@@ -1,29 +1,29 @@
-Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
+Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail', {
     extend: 'Ext.window.Window',
     alias: 'widget.DataEntryDetailSalesAuditReportForm',
-    requires:[
+    requires: [
         'Ext.Praxis.controller.salesaudit.SalesAuditReport.DataEntryDetailSalesAuditReportController'
     ],
     controller: 'DataEntryDetailSalesAuditReportController',
-    title:"",
-    header:false,
-    height:970,
-    width:1598,
-    resizable:false,
-    layout:'fit',
-    modal:true,
+    title: "",
+    header: false,
+    height: 970,
+    width: 1598,
+    resizable: false,
+    layout: 'fit',
+    modal: true,
     border: false,
     defaults: {
         border: false
     },
-    items:[
+    items: [
         {
             xtype: 'form',
-            defaults:{
+            defaults: {
                 style: 'margin: 3px;',
                 border: false
             },
-            items:[
+            items: [
                 {
                     xtype: 'panel',
                     layout: {
@@ -92,7 +92,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                                 },
                                                                 {
                                                                     xtype: 'label',
-                                                                    id: prototype.id+'-1-IssuedBy',
+                                                                    id: prototype.id + '-1-IssuedBy',
                                                                     width: 159
                                                                 },
                                                                 {
@@ -102,9 +102,21 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                                 },
                                                                 {
                                                                     xtype: 'label',
-                                                                    id: prototype.id+'-1-txtSRC',
+                                                                    id: prototype.id + '-1-txtSRC',
                                                                     width: 78
-                                                                }
+                                                                },
+                                                                {
+                                                                    xtype: 'label',
+                                                                    text: 'Dynamic',
+                                                                    style: 'font-weight:bold;'
+                                                                },
+                                                        {
+                                                            xtype: 'textfield',
+                                                            id: prototype.id + '-1-txtDynamic',
+                                                            fieldStyle: 'text-align:center;',
+                                                            width: 50,
+                                                            readOnly: true
+                                                        }
                                                             ]
                                                         },
                                                         {
@@ -123,7 +135,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                                 },
                                                                 {
                                                                     xtype: 'label',
-                                                                    id: prototype.id+'-1-txtEndors',
+                                                                    id: prototype.id + '-1-txtEndors',
                                                                     width: 213
                                                                 }
                                                             ]
@@ -144,7 +156,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                                 },
                                                                 {
                                                                     xtype: 'label',
-                                                                    id: prototype.id+'-1-txtPassenger',
+                                                                    id: prototype.id + '-1-txtPassenger',
                                                                     width: 260
                                                                 }
                                                             ]
@@ -165,7 +177,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                                 },
                                                                 {
                                                                     xtype: 'label',
-                                                                    id: prototype.id+'-1-txtORIN',
+                                                                    id: prototype.id + '-1-txtORIN',
                                                                     width: 298
                                                                 }
                                                             ]
@@ -199,7 +211,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                                 },
                                                                 {
                                                                     xtype: 'label',
-                                                                    id: prototype.id+'-1-Baggage',
+                                                                    id: prototype.id + '-1-Baggage',
                                                                     width: '99%'
                                                                 }
                                                             ]
@@ -217,7 +229,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                                 },
                                                                 {
                                                                     xtype: 'label',
-                                                                    id: prototype.id+'-1-txtTourC',
+                                                                    id: prototype.id + '-1-txtTourC',
                                                                     width: '99%'
                                                                 }
                                                             ]
@@ -235,7 +247,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                                 },
                                                                 {
                                                                     xtype: 'label',
-                                                                    id: prototype.id+'-1-lblTicket21',
+                                                                    id: prototype.id + '-1-lblTicket21',
                                                                     width: '99%'
                                                                 }
                                                             ]
@@ -253,12 +265,12 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                                 },
                                                                 {
                                                                     xtype: 'label',
-                                                                    id: prototype.id+'-1-EsConjunto',
+                                                                    id: prototype.id + '-1-EsConjunto',
                                                                     hidden: true
                                                                 },
                                                                 {
                                                                     xtype: 'label',
-                                                                    id: prototype.id+'-1-EsConjunto',
+                                                                    id: prototype.id + '-1-EsConjunto',
                                                                     width: '99%'
                                                                 }
                                                             ]
@@ -299,7 +311,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                             items: [
                                                                 {
                                                                     xtype: 'label',
-                                                                    id: prototype.id+'-1-OriginDestination',
+                                                                    id: prototype.id + '-1-OriginDestination',
                                                                     width: '99%'
                                                                 }
                                                             ]
@@ -338,7 +350,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                             items: [
                                                                 {
                                                                     xtype: 'button',
-                                                                    id: prototype.id+'-1-txtIssExc',
+                                                                    id: prototype.id + '-1-txtIssExc',
                                                                     style: 'font-weight:bold;background:transparent;',
                                                                     html: '<strong style="background:transparent;color:#057ECB;">139 5955484133</strong>',
                                                                     border: false,
@@ -386,7 +398,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                             items: [
                                                                 {
                                                                     xtype: 'label',
-                                                                    id: prototype.id+'-1-DatePlace',
+                                                                    id: prototype.id + '-1-DatePlace',
                                                                     width: '99%'
                                                                 }
                                                             ]
@@ -404,7 +416,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                                 },
                                                                 {
                                                                     xtype: 'label',
-                                                                    id: prototype.id+'-1-txtAgentF',
+                                                                    id: prototype.id + '-1-txtAgentF',
                                                                     width: '99%'
                                                                 }
                                                             ]
@@ -430,7 +442,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                             items: [
                                                                 {
                                                                     xtype: 'label',
-                                                                    id: prototype.id+'-1-txtPNR',
+                                                                    id: prototype.id + '-1-txtPNR',
                                                                     width: '99%'
                                                                 }
                                                             ]
@@ -454,7 +466,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                 // <editor-fold defaultstate="collapsed" desc="gridComponent3">
                                                 {
                                                     xtype: 'grid',
-                                                    id: prototype.id+'-1-gridComponent3',
+                                                    id: prototype.id + '-1-gridComponent3',
                                                     bodyStyle: 'background: transparent;"',
                                                     width: 1000,
                                                     height: 72,
@@ -467,19 +479,19 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                             align: 'center'
                                                         },
                                                         items: [
-                                                            { text: 'Cpn', dataIndex: '', width: 45 },
-                                                            { text: 'X/O', dataIndex: 'STPO', width: 45 },
-                                                            { text: 'From', dataIndex: 'ORAC', width: 120 },
-                                                            { text: 'To', dataIndex: 'DSTC', width: 120 },
-                                                            { text: 'CR', dataIndex: 'CARR', width: 55 },
-                                                            { text: 'Flight', dataIndex: 'FTNR', width: 70 },
-                                                            { text: 'Class', dataIndex: 'RBKD', width: 55 },
-                                                            { text: 'Date', dataIndex: 'FTDA', width: 90 },
-                                                            { text: 'Time', dataIndex: 'FTDT', width: 90 },
-                                                            { text: 'F.Basis', dataIndex: 'FBTD', flex: 1/*width: 130*/ },
-                                                            { text: 'NVB', dataIndex: 'NBDA', width: 55 },
-                                                            { text: 'ACC.Date', dataIndex: 'NADA', width: 90 },
-                                                            { text: 'Used', dataIndex: 'strUso', width: 55 }
+                                                            {text: 'Cpn', dataIndex: '', width: 45},
+                                                            {text: 'X/O', dataIndex: 'STPO', width: 45},
+                                                            {text: 'From', dataIndex: 'ORAC', width: 120},
+                                                            {text: 'To', dataIndex: 'DSTC', width: 120},
+                                                            {text: 'CR', dataIndex: 'CARR', width: 55},
+                                                            {text: 'Flight', dataIndex: 'FTNR', width: 70},
+                                                            {text: 'Class', dataIndex: 'RBKD', width: 55},
+                                                            {text: 'Date', dataIndex: 'FTDA', width: 90},
+                                                            {text: 'Time', dataIndex: 'FTDT', width: 90},
+                                                            {text: 'F.Basis', dataIndex: 'FBTD', flex: 1/*width: 130*/},
+                                                            {text: 'NVB', dataIndex: 'NBDA', width: 55},
+                                                            {text: 'ACC.Date', dataIndex: 'NADA', width: 90},
+                                                            {text: 'Used', dataIndex: 'strUso', width: 55}
                                                         ]
                                                     }
                                                 }
@@ -526,7 +538,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                                 },
                                                                 {
                                                                     xtype: 'textfield',
-                                                                    id: prototype.id+'-1-txtFareC',
+                                                                    id: prototype.id + '-1-txtFareC',
                                                                     fieldStyle: 'text-align:left;background-color:white;',
                                                                     enforceMaxLength: true,
                                                                     maxLength: 3,
@@ -551,7 +563,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                                 },
                                                                 {
                                                                     xtype: 'textfield',
-                                                                    id: prototype.id+'-1-txtEquivFa',
+                                                                    id: prototype.id + '-1-txtEquivFa',
                                                                     fieldStyle: 'text-align:left;background-color:white;',
                                                                     enforceMaxLength: true,
                                                                     maxLength: 3,
@@ -576,7 +588,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                                 },
                                                                 {
                                                                     xtype: 'textarea',
-                                                                    id: prototype.id+'-1-txtTaxes',
+                                                                    id: prototype.id + '-1-txtTaxes',
                                                                     value: '',
                                                                     fieldStyle: 'font-family:"Courier New";text-align:left;',
                                                                     width: 145
@@ -598,7 +610,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                                 },
                                                                 {
                                                                     xtype: 'textfield',
-                                                                    id: prototype.id+'-1-txtTotal',
+                                                                    id: prototype.id + '-1-txtTotal',
                                                                     fieldStyle: 'text-align:left;background-color:white;',
                                                                     enforceMaxLength: true,
                                                                     maxLength: 3,
@@ -630,7 +642,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textarea',
-                                                            id: prototype.id+'-1-txtFareCal',
+                                                            id: prototype.id + '-1-txtFareCal',
                                                             value: '',
                                                             width: 590,
                                                             grow: true,
@@ -661,7 +673,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                                 {xtype: 'tbspacer', width: 6},
                                                                 {
                                                                     xtype: 'textarea',
-                                                                    id: prototype.id+'-1-txtFormPay',
+                                                                    id: prototype.id + '-1-txtFormPay',
                                                                     value: '',
                                                                     width: 478,
                                                                     grow: true,
@@ -679,7 +691,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                                 {xtype: 'tbspacer', width: 52},
                                                                 {
                                                                     xtype: 'label',
-                                                                    id: prototype.id+'-1-NUMBERTKT',
+                                                                    id: prototype.id + '-1-NUMBERTKT',
                                                                     text: '139 - 1111111111',
                                                                     style: 'font-weight:bold;color:#C46600;',
                                                                     width: 200,
@@ -688,35 +700,35 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                                 {xtype: 'tbspacer', width: 1},
                                                                 {
                                                                     xtype: 'button',
-                                                                    id:prototype.id+'-1-btnPDI',
+                                                                    id: prototype.id + '-1-btnPDI',
                                                                     html: '<strong style="font-size:13px;">PDI</strong>',
                                                                     icon: 'resources/img/botones/24x24/Airline_Ticket-24.png',
                                                                     scale: 'medium',
                                                                     width: 75,
-                                                                    listeners:{
+                                                                    listeners: {
                                                                         click: 'btnclick_PDI',
                                                                     }
                                                                 },
                                                                 {xtype: 'tbspacer', width: 7},
                                                                 {
                                                                     xtype: 'button',
-                                                                    id:prototype.id+'-1-btnReview',
+                                                                    id: prototype.id + '-1-btnReview',
                                                                     html: '<strong style="font-size:11px;">Review ADM</strong>',
                                                                     icon: 'resources/img/botones/24x24/check-24.png',
                                                                     scale: 'medium',
                                                                     width: 134,
-                                                                    listeners:{
+                                                                    listeners: {
                                                                         click: 'btn_clickReviewADM',
                                                                     }
                                                                 },
                                                                 {xtype: 'tbspacer', width: 7},
                                                                 {
                                                                     xtype: 'button',
-                                                                    id:prototype.id+'-1-btnCloseS',
+                                                                    id: prototype.id + '-1-btnCloseS',
                                                                     html: '<strong style="font-size:12px;">Close</strong>',
                                                                     icon: 'resources/img/botones/24x24/1337983423_Cancel__Red.png',
                                                                     scale: 'medium',
-                                                                    listeners:{
+                                                                    listeners: {
                                                                         click: 'btnCancel_clickHandler'
                                                                     }
                                                                 }
@@ -756,7 +768,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtUser',
+                                                            id: prototype.id + '-1-txtUser',
                                                             fieldStyle: 'text-align:center;',
                                                             maskRe: /[0-9]/,
                                                             width: 116,
@@ -782,7 +794,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtUDate',
+                                                            id: prototype.id + '-1-txtUDate',
                                                             fieldStyle: 'text-align:center;',
 //                                                            enforceMaxLength: true,
 //                                                            maxLength: 1,
@@ -810,7 +822,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtUserAudit',
+                                                            id: prototype.id + '-1-txtUserAudit',
                                                             fieldStyle: 'text-align:center;',
 //                                                            enforceMaxLength: true,
 //                                                            maxLength: 1,
@@ -838,7 +850,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtFRevis',
+                                                            id: prototype.id + '-1-txtFRevis',
                                                             fieldStyle: 'text-align:center;',
 //                                                            enforceMaxLength: true,
 //                                                            maxLength: 1,
@@ -851,15 +863,15 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                 {xtype: 'tbspacer', width: 208},
                                                 {
                                                     xtype: 'image',
-                                                    id: prototype.id+'-1-imgTicket',
+                                                    id: prototype.id + '-1-imgTicket',
                                                     src: 'resources/img/icon/48x48/ticket-previous.png',
                                                     border: true,
                                                     height: 27,
                                                     padding: '0 0 4 0',
-                                                    mode : 'image',
+                                                    mode: 'image',
                                                     hidden: true,
                                                     listeners: {
-                                                        afterrender: function(c) {
+                                                        afterrender: function (c) {
                                                             Ext.create('Ext.tip.ToolTip', {
                                                                 target: c.getEl(),
                                                                 html: 'Previous Ticket'
@@ -926,7 +938,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                                     icon: 'resources/img/botones/24x24/Small_parcel-24.png',
                                                                     scale: 'medium',
 //                                                                    width: 75,
-                                                                    listeners:{
+                                                                    listeners: {
                                                                         click: 'btnDeliveryTKT_clickHandler',
                                                                     }
                                                                 },
@@ -937,7 +949,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                                     icon: 'resources/img/botones/24x24/note-24.png',
                                                                     scale: 'medium',
                                                                     width: 136,
-                                                                    listeners:{
+                                                                    listeners: {
                                                                         click: 'btnReasons_clickHandler',
                                                                     }
                                                                 },
@@ -947,7 +959,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                                     html: '<strong style="font-size:12px;">FOP</strong>',
                                                                     icon: 'resources/img/botones/24x24/Finance_payment_method-24.png',
                                                                     scale: 'medium',
-                                                                    listeners:{
+                                                                    listeners: {
                                                                         click: 'btnFOP_clickHandler',
                                                                     }
                                                                 },
@@ -957,7 +969,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                                     html: '<strong style="font-size:12px;">Historial</strong>',
                                                                     icon: 'resources/img/botones/24x24/historical_ticket.png',
                                                                     scale: 'medium',
-                                                                    listeners:{
+                                                                    listeners: {
                                                                         click: 'btn_clickHistorialTKT',
                                                                     }
                                                                 }
@@ -975,7 +987,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                 // <editor-fold defaultstate="collapsed" desc="gridComponent">
                                                 {
                                                     xtype: 'grid',
-                                                    id: prototype.id+'-1-gridComponent',
+                                                    id: prototype.id + '-1-gridComponent',
                                                     border: true,
                                                     width: 402,
                                                     height: 240,
@@ -1001,8 +1013,8 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                                 },
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     var data = record.data;
-                                                                    var src = data.Concepto==='Fare'? '' :data.Concepto==='Q' ? '' : data.Concepto==='Net' ? '' : 'resources/img/botones/16x16/1326498593_018.png';
-                                                                    return '<a href="#salesaudit-salesAudit-accepted-form"><img src="'+src+'"></a>';
+                                                                    var src = data.Concepto === 'Fare' ? '' : data.Concepto === 'Q' ? '' : data.Concepto === 'Net' ? '' : 'resources/img/botones/16x16/1326498593_018.png';
+                                                                    return '<a href="#salesaudit-salesAudit-accepted-form"><img src="' + src + '"></a>';
                                                                 }
                                                             },
                                                             {
@@ -1045,7 +1057,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                             items: [
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtCcust',
+                                    id: prototype.id + '-1-txtCcust',
                                     width: 140,
                                     hidden: true
                                 },
@@ -1057,7 +1069,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtFrmaSerie',
+                                    id: prototype.id + '-1-txtFrmaSerie',
                                     fieldStyle: 'text-align:center;',
                                     maskRe: /[0-9]/,
                                     width: 116,
@@ -1072,7 +1084,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtSeq',
+                                    id: prototype.id + '-1-txtSeq',
                                     fieldStyle: 'text-align:center;',
                                     enableKeyEvents: true,
 //                                    enforceMaxLength: true,
@@ -1090,7 +1102,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtCupon',
+                                    id: prototype.id + '-1-txtCupon',
                                     fieldStyle: 'text-align:center;',
                                     maskRe: /[0-9]/,
                                     width: 45,
@@ -1105,7 +1117,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtGrupo',
+                                    id: prototype.id + '-1-txtGrupo',
                                     fieldStyle: 'text-align:center;',
                                     maskRe: /[0-9]/,
                                     width: 87,
@@ -1120,7 +1132,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtTRNCU',
+                                    id: prototype.id + '-1-txtTRNCU',
                                     fieldStyle: 'text-align:center;',
 //                                    enforceMaxLength: true,
 //                                    maxLength: 1,
@@ -1137,7 +1149,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtAgent',
+                                    id: prototype.id + '-1-txtAgent',
                                     fieldStyle: 'text-align:center;',
                                     maskRe: /[0-9]/,
                                     width: 57,
@@ -1152,7 +1164,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtFecVta',
+                                    id: prototype.id + '-1-txtFecVta',
                                     fieldStyle: 'text-align:center;',
                                     width: 72,
                                     readOnly: true
@@ -1166,7 +1178,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtCiuVta',
+                                    id: prototype.id + '-1-txtCiuVta',
                                     fieldStyle: 'text-align:center;',
                                     maskRe: /[0-9]/,
                                     width: 36,
@@ -1174,7 +1186,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtPaiVta',
+                                    id: prototype.id + '-1-txtPaiVta',
                                     fieldStyle: 'text-align:center;',
                                     maskRe: /[0-9]/,
                                     width: 29,
@@ -1189,7 +1201,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtCiuUso',
+                                    id: prototype.id + '-1-txtCiuUso',
                                     fieldStyle: 'text-align:center;',
 //                                    enforceMaxLength: true,
 //                                    maxLength: 1,
@@ -1199,7 +1211,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtPaiUso',
+                                    id: prototype.id + '-1-txtPaiUso',
                                     fieldStyle: 'text-align:center;',
 //                                    enforceMaxLength: true,
 //                                    maxLength: 1,
@@ -1216,7 +1228,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtTPax',
+                                    id: prototype.id + '-1-txtTPax',
                                     fieldStyle: 'text-align:center;',
                                     maskRe: /[0-9]/,
                                     width: 31,
@@ -1224,7 +1236,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'label',
-                                    id: prototype.id+'-1-txtWaiver2',
+                                    id: prototype.id + '-1-txtWaiver2',
                                     style: 'text-align:center;font-weight:bold;',
                                     padding: '4 0',
                                     text: 'Waiver:',
@@ -1232,7 +1244,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtWaiver',
+                                    id: prototype.id + '-1-txtWaiver',
                                     fieldStyle: 'text-align:right;color:#113DDF;text-decoration:underline;',
                                     enableKeyEvents: true,
                                     value: '',
@@ -1241,16 +1253,16 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                     readOnly: true,
                                     handleMouseEvents: true,
                                     listeners: {
-                                        'render': function(cmp) {
+                                        'render': function (cmp) {
                                             cmp.getEl().on('click',
-                                                'lnkDownload_clickHandler'
-                                            );
+                                                    'lnkDownload_clickHandler'
+                                                    );
                                         }
                                     }
                                 },
                                 {
                                     xtype: 'label',
-                                    id: prototype.id+'-1-lblReverdate',
+                                    id: prototype.id + '-1-lblReverdate',
                                     style: 'text-align:center;font-weight:bold;',
                                     padding: '4 0',
                                     text: 'Rever. date:',
@@ -1258,7 +1270,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtReverdate',
+                                    id: prototype.id + '-1-txtReverdate',
                                     fieldStyle: 'text-align:center;',
                                     maskRe: /[0-9]/,
                                     width: 70,
@@ -1266,17 +1278,17 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtTicket',
+                                    id: prototype.id + '-1-txtTicket',
                                     hidden: true
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtFuente',
+                                    id: prototype.id + '-1-txtFuente',
                                     hidden: true
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtAgent2',
+                                    id: prototype.id + '-1-txtAgent2',
                                     hidden: true
                                 }
                             ]
@@ -1295,7 +1307,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtFare',
+                                    id: prototype.id + '-1-txtFare',
                                     fieldStyle: 'text-align:center;',
                                     maskRe: /[0-9]/,
                                     width: 80,
@@ -1303,7 +1315,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtCur',
+                                    id: prototype.id + '-1-txtCur',
                                     fieldStyle: 'text-align:center;',
                                     maskRe: /[0-9]/,
                                     width: 28,
@@ -1318,7 +1330,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtNUC',
+                                    id: prototype.id + '-1-txtNUC',
                                     fieldStyle: 'text-align:center;',
                                     maskRe: /[0-9]/,
                                     width: 53,
@@ -1333,7 +1345,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtROE',
+                                    id: prototype.id + '-1-txtROE',
                                     fieldStyle: 'text-align:center;',
                                     maskRe: /[0-9]/,
                                     width: 82,
@@ -1348,7 +1360,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtPlus',
+                                    id: prototype.id + '-1-txtPlus',
                                     fieldStyle: 'text-align:center;',
 //                                    enforceMaxLength: true,
 //                                    maxLength: 1,
@@ -1365,7 +1377,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtSOver',
+                                    id: prototype.id + '-1-txtSOver',
                                     fieldStyle: 'text-align:center;',
                                     maskRe: /[0-9]/,
                                     width: 61,
@@ -1373,7 +1385,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtSOver2',
+                                    id: prototype.id + '-1-txtSOver2',
                                     fieldStyle: 'text-align:center;',
                                     maskRe: /[0-9]/,
                                     width: 29,
@@ -1388,7 +1400,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtRate',
+                                    id: prototype.id + '-1-txtRate',
                                     fieldStyle: 'text-align:center;',
                                     width: 105,
                                     readOnly: true
@@ -1402,7 +1414,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtIT',
+                                    id: prototype.id + '-1-txtIT',
                                     fieldStyle: 'text-align:center;',
                                     maskRe: /[0-9]/,
                                     width: 117,
@@ -1417,7 +1429,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtTIDoc',
+                                    id: prototype.id + '-1-txtTIDoc',
                                     fieldStyle: 'text-align:center;',
 //                                    enforceMaxLength: true,
 //                                    maxLength: 1,
@@ -1434,7 +1446,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtSOURCE',
+                                    id: prototype.id + '-1-txtSOURCE',
                                     fieldStyle: 'text-align:center;',
 //                                    enforceMaxLength: true,
 //                                    maxLength: 1,
@@ -1451,7 +1463,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtEMDReal',
+                                    id: prototype.id + '-1-txtEMDReal',
                                     fieldStyle: 'text-align:center;',
 //                                    enforceMaxLength: true,
 //                                    maxLength: 1,
@@ -1468,7 +1480,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtChannel',
+                                    id: prototype.id + '-1-txtChannel',
                                     fieldStyle: 'text-align:center;',
 //                                    enforceMaxLength: true,
 //                                    maxLength: 1,
@@ -1492,7 +1504,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtEquiv',
+                                    id: prototype.id + '-1-txtEquiv',
                                     fieldStyle: 'text-align:center;',
                                     maskRe: /[0-9]/,
                                     width: 81,
@@ -1500,7 +1512,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtEquivCur',
+                                    id: prototype.id + '-1-txtEquivCur',
                                     fieldStyle: 'text-align:center;',
                                     enforceMaxLength: true,
                                     maxLength: 1,
@@ -1517,7 +1529,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtFCMI',
+                                    id: prototype.id + '-1-txtFCMI',
                                     fieldStyle: 'text-align:center;',
                                     maskRe: /[0-9]/,
                                     width: 26,
@@ -1532,7 +1544,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtFareType',
+                                    id: prototype.id + '-1-txtFareType',
                                     fieldStyle: 'text-align:center;',
                                     enforceMaxLength: true,
                                     maxLength: 1,
@@ -1542,7 +1554,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'label',
-                                    id: prototype.id+'-1-lblRType',
+                                    id: prototype.id + '-1-lblRType',
                                     style: 'text-align:center;',
                                     padding: '4 0',
                                     text: 'Refund Type:',
@@ -1550,7 +1562,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtRType',
+                                    id: prototype.id + '-1-txtRType',
                                     fieldStyle: 'text-align:center;',
                                     enforceMaxLength: true,
                                     maxLength: 1,
@@ -1560,7 +1572,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'label',
-                                    id: prototype.id+'-1-lblEType',
+                                    id: prototype.id + '-1-lblEType',
                                     style: 'text-align:center;',
                                     padding: '4 0',
                                     text: 'Exch Type:',
@@ -1568,7 +1580,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtEType',
+                                    id: prototype.id + '-1-txtEType',
                                     fieldStyle: 'text-align:center;',
                                     enforceMaxLength: true,
                                     maxLength: 1,
@@ -1585,7 +1597,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtComment',
+                                    id: prototype.id + '-1-txtComment',
                                     fieldStyle: 'text-align:center;',
                                     width: 220,
                                     readOnly: true
@@ -1599,14 +1611,14 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtCommentMIA',
+                                    id: prototype.id + '-1-txtCommentMIA',
                                     fieldStyle: 'text-align:center;',
                                     width: 220,
                                     readOnly: true
                                 },
                                 {
                                     xtype: 'label',
-                                    id: prototype.id+'-1-lblInvol',
+                                    id: prototype.id + '-1-lblInvol',
                                     style: 'text-align:center;',
                                     padding: '4 0',
                                     text: 'Involuntary:',
@@ -1614,7 +1626,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtInvol',
+                                    id: prototype.id + '-1-txtInvol',
                                     fieldStyle: 'text-align:center;',
                                     width: 25,
                                     readOnly: true
@@ -1628,7 +1640,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtBSR',
+                                    id: prototype.id + '-1-txtBSR',
                                     fieldStyle: 'text-align:center;',
                                     maskRe: /[0-9]/,
                                     width: 50,
@@ -1643,12 +1655,13 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtERROR',
+                                    id: prototype.id + '-1-txtERROR',
                                     fieldStyle: 'text-align:center;',
                                     maskRe: /[0-9]/,
                                     width: 174,
                                     readOnly: true
                                 }
+
                             ]
                         },
                         {
@@ -1665,7 +1678,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtADC',
+                                    id: prototype.id + '-1-txtADC',
                                     fieldStyle: 'text-align:center;',
                                     maskRe: /[0-9]/,
                                     width: 81,
@@ -1673,7 +1686,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id: prototype.id+'-1-txtADC2',
+                                    id: prototype.id + '-1-txtADC2',
                                     fieldStyle: 'text-align:center;',
                                     maskRe: /[0-9]/,
                                     width: 28,
@@ -1702,7 +1715,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id+'-1-txtTktOrig',
+                                            id: prototype.id + '-1-txtTktOrig',
                                             fieldStyle: 'text-align:center;',
 //                                            enforceMaxLength: true,
 //                                            maxLength: 1,
@@ -1719,7 +1732,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id+'-1-txtAgentOrig',
+                                            id: prototype.id + '-1-txtAgentOrig',
                                             fieldStyle: 'text-align:center;',
                                             maskRe: /[0-9]/,
                                             width: 52,
@@ -1734,7 +1747,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id+'-1-txtFecUsoOrig',
+                                            id: prototype.id + '-1-txtFecUsoOrig',
                                             fieldStyle: 'text-align:center;',
                                             width: 80,
                                             readOnly: true
@@ -1748,7 +1761,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id+'-1-txtPlace',
+                                            id: prototype.id + '-1-txtPlace',
                                             fieldStyle: 'text-align:center;',
                                             maskRe: /[0-9]/,
                                             width: 43,
@@ -1756,7 +1769,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                         },
                                         {
                                             xtype: 'label',
-                                            id: prototype.id+'-1-lblQty',
+                                            id: prototype.id + '-1-lblQty',
                                             style: 'text-align:center;',
                                             padding: '4 0',
                                             text: 'Qty:',
@@ -1764,7 +1777,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id+'-1-txtQty',
+                                            id: prototype.id + '-1-txtQty',
                                             fieldStyle: 'text-align:center;',
                                             enforceMaxLength: true,
                                             maxLength: 1,
@@ -1774,7 +1787,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                         },
                                         {
                                             xtype: 'label',
-                                            id: prototype.id+'-1-lblReservDate',
+                                            id: prototype.id + '-1-lblReservDate',
                                             style: 'text-align:center;',
                                             padding: '4 0',
                                             text: 'Reserv.Date:',
@@ -1783,7 +1796,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id+'-1-txtReservDate',
+                                            id: prototype.id + '-1-txtReservDate',
                                             fieldStyle: 'text-align:center;',
                                             width: 75,
                                             hidden: true,
@@ -1791,7 +1804,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                         },
                                         {
                                             xtype: 'label',
-                                            id: prototype.id+'-1-lblEMDRel',
+                                            id: prototype.id + '-1-lblEMDRel',
                                             style: 'text-align:center;',
                                             padding: '4 0',
                                             text: 'EMD Rel:',
@@ -1800,7 +1813,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id+'-1-txtEMDRel',
+                                            id: prototype.id + '-1-txtEMDRel',
                                             fieldStyle: 'text-align:center;',
                                             width: 100,
                                             hidden: true,
@@ -1808,7 +1821,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                         },
                                         {
                                             xtype: 'label',
-                                            id: prototype.id+'-1-lblOrigTrnx',
+                                            id: prototype.id + '-1-lblOrigTrnx',
                                             style: 'text-align:center;',
                                             padding: '4 0',
                                             text: 'Orig. Trnx:',
@@ -1816,14 +1829,14 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id+'-1-txtOrigTrnx',
+                                            id: prototype.id + '-1-txtOrigTrnx',
                                             fieldStyle: 'text-align:center;',
                                             width: 40,
                                             readOnly: true
                                         },
                                         {
                                             xtype: 'label',
-                                            id: prototype.id+'-1-lblOrigDate',
+                                            id: prototype.id + '-1-lblOrigDate',
                                             style: 'text-align:center;',
                                             padding: '4 0',
                                             text: 'Orig. Date:',
@@ -1831,14 +1844,14 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id+'-1-txtOrigDate',
+                                            id: prototype.id + '-1-txtOrigDate',
                                             fieldStyle: 'text-align:center;',
                                             width: 75,
                                             readOnly: true
                                         },
                                         {
                                             xtype: 'label',
-                                            id: prototype.id+'-1-lblOrigAgency',
+                                            id: prototype.id + '-1-lblOrigAgency',
                                             style: 'text-align:center;',
                                             padding: '4 0',
                                             text: 'Orig. Agency:',
@@ -1846,14 +1859,14 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id+'-1-txtOrigAgency',
+                                            id: prototype.id + '-1-txtOrigAgency',
                                             fieldStyle: 'text-align:center;',
                                             width: 70,
                                             readOnly: true
                                         },
                                         {
                                             xtype: 'label',
-                                            id: prototype.id+'-1-lblOrigSource',
+                                            id: prototype.id + '-1-lblOrigSource',
                                             style: 'text-align:center;',
                                             padding: '4 0',
                                             text: 'Orig. Source:',
@@ -1861,24 +1874,24 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id+'-1-txtOrigSource',
+                                            id: prototype.id + '-1-txtOrigSource',
                                             fieldStyle: 'text-align:center;',
                                             width: 59,
                                             readOnly: true
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id+'-1-txtRUTAF',
+                                            id: prototype.id + '-1-txtRUTAF',
                                             hidden: true
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id+'-1-txtNAMEF',
+                                            id: prototype.id + '-1-txtNAMEF',
                                             hidden: true
                                         },
                                         {
                                             xtype: 'textfield',
-                                            id: prototype.id+'-1-txtA1672FPROC',
+                                            id: prototype.id + '-1-txtA1672FPROC',
                                             hidden: true
                                         }
                                     ]
@@ -1907,7 +1920,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                         // <editor-fold defaultstate="collapsed" desc="gridComponent2">
                                         {
                                             xtype: 'grid',
-                                            id: prototype.id+'-1-gridComponent2',
+                                            id: prototype.id + '-1-gridComponent2',
                                             width: 676,
                                             height: 95,
                                             columnLines: true,
@@ -1918,32 +1931,32 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                     align: 'center'
                                                 },
                                                 items: [
-                                                    { text: 'Ticket', dataIndex: 'VP_FRMSRIE', flex: 1 },
-                                                    { text: 'Cpn', dataIndex: 'A1672CUPON', width: 40 },
-                                                    { text: 'Cnx', dataIndex: 'A1672CONEX', width: 40 },
-                                                    { text: 'From', dataIndex: 'ORIGEN', width: 50 },
-                                                    { text: 'To', dataIndex: 'DESTINO', width: 45 },
-                                                    { text: 'Carrier', dataIndex: 'A1672CARR', width: 53 },
-                                                    { text: 'Flight<br>Num', dataIndex: 'A1672NVLO', width: 45,
+                                                    {text: 'Ticket', dataIndex: 'VP_FRMSRIE', flex: 1},
+                                                    {text: 'Cpn', dataIndex: 'A1672CUPON', width: 40},
+                                                    {text: 'Cnx', dataIndex: 'A1672CONEX', width: 40},
+                                                    {text: 'From', dataIndex: 'ORIGEN', width: 50},
+                                                    {text: 'To', dataIndex: 'DESTINO', width: 45},
+                                                    {text: 'Carrier', dataIndex: 'A1672CARR', width: 53},
+                                                    {text: 'Flight<br>Num', dataIndex: 'A1672NVLO', width: 45,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = "text-align:left;";
-                                                            metaData.tdAttr = 'data-qtip="'+data.A1672NVLO+'"';
+                                                            metaData.tdAttr = 'data-qtip="' + data.A1672NVLO + '"';
                                                             return value;
                                                         }
                                                     },
-                                                    { text: 'Flight Date', dataIndex: 'A1672FVLO', width: 73 },
-                                                    { text: 'Cabin', dataIndex: 'A1672CABIN', width: 45 },
-                                                    { text: 'Class', dataIndex: 'A1672CLASE', width: 45 },
-                                                    { text: 'F.Basis', dataIndex: 'A1672FBASI', width: 65,
+                                                    {text: 'Flight Date', dataIndex: 'A1672FVLO', width: 73},
+                                                    {text: 'Cabin', dataIndex: 'A1672CABIN', width: 45},
+                                                    {text: 'Class', dataIndex: 'A1672CLASE', width: 45},
+                                                    {text: 'F.Basis', dataIndex: 'A1672FBASI', width: 65,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = "text-align:left;";
-                                                            metaData.tdAttr = 'data-qtip="'+data.A1672FBASI+'"';
+                                                            metaData.tdAttr = 'data-qtip="' + data.A1672FBASI + '"';
                                                             return value;
                                                         }
                                                     },
-                                                    { text: 'Usage', dataIndex: 'A1672CPNS', width: 75, id: prototype.id+'-1-txtUsage' }
+                                                    {text: 'Usage', dataIndex: 'A1672CPNS', width: 75, id: prototype.id + '-1-txtUsage'}
                                                 ]
                                             }
                                         }
@@ -1952,21 +1965,21 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                 },
                                 {
                                     xtype: 'panel',
-                                    id: prototype.id+'-1-Component0',
+                                    id: prototype.id + '-1-Component0',
                                     bodyStyle: 'background: transparent;"',
                                     layout: 'vbox',
                                     border: false,
                                     items: [
                                         {
                                             xtype: 'label',
-                                            id: prototype.id+'-1-Component1',
+                                            id: prototype.id + '-1-Component1',
                                             text: 'FARE COMPONENT AGENT',
                                             style: 'font-weight:bold;',
                                             width: 234
                                         },
                                         {
                                             xtype: 'panel',
-                                            id: prototype.id+'-1-Component2',
+                                            id: prototype.id + '-1-Component2',
                                             bodyStyle: 'background: transparent;"',
                                             layout: 'hbox',
                                             border: false,
@@ -1974,7 +1987,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                             items: [
                                                 {
                                                     xtype: 'label',
-                                                    id: prototype.id+'-1-lblCURBalance',
+                                                    id: prototype.id + '-1-lblCURBalance',
                                                     style: 'text-align:center;',
                                                     padding: '4 0',
                                                     text: 'CUR',
@@ -1982,7 +1995,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                 },
                                                 {
                                                     xtype: 'textfield',
-                                                    id: prototype.id+'-1-txtCurBalance',
+                                                    id: prototype.id + '-1-txtCurBalance',
                                                     fieldStyle: 'text-align:center;',
 //                                                    enforceMaxLength: true,
 //                                                    maxLength: 1,
@@ -1991,7 +2004,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                 },
                                                 {
                                                     xtype: 'label',
-                                                    id: prototype.id+'-1-lblFareBalance',
+                                                    id: prototype.id + '-1-lblFareBalance',
                                                     style: 'text-align:center;',
                                                     padding: '4 0',
                                                     text: 'FARE NEW',
@@ -1999,7 +2012,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                 },
                                                 {
                                                     xtype: 'textfield',
-                                                    id: prototype.id+'-1-txtFareBalance',
+                                                    id: prototype.id + '-1-txtFareBalance',
                                                     fieldStyle: 'text-align:center;',
                                                     maskRe: /[0-9]/,
                                                     width: 53,
@@ -2007,7 +2020,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                 },
                                                 {
                                                     xtype: 'label',
-                                                    id: prototype.id+'-1-lblFareOldBalance',
+                                                    id: prototype.id + '-1-lblFareOldBalance',
                                                     style: 'text-align:center;',
                                                     padding: '4 0',
                                                     text: 'FARE OLD',
@@ -2015,7 +2028,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                 },
                                                 {
                                                     xtype: 'textfield',
-                                                    id: prototype.id+'-1-txtFareOldBalance',
+                                                    id: prototype.id + '-1-txtFareOldBalance',
                                                     fieldStyle: 'text-align:center;',
                                                     maskRe: /[0-9]/,
                                                     width: 53,
@@ -2023,7 +2036,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                 },
                                                 {
                                                     xtype: 'label',
-                                                    id: prototype.id+'-1-lblADCBalance',
+                                                    id: prototype.id + '-1-lblADCBalance',
                                                     style: 'text-align:center;',
                                                     padding: '4 0',
                                                     text: 'ADC',
@@ -2031,7 +2044,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                 },
                                                 {
                                                     xtype: 'textfield',
-                                                    id: prototype.id+'-1-txtADCBalance',
+                                                    id: prototype.id + '-1-txtADCBalance',
                                                     fieldStyle: 'text-align:center;',
                                                     maskRe: /[0-9]/,
                                                     width: 53,
@@ -2042,7 +2055,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                         // <editor-fold defaultstate="collapsed" desc="gridComp">
                                         {
                                             xtype: 'grid',
-                                            id: prototype.id+'-1-gridComp',
+                                            id: prototype.id + '-1-gridComp',
                                             width: 703,
                                             height: 88,
                                             columnLines: true,
@@ -2053,45 +2066,45 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                     align: 'center'
                                                 },
                                                 items: [
-                                                    { text: 'Corrl.', dataIndex: 'A1580CORRL', width: 47 },
-                                                    { text: 'Component', dataIndex: 'A1580FROM', flex: 1,
+                                                    {text: 'Corrl.', dataIndex: 'A1580CORRL', width: 47},
+                                                    {text: 'Component', dataIndex: 'A1580FROM', flex: 1,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = "text-align:left;";
-                                                            metaData.tdAttr = 'data-qtip="'+data.A1580FROM+'"';
+                                                            metaData.tdAttr = 'data-qtip="' + data.A1580FROM + '"';
                                                             return value;
                                                         }
                                                     },
-                                                    { text: 'Carrier', dataIndex: 'A1580CARR', width: 55 },
-                                                    { text: 'Fare Basis', dataIndex: 'A1580FBASI', width: 80,
+                                                    {text: 'Carrier', dataIndex: 'A1580CARR', width: 55},
+                                                    {text: 'Fare Basis', dataIndex: 'A1580FBASI', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = "text-align:left;";
-                                                            metaData.tdAttr = 'data-qtip="'+data.A1580FBASI+'"';
+                                                            metaData.tdAttr = 'data-qtip="' + data.A1580FBASI + '"';
                                                             return value;
                                                         }
                                                     },
-                                                    { text: 'NUC/Cur', dataIndex: 'A1580MDA', width: 68 },
-                                                    { text: 'Fare', dataIndex: 'A1580FARE', width: 70,
+                                                    {text: 'NUC/Cur', dataIndex: 'A1580MDA', width: 68},
+                                                    {text: 'Fare', dataIndex: 'A1580FARE', width: 70,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             return win.formatDblNumber(value);
                                                         }
                                                     },
-                                                    { text: 'Q', dataIndex: 'A1580Q', width: 70,
+                                                    {text: 'Q', dataIndex: 'A1580Q', width: 70,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             return win.formatDblNumber(value);
                                                         }
                                                     },
-                                                    { text: 'Cur<br>Agent', dataIndex: 'A1580MORIG', width: 50 },
-                                                    { text: 'Fare Agent', dataIndex: 'A1580FAORI', width: 80,
+                                                    {text: 'Cur<br>Agent', dataIndex: 'A1580MORIG', width: 50},
+                                                    {text: 'Fare Agent', dataIndex: 'A1580FAORI', width: 80,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             return win.formatDblNumber(value);
                                                         }
                                                     },
-                                                    { text: 'Q Agent', dataIndex: 'A1580QORIG', width: 70,
+                                                    {text: 'Q Agent', dataIndex: 'A1580QORIG', width: 70,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             return win.formatDblNumber(value);
@@ -2116,7 +2129,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                             items: [
                                 {
                                     xtype: 'tabpanel',
-                                    id: prototype.id+'-1-tnvMain',
+                                    id: prototype.id + '-1-tnvMain',
                                     width: '100%',
                                     height: 203,
                                     activeTab: 0,
@@ -2128,11 +2141,11 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                         {
                                             xtype: 'panel',
                                             title: '<label style="color:#0B333C;">FARE COMPONENT AIRLINE</label>',
-                                            id: prototype.id+'-1-boxComponent',
+                                            id: prototype.id + '-1-boxComponent',
                                             items: [
                                                 {
                                                     xtype: 'panel',
-                                                    id: prototype.id+'-1-IRLINECOMPONE',
+                                                    id: prototype.id + '-1-IRLINECOMPONE',
                                                     width: 1400,
                                                     height: 24,
                                                     layout: 'hbox',
@@ -2142,7 +2155,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         {xtype: 'tbspacer', width: 782},
                                                         {
                                                             xtype: 'label',
-                                                            id: prototype.id+'-1-lblCURAIRLE',
+                                                            id: prototype.id + '-1-lblCURAIRLE',
                                                             style: 'text-align:center;',
                                                             padding: '4 0',
                                                             text: 'CUR',
@@ -2150,7 +2163,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtCURAIRLE',
+                                                            id: prototype.id + '-1-txtCURAIRLE',
                                                             fieldStyle: 'text-align:center;',
 //                                                            enforceMaxLength: true,
 //                                                            maxLength: 1,
@@ -2159,7 +2172,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'label',
-                                                            id: prototype.id+'-1-lblFareAIRLE',
+                                                            id: prototype.id + '-1-lblFareAIRLE',
                                                             style: 'text-align:center;',
                                                             padding: '4 0',
                                                             text: 'FARE NEW',
@@ -2167,7 +2180,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtFareAIRLE',
+                                                            id: prototype.id + '-1-txtFareAIRLE',
                                                             fieldStyle: 'text-align:center;',
                                                             maskRe: /[0-9]/,
                                                             width: 53,
@@ -2175,7 +2188,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'label',
-                                                            id: prototype.id+'-1-lblFareOldAIRLE',
+                                                            id: prototype.id + '-1-lblFareOldAIRLE',
                                                             style: 'text-align:center;',
                                                             padding: '4 0',
                                                             text: 'FARE OLD',
@@ -2183,7 +2196,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtFareOldAIRLE',
+                                                            id: prototype.id + '-1-txtFareOldAIRLE',
                                                             fieldStyle: 'text-align:center;',
                                                             maskRe: /[0-9]/,
                                                             width: 53,
@@ -2191,7 +2204,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'label',
-                                                            id: prototype.id+'-1-lblADCAIRLE',
+                                                            id: prototype.id + '-1-lblADCAIRLE',
                                                             style: 'text-align:center;',
                                                             padding: '4 0',
                                                             text: 'ADC',
@@ -2199,12 +2212,12 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtADCAIRLE',
+                                                            id: prototype.id + '-1-txtADCAIRLE',
                                                             fieldStyle: 'text-align:center;',
                                                             maskRe: /[0-9]/,
                                                             width: 53,
                                                             readOnly: true
-                                                        }
+                                                        }                                                        
                                                     ]
                                                 },
                                                 {
@@ -2231,7 +2244,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtCURAIR',
+                                                            id: prototype.id + '-1-txtCURAIR',
                                                             fieldStyle: 'text-align:center;',
 //                                                            enforceMaxLength: true,
 //                                                            maxLength: 1,
@@ -2247,7 +2260,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtFareAIR',
+                                                            id: prototype.id + '-1-txtFareAIR',
                                                             fieldStyle: 'text-align:center;',
                                                             maskRe: /[0-9]/,
                                                             width: 80,
@@ -2255,7 +2268,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtCurAIR',
+                                                            id: prototype.id + '-1-txtCurAIR',
                                                             fieldStyle: 'text-align:center;',
 //                                                            enforceMaxLength: true,
 //                                                            maxLength: 1,
@@ -2272,7 +2285,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtEquivAIR',
+                                                            id: prototype.id + '-1-txtEquivAIR',
                                                             fieldStyle: 'text-align:center;',
                                                             maskRe: /[0-9]/,
                                                             width: 81,
@@ -2280,7 +2293,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtEquivCurAIR',
+                                                            id: prototype.id + '-1-txtEquivCurAIR',
                                                             fieldStyle: 'text-align:center;',
 //                                                            enforceMaxLength: true,
 //                                                            maxLength: 1,
@@ -2290,7 +2303,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'label',
-                                                            id: prototype.id+'-1-txtYQPAYNAME',
+                                                            id: prototype.id + '-1-txtYQPAYNAME',
                                                             style: 'text-align:center;',
                                                             padding: '4 0',
                                                             text: 'YQ PAY.:',
@@ -2298,7 +2311,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtYQPAY1',
+                                                            id: prototype.id + '-1-txtYQPAY1',
                                                             fieldStyle: 'text-align:center;',
                                                             maskRe: /[0-9]/,
                                                             width: 81,
@@ -2306,7 +2319,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtYQPAY2',
+                                                            id: prototype.id + '-1-txtYQPAY2',
                                                             fieldStyle: 'text-align:center;',
 //                                                            enforceMaxLength: true,
 //                                                            maxLength: 1,
@@ -2316,7 +2329,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'label',
-                                                            id: prototype.id+'-1-txtYRPAYNAME',
+                                                            id: prototype.id + '-1-txtYRPAYNAME',
                                                             style: 'text-align:center;',
                                                             padding: '4 0',
                                                             text: 'YR PAY.:',
@@ -2324,7 +2337,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtYRPAY1',
+                                                            id: prototype.id + '-1-txtYRPAY1',
                                                             fieldStyle: 'text-align:center;',
                                                             maskRe: /[0-9]/,
                                                             width: 81,
@@ -2332,7 +2345,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtYRPAY2',
+                                                            id: prototype.id + '-1-txtYRPAY2',
                                                             fieldStyle: 'text-align:center;',
 //                                                            enforceMaxLength: true,
 //                                                            maxLength: 1,
@@ -2342,7 +2355,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'label',
-                                                            id: prototype.id+'-1-txtChargeName',
+                                                            id: prototype.id + '-1-txtChargeName',
                                                             style: 'text-align:center;',
                                                             padding: '4 0',
                                                             text: 'S/Charge:',
@@ -2350,7 +2363,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtCharge1',
+                                                            id: prototype.id + '-1-txtCharge1',
                                                             fieldStyle: 'text-align:center;',
                                                             maskRe: /[0-9]/,
                                                             width: 81,
@@ -2358,7 +2371,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtCharge2',
+                                                            id: prototype.id + '-1-txtCharge2',
                                                             fieldStyle: 'text-align:center;',
 //                                                            enforceMaxLength: true,
 //                                                            maxLength: 1,
@@ -2368,7 +2381,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'label',
-                                                            id: prototype.id+'-1-txtPenaltyName',
+                                                            id: prototype.id + '-1-txtPenaltyName',
                                                             style: 'text-align:center;',
                                                             padding: '4 0',
                                                             text: 'Penalty PAY:',
@@ -2376,7 +2389,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtPenalty1',
+                                                            id: prototype.id + '-1-txtPenalty1',
                                                             fieldStyle: 'text-align:center;',
                                                             maskRe: /[0-9]/,
                                                             width: 81,
@@ -2384,7 +2397,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtPenalty2',
+                                                            id: prototype.id + '-1-txtPenalty2',
                                                             fieldStyle: 'text-align:center;',
 //                                                            enforceMaxLength: true,
 //                                                            maxLength: 1,
@@ -2392,12 +2405,13 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                             width: 28,
                                                             readOnly: true
                                                         }
+                                                        
                                                     ]
                                                 },
                                                 // <editor-fold defaultstate="collapsed" desc="gridComponentOld">
                                                 {
                                                     xtype: 'grid',
-                                                    id: prototype.id+'-1-gridComponentOld',
+                                                    id: prototype.id + '-1-gridComponentOld',
                                                     width: 1400,
                                                     height: 150,
                                                     columnLines: true,
@@ -2408,20 +2422,20 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                             align: 'center'
                                                         },
                                                         items: [
-                                                            { text: 'Corrl', dataIndex: 'A1580CORRL', width: 43 },
-                                                            { text: 'Component', dataIndex: 'A1580FROM', flex: 1 },
-                                                            { text: 'Carr', dataIndex: 'A1580CARR', width: 45 },
-                                                            { text: 'Class', dataIndex: 'A1580CLASE', width: 45 },
-                                                            { text: 'FBasis', dataIndex: 'A1580FBASI', width: 70,
+                                                            {text: 'Corrl', dataIndex: 'A1580CORRL', width: 43},
+                                                            {text: 'Component', dataIndex: 'A1580FROM', flex: 1},
+                                                            {text: 'Carr', dataIndex: 'A1580CARR', width: 45},
+                                                            {text: 'Class', dataIndex: 'A1580CLASE', width: 45},
+                                                            {text: 'FBasis', dataIndex: 'A1580FBASI', width: 70,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     var data = record.data;
                                                                     metaData.style = "text-align:left;";
-                                                                    metaData.tdAttr = 'data-qtip="'+data.A1580FBASI+'"';
+                                                                    metaData.tdAttr = 'data-qtip="' + data.A1580FBASI + '"';
                                                                     return value;
                                                                 }
                                                             },
-                                                            { text: 'Cur<br>ATPCO', dataIndex: 'A1580MDAAT', width: 55 },
-                                                            { text: 'ROE', dataIndex: 'A1580ROEAT', width: 60,
+                                                            {text: 'Cur<br>ATPCO', dataIndex: 'A1580MDAAT', width: 55},
+                                                            {text: 'ROE', dataIndex: 'A1580ROEAT', width: 60,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";
                                                                     return win.formatDblNumber(value);
@@ -2429,70 +2443,70 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                             },
                                                             {
                                                                 text: '&nbsp;',
-                                                                id: prototype.id+'-1-lstComponent_SALES',
+                                                                id: prototype.id + '-1-lstComponent_SALES',
                                                                 defaults: {
                                                                     menuDisabled: true,
                                                                     sortable: true,
                                                                     align: 'center'
                                                                 },
                                                                 columns: [
-                                                                    { text: 'FARE<br>ATPCO', dataIndex: 'A1580FARAT', width: 65,
+                                                                    {text: 'FARE<br>ATPCO', dataIndex: 'A1580FARAT', width: 65,
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             return win.formatDblNumber(value);
                                                                         }
                                                                     },
-                                                                    { text: 'Q.<br>ATPCO', dataIndex: 'A1580QATPC', width: 65,
+                                                                    {text: 'Q.<br>ATPCO', dataIndex: 'A1580QATPC', width: 65,
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             return win.formatDblNumber(value);
                                                                         }
                                                                     },
-                                                                    { text: 'SOVER<br>ATPCO', dataIndex: 'A1580SOATP', width: 65,
+                                                                    {text: 'SOVER<br>ATPCO', dataIndex: 'A1580SOATP', width: 65,
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             return win.formatDblNumber(value);
                                                                         }
                                                                     },
-                                                                    { text: 'YQ<br>ATPCO', dataIndex: 'A1580YQATP', width: 65,
+                                                                    {text: 'YQ<br>ATPCO', dataIndex: 'A1580YQATP', width: 65,
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             return win.formatDblNumber(value);
                                                                         }
                                                                     },
-                                                                    { text: 'YR.<br>ATPCO', dataIndex: 'A1580YRATP', width: 65,
+                                                                    {text: 'YR.<br>ATPCO', dataIndex: 'A1580YRATP', width: 65,
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             return win.formatDblNumber(value);
                                                                         }
                                                                     },
-                                                                    { text: 'Cur<br>AIRLINE', dataIndex: 'A1580MDA', width: 65 },
-                                                                    { text: 'FARE<br>AIRLINE', dataIndex: 'A1580FMIOR', width: 65,
+                                                                    {text: 'Cur<br>AIRLINE', dataIndex: 'A1580MDA', width: 65},
+                                                                    {text: 'FARE<br>AIRLINE', dataIndex: 'A1580FMIOR', width: 65,
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             return win.formatDblNumber(value);
                                                                         }
                                                                     },
-                                                                    { text: 'Q.<br>AIRLINE', dataIndex: 'A1580QMIOR', width: 65,
+                                                                    {text: 'Q.<br>AIRLINE', dataIndex: 'A1580QMIOR', width: 65,
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             return win.formatDblNumber(value);
                                                                         }
                                                                     },
-                                                                    { text: 'SOVER<br>AIRLINE', dataIndex: 'A1580SOMIO', width: 65,
+                                                                    {text: 'SOVER<br>AIRLINE', dataIndex: 'A1580SOMIO', width: 65,
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             return win.formatDblNumber(value);
                                                                         }
                                                                     },
-                                                                    { text: 'YQ<br>AIRLINE', dataIndex: 'A1580YQMIO', width: 65,
+                                                                    {text: 'YQ<br>AIRLINE', dataIndex: 'A1580YQMIO', width: 65,
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             return win.formatDblNumber(value);
                                                                         }
                                                                     },
-                                                                    { text: 'YR<br>AIRLINE', dataIndex: 'A1580YRMIO', width: 65,
+                                                                    {text: 'YR<br>AIRLINE', dataIndex: 'A1580YRMIO', width: 65,
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             return win.formatDblNumber(value);
                                                                         }
                                                                     },
-                                                                    { text: 'FARE<br>Diff.', dataIndex: 'A1580FADIF', width: 65,
+                                                                    {text: 'FARE<br>Diff.', dataIndex: 'A1580FADIF', width: 65,
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             return win.formatDblNumber(value);
                                                                         }
                                                                     },
-                                                                    { text: 'Q.<br>Diff.', dataIndex: 'A1580QDIF', width: 65,
+                                                                    {text: 'Q.<br>Diff.', dataIndex: 'A1580QDIF', width: 65,
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             return win.formatDblNumber(value);
                                                                         }
@@ -2501,7 +2515,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                             },
                                                             {
                                                                 text: '&nbsp;',
-                                                                id: prototype.id+'-1-lstComponent_RFND',
+                                                                id: prototype.id + '-1-lstComponent_RFND',
                                                                 hidden: true,
                                                                 defaults: {
                                                                     menuDisabled: true,
@@ -2509,56 +2523,56 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                                     align: 'center'
                                                                 },
                                                                 columns: [
-                                                                    { text: 'PnltyFee Atpco', dataIndex: 'A1580FEEAT', width: 65,
+                                                                    {text: 'PnltyFee Atpco', dataIndex: 'A1580FEEAT', width: 65,
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             return win.formatDblNumber(value);
                                                                         }
                                                                     },
-                                                                    { text: 'Nuc / Cur', dataIndex: 'A1580MORIG', width: 55 },
-                                                                    { text: 'FARE', dataIndex: 'A1580FARE', width: 65,
+                                                                    {text: 'Nuc / Cur', dataIndex: 'A1580MORIG', width: 55},
+                                                                    {text: 'FARE', dataIndex: 'A1580FARE', width: 65,
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             return win.formatDblNumber(value);
                                                                         }
                                                                     },
-                                                                    { text: 'Q', dataIndex: 'A1580QORIG', width: 65,
+                                                                    {text: 'Q', dataIndex: 'A1580QORIG', width: 65,
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             return win.formatDblNumber(value);
                                                                         }
                                                                     },
-                                                                    { text: 'StOver', dataIndex: 'A1580SOVER', width: 65,
+                                                                    {text: 'StOver', dataIndex: 'A1580SOVER', width: 65,
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             return win.formatDblNumber(value);
                                                                         }
                                                                     },
-                                                                    { text: 'Cur<br>Airline', dataIndex: 'A1580MDA', width: 55 },
-                                                                    { text: 'FARE<br>AIRLINE', dataIndex: 'A1580FAORI', width: 65,
+                                                                    {text: 'Cur<br>Airline', dataIndex: 'A1580MDA', width: 55},
+                                                                    {text: 'FARE<br>AIRLINE', dataIndex: 'A1580FAORI', width: 65,
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             return win.formatDblNumber(value);
                                                                         }
                                                                     },
-                                                                    { text: 'Q<br>Airline', dataIndex: 'A1580QMIOR', width: 65,
+                                                                    {text: 'Q<br>Airline', dataIndex: 'A1580QMIOR', width: 65,
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             return win.formatDblNumber(value);
                                                                         }
                                                                     },
-                                                                    { text: 'StOver<br>Airline', dataIndex: 'A1580SOMIO', width: 65,
+                                                                    {text: 'StOver<br>Airline', dataIndex: 'A1580SOMIO', width: 65,
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             return win.formatDblNumber(value);
                                                                         }
                                                                     },
-                                                                    { text: 'PnltyFee<br>Airline', dataIndex: 'A1580PENAL', width: 65,
+                                                                    {text: 'PnltyFee<br>Airline', dataIndex: 'A1580PENAL', width: 65,
                                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                             return win.formatDblNumber(value);
                                                                         }
                                                                     },
-                                                                    { text: 'Apply<br>RFND', dataIndex: 'A1580APPLY', width: 45 },
-                                                                    { text: 'Incl<br>Cpn', dataIndex: 'A1580INCCP', width: 45 },
-                                                                    { text: 'Excl<br>PnltyFee', dataIndex: 'A1580EXCLU', width: 50 }
+                                                                    {text: 'Apply<br>RFND', dataIndex: 'A1580APPLY', width: 45},
+                                                                    {text: 'Incl<br>Cpn', dataIndex: 'A1580INCCP', width: 45},
+                                                                    {text: 'Excl<br>PnltyFee', dataIndex: 'A1580EXCLU', width: 50}
                                                                 ]
                                                             },
-                                                            { text: 'Status', dataIndex: 'A1580STAT', width: 50 },
-                                                            { text: 'ADM', dataIndex: 'A1580FLADM', width: 40 },
-                                                            { text: 'Error', dataIndex: 'A1580ERROR', width: 50 }
+                                                            {text: 'Status', dataIndex: 'A1580STAT', width: 50},
+                                                            {text: 'ADM', dataIndex: 'A1580FLADM', width: 40},
+                                                            {text: 'Error', dataIndex: 'A1580ERROR', width: 50}
                                                         ]
                                                     }
                                                 }
@@ -2568,7 +2582,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                         {
                                             xtype: 'panel',
                                             title: '<label style="color:#0B333C;">FARE COMPONENT USED</label>',
-                                            id: prototype.id+'-1-boxComponentUsed',
+                                            id: prototype.id + '-1-boxComponentUsed',
                                             items: [
                                                 {
                                                     xtype: 'panel',
@@ -2581,7 +2595,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         {xtype: 'tbspacer', width: 782},
                                                         {
                                                             xtype: 'label',
-                                                            id: prototype.id+'-1-lblCURAIRLEUSED',
+                                                            id: prototype.id + '-1-lblCURAIRLEUSED',
                                                             style: 'text-align:center;',
                                                             padding: '4 0',
                                                             text: 'CUR',
@@ -2589,7 +2603,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtCURAIRLEUSED',
+                                                            id: prototype.id + '-1-txtCURAIRLEUSED',
                                                             fieldStyle: 'text-align:center;',
                                                             enforceMaxLength: true,
                                                             maxLength: 1,
@@ -2598,7 +2612,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'label',
-                                                            id: prototype.id+'-1-lblFareAIRLEUSED',
+                                                            id: prototype.id + '-1-lblFareAIRLEUSED',
                                                             style: 'text-align:center;',
                                                             padding: '4 0',
                                                             text: 'FARE NEW',
@@ -2606,7 +2620,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtFareAIRLEUSED',
+                                                            id: prototype.id + '-1-txtFareAIRLEUSED',
                                                             fieldStyle: 'text-align:center;',
                                                             maskRe: /[0-9]/,
                                                             width: 53,
@@ -2614,7 +2628,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'label',
-                                                            id: prototype.id+'-1-lblFareOldAIRLEUSED',
+                                                            id: prototype.id + '-1-lblFareOldAIRLEUSED',
                                                             style: 'text-align:center;',
                                                             padding: '4 0',
                                                             text: 'FARE OLD',
@@ -2622,7 +2636,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtFareOldAIRLEUSED',
+                                                            id: prototype.id + '-1-txtFareOldAIRLEUSED',
                                                             fieldStyle: 'text-align:center;',
                                                             maskRe: /[0-9]/,
                                                             width: 53,
@@ -2630,7 +2644,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'label',
-                                                            id: prototype.id+'-1-lblADCAIRLEUSED',
+                                                            id: prototype.id + '-1-lblADCAIRLEUSED',
                                                             style: 'text-align:center;',
                                                             padding: '4 0',
                                                             text: 'ADC',
@@ -2638,7 +2652,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                         },
                                                         {
                                                             xtype: 'textfield',
-                                                            id: prototype.id+'-1-txtADCAIRLEUSED',
+                                                            id: prototype.id + '-1-txtADCAIRLEUSED',
                                                             fieldStyle: 'text-align:center;',
                                                             maskRe: /[0-9]/,
                                                             width: 53,
@@ -2649,7 +2663,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                 // <editor-fold defaultstate="collapsed" desc="gridFCRfndUsed">
                                                 {
                                                     xtype: 'grid',
-                                                    id: prototype.id+'-1-gridFCRfndUsed',
+                                                    id: prototype.id + '-1-gridFCRfndUsed',
                                                     width: 1400,
                                                     height: 120,
                                                     columnLines: true,
@@ -2660,108 +2674,108 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                             align: 'center'
                                                         },
                                                         items: [
-                                                            { text: 'Corrl.', dataIndex: 'A1580CORRL', width: 45 },
-                                                            { text: 'Component', dataIndex: 'A1580FROM', flex: 1,
+                                                            {text: 'Corrl.', dataIndex: 'A1580CORRL', width: 45},
+                                                            {text: 'Component', dataIndex: 'A1580FROM', flex: 1,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     var data = record.data;
                                                                     metaData.style = "text-align:left;";
-                                                                    metaData.tdAttr = 'data-qtip="'+data.A1580FROM+'"';
+                                                                    metaData.tdAttr = 'data-qtip="' + data.A1580FROM + '"';
                                                                     return value;
                                                                 }
                                                             },
-                                                            { text: 'Carrier', dataIndex: 'A1580CARR', width: 52 },
-                                                            { text: 'Class', dataIndex: 'A1580CLASE', width: 45 },
-                                                            { text: 'Fare<br>Basis', dataIndex: 'A1580FBASI', width: 67,
+                                                            {text: 'Carrier', dataIndex: 'A1580CARR', width: 52},
+                                                            {text: 'Class', dataIndex: 'A1580CLASE', width: 45},
+                                                            {text: 'Fare<br>Basis', dataIndex: 'A1580FBASI', width: 67,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     var data = record.data;
                                                                     metaData.style = "text-align:left;";
-                                                                    metaData.tdAttr = 'data-qtip="'+data.A1580FBASI+'"';
+                                                                    metaData.tdAttr = 'data-qtip="' + data.A1580FBASI + '"';
                                                                     return value;
                                                                 }
                                                             },
-                                                            { text: 'Cur<br>ATPCO', dataIndex: 'A1580MDAAT', width: 54 },
-                                                            { text: 'ROE', dataIndex: 'A1580ROEAT', width: 65,
+                                                            {text: 'Cur<br>ATPCO', dataIndex: 'A1580MDAAT', width: 54},
+                                                            {text: 'ROE', dataIndex: 'A1580ROEAT', width: 65,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:center;";
                                                                     return win.formatDblNumber(value);
                                                                 }
                                                             },
-                                                            { text: 'Pnlty<br>Fee<br>ATPCO', dataIndex: 'A1580FEEAT', width: 65,
+                                                            {text: 'Pnlty<br>Fee<br>ATPCO', dataIndex: 'A1580FEEAT', width: 65,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";
                                                                     return win.formatDblNumber(value);
                                                                 }
                                                             },
-                                                            { text: 'NUC/Curr', dataIndex: 'A1580NUC', width: 67,
+                                                            {text: 'NUC/Curr', dataIndex: 'A1580NUC', width: 67,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";
                                                                     return win.formatDblNumber(value);
                                                                 }
                                                             },
-                                                            { text: 'FARE', dataIndex: 'A1580FARE', width: 65,
+                                                            {text: 'FARE', dataIndex: 'A1580FARE', width: 65,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:center;";
                                                                     return win.formatDblNumber(value);
                                                                 }
                                                             },
-                                                            { text: 'Q', dataIndex: 'A1580Q', width: 65,
+                                                            {text: 'Q', dataIndex: 'A1580Q', width: 65,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";
                                                                     return win.formatDblNumber(value);
                                                                 }
                                                             },
-                                                            { text: 'SOver', dataIndex: 'A1580SOVER', width: 65,
+                                                            {text: 'SOver', dataIndex: 'A1580SOVER', width: 65,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";
                                                                     return win.formatDblNumber(value);
                                                                 }
                                                             },
-                                                            { text: 'Cur<br>Airline', dataIndex: 'A1580MMORI', width: 50 },
-                                                            { text: 'Fare<br>Airline', dataIndex: 'A1580FMIOR', width: 65,
+                                                            {text: 'Cur<br>Airline', dataIndex: 'A1580MMORI', width: 50},
+                                                            {text: 'Fare<br>Airline', dataIndex: 'A1580FMIOR', width: 65,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";
                                                                     return win.formatDblNumber(value);
                                                                 }
                                                             },
-                                                            { text: 'Q<br>Airline', dataIndex: 'A1580QMIOR', width: 65,
+                                                            {text: 'Q<br>Airline', dataIndex: 'A1580QMIOR', width: 65,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";
                                                                     return win.formatDblNumber(value);
                                                                 }
                                                             },
-                                                            { text: 'SOver<br>Airline', dataIndex: 'A1580SOMIO', width: 65,
+                                                            {text: 'SOver<br>Airline', dataIndex: 'A1580SOMIO', width: 65,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:center;";
                                                                     return win.formatDblNumber(value);
                                                                 }
                                                             },
-                                                            { text: 'Pnlty<br>Fee<br>Airline', dataIndex: 'A1580PENAL', width: 65,
+                                                            {text: 'Pnlty<br>Fee<br>Airline', dataIndex: 'A1580PENAL', width: 65,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";
                                                                     return win.formatDblNumber(value);
                                                                 }
                                                             },
-                                                            { text: 'Apply<br>RFND', dataIndex: 'A1580APPLY', width: 65,
+                                                            {text: 'Apply<br>RFND', dataIndex: 'A1580APPLY', width: 65,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";
                                                                     return value;
                                                                 }
                                                             },
-                                                            { text: 'Incl<br>CPN', dataIndex: 'A1580INCCP', width: 70,
+                                                            {text: 'Incl<br>CPN', dataIndex: 'A1580INCCP', width: 70,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";
                                                                     return value;
                                                                 }
                                                             },
-                                                            { text: 'Excl<br>Pnlty<br>Fee', dataIndex: 'A1580EXCLU', width: 70,
+                                                            {text: 'Excl<br>Pnlty<br>Fee', dataIndex: 'A1580EXCLU', width: 70,
                                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                                     metaData.style = "text-align:right;";
                                                                     return value;
                                                                 }
                                                             },
-                                                            { text: 'Status', dataIndex: 'A1580STAT', width: 55 },
-                                                            { text: 'ADM', dataIndex: 'A1580FLADM', width: 40 },
-                                                            { text: 'Error', dataIndex: 'A1580ERROR', width: 50 }
+                                                            {text: 'Status', dataIndex: 'A1580STAT', width: 55},
+                                                            {text: 'ADM', dataIndex: 'A1580FLADM', width: 40},
+                                                            {text: 'Error', dataIndex: 'A1580ERROR', width: 50}
                                                         ]
                                                     }
                                                 }
@@ -2775,7 +2789,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                         {xtype: 'tbspacer', height: 4},
                         {
                             xtype: 'panel',
-                            id: prototype.id+'-1-OLD_FARE_COMPONENT',
+                            id: prototype.id + '-1-OLD_FARE_COMPONENT',
                             width: '100%',
                             height: 135,
                             layout: 'hbox',
@@ -2814,7 +2828,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                 },
                                                 {
                                                     xtype: 'textfield',
-                                                    id: prototype.id+'-1-txtFarePENAL',
+                                                    id: prototype.id + '-1-txtFarePENAL',
                                                     fieldStyle: 'text-align:center;',
                                                     maskRe: /[0-9]/,
                                                     width: 53,
@@ -2822,7 +2836,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                 },
                                                 {
                                                     xtype: 'textfield',
-                                                    id: prototype.id+'-1-txtCURAPENAL',
+                                                    id: prototype.id + '-1-txtCURAPENAL',
                                                     fieldStyle: 'text-align:center;',
 //                                                    enforceMaxLength: true,
 //                                                    maxLength: 1,
@@ -2838,7 +2852,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                 },
                                                 {
                                                     xtype: 'textfield',
-                                                    id: prototype.id+'-1-txtFareIVA',
+                                                    id: prototype.id + '-1-txtFareIVA',
                                                     fieldStyle: 'text-align:center;',
                                                     maskRe: /[0-9]/,
                                                     width: 53,
@@ -2846,7 +2860,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                 },
                                                 {
                                                     xtype: 'textfield',
-                                                    id: prototype.id+'-1-txtFarePOR',
+                                                    id: prototype.id + '-1-txtFarePOR',
                                                     fieldStyle: 'text-align:center;',
                                                     maskRe: /[0-9]/,
                                                     width: 53,
@@ -2863,7 +2877,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                         // <editor-fold defaultstate="collapsed" desc="gridComponentOLD">
                                         {
                                             xtype: 'grid',
-                                            id: prototype.id+'-1-gridComponentOLD',
+                                            id: prototype.id + '-1-gridComponentOLD',
                                             width: 1400,
                                             height: 150,
                                             columnLines: true,
@@ -2874,78 +2888,78 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
                                                     align: 'center'
                                                 },
                                                 items: [
-                                                    { text: 'Corrl<br>Tkt', dataIndex: 'A1580CORRL', width: 47 },
-                                                    { text: 'Old Tkt', dataIndex: 'A2837CIANW', width: 100 },
-                                                    { text: 'New Tkt', dataIndex: 'A2837CIAPA', width: 100 },
-                                                    { text: 'Corrl<br>Comp', dataIndex: 'A2837CCORR', width: 50 },
-                                                    { text: 'Component', dataIndex: 'A1580FROM', width: 80 },
-                                                    { text: 'Carr', dataIndex: 'A1580CARR', width: 50 },
-                                                    { text: 'Class', dataIndex: 'A1580CLASE', width: 45 },
-                                                    { text: 'FBasis', dataIndex: 'A1580FBASI', flex: 1,
+                                                    {text: 'Corrl<br>Tkt', dataIndex: 'A1580CORRL', width: 47},
+                                                    {text: 'Old Tkt', dataIndex: 'A2837CIANW', width: 100},
+                                                    {text: 'New Tkt', dataIndex: 'A2837CIAPA', width: 100},
+                                                    {text: 'Corrl<br>Comp', dataIndex: 'A2837CCORR', width: 50},
+                                                    {text: 'Component', dataIndex: 'A1580FROM', width: 80},
+                                                    {text: 'Carr', dataIndex: 'A1580CARR', width: 50},
+                                                    {text: 'Class', dataIndex: 'A1580CLASE', width: 45},
+                                                    {text: 'FBasis', dataIndex: 'A1580FBASI', flex: 1,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = "text-align:left;";
-                                                            metaData.tdAttr = 'data-qtip="'+data.A1580FBASI+'"';
+                                                            metaData.tdAttr = 'data-qtip="' + data.A1580FBASI + '"';
                                                             return value;
                                                         }
                                                     },
-                                                    { text: 'Cur<br>ATPCO', dataIndex: 'A1580MDAAT', width: 60 },
-                                                    { text: 'ROE', dataIndex: 'A1580ROEAT', width: 65,
+                                                    {text: 'Cur<br>ATPCO', dataIndex: 'A1580MDAAT', width: 60},
+                                                    {text: 'ROE', dataIndex: 'A1580ROEAT', width: 65,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
                                                             return win.formatDblNumber(value);
                                                         }
                                                     },
-                                                    { text: 'Pnlty Fee<br>ATPCO', dataIndex: 'A1580FEEAT', width: 75,
+                                                    {text: 'Pnlty Fee<br>ATPCO', dataIndex: 'A1580FEEAT', width: 75,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             return win.formatDblNumber(value);
                                                         }
                                                     },
-                                                    { text: 'NUC/Curr', dataIndex: 'A1580MDA', width: 75,
+                                                    {text: 'NUC/Curr', dataIndex: 'A1580MDA', width: 75,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             return value;
                                                         }
                                                     },
-                                                    { text: 'FARE', dataIndex: 'A1580FARE', width: 70,
+                                                    {text: 'FARE', dataIndex: 'A1580FARE', width: 70,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:center;";
                                                             return win.formatDblNumber(value);
                                                         }
                                                     },
-                                                    { text: 'Q', dataIndex: 'A1580Q', width: 60,
+                                                    {text: 'Q', dataIndex: 'A1580Q', width: 60,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             return win.formatDblNumber(value);
                                                         }
                                                     },
-                                                    { text: 'Pnlty Fee<br>Airline', dataIndex: 'A2837FEEMI', width: 75,
+                                                    {text: 'Pnlty Fee<br>Airline', dataIndex: 'A2837FEEMI', width: 75,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             return win.formatDblNumber(value);
                                                         }
                                                     },
-                                                    { text: 'Apply<br>RFND', dataIndex: 'A1580APPLY', width: 75,
+                                                    {text: 'Apply<br>RFND', dataIndex: 'A1580APPLY', width: 75,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             return value;
                                                         }
                                                     },
-                                                    { text: 'BSR', dataIndex: 'A2837BSR', width: 60,
+                                                    {text: 'BSR', dataIndex: 'A2837BSR', width: 60,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             return win.formatDblNumber(value);
                                                         }
                                                     },
-                                                    { text: 'Orig Date', dataIndex: 'A2837FEMIO', width: 70,
+                                                    {text: 'Orig Date', dataIndex: 'A2837FEMIO', width: 70,
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             metaData.style = "text-align:right;";
                                                             return value;
                                                         }
                                                     },
-                                                    { text: 'Orig<br>Trnx', dataIndex: 'A2837TRNCO', width: 60 },
-                                                    { text: 'Error', dataIndex: 'A1580ERROR', width: 50 }
+                                                    {text: 'Orig<br>Trnx', dataIndex: 'A2837TRNCO', width: 60},
+                                                    {text: 'Error', dataIndex: 'A1580ERROR', width: 50}
                                                 ]
                                             }
                                         }
@@ -2959,26 +2973,26 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditReportForm.DataEntryDetail',{
             ]
         }
     ],
-    dockedItems:[
+    dockedItems: [
         {
             xtype: 'toolbar',
             dock: 'bottom',
             ui: 'footer',
             margin: '2 0 0 0',
-            layout:{
+            layout: {
                 pack: 'center'
             },
             fieldStyle: 'text-align:center',
-            defaults:{
+            defaults: {
                 scale: 'medium'
             },
-            items:[
+            items: [
                 {
-                    id:prototype.id+'-1-btnClose',
+                    id: prototype.id + '-1-btnClose',
                     html: '<strong style="font-size:13px;">Close</strong>',
                     icon: 'resources/img/botones/1337983423_Cancel__Red.png',
                     scale: 'medium',
-                    listeners:{
+                    listeners: {
                         click: 'btnCancel_clickHandler'
                     }
                 }

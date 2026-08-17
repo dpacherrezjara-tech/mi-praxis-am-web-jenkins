@@ -26,11 +26,20 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Options', {
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnAdd',
-                            hidden: typeof gloUsr === 'undefined' || gloUsr !== 'DANAZCO' && gloUsr !== 'JLEYVA' && gloUsr !== 'FMARTINEZ' && gloUsr !== 'ANGELAG',
+                            //hidden: typeof gloUsr === 'undefined' || gloUsr !== 'DANAZCO' && gloUsr !== 'JLEYVA' && gloUsr !== 'FMARTINEZ' && gloUsr !== 'ANGELAG',
                              iconCls: 'prx-icon-rules',
                             tooltip: 'Rule maintenance',
                             listeners: {
                                 click: 'onClickAddBtn'
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnSave',
+                            iconCls: 'prx-icon-image-update',
+                            tooltip: 'Generate ADM',
+                            listeners: {
+                                click: 'onClickSaveBtn'
                             }
                         },
                         {

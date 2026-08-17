@@ -27,6 +27,18 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Grids.Compensation04
                 markDirty: false
             },
             columnLines: true,
+            selModel: {
+                selType: 'checkboxmodel',
+                listeners: {
+                    beforeselect: function (grid, record, index, eOpts) {
+                        var estado = Ext.String.trim(record.get('A4961FLADM') || '');
+                        var canal = Ext.String.trim(record.get('A4961CANAL') || '');
+                        var canalesNoPermitidos = ['CCT', 'WEB'];
+
+                        return estado === 'SU' && !Ext.Array.contains(canalesNoPermitidos, canal);
+                    }
+                }
+            },
             columns: {
                 defaults: {
                     align: 'center',
@@ -40,6 +52,8 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Grids.Compensation04
                         width: 40 // Ajusta el ancho de la columna si es necesario
                     },
                     {text: 'Ticket', dataIndex: 'A4961TICKET', width: 140},
+                    {text: 'Source', dataIndex: 'A4961FUENT', width: 55},
+                    {text: 'Channel', dataIndex: 'A4961CANAL', width: 60},
                     {text: 'SEQ', dataIndex: 'A4961SEQ', width: 50},
                     {text: 'Cur.', dataIndex: 'MDA', width: 40},
                     {text: 'Amount<br>VOU', dataIndex: 'A4961NETOL', width: 120, renderer: 'onColumnAmountRenderer'},
@@ -50,6 +64,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Grids.Compensation04
                     {text: 'Sale<br>Date', dataIndex: 'A4961FVENT', width: 80},
                     {text: 'Processing<br>Date', dataIndex: 'A4961FPROC', width: 80},
                     {text: 'Notices<br>Date', dataIndex: 'A4961FANOT', width: 80},
+                    {text: 'N°<br>Notices', dataIndex: 'A4961FANOT', width: 80},
                     {text: 'Trnx', dataIndex: 'A4961TRNCU', width: 80},
                     {text: 'Doc.<br>Type', dataIndex: 'A4961TDOC', width: 80},
                     {text: 'PNR', dataIndex: 'A4961PNR', width: 80},
@@ -65,14 +80,16 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Grids.Compensation04
                                 'Suggested': {text: 'Suggested', bg: '#FFF9C4', color: '#F57F17'}, // amarillo
                                 'Unregistered Client': {text: 'Unregistered Client', bg: '#FFE0B2', color: '#E65100'}, // naranja
                                 'Unregistered Sale': {text: 'Unregistered Sale', bg: '#FFCCBC', color: '#BF360C'}, // naranja-rojizo
+                                'Unregistered Email': {text: 'Unregistered Email', bg: '#FFCDD2', color: '#B71C1C'}, // rojo ← NUEVO
                                 'APPROVED': {text: 'Approved', bg: '#C8E6C9', color: '#1B5E20'}, // verde
                                 'Match': {text: 'Match', bg: '#BBDEFB', color: '#0D47A1'}, // azul
                                 'AM Consult': {text: 'AM Consult', bg: '#B2EBF2', color: '#006064'}, // teal
                                 'Manual review': {text: 'Manual review', bg: '#E1BEE7', color: '#6A1B9A'}, // púrpura
-                                'No applicable rule': {text: 'No applicable rule', bg: '#E0E0E0', color: '#424242'},  // gris
-                                'Supervisor Authorization': {text: 'Supervisor Authorization', bg: '#D7CCC8', color: '#5D4037'},  //marrón
-                                'Without Reservation': {text: 'Without Reservation', bg: '#F8BBD0', color: '#880E4F'},  // rosa
-                                'Customer service': {text: 'Customer service', bg: '#F0F4C3', color: '#827717'} // lime
+                                'No applicable rule': {text: 'No applicable rule', bg: '#E0E0E0', color: '#424242'}, // gris
+                                'Supervisor Authorization': {text: 'Supervisor Authorization', bg: '#D7CCC8', color: '#5D4037'}, // marrón
+                                'Without Reservation': {text: 'Without Reservation', bg: '#F8BBD0', color: '#880E4F'}, // rosa
+                                'Customer service': {text: 'Customer service', bg: '#F0F4C3', color: '#827717'}, // lime
+                                'IATAs exempted by AM': {text: 'IATAs exempted by AM', bg: '#C5CAE9', color: '#1A237E'} // índigo
                             };
                             const status = opts[value];
                             if (status) {

@@ -245,6 +245,30 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.SalesAuditAccepted
                                                 specialkey: 'onSearchkey'
                                             }
                                         },
+                                        /*{
+                                            xtype: 'combobox',
+                                            name: 'IN_PROCESS',
+                                            id: prototype.id + '-Processes',
+                                            fieldLabel: 'Processes',
+                                            store: Ext.create('Ext.data.SimpleStore', {
+                                                fields: ['code', 'name'],
+                                                data: [
+                                                    ['', 'Select'],
+                                                    ['AUTO', 'Automatic'],
+                                                    ['VOUC', '0425']
+                                                ]
+                                            }),
+                                            labelWidth: 70,
+                                            width: 170,
+                                            displayField: 'name',
+                                            valueField: 'code',
+                                            queryMode: 'local',
+                                            editable: false,
+                                            value: '',
+                                            listeners: { 
+                                                select: 'onCmbSourceSelect' 
+                                            }
+                                        },*/
                                         {
                                             xtype: 'combo',
                                             id: prototype.id + '-ComboSource',

@@ -148,7 +148,10 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                                             ['AC', 'Customer service'],
                                                             ['SA', 'Supervisor Authorization'],
                                                             ['RN', 'Without Reservation'],
-                                                            ['AP', 'Approved']                                                            
+                                                            ['AP', 'Approved'],
+                                                            ['UC', 'Unregistered Client'],
+                                                            ['US', 'Unregistered Sale'],
+                                                            ['SC', 'Unregistered Email']
                                                         ]
                                                     }),
                                                     width: 200,

@@ -24,38 +24,38 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
         }
     },
     onCmbSearchChange: function (obj, records, eOpts) {
-        if (obj.getValue() === "TICKET" ) {
-             Ext.getCmp( prototype.id + '-IN_TICKET').show();
-             Ext.getCmp(prototype.id + '-IN_DATEF').hide();
-             Ext.getCmp(prototype.id + '-IN_DATET').hide();
-             Ext.getCmp(prototype.id + '-IN_TRNCU').hide();
-             Ext.getCmp(prototype.id + '-cmbPaises').hide();
-             Ext.getCmp(prototype.id + '-IN_CIATA').hide();
-             Ext.getCmp(prototype.id + '-IN_SPNR').hide();
-             Ext.getCmp(prototype.id + '-IN_STATUS').hide();
-             Ext.getCmp(prototype.id + '-pagination').hide(); 
-             //
-             Ext.getCmp(prototype.id + '-IN_DATEF').setValue('');
-             Ext.getCmp(prototype.id + '-IN_DATET').setValue('');
-             Ext.getCmp(prototype.id + '-IN_TRNCU').setValue('');
-             Ext.getCmp(prototype.id + '-cmbPaises').setValue('');
-             Ext.getCmp(prototype.id + '-IN_CIATA').setValue('');
-             Ext.getCmp(prototype.id + '-IN_SPNR').setValue('');
-             Ext.getCmp(prototype.id + '-IN_STATUS').setValue('');
-        }else{
-             Ext.getCmp( prototype.id + '-IN_TICKET').hide();
-             Ext.getCmp(prototype.id + '-IN_DATEF').show();
-             Ext.getCmp(prototype.id + '-IN_DATET').show();
-             Ext.getCmp(prototype.id + '-IN_TRNCU').show();
-             Ext.getCmp(prototype.id + '-cmbPaises').show();
-             Ext.getCmp(prototype.id + '-IN_CIATA').show();
-             Ext.getCmp(prototype.id + '-IN_SPNR').show();
-             Ext.getCmp(prototype.id + '-IN_STATUS').show();
-             Ext.getCmp(prototype.id + '-pagination').show(); 
-             // 
-             Ext.getCmp( prototype.id + '-IN_TICKET').setValue('');
-             Ext.getCmp(prototype.id + '-IN_DATEF').setValue(new Date());
-             Ext.getCmp(prototype.id + '-IN_DATET').setValue(new Date());
+        if (obj.getValue() === "TICKET") {
+            Ext.getCmp(prototype.id + '-IN_TICKET').show();
+            Ext.getCmp(prototype.id + '-IN_DATEF').hide();
+            Ext.getCmp(prototype.id + '-IN_DATET').hide();
+            Ext.getCmp(prototype.id + '-IN_TRNCU').hide();
+            Ext.getCmp(prototype.id + '-cmbPaises').hide();
+            Ext.getCmp(prototype.id + '-IN_CIATA').hide();
+            Ext.getCmp(prototype.id + '-IN_SPNR').hide();
+            Ext.getCmp(prototype.id + '-IN_STATUS').hide();
+            Ext.getCmp(prototype.id + '-pagination').hide();
+            //
+            Ext.getCmp(prototype.id + '-IN_DATEF').setValue('');
+            Ext.getCmp(prototype.id + '-IN_DATET').setValue('');
+            Ext.getCmp(prototype.id + '-IN_TRNCU').setValue('');
+            Ext.getCmp(prototype.id + '-cmbPaises').setValue('');
+            Ext.getCmp(prototype.id + '-IN_CIATA').setValue('');
+            Ext.getCmp(prototype.id + '-IN_SPNR').setValue('');
+            Ext.getCmp(prototype.id + '-IN_STATUS').setValue('');
+        } else {
+            Ext.getCmp(prototype.id + '-IN_TICKET').hide();
+            Ext.getCmp(prototype.id + '-IN_DATEF').show();
+            Ext.getCmp(prototype.id + '-IN_DATET').show();
+            Ext.getCmp(prototype.id + '-IN_TRNCU').show();
+            Ext.getCmp(prototype.id + '-cmbPaises').show();
+            Ext.getCmp(prototype.id + '-IN_CIATA').show();
+            Ext.getCmp(prototype.id + '-IN_SPNR').show();
+            Ext.getCmp(prototype.id + '-IN_STATUS').show();
+            Ext.getCmp(prototype.id + '-pagination').show();
+            // 
+            Ext.getCmp(prototype.id + '-IN_TICKET').setValue('');
+            Ext.getCmp(prototype.id + '-IN_DATEF').setValue(new Date());
+            Ext.getCmp(prototype.id + '-IN_DATET').setValue(new Date());
         }
     },
     loadTickets: async function () {
@@ -272,6 +272,79 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
         });
         newWin.show();
     },
+    onClickSaveBtn: function () {
+        const me = this;
+        const grid =  Ext.getCmp(prototype.id + '-gridExceptionTickets');
+
+        if (!grid) {
+            Ext.Msg.alert('.: PRAXIS :.', 'Grid not found');
+            return;
+        }
+
+        const selModel = grid.getSelectionModel();
+        if (!selModel.hasSelection()) {
+            Ext.Msg.alert('.: PRAXIS :.', 'You must select a Ticket');
+            return;
+        }
+
+        const lstTicketsToProcess = selModel.getSelection().map(function (row) {
+            return {
+                A4961CCUST: row.get('A4961CCUST'),
+                A4961CIA: row.get('A4961CIA'),
+                A4961FORMA: row.get('A4961FORMA'),
+                A4961SERIE: row.get('A4961SERIE'),
+                A4961SEQ: row.get('A4961SEQ'),
+                A4961TRNCU: row.get('A4961TRNCU')
+            };
+        });
+
+        global.Msg({
+            msg: 'Are you sure you want to generate the ADM?',
+            icon: 3,
+            buttons: 3,
+            fn: async function (btn) {
+                if (btn !== 'yes')
+                    return;
+
+                const params = {
+                    IN_CCUST: '139',
+                    IN_JSON_DET: JSON.stringify(lstTicketsToProcess)
+                };
+                const notifier = new AWN();
+                me.view.setLoading(true);
+
+                try {
+                    const res = await global.callStorePost('PXSAUDIT', 'SQP06093', params);
+                    const result = res && res.data && res.data.lstRs && res.data.lstRs[0] && res.data.lstRs[0][0];
+
+                    if (!result) {
+                        throw new Error('Invalid response format');
+                    }
+
+                    const success = Number(result.VL_SQLCODE) === 0;
+                    global.Msg({
+                        msg: result.VL_MESSAGE,
+                        icon: success ? 1 : 0,
+                        fn: function () {
+                            if (success) {
+                                notifier.warning('Update Successfully');
+                                me.loadFilters();
+                                me.loadTickets();
+                                me.loadCharts();
+                            } else {
+                                notifier.alert('Error on Update');
+                            }
+                        }
+                    });
+                } catch (e) {
+                    console.error(e);
+                    notifier.alert('Error on Update');
+                } finally {
+                    me.view.setLoading(false);
+                }
+            }
+        });
+    },
     onColumnAmountRenderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.style = "background:#D5F4D5 !important";
         return Ext.util.Format.number(value, '0,000.00');
@@ -286,8 +359,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.Compensation0425Form.Compensation04
                         'Ticket': x.A4961TICKET,
                         'SEQ': x.A4961SEQ,
                         'Currency': x.MDA,
+                        'Source': x.A4961FUENT,
+                        'Channel': x.A4961CANAL,
                         'Amount Vou': x.A4961NETOL,
-                        'Amount ADM': x.A4961NETDI, 
+                        'Amount ADM': x.A4961NETDI,
                         'Agent': x.A4961AGENT,
                         'Agent Name': x.NIATA,
                         'Sale Country': x.A4961PAIS,

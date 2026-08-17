@@ -82,7 +82,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.SalesAuditAccept
                     Ext.getCmp(prototype.id + 'btn-Matchup').show();
                     Ext.getCmp(prototype.id + 'btn-1').hide();
                     Ext.getCmp(prototype.id + 'btn-2').show();
-                    
+
                 } else {
                     Ext.getCmp(prototype.id + 'matchup').hide();
                     Ext.getCmp(prototype.id + 'btn-Matchup').hide();
@@ -99,7 +99,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.SalesAuditAccept
                     Ext.getCmp(prototype.id + 'btn-SendNotifi').hide();
                     Ext.getCmp(prototype.id + 'btn-1').show();
                     Ext.getCmp(prototype.id + 'btn-2').hide();
-                     Ext.getCmp(prototype.id + 'Notifi').hide();
+                    Ext.getCmp(prototype.id + 'Notifi').hide();
                 }
 
             }
@@ -703,6 +703,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.SalesAuditAccept
         var vl_fuent = '';
         var vl_correo = 0;
         var lstNewList = new Array();
+        var lstNewList0425 = new Array();
         var grid = Ext.getCmp(prototype.id + '-gridData');
         if (grid.getSelectionModel().hasSelection()) {
             var selection = grid.getSelectionModel().getSelected();
@@ -713,26 +714,49 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.SalesAuditAccept
                     if (row.get('A1672CORREO') === 1) {
                         vl_correo = 2;
                     }
-                    lstNewList.push(row.data);
+                    if (Ext.String.trim(row.get('A1672BASE')) === '0425') {
+                        lstNewList0425.push({
+                            A4961CCUST: row.get('A1672CCUST'),
+                            A4961CIA: row.get('A1672CIA'),
+                            A4961FORMA: row.get('A1672FORMA'),
+                            A4961SERIE: row.get('A1672SERIE'),
+                            A4961SEQ: row.get('A1672SEQ'),
+                            A4961TRNCU: row.get('A1672TRNCU')
+
+                        });
+                    } else {
+                        lstNewList.push(row.data);
+                    }
+
                 } else {
-                    if (vl_fuent !== Ext.String.trim(row.get('A1672FUENT')))
-                    {
+                    if (vl_fuent !== Ext.String.trim(row.get('A1672FUENT'))) {
                         Ext.Msg.alert('.: PRAXIS :.', 'You cant not select more than one Source');
                         return;
                     } else {
-                        lstNewList.push(row.data);
+                        if (Ext.String.trim(row.get('A1672BASE')) === '0425') {
+                            lstNewList0425.push({
+                                A4961CCUST: row.get('A1672CCUST'),
+                                A4961CIA: row.get('A1672CIA'),
+                                A4961FORMA: row.get('A1672FORMA'),
+                                A4961SERIE: row.get('A1672SERIE'),
+                                A4961SEQ: row.get('A1672SEQ'),
+                                A4961TRNCU: row.get('A1672TRNCU')
+                            });
+                        } else {
+                            lstNewList.push(row.data);
+                        }
                         if (row.get('A1672CORREO') === 1) {
                             vl_correo = 2;
                         }
                     }
                 }
-
             }
-            if (lstNewList.length > 0) {
+            if (lstNewList.length > 0 || lstNewList0425.length > 0) {
                 var win = new Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.DataEntrySalesAuditAccepted({
                     params: {
                         cmbOpcion: obj.getValue(),
                         lstSelectedTkts: lstNewList,
+                        lstNewList0425: lstNewList0425,
                         lstComment: me.lstCampos,
                         fuente: vl_fuent,
                         correo: vl_correo,
@@ -747,6 +771,62 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.SalesAuditAccept
             return;
         }
     },
+    /*btnOK_clickHandler: function (obj) {
+     var me = this;
+     var vl_fuent = '';
+     var vl_correo = 0;
+     var lstNewList = new Array();
+     var lstNewList0425 = new Array();
+     var grid = Ext.getCmp(prototype.id + '-gridData');
+     if (grid.getSelectionModel().hasSelection()) {
+     var selection = grid.getSelectionModel().getSelected();
+     for (var i = 0; i < selection.length; i++) {
+     var row = grid.getSelectionModel().getSelection()[i];
+     if (i === 0) {
+     vl_fuent = Ext.String.trim(row.get('A1672FUENT'));
+     if (row.get('A1672CORREO') === 1) {
+     vl_correo = 2;
+     }
+     if(Ext.String.trim(row.get('A1672BASE'))==='0425') {
+     lstNewList0425.push(row.data);
+     }else{
+     lstNewList.push(row.data);
+     }
+     
+     } else {
+     if (vl_fuent !== Ext.String.trim(row.get('A1672FUENT')))
+     {
+     Ext.Msg.alert('.: PRAXIS :.', 'You cant not select more than one Source');
+     return;
+     } else {
+     lstNewList.push(row.data);
+     if (row.get('A1672CORREO') === 1) {
+     vl_correo = 2;
+     }
+     }
+     }
+     
+     }
+     if (lstNewList.length > 0 || lstNewList0425.length > 0) {
+     var win = new Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.DataEntrySalesAuditAccepted({
+     params: {
+     cmbOpcion: obj.getValue(),
+     lstSelectedTkts: lstNewList,
+     lstNewList0425: lstNewList0425,
+     lstComment: me.lstCampos,
+     fuente: vl_fuent,
+     correo: vl_correo,
+     tktPattern: Ext.getCmp(prototype.id + '-txtFrmaSerie').getValue() + '' + Ext.getCmp(prototype.id + '-txtSeq').getValue(),
+     url01: prototype.url
+     }
+     });
+     win.show();
+     }
+     } else {
+     Ext.Msg.alert('.: PRAXIS :.', 'Debes selecionar una Ticket');
+     return;
+     }
+     },*/
     imgSerech_clickHandler: function () {
         this.imgSearch_clickHandler(true);
     },
