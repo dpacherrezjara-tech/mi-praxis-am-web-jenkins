@@ -9,6 +9,7 @@ public class A1672 {
     public String A1672SEQ = ""; //Seq
     public String A1672AGENT = "";//Agent
     public String A1672CUPON = "";
+     public String A1672DINAM = "";
     //DATOS GENERALES DEL TICKET
     public String A1672PAIVT = "";
     public String A1672TICKET = ""; //TICKET (CIA FORMA SERIE - SEQ)
@@ -150,6 +151,7 @@ public class A1672 {
     public double A1672PNTIV;
     public String A1672RUTAF;
     public String A1672NAMEF;
+    public String A1672BASE;
     public String A1672STO0;
     public String A1672TKCNX;
     //DATOS PARA LA ESTADISTICA

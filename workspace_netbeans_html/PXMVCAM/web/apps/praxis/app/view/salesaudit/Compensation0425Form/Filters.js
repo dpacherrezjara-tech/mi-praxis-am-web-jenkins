@@ -86,7 +86,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Filters', {
                                 {
                                     xtype: 'textfield',
                                     name: 'IN_TICKET',
-                                    labelWidth: 40,hidden:true,
+                                    labelWidth: 40, hidden: true,
                                     id: prototype.id + '-IN_TICKET',
                                     width: 140,
                                     enforceMaxLength: true,
@@ -111,7 +111,7 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Filters', {
                                     xtype: 'datefield',
                                     fieldLabel: 'To',
                                     name: 'IN_DATET',
-                                     id: prototype.id + '-IN_DATET',
+                                    id: prototype.id + '-IN_DATET',
                                     format: 'Ymd',
                                     labelWidth: 20,
                                     width: 130,
@@ -230,7 +230,9 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Filters', {
                                             ['SA', 'Supervisor Authorization'],
                                             ['AC', 'Customer service'],
                                             ['RN', 'Without Reservation'],
-                                            ['AP', 'Approved']                                            
+                                            ['AP', 'Approved'],
+                                            ['SC', 'Unregistered Email'],
+                                            ['IE', 'IATAs exempted by AM']
                                         ]
                                     }),
                                     displayField: 'name',

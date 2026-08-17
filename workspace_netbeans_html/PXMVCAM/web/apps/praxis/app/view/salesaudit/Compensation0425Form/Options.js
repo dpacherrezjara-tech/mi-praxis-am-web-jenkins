@@ -35,6 +35,15 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Options', {
                         },
                         {
                             xtype: 'button',
+                            id: prototype.id + '-btnSave',
+                            iconCls: 'prx-icon-image-update',
+                            tooltip: 'Generate ADM',
+                            listeners: {
+                                click: 'onClickSaveBtn'
+                            }
+                        },
+                        {
+                            xtype: 'button',
                             id: prototype.id + '-btnFilter',
                             iconCls: 'prx-icon-filter',
                             tooltip: 'Rule maintenance',

@@ -110,6 +110,7 @@ public class SalesAuditAcceptedDAO {
                 beanADM.A1672CANAL = rst.getString("A1672CANAL").trim();
                 beanADM.A1672NAMEF = rst.getString("AGENCY").trim();
                 msjeError = rst.getString("A1580DESC2").trim();
+                beanADM.A1672BASE = rst.getString("A1672PROCESO").trim();
                 msjeError2 = msjeError.split(";");
 
                 for (int i = 0; i < msjeError2.length; i++) {
@@ -1110,6 +1111,7 @@ public class SalesAuditAcceptedDAO {
                 recADM.A1672SEQ = rst.getString("A1672SEQ").trim();
                 recADM.A1672TRNCU = rst.getString("A1672TRNCU").trim();
                 recADM.A1672CURRENCY = rst.getString("A1672CURRENCY");
+                recADM.A1672DINAM = rst.getString("A4777DINAM").trim();
 
                 recADM.A1672UASIG = rst.getString("A1672UASIG").trim();
                 recADM.A1672FASIG = rst.getString("A1672FASIG").trim();
