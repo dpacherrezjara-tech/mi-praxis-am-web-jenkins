@@ -118,6 +118,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterCCAM.AccountingMasterCCA
         var A1819NATU = Ext.getCmp(prototype.id + '-txtCAN').getValue();
         var A1819CTA = Ext.getCmp(prototype.id + '-txtCta').getValue();
         var A1819SCTA = Ext.getCmp(prototype.id + '-txtSubCta').getValue();
+        var OLD_REGISTERS = Ext.getCmp(prototype.id + '-txtoldregisters').getValue();
 
 
         searchParams = {
@@ -128,7 +129,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterCCAM.AccountingMasterCCA
             A1819TACC: A1819TACC,
             A1819NATU: A1819NATU,
             A1819CTA: A1819CTA,
-            A1819SCTA: A1819SCTA
+            A1819SCTA: A1819SCTA,
+            OLD_REGISTERS: OLD_REGISTERS
         };
 
         console.log("IN_A1819CCUST : " + IN_A1819CCUST);
@@ -139,6 +141,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterCCAM.AccountingMasterCCA
         console.log("A1819NATU : " + A1819NATU);
         console.log("A1819CTA : " + A1819CTA);
         console.log("A1819SCTA : " + A1819SCTA);
+        console.log("OLD_REGISTERS : " + OLD_REGISTERS);
 
 
 
@@ -221,6 +224,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterCCAM.AccountingMasterCCA
                 + '&A1819NATU=' + searchParams.A1819NATU
                 + '&A1819CTA=' + searchParams.A1819CTA
                 + '&A1819SCTA=' + searchParams.A1819SCTA
+                + '&OLD_REGISTERS=' + searchParams.OLD_REGISTERS
                 );
     }
 

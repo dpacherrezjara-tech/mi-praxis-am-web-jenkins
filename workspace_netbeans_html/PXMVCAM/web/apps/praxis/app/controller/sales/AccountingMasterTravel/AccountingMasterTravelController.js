@@ -87,13 +87,15 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTravel.AccountingMasterT
         var IN_A1838AGENT = Ext.getCmp(prototype.id + '-txtAgent').getValue();
         var A1838CUENT = Ext.getCmp(prototype.id + '-txtCta').getValue();
         var A1838SUBCT = Ext.getCmp(prototype.id + '-txtSubCta').getValue();
+        var OLD_REGISTERS = Ext.getCmp(prototype.id + '-txtoldregisters').getValue();
 
         searchParams = {
             IN_A1838CCUST: IN_A1838CCUST,
             IN_A1838TIPO: IN_A1838TIPO,
             IN_A1838AGENT: IN_A1838AGENT,
             A1838CUENT: A1838CUENT,
-            A1838SUBCT: A1838SUBCT
+            A1838SUBCT: A1838SUBCT,
+            OLD_REGISTERS: OLD_REGISTERS
         };
 
         console.log("IN_A1838CCUST : " + IN_A1838CCUST);
@@ -101,6 +103,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTravel.AccountingMasterT
         console.log("IN_A1838AGENT : " + IN_A1838AGENT);
         console.log("A1838CUENT : " + A1838CUENT);
         console.log("A1838SUBCT : " + A1838SUBCT);
+        console.log("OLD_REGISTERS : " + OLD_REGISTERS);
     },
     setGridData: function(obj, val) {
         this.setParams();
@@ -170,6 +173,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTravel.AccountingMasterT
                 + '&IN_A1838AGENT=' + searchParams.IN_A1838AGENT
                 + '&A1838CUENT=' + searchParams.A1838CUENT
                 + '&A1838SUBCT=' + searchParams.A1838SUBCT
+                + '&OLD_REGISTERS=' + searchParams.OLD_REGISTERS
                 );
     }
 

@@ -116,6 +116,17 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterUATPForm.Filters', {
                     labelWidth: 35,
                     width: 130
 
+                },
+                { xtype: 'tbspacer', width: 5 },
+                {
+                    xtype: 'label',
+                    html: 'Old Registers',
+                    fieldStyle: 'text-align: center;',
+                    padding: '8px 7px 8px 0px'
+                },
+                {
+                    xtype: 'checkboxfield',
+                    id: prototype.id + '-txtoldregisters'
                 }
 
             ]
