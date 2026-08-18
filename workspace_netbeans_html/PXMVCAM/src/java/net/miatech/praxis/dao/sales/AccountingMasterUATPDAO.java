@@ -65,13 +65,13 @@ public class AccountingMasterUATPDAO {
             if (filter.page.PAGNUM > 0) {
                PAGINIT = (filter.page.PAGNUM - 1) * totRowsPag + 1;
             }
-             String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04221(?,?,?,?,?,?,?,?,?,?,?)}"; // CAMBIAMOS SP PRAXIS.PX161S01A1820
+             String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04221(?,?,?,?,?,?,?,?,?,?,?,?)}"; // CAMBIAMOS SP PRAXIS.PX161S01A1820
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();  cstmt01 = cnx.prepareCall(SQLCLL01);
             
-            cstmt01.registerOutParameter(7, Types.INTEGER);
             cstmt01.registerOutParameter(8, Types.INTEGER);
             cstmt01.registerOutParameter(9, Types.INTEGER);
             cstmt01.registerOutParameter(10, Types.INTEGER);
+            cstmt01.registerOutParameter(11, Types.INTEGER);
 
             cstmt01.setString(1, "139");//filter.IN_A1717CCUST
             cstmt01.setString(2, filter.IN_FILTRO);
@@ -79,20 +79,21 @@ public class AccountingMasterUATPDAO {
             cstmt01.setString(4, filter.A1820TCUAT);
             cstmt01.setString(5, filter.A1820CTA);
             cstmt01.setString(6, filter.A1820SCTA);
-            cstmt01.setInt(7, PAGINIT);
-            cstmt01.setInt(8, totRowsPag);     
-            cstmt01.setInt(9, totRows);     
-            cstmt01.setInt(10, filter.page.TOTROW);
-            cstmt01.setString(11, filter.A1820MODO);
+            cstmt01.setString(7, filter.OLD_REGISTERS);
+            cstmt01.setInt(8, PAGINIT);
+            cstmt01.setInt(9, totRowsPag);     
+            cstmt01.setInt(10, totRows);     
+            cstmt01.setInt(11, filter.page.TOTROW);
+            cstmt01.setString(12, filter.A1820MODO);
             
             cstmt01.execute();
             
-            filter.page.PAGNUM = cstmt01.getInt(7);
-            filter.page.PAGROW = cstmt01.getInt(8);
-            filter.page.TOTPAG = cstmt01.getInt(9);
-            filter.page.TOTROW = cstmt01.getInt(10);
+            filter.page.PAGNUM = cstmt01.getInt(8);
+            filter.page.PAGROW = cstmt01.getInt(9);
+            filter.page.TOTPAG = cstmt01.getInt(10);
+            filter.page.TOTROW = cstmt01.getInt(11);
             
-            if (filter.page.TOTROW > 0 && filter.page.TOTROW == cstmt01.getInt(8)) {
+            if (filter.page.TOTROW > 0 && filter.page.TOTROW == cstmt01.getInt(10)) {
                totRows = filter.page.TOTROW;
                totPAGS = filter.page.TOTPAG;
             } else {

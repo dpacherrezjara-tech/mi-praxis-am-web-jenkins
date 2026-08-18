@@ -44,6 +44,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -99,6 +100,7 @@ public class AccountingMasterUATPController extends BaseController {
             filter.A1820CTA = request.getParameter("A1820CTA");
             filter.A1820SCTA = request.getParameter("A1820SCTA");
             filter.A1820MODO = request.getParameter("A1820MODO");
+            filter.OLD_REGISTERS = request.getParameter("OLD_REGISTERS").equals("true") ? "0" : "1";
            
 
             System.out.println("----------------- Parametros --------------------- ");

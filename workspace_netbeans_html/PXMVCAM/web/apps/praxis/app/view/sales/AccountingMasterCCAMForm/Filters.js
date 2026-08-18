@@ -120,6 +120,17 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.Filters', {
                     width: 150,
                     maxLength: 5,
                     enforceMaxLength: true
+                },
+                { xtype: 'tbspacer', width: 5 },
+                {
+                    xtype: 'label',
+                    html: 'Old Registers',
+                    fieldStyle: 'text-align: center;',
+                    padding: '8px 7px 8px 0px'
+                },
+                {
+                    xtype: 'checkboxfield',
+                    id: prototype.id + '-txtoldregisters'
                 }
 
             ]
