@@ -16,5 +16,8 @@ public class A1820Filter extends A1820{
     public String IN_TIPO = "";
     public String IN_A1820TCUAT_OLD = "";
     public String OLD_REGISTERS = "";
-    public Pagination page = new Pagination();	
+    public Pagination page = new Pagination();
+    public String IN_A1820FINI_OLD = "";
+    public String IN_A1820FFIN_OLD = "";
+
 }
