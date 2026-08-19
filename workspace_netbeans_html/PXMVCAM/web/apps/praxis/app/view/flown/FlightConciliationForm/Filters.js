@@ -713,7 +713,43 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 }
                             ]
                         },
-                        {xtype: 'tbspacer', width: 665},
+                        {xtype: 'tbspacer', width: 20},
+                        {
+                            xtype: 'label',
+                            html: 'Manifest Name:',
+                            align: 'center',
+                            fieldStyle: 'text-align: center;',
+                            padding: '8px 7px 8px 0px'
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtManifestName',
+                            fieldStyle: 'text-align:center',
+                            emptyText: 'e.g. LIM_0019_20260724',
+                            enforceMaxLength: true,
+                            maskRe: /[A-Za-z0-9_]/,
+                            maxLength: 20,
+                            width: 160,
+                            enableKeyEvents: true,
+                            listeners: {
+                                change: 'onUpperValue',
+                                keypress: 'onManifestNameKeypress'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 8},
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnLoadManifest',
+                            margin: '2 0 0 0',
+                            width: 110,
+                            html: '<strong style="color:white;">Load Manifest</strong>',
+                            style: 'background:#24678D;color:white;font-weight:bold;',
+                            border: false,
+                            listeners: {
+                                click: 'btnLoadManifest_click'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 300},
                         {
                             xtype: 'label',
                             html: 'Cierre de Vuelo:',
