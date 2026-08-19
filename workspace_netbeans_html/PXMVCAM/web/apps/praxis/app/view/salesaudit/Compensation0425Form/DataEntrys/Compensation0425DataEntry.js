@@ -151,7 +151,8 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.DataEntrys.Compensat
                                                             ['AP', 'Approved'],
                                                             ['UC', 'Unregistered Client'],
                                                             ['US', 'Unregistered Sale'],
-                                                            ['SC', 'Unregistered Email']
+                                                            ['SC', 'Unregistered Email'],
+                                                            ['IA', 'IATAs Consult']
                                                         ]
                                                     }),
                                                     width: 200,

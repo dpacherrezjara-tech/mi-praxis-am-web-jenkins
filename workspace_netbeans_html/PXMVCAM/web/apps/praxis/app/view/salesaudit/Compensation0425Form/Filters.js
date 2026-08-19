@@ -232,7 +232,8 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Filters', {
                                             ['RN', 'Without Reservation'],
                                             ['AP', 'Approved'],
                                             ['SC', 'Unregistered Email'],
-                                            ['IE', 'IATAs exempted by AM']
+                                            ['IE', 'IATAs exempted by AM'],
+                                            ['IA', 'IATAs Consult']
                                         ]
                                     }),
                                     displayField: 'name',

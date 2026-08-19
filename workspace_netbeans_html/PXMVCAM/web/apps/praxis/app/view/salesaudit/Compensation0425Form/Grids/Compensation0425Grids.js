@@ -89,7 +89,8 @@ Ext.define('Ext.Praxis.view.salesaudit.Compensation0425Form.Grids.Compensation04
                                 'Supervisor Authorization': {text: 'Supervisor Authorization', bg: '#D7CCC8', color: '#5D4037'}, // marrón
                                 'Without Reservation': {text: 'Without Reservation', bg: '#F8BBD0', color: '#880E4F'}, // rosa
                                 'Customer service': {text: 'Customer service', bg: '#F0F4C3', color: '#827717'}, // lime
-                                'IATAs exempted by AM': {text: 'IATAs exempted by AM', bg: '#C5CAE9', color: '#1A237E'} // índigo
+                                'IATAs exempted by AM': {text: 'IATAs exempted by AM', bg: '#C5CAE9', color: '#1A237E'}, // índigo
+                                'IATAs Consult': { text: 'IATAs Consult', bg: '#D1C4E9', color: '#4527A0' } // violeta profundo (deep purple)
                             };
                             const status = opts[value];
                             if (status) {
