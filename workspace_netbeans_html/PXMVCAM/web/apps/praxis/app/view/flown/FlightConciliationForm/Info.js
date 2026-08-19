@@ -426,7 +426,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Info', {
                                 {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDetail',
-                                    width: 1770,
+                                    width: 1732,
                                     height: 580,
                                     columnLines: true,
                                     features: [{
