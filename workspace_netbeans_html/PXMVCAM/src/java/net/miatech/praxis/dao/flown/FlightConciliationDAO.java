@@ -341,7 +341,7 @@ public class FlightConciliationDAO {
         List<A1691Filter2> lstCons = new ArrayList<>(0);
         A1691Filter2 beanCons;
         String strDesc = "";
-        long QCPNOD = 0, QCPNVC = 0, QCPAD = 0, QCPCHD = 0, QCPINF = 0, QCPTRA = 0, QCPNOCR = 0, QCPNMA = 0, QCPNTOT = 0, QCPNLEG = 0, QCPNVAL = 0, DIFFODSVCR = 0;
+        long QCPNOD = 0, QCPNVC = 0, QCPAD = 0, QCPCHD = 0, QCPINF = 0, QCPTRA = 0, QCPNOCR = 0, QCPNMA = 0, QCPNTOT = 0, QCPNLEG = 0, QCPNVAL = 0,QCPNCONTAB = 0, DIFFODSVCR = 0;
         int QCPNFI = 0, QCPNFRE = 0, QCPHARB = 0, QTYTOTPS = 0;
         if (strTipo.equals("QPRO")) {
             strDesc = " Detail of Quantity Pending";
@@ -422,6 +422,7 @@ public class FlightConciliationDAO {
                 QCPINF = rst.getLong("QCPINF");
                 QCPTRA = rst.getLong("QCPTRA");
                 QCPNVAL = rst.getLong("QCPNVAL");
+                QCPNCONTAB = rst.getLong("QCPNCONTAB");
 
                 DIFFODSVCR = QCPNOD - QCPNVC;
             }
@@ -506,8 +507,9 @@ public class FlightConciliationDAO {
                     beanCons.QCPNMA = rst.getLong("QCPNMA");
                     beanCons.QCPNTOT = rst.getLong("QCPNTOT");
                     beanCons.QCPNVAL = rst.getLong("QCPNVAL");
+                    beanCons.QCPNCONTAB = rst.getLong("QCPNCONTAB");
                     beanCons.lngQDIFF = rst.getLong("QCPNTOT") - rst.getInt("QCPNFI");
-                    beanCons.DIFFODSVCR = rst.getLong("QCPNOD") - rst.getInt("QCPNVC");
+                    beanCons.DIFFODSVCR = rst.getLong("QCPNOD") - (rst.getInt("QCPNTOT") + rst.getInt("QCPNFRE"));
 
                     /*if(rst.getString("FMULTI").trim().equals("L")){
                      beanCons.lngQVCR = rst.getLong("QTOT");
@@ -532,7 +534,7 @@ public class FlightConciliationDAO {
                     beanCons.totQCPHARB_ESP = QCPHARB;
                     beanCons.totQTYTOTPS = QTYTOTPS;
                     beanCons.totQCPNVAL = QCPNVAL;
-                    beanCons.totQCPNVAL = QCPNVAL;
+                    beanCons.totQCPNCONTAB = QCPNCONTAB;
                     beanCons.totDIFFODSVCR = DIFFODSVCR;
 
                     beanCons.totDiff = QCPNTOT - QCPNFI;
