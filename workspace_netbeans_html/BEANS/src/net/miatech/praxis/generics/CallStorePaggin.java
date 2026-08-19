@@ -45,7 +45,11 @@ public class CallStorePaggin {
                 // Desactivar paginacion
                 this.IO_PAGROW = -1;
                 this.IO_PAGNUM = 1;
+            }else{
+                this.IO_PAGROW = 20;
+                this.IO_PAGNUM = (start / this.IO_PAGROW) + 1;
             }
+                
         }
         else{
             this.IO_PAGROW = 20;
@@ -59,25 +63,10 @@ public class CallStorePaggin {
     }
     
     public void setPageOut(Map<String,Object> obj){
-        // Algunos SP no declaran los 4 parametros INOUT de paginacion (no estan
-        // pensados para paginar server-side). En ese caso el driver JDBC no los
-        // devuelve en absoluto (obj.get(...) == null): se conservan los valores
-        // ya calculados en setPage() y el total se deriva del propio response.
-        this.IO_PAGNUM = parseIntOrDefault(obj.get("IO_PAGNUM"), this.IO_PAGNUM);
-        this.IO_PAGROW = parseIntOrDefault(obj.get("IO_PAGROW"), this.IO_PAGROW);
-        this.IO_TOTPAG = parseIntOrDefault(obj.get("IO_TOTPAG"), this.IO_TOTPAG);
-        this.IO_TOTROW = parseIntOrDefault(obj.get("IO_TOTROW"), (this.response != null) ? this.response.size() : this.IO_TOTROW);
+        this.IO_PAGNUM = Integer.parseInt(obj.get("IO_PAGNUM").toString());
+        this.IO_PAGROW = Integer.parseInt(obj.get("IO_PAGROW").toString());
+        this.IO_TOTPAG = Integer.parseInt(obj.get("IO_TOTPAG").toString());
+        this.IO_TOTROW = Integer.parseInt(obj.get("IO_TOTROW").toString());
         this.total = this.IO_TOTROW;
-    }
-
-    private int parseIntOrDefault(Object value, int defaultValue) {
-        if (value == null) {
-            return defaultValue;
-        }
-        try {
-            return Integer.parseInt(value.toString());
-        } catch (NumberFormatException e) {
-            return defaultValue;
-        }
     }
 }

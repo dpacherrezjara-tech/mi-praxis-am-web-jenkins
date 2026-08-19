@@ -115,8 +115,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailS
             success: function (response, options) { //records, operation, success
                 mask.hide();
                 var res = Ext.JSON.decode(response.responseText);
-                if (res.success) {
-
+                if (res.success) { 
                     Ext.getCmp(prototype.id1 + '-txtExchType').hide();
                     Ext.getCmp(prototype.id1 + '-txtRefundType').hide();
                     Ext.getCmp(prototype.id1 + '-gridComponent2').getStore().removeAll();
@@ -127,7 +126,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailS
                     Ext.getCmp(prototype.id1 + '-gridComponentOldSALES').getStore().loadData(res.lstComponent);
                     Ext.getCmp(prototype.id1 + '-gridComponentOldRFND').getStore().removeAll();
                     Ext.getCmp(prototype.id1 + '-gridComponentOldRFND').getStore().loadData(res.lstComponent);
-
+                    Ext.getCmp(prototype.id1 + '-txtDynamic').setValue(Ext.String.trim(res.beanADM.A1672DINAM));
+                     
                     Ext.getCmp(prototype.id1 + '-gridComponentOLD').getStore().removeAll();
                     Ext.getCmp(prototype.id1 + '-gridComponentOLD').getStore().loadData(res.lstComponentOld);
 

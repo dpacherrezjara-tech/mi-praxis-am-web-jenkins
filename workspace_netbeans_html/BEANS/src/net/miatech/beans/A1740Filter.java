@@ -20,6 +20,7 @@ public class A1740Filter extends A1740{
     public String IN_A1740CATEG_OLD = "";
     public String IN_A1740FINI_OLD = "";
     public String IN_A1740FFIN_OLD = "";
+    public String A1740OLD_REGISTERS = "";
     public String IN_USR = "";
     public String IN_FEC = "";
     public String IN_HOR = "";   

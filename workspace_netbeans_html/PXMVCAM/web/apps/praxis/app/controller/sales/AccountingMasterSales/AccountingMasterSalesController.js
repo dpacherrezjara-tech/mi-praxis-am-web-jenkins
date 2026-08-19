@@ -56,6 +56,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.AccountingMasterSa
         var A1740CATEG = Ext.getCmp(prototype.id + '-txtCategory').getValue();
         var A1740CTA = Ext.getCmp(prototype.id + '-txtCta').getValue();
         var A1740SCTA = Ext.getCmp(prototype.id + '-txtSubCta').getValue();
+        var A1740OLD_REGISTERS = Ext.getCmp(prototype.id + '-txtoldregisters').getValue();
         
         searchParams = {
             IN_A1740TITRA: IN_A1740TITRA,
@@ -63,7 +64,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.AccountingMasterSa
             A1740SUBTI: A1740SUBTI,
             A1740CATEG: A1740CATEG,
             A1740CTA: A1740CTA,
-            A1740SCTA: A1740SCTA
+            A1740SCTA: A1740SCTA,
+            A1740OLD_REGISTERS: A1740OLD_REGISTERS
         };
     },
 //    btnDisplay_click: function() {
@@ -81,6 +83,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.AccountingMasterSa
                 url: prototype.url + '/search'
             }, listeners: {
                 beforeload: function(obj) {
+                    console.log('searchParams',searchParams);
                     obj.proxy.extraParams = searchParams;
                 },
                 load: function(obj) {
@@ -136,7 +139,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.AccountingMasterSa
                 '&A1740SUBTI=' + searchParams.A1740SUBTI + 
                 '&A1740CATEG=' + searchParams.A1740CATEG + 
                 '&A1740CTA=' + searchParams.A1740CTA + 
-                '&A1740SCTA=' + searchParams.A1740SCTA);
+                '&A1740SCTA=' + searchParams.A1740SCTA +
+                '&A1740OLD_REGISTERS=' + searchParams.A1740OLD_REGISTERS);
     },
     btnFilter_click: function(obj) {
         var option = Ext.getCmp(prototype.id + '-contentFilter');

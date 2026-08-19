@@ -86,7 +86,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.BPOControlAnalytics.GridBPOControlA
                 const row = {
                     "#": index + 1,
                     User: x.USUARIO,
-                    Date: formatDate(x.FECHA),
+                    Date: x.FECHA,
                     Time: x.HORA || "",
                     Performance: formatSeconds(x.TIEMPO_SEG)
                 };

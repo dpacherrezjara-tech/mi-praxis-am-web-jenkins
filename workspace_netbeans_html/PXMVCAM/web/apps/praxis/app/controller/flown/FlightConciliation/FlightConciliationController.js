@@ -1833,6 +1833,21 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             return;
         }
 
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Are you sure you want to update the counters?',
+            buttons: Ext.MessageBox.YESNO,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function (btn) {
+                if (btn === 'yes') {
+                    me.executeActualizarContador(anio, mes);
+                }
+            }
+        });
+    },
+    executeActualizarContador: function (anio, mes) {
         Ext.getCmp(prototype.id + '-btnActualizarContador').disable();
 
         Ext.Ajax.request({
@@ -1957,7 +1972,132 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
             }
         });
 
-    }
+    },
 
+    // <editor-fold defaultstate="collapsed" desc="Manual Manifest Load">
+    onManifestNameKeypress: function (obj, e, eOpts) {
+        if (e.getKey() === e.ENTER) {
+            this.btnLoadManifest_click();
+        }
+    },
+    btnLoadManifest_click: function () {
+        var manifestName = this.getValue("txtManifestName").trim().toUpperCase();
+        var manifestPattern = /^[A-Z]{3}_\d{3,5}_\d{8}$/;
+
+        if (manifestName === '') {
+            global.Msg({msg: 'Please enter a Manifest Name.'});
+            this.focus('txtManifestName');
+            return;
+        }
+
+        if (!manifestPattern.test(manifestName)) {
+            global.Msg({msg: 'Invalid Manifest Name format. Expected: AAA_NNNN_YYYYMMDD (e.g. LIM_0019_20260724).'});
+            this.focus('txtManifestName');
+            return;
+        }
+
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Load manifest "' + manifestName + '" ?',
+            buttons: Ext.MessageBox.YESNO,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function (btn) {
+                if (btn === 'yes') {
+                    this.loadManifest(manifestName);
+                }
+            }
+        });
+    },
+    loadManifest: function (manifestName) {
+        var logWin = Ext.create('Ext.window.Window', {
+            id: prototype.id + '-winManifestLoad',
+            title: 'Loading Manifest: ' + manifestName,
+            width: 650,
+            height: 400,
+            modal: true,
+            closable: false,
+            resizable: true,
+            layout: 'fit',
+            items: [{
+                    xtype: 'textareafield',
+                    id: prototype.id + '-txtManifestLoadLog',
+                    readOnly: true,
+                    fieldStyle: 'font-family: Consolas, monospace; font-size: 11px; background:#111111; color:#33ff33;',
+                    value: ''
+                }],
+            buttons: [{
+                    text: 'Close',
+                    id: prototype.id + '-btnManifestLoadClose',
+                    disabled: true,
+                    handler: function () {
+                        logWin.close();
+                    }
+                }]
+        });
+        logWin.show();
+
+        Ext.Ajax.request({
+            url: prototype.url + '/loadManifest',
+            method: 'POST',
+            timeout: 60000000,
+            params: {manifestName: manifestName},
+            success: function (response, opts) {
+                var res = Ext.JSON.decode(response.responseText);
+                if (res.success) {
+                    me.pollManifestLoad(manifestName, 0);
+                } else {
+                    global.Msg({msg: res.sesion});
+                    logWin.close();
+                }
+            },
+            failure: function (response, opts) {
+                console.log('server-side failure with status code ' + response.status);
+                global.Msg({msg: 'Could not start the manifest load.'});
+                logWin.close();
+            }
+        });
+    },
+    pollManifestLoad: function (manifestName, fromLine) {
+        Ext.Ajax.request({
+            url: prototype.url + '/loadManifestStatus',
+            method: 'POST',
+            timeout: 60000000,
+            params: {manifestName: manifestName, fromLine: fromLine},
+            success: function (response, opts) {
+                var res = Ext.JSON.decode(response.responseText);
+                if (!res.success) {
+                    global.Msg({msg: res.sesion});
+                    return;
+                }
+
+                var area = Ext.getCmp(prototype.id + '-txtManifestLoadLog');
+                if (area && res.lines && res.lines.length > 0) {
+                    var current = area.getValue();
+                    area.setValue(current + (current ? '\n' : '') + res.lines.join('\n'));
+                    if (area.inputEl) {
+                        area.inputEl.dom.scrollTop = area.inputEl.dom.scrollHeight;
+                    }
+                }
+
+                if (res.status === 'RUNNING') {
+                    Ext.Function.defer(function () {
+                        me.pollManifestLoad(manifestName, res.nextFromLine);
+                    }, 2000);
+                } else {
+                    var closeBtn = Ext.getCmp(prototype.id + '-btnManifestLoadClose');
+                    if (closeBtn) {
+                        closeBtn.enable();
+                    }
+                    global.Msg({msg: res.status === 'DONE' ? 'Manifest load completed.' : 'Manifest load finished with errors.'});
+                }
+            },
+            failure: function (response, opts) {
+                console.log('server-side failure with status code ' + response.status);
+            }
+        });
+    }
+    // </editor-fold>
 
 });

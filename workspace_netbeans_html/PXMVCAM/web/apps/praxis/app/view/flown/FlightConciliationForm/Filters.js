@@ -385,8 +385,8 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,
                             maskRe: /[0-9]/,
-//                            maxLength: 13,
-                            width: 156,
+                            maxLength: 15,
+                            width: 100,
                             enableKeyEvents: true,
                             listeners: {
                                 change: 'onValidarChange',
@@ -415,7 +415,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 keypress: 'BuscarTKT_keyDownHandler'
                             }
                         },
-                        {xtype: 'tbspacer', width: 10},
+                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'label',
                             id: prototype.id + '-labelFSabre',
@@ -452,7 +452,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 change: 'cmbFSabre_changeHandler'
                             }
                         },
-                        {xtype: 'tbspacer', width: 10},
+                        {xtype: 'tbspacer', width: 0},
                         {
                             xtype: 'label',
                             id: prototype.id + '-labelScanTicket',
@@ -514,10 +514,10 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
 //                                click: 'btnScanTicket_clickHandler'
 //                            }
 //                        },
-                        {xtype: 'tbspacer', width: 25},
+//                        {xtype: 'tbspacer', width: 25},
                         {
                             xtype: 'label',
-                            html: 'Flght Date:',
+                            html: 'Flight Date:',
                             align: 'center',
                             fieldStyle: 'text-align: center;',
                             padding: '7px 7px 6px 0px'
@@ -538,7 +538,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                             width: 70,
                             listConfig: {maxHeight: 111, minWidth: 70}
                         },
-                        {xtype: 'tbspacer', width: 4},
+//                        {xtype: 'tbspacer', width: 4},
                         {
                             xtype: 'combo',
                             id: prototype.id + '-cmbMesContador',
@@ -558,7 +558,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnActualizarContador',
-                            html: '<strong style="color:white;">Actualizar Contador</strong>',
+                            html: '<strong style="color:white;">Upd. Counter</strong>',
                             style: 'background:#24678D;color:white;font-weight:bold;',
                             border: false,
                             margin: '2 0 0 0',
@@ -566,7 +566,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 click: 'btnActualizarContador_click'
                             }
                         },
-                        {xtype: 'tbspacer', width: 250},
+                        {xtype: 'tbspacer', width: 30},
                         {
                             xtype: 'combo',
                             id: prototype.id + '-cmbControl',
@@ -713,7 +713,43 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 }
                             ]
                         },
-                        {xtype: 'tbspacer', width: 665},
+                        {xtype: 'tbspacer', width: 20},
+                        {
+                            xtype: 'label',
+                            html: 'Manifest Name:',
+                            align: 'center',
+                            fieldStyle: 'text-align: center;',
+                            padding: '8px 7px 8px 0px'
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtManifestName',
+                            fieldStyle: 'text-align:center',
+                            emptyText: 'e.g. LIM_0019_20260724',
+                            enforceMaxLength: true,
+                            maskRe: /[A-Za-z0-9_]/,
+                            maxLength: 20,
+                            width: 160,
+                            enableKeyEvents: true,
+                            listeners: {
+                                change: 'onUpperValue',
+                                keypress: 'onManifestNameKeypress'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 8},
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnLoadManifest',
+                            margin: '2 0 0 0',
+                            width: 110,
+                            html: '<strong style="color:white;">Load Manifest</strong>',
+                            style: 'background:#24678D;color:white;font-weight:bold;',
+                            border: false,
+                            listeners: {
+                                click: 'btnLoadManifest_click'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 300},
                         {
                             xtype: 'label',
                             html: 'Cierre de Vuelo:',
