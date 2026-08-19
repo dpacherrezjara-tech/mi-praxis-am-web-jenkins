@@ -729,6 +729,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.SalesAuditAccepted
                                 },
                                 items: [
                                     {text: 'Ticket Nbr', dataIndex: 'strTicket', width: 110},
+                                    {text: 'Base', dataIndex: 'A1672BASE', width: 55},
                                     {text: 'Source', dataIndex: 'A1672FUENT', width: 55},
                                     {text: 'Channel', dataIndex: 'A1672CANAL', width: 60},
                                     {text: 'Country', dataIndex: 'A1672PAIVT', width: 60},

@@ -233,6 +233,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntrySalesAu
                                 success: function (fp, o) {
                                     var res = Ext.decode(o.response.responseText);
                                     if (me.view.params.fuente === 'ASR') {
+
                                         if (me.view.params.lstNewList0425.length > 0) {
                                             me.onSaveASR0425();
                                             mask.hide();
@@ -280,12 +281,80 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntrySalesAu
                     }
                 });
             } else {
-                var mask = new Ext.LoadMask(Ext.getCmp(prototype.id9 + '-form'), {
-                    msg: 'Please Wait....'
-                });
-                mask.show();
-                me.onSaveASR0425();
-                mask.hide();
+                if (me.view.params.lstSelectedTkts.length > 0) {
+                    global.Msg({
+                        msg: 'Review ADM?',
+                        icon: 3,
+                        buttons: 3,
+                        fn: function (btn) {
+                            if (btn === 'yes') {
+                                var mask = new Ext.LoadMask(Ext.getCmp(prototype.id9 + '-form'), {
+                                    msg: 'Please Wait....'
+                                });
+                                mask.show();
+                                form.submit({
+                                    url: me.urlWin01 + '/marcarRev/',
+                                    waitMsg: 'Uploading your sure to upload the file...',
+                                    params: {beanString: JSON.stringify(me.BeanGuardar),
+                                        beanSelectedTkts: JSON.stringify(me.view.params.lstSelectedTkts)
+                                    },
+                                    success: function (fp, o) {
+                                        var res = Ext.decode(o.response.responseText);
+                                        if (me.view.params.fuente === 'ASR') {
+                                            if (me.view.params.lstNewList0425.length > 0) {
+                                                alert('novo');
+                                            } else {
+                                                mask.hide();
+                                                Ext.Msg.alert('Success', 'Your sure to upload the file "' + res.result + '" has been uploaded.');
+                                                var vp_icon = 0;
+                                                if (res.result === 'The record was saved successfully.') {
+                                                    vp_icon = 1;
+                                                }
+                                                global.Msg({msg: res.result, icon: vp_icon, fn: function () {
+                                                        if (vp_icon === 1) {
+                                                            // lstNewList0425: lstNewList0425,
+                                                            Ext.getCmp(prototype.id + '-Contenedor').getController().imgSearch_clickHandler();
+                                                            Ext.getCmp(prototype.id9 + '-win').close();
+
+                                                        }
+
+
+                                                    }});
+                                            }
+                                        } else {
+                                            mask.hide();
+                                            Ext.Msg.alert('Success', 'Your sure to upload the file "' + res.result + '" has been uploaded.');
+                                            var vp_icon = 0;
+                                            if (res.result === 'The record was saved successfully.') {
+                                                vp_icon = 1;
+                                            }
+                                            global.Msg({msg: res.result, icon: vp_icon, fn: function () {
+                                                    if (vp_icon === 1) {
+                                                        // lstNewList0425: lstNewList0425,
+                                                        Ext.getCmp(prototype.id + '-Contenedor').getController().imgSearch_clickHandler();
+                                                        Ext.getCmp(prototype.id9 + '-win').close();
+
+                                                    }
+
+
+                                                }});
+                                        }
+
+                                    }
+                                });
+                            }
+
+                        }
+                    });
+                } else {
+                    var mask = new Ext.LoadMask(Ext.getCmp(prototype.id9 + '-form'), {
+                        msg: 'Please Wait....'
+                    });
+                    mask.show();
+                    me.onSaveASR0425();
+                    mask.hide();
+                }
+
             }
 
         } else {
