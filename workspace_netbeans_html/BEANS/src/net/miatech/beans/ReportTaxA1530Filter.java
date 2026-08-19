@@ -24,7 +24,6 @@ public class ReportTaxA1530Filter extends A1530 {
     public String ATO = "";
     public String BANK = "";
     public String SALES = "";
-    public String MODO = "";
     public String Opcion = "";
 
     public String FECPROC = "";

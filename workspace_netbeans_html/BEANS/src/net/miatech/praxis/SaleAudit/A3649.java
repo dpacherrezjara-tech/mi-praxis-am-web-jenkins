@@ -23,10 +23,6 @@ public class A3649 {
     public String A3649ARCHI;
     public String A3649REGRQ;
     public String A3649ANIO;
-    public String A3659CIA;
-    public String A3659FORMA;
-    public String A3659SERIE;
-    public String A3659SEQ;
     public String A3649FRERQ;
     public String A3649REGIS;
     public String A3649FREGI;
@@ -36,37 +32,6 @@ public class A3649 {
     public String A3649FREVI;
     public String A3649HREVI;
 
-    public String getA3659CIA() {
-        return A3659CIA;
-    }
-
-    public void setA3659CIA(String A3659CIA) {
-        this.A3659CIA = A3659CIA;
-    }
-
-    public String getA3659FORMA() {
-        return A3659FORMA;
-    }
-
-    public void setA3659FORMA(String A3659FORMA) {
-        this.A3659FORMA = A3659FORMA;
-    }
-
-    public String getA3659SERIE() {
-        return A3659SERIE;
-    }
-
-    public void setA3659SERIE(String A3659SERIE) {
-        this.A3659SERIE = A3659SERIE;
-    }
-
-    public String getA3659SEQ() {
-        return A3659SEQ;
-    }
-
-    public void setA3659SEQ(String A3659SEQ) {
-        this.A3659SEQ = A3659SEQ;
-    }
     public String getA3649ANIO() {
         return A3649ANIO;
     }

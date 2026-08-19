@@ -11,7 +11,6 @@ package net.miatech.beans;
 public class PX549S01A1747Filter{
     //INPUT
     public int IN_OPCION = 0;
-    public String IN_TIPOC = "";
     public String IN_FECHAFROM = "";
     public String IN_FECHATO = "";
     public String IN_TKT = "";

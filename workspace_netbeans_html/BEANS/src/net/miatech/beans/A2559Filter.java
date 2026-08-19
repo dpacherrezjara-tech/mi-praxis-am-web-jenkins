@@ -23,24 +23,5 @@ public class A2559Filter extends A2559{
     public Double A2559DTAX = 0.0;
     public Double A2559DISC = 0.0;
     
-    public String A2559FCOIC = "";
-    public String A2559TUSO = "";
-    public Double A2559YQ = 0.0;
-    public Double A2559TCAMB = 0.0;
-    public Double A2559FYQ = 0.00;
-    public Double A2559TCAMF = 0.00;
-    public Double DFQ = 0.0;
-    public Double DCAMB = 0.0;
-    public String IN_FLAG = "";
-    
-    public String IN_FLOWN_FINI = "";
-    public String IN_FLOWN_FFIN = "";
-    public String IN_FLIGHT_FINI = "";
-    public String IN_FLIGHT_FFIN = "";
-    public String IN_BILLING_DATEFINI = "";
-    public String IN_BILLING_DATEFFIN = "";
-    public String IN_PERIOD = "";
-    public String STATUS = "";
-    
     public Pagination page = new Pagination();
 }

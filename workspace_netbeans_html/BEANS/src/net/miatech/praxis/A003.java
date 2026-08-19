@@ -137,12 +137,6 @@ public class A003 {
     //EXTRAS
     public String VP_A003SABCTY = "";
     
-    public String A4059DESDE  = "";
-    public String A4059HASTA  = "";
-    public String A4059CTAUN  = "";
-    public String A4059CTACC  = "";
-    public String A4059CTAUB  = "";
-    
     public int pos = 0;
     //PAGINACION ===============================================================
     public int intCurrentPg = -1;

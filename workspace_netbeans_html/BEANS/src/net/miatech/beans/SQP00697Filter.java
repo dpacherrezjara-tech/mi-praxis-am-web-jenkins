@@ -43,16 +43,12 @@ public class SQP00697Filter {
     public double A1531VFOP = 0d;
     public double totA1531VFOP = 0d;
     public String A720SEQ = "";
-    public String SCARDN = "";
-    public String SAUTHOC = "";
     public String A1531CAPL = "";
     public String A1531MFOP = "";
     public String IN_DATE_FROM = "";
     public String IN_DATE_TO = "";
     public String IN_IATA = "";
     public String IN_CAPL = "";
-    public String A720TKVOID = "";
-    public String STATUSMP = "";
     public Pagination page = new Pagination();
     
     public String bufferToString(String ccust, String strTicket, String strPag, String comodin) {

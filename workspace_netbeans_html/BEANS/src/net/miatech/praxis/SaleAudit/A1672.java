@@ -2,6 +2,7 @@ package net.miatech.praxis.SaleAudit;
 
 public class A1672 {
 
+    
     public String A1672CCUST = ""; //Customer
     public String A1672CIA = ""; //CIA
     public String A1672FORMA = ""; //Forma	
@@ -73,7 +74,6 @@ public class A1672 {
     public String A1672NREASON = "";
     public String A1672CURRENCY = "";
     public String A1672PNR = "";
-    public String A1672IDFIL = "";
     public int A1672CORREO = 0;
     public String A1672MEMO = "";
     public String A1672FLADM = "";
@@ -202,29 +202,11 @@ public class A1672 {
     public int CANTADMGDS;
     public int CANTASR;
     public int CANTBSP;
-    public int CANTPYR;
     public int CANTJUSTIADMREPORT;
     public int CANTARC;
     public int CANTABSP;
     public int CANTOTAL;
     public int TOTALGROUP;
-    public String A1672TIBOL;
-
-    public int getCANTPYR() {
-        return CANTPYR;
-    }
-
-    public void setCANTPYR(int CANTPYR) {
-        this.CANTPYR = CANTPYR;
-    }
-
-    public String getA1672TIBOL() {
-        return A1672TIBOL;
-    }
-
-    public void setA1672TIBOL(String A1672TIBOL) {
-        this.A1672TIBOL = A1672TIBOL;
-    }
 
     public int getCANTOTAL() {
         return CANTOTAL;
@@ -241,7 +223,8 @@ public class A1672 {
     public void setTOTALGROUP(int TOTALGROUP) {
         this.TOTALGROUP = TOTALGROUP;
     }
-
+    
+    
     public int getCANTARC() {
         return CANTARC;
     }
@@ -257,7 +240,8 @@ public class A1672 {
     public void setCANTABSP(int CANTABSP) {
         this.CANTABSP = CANTABSP;
     }
-
+    
+    
     public int getCANTADMJUSTI() {
         return CANTADMJUSTI;
     }
@@ -329,6 +313,8 @@ public class A1672 {
     public void setCANTBSP(int CANTBSP) {
         this.CANTBSP = CANTBSP;
     }
+    
+    
 
     public double getCANTADMACEPORC() {
         return CANTADMACEPORC;

@@ -50,26 +50,7 @@ public class A3654 {
     public String A3654FREVI;
     public String A3654HREVI;
     public Double A3654MONTO;
-    public String A3654ANIO;
-    public String A3654FLAG;
 
-    public String getA3654ANIO() {
-        return A3654ANIO;
-    }
-
-    public void setA3654ANIO(String A3654ANIO) {
-        this.A3654ANIO = A3654ANIO;
-    }
-
-    public String getA3654FLAG() {
-        return A3654FLAG;
-    }
-
-    public void setA3654FLAG(String A3654FLAG) {
-        this.A3654FLAG = A3654FLAG;
-    }
-
-    
     public String getA3654CCUST() {
         return A3654CCUST;
     }

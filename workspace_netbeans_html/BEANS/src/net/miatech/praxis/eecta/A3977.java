@@ -25,7 +25,6 @@ public class A3977 {
     public String A3977STSPG = "";
     public String A3977IDPG = "";
     public String A3977SQPG = "";
-    public String A3977SQRCB = "";
     public String A3977REFPG = "";
     public String A3977FECPG = "";
     public String A3977BANCO = "";
@@ -33,7 +32,6 @@ public class A3977 {
     public String A3977TRXPG = "";
     public Double A3977TOT = 0.0;
     public Double A3977TOTAP = 0.0;
-    public Double A3977TAJUS = 0.0;    
     public Double A3977SALD = 0.0;
     public String A3977MDA = "";
     public String A3977APLIC = "";

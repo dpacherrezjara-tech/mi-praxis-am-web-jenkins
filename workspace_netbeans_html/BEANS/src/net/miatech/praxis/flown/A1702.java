@@ -11,7 +11,6 @@ package net.miatech.praxis.flown;
 public class A1702 { 
     
     public String  CCUST ="";
-    public String  DFLIGHT ="";
     public String  EQUIPO ="";
     public String  MODELO ="";
     public String  NUMERO ="";
@@ -21,10 +20,6 @@ public class A1702 {
     public double  TOTGALO =0;
     public double  TOTCARG =0;
     public String  ESTADO ="";
-    public String  A2543TIP ="";
-    public String  A2543COD ="";
-    public String  A2543DES ="";
-    public String  A2543PROCESS ="";
     public int  PAX  =0;
     public int  PAXF  =0;
     public int  PAXJ  =0;

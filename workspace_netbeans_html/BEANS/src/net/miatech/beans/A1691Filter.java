@@ -23,7 +23,6 @@ public class A1691Filter extends A1691 {
     public String strFormatDate3 = "";
     public String strTitulo = "";
     public String strDescripcion = "";
-    public String strDescripcion2 = "";
     public String strFCLOFO = "";
      public String strDesFCLOFO = "";
     public String strFormatFSENDSS = "";
@@ -44,13 +43,6 @@ public class A1691Filter extends A1691 {
     public String strDescCARRIVA = "";
     public String strDescFFLOW = "";
     public String strSQL = "";
-    public String USRDESCRIP = "";
-    public String FECRDESCRIP = "";
-    public String USACDESCRIP = "";
-    public String FEACDESCRIP = "";
-    public String HOACDESCRIP = "";
-    public String USCRDESCRIP = "";
-    public String HOCRDESCRIP = "";
     public long RN  = 0;
     
     public String FPROC   = "";

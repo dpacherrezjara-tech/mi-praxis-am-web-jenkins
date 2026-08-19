@@ -13,7 +13,6 @@ public class A1413 {
 public String A1413CCUST = "";
 public String A1413DATE = "";
 public String A1413SEC = ""; 
-public String A1413NENV = ""; 
 public String A1413DATA = "";
 public String A1413STATU = "";
 public String A1413CIA  = "";

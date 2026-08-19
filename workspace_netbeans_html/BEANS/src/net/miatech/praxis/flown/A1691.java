@@ -43,8 +43,8 @@ public class A1691 {
     public long QCPNMA = 0;
     public long QCPNOCR = 0;
     public long QCPNON = 0;
-    public long QCPHARB = 0;
     public long QCPNOAL = 0;
+    public long QCPHARB = 0;
     public long QCPCFRE = 0;
     public long QCPCABY = 0;
     public long QCPCABF = 0;
@@ -66,7 +66,6 @@ public class A1691 {
     public String FSENDFI = "";
     public int QCPNFI = 0;
     public int QCPNFRE = 0;
-    public int QCPHARB_ESP = 0;
     public String FSTAFI = "";
     
     //tot

@@ -265,28 +265,9 @@ public class A3084Filter extends A3084 {
     public String strOPECARR24 ="";  
     public String strTKTCARR24 ="";  
     public String strFAREBAS24 ="";  
-    //Accounting Coupons
-    public String FCONT = "";
-    public String CARRYER = "";
-    public String CIAF = "";
-    public String FTYPE = "";
-    public int QTY_CPN = 0;
-    public double VALOR = 0;
-    public double VALOR_YQ = 0;
-    public double totVALOR = 0;
-    public double VALOR_MXN = 0;
-    public double VALOR__YQ_MXN = 0;
-    public double totVALOR_MXN = 0;
-    public int TOTQTY_CPN = 0;
-    public double TOTVALOR = 0;
-    public double TOTVALOR_YQ = 0;
-    public double TOTtotVALOR = 0;
-    public double TOTVALOR_MXN = 0;
-    public double TOTVALOR__YQ_MXN = 0;
-    public double TOTtotVALOR_MXN = 0;
 
     public Pagination page = new Pagination();
-    
+
     public String bufferToString(String ccust, String strTicket, String strPag, String tabla, String strTipo) {
 
         String strValue = "";

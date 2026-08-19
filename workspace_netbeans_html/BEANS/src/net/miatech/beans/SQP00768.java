@@ -46,39 +46,10 @@ public class SQP00768 {
     public int orden = 0;
     public String strCodReasons = "";
     
-    public String cmbSELECTED = "";
-    
     public String strCampo = "";
     public int strAscDesc = 0;
     public boolean chkGroup=false;
     
-    // Calculados solo para A1672 (Tickets Invol): Ticket = CIA+FORMA+SERIE,
-    // Ticket Ori = CIAOR+FOROR+SEROR, isChainRoot = true si la fila no es un exchange
-    // (TRNCU <> 'EXCH'), usado para alternar el color de fondo por cadena en el Excel.
-    public String ticket = "";
-    public String ticketOri = "";
-    public boolean isChainRoot = false;
-
-    // pxSeqKey = A1672SEQ real de la fila (viene siempre del SP, sin importar
-    // en que columnN haya quedado SEQ si el usuario lo marco como columna).
-    // sortKey = identidad de la raiz de la cadena (para agrupar). pnrMismatch
-    // = true si dentro de esa cadena hay mas de un PNR distinto (se pinta en
-    // verde en la grilla como alerta de calidad de dato).
-    public String pxSeqKey = "";
-    public String sortKey = "";
-    public boolean pnrMismatch = false;
-    public boolean paxMismatch = false;
-
-    // CSR Match Masivos ASR (Casuistica 1/2/3, regla de cierre comun): solo
-    // aplica a filas EXCH (no a la raiz). Compara contra su predecesor
-    // inmediato (Ticket Ori) -- NO valida la evidencia (REAC/OSI/IT), solo
-    // el cierre aritmetico: misma ruta (origen-destino) y variacion de fecha
-    // de vuelo dentro del umbral (48h domestico / 72h internacional segun DI).
-    public boolean rutaOK = false;
-    public boolean fechaOK = false;
-    public boolean reglaCierreOK = false;
-    public String reglaCierreDetalle = "";
-
     public String column1 = "";
     public String column2 = "";
     public String column3 = "";
@@ -86,9 +57,6 @@ public class SQP00768 {
     public String column5 = "";
     public String column6 = "";
     public String column7 = "";
-    
-    public String A1721FRCA = "";
-    
     public String column8 = "";
     public String column9 = "";
     public String column10 = "";

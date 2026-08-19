@@ -31,7 +31,6 @@ public class A3676Filter extends A3676 {
     public String IN_DATEFROM;
     public String IN_DATETO;
     public String IN_TYPE;
-    public String IN_TKT;
     public String pexcel;
     public String TICKET;
 

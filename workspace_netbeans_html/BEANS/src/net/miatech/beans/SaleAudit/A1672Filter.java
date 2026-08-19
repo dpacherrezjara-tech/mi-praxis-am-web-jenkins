@@ -18,7 +18,6 @@ public class A1672Filter extends A1672 {
     public String VP_SEQ = "";
     public String VP_CUPON = "";
 
-    public String VP_PRESTACIO = "";
     public String VP_SOURCE = "";
     public String VP_ISSUEDATE = "";
     public String VP_CANAL = "";

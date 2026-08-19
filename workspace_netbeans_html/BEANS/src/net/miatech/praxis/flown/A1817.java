@@ -10,26 +10,14 @@ package net.miatech.praxis.flown;
  */
 public class A1817 {
 
-    public String RN = "";
     public String CCUST = "";
     public int NAID = 0;
     public String STVAL = "";
-    public String descSTVAL = "";
-    public String IDCON = "";
-    public String FCONT = "";
-    public String FHTRANS = "";
-    public String FECVTA = "";
-    public String DAUDTAX = "";
-    public String descDFLIGHT = "";
     public String TEMD = "";
     // INFORMATION FLIGHT OCR  
     public String CCIA = "";
     public String FORMA = "";
     public String SERIE = "";
-    public String CCIAP = "";
-    public String FORMAP = "";
-    public String SERIEP = "";
-    public String TICKET = "";
     public String CUPON = "";
     public String FFLOW = "";
     public String TOPER = "";

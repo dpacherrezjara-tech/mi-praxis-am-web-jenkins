@@ -18,6 +18,5 @@ public class SQP04110Filter {
     public String VP_FDATE2 = "";
     public String VP_FEJEC = "";
     public String VP_CDCLI= "";
-    public String VP_FACTURAR= "";
     public DBException dbException = new DBException();
 }

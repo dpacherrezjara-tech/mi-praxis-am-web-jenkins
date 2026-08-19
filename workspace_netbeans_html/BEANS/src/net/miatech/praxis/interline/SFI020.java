@@ -17,12 +17,6 @@ public class SFI020 {
     public String PERNUM = "";
     public String BNUMBER = "";
     public String BDATE = "";
-    public String BEAN_BDATE = "";
-    public String BEAN_BDAIR = "";
-    public String BEAN_TRNCU = "";
-    public String BEAN_FVALUE = "";
-    public String BEAN_TYPE = "";
-    public String BEAN_ORDER = "";
     public String BDATE2 = "";
     public long NAID = 0;
     public int BCODE = 0;

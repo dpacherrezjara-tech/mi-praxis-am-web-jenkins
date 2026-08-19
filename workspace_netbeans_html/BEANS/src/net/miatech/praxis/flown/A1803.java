@@ -22,9 +22,6 @@ public class A1803 {
             public String CITYD  ="";
             public String BOOKI="";
             public String CLASE ="";
-            public String RFIC ="";
-            public String RECODE ="";
-            public String CODEDESC ="";
             public String FAREBASE="";
             public String CURRENC="";
             public double VALOR =0;

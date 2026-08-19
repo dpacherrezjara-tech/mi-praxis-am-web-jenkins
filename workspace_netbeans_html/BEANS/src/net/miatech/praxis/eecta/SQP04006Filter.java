@@ -13,7 +13,6 @@ import net.miatech.beans.Pagination;
  */
 public class SQP04006Filter extends A3965 {
 
-    public String VP_A3953TCLIN = "";
     public String VP_A3965CCUST = "";
     public String VP_A3965CDCLI = "";
     public String VP_A3965PERIO = "";

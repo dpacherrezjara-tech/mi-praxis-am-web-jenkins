@@ -11,30 +11,6 @@ package net.miatech.praxis.SaleAudit;
 public class A2537 {
 
     public String A2537CCUST;
-    public String A2537SEQ;
-    public String A2537NCASO;
-    public String A2537PCASO;
-    public String A2537FCRRE;
-    public String A2537HCRRE;
-    public String A2537FVETO;
-    public String A2537HVETO;
-    public String A2537ESTAD;
-    public String A2537CODIT;
-    public String A2537NVLO;
-    public String A2537FVLO;
-    public String A2537HVLO;
-    public String A2537ITIN;
-    public String A2537TKTS;
-    public String A2537TCASO;
-    public String A2537CCPTO;
-    public String A2537SCPTO;
-    public String A2537CURRW;
-    public String A2537AMOUW;
-    public String A2537IATAE;
-    public String A2537AGENE;
-    public String A2537EJECB;
-    public String A2537DESCR;
-    public String A2537RUTAA;
      public String A2537ID;
     public String A2537KEY;
     public String A2537STAT;
@@ -78,7 +54,6 @@ public class A2537 {
     public String A2537HMODI;
     public String A2537TIKET;
     public String A2537NAMEF;
-    public String A2537TKTS_HAS_WAIVER;
 
     public String getA2537NAMEF() {
         return A2537NAMEF;
@@ -428,14 +403,6 @@ public class A2537 {
 
     public void setA2537HMODI(String A2537HMODI) {
         this.A2537HMODI = A2537HMODI;
-    }
-
-     public String getA2537TKTS_HAS_WAIVER() {
-        return A2537TKTS_HAS_WAIVER;
-    }
-
-    public void setA2537TKTS_HAS_WAIVER(String A2537TKTS_HAS_WAIVER) {
-        this.A2537TKTS_HAS_WAIVER = A2537TKTS_HAS_WAIVER;
     }
     
     
