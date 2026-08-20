@@ -1,34 +1,34 @@
 Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
     extend: 'Ext.form.Panel',
     alias: 'widget.' + prototype.id + '-filters',
-    border: false,
-    margin: '2 0 2 0 ',
-    layout: 'column',
+    border: true,
+    bodyStyle: 'background-color: #E3EAF9;',
+    layout: 'fit',
     items: [
         {
-            xtype: 'form',
-            border: false,
-            bodyStyle: 'background: transparent',
-            layout: 'vbox',
+            xtype: 'fieldset',
+            id: prototype.id + '-titleFieldsetBSP',
+            title: '<span style="color:#1A4D8F;font-weight:bold;">FILTERS</span>',
+            style: 'border: 1px solid #1A4D8F; padding: 10px; margin: 10px 15px;',
+            layout: {
+                type: 'vbox',
+                align: 'stretch'
+            },
+            defaultType: 'container',
             defaults: {
-                anchor: '100%',
-                width: prototype.widthContenedor,
-                bodyStyle: 'background-color: #E3EAF9;'
+                layout: 'hbox',
+                margin: '0 0 14 0',
+                defaults: {
+                    labelAlign: 'right',
+                    labelStyle: 'font-size: 12px;',
+                    fieldStyle: 'text-align: center; font-size: 12px;',
+                    margin: '0 8 0 0'
+                }
             },
             items: [
+                // ================= FILA 1 =================
                 {
-                    xtype: 'panel',
-                    layout: 'hbox',
-                    defaults: {
-                        padding: '5px 1px 5px 1px',
-                        anchor: '100%',
-                        hiddenLabel: false,
-                        labelAlign: 'right',
-                        enableKeyEvents: true,
-                        enforceMaxLength: true
-                    },
                     items: [
-                        {xtype: 'tbspacer', width: 7},
                         {
                             xtype: 'combo',
                             id: prototype.id + '-cmbTipoFecha',
@@ -38,6 +38,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                     [1, "Transaction Date"], [2, "Processing Date"]
                                 ]
                             }),
+                            hidden: true,
                             queryMode: 'local',
                             allowBlank: true,
                             forceSelection: true,
@@ -48,8 +49,6 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                             width: 123,
                             value: 1,
                             typeAhead: true,
-                            hidden: true,
-                            padding: '5 4 5 1',
                             valueField: 'code', displayField: 'name',
                             enableKeyEvents: true,
                             triggerAction: 'all',
@@ -59,153 +58,150 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 }
                             }
                         },
-                        {xtype: 'tbspacer', width: 4},
-                        // <editor-fold defaultstate="collapsed" desc="Combo Date">
-                        {
-                            xtype: 'label',
-                            id: prototype.id + '-lblFlightDate',
-                            text: 'Flight Date',
-                            style: 'font-weight:bold;',
-                            padding: '8px 7px 8px 0px'
-                        },
-                        {xtype: 'tbspacer', width: 8},
-                        {
-                            xtype: 'label',
-                            html: 'From:',
-                            align: 'center',
-                            fieldStyle: 'text-align: center;',
-                            padding: '8px 7px 8px 0px'
-                        },
-                        {xtype: 'tbspacer', width: 4},
                         {
                             xtype: 'combo',
-                            id: prototype.id + '-cmbDateFromYear',
+                            id: prototype.id + '-searchBy',
+                            fieldLabel: 'Search By',
+                            labelAlign: 'left',
+                            labelWidth: 70,
+                            width: 170,
+                            store: new Ext.data.SimpleStore({
+                                fields: ['code', 'name'],
+                                data: [
+                                    ["", "Flight Date"]
+                                ]
+                            }),
                             queryMode: 'local',
-                            triggerAction: 'all',
-                            autoSelect: false,
-                            enableKeyEvents: true,
+                            allowBlank: true,
                             forceSelection: true,
-                            caseSensitive: true,
+                            caseSensitive: false,
+                            autoSelect: true,
+                            disabled: true,
                             editable: false,
-                            valueField: 'code',
-                            displayField: 'name',
-                            width: 70,
-                            listConfig: {maxHeight: 111, minWidth: 70},
-                            listeners: {
-                                change: 'cbxDateFromYear_changeHandler'
-                            }
-                        },
-                        {xtype: 'tbspacer', width: 4},
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbDateFromMonth',
-                            labelAlign: 'right',
-                            queryMode: 'local',
-                            triggerAction: 'all',
-                            editable: false,
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            caseSensitive: true,
+                            value: "",
+                            typeAhead: true,
                             valueField: 'code', displayField: 'name',
-                            listConfig: {minWidth: 60},
-                            width: 60,
-                            anchor: '100%',
-                            listeners: {
-                                change: 'cbxDateFromMonth_changeHandler'
-                            }
-                        },
-                        {xtype: 'tbspacer', width: 4},
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbDateFromDay',
-                            labelAlign: 'right',
-                            queryMode: 'local',
-                            triggerAction: 'all',
-                            editable: false,
-                            autoSelect: false,
                             enableKeyEvents: true,
-                            caseSensitive: true,
-                            valueField: 'code', displayField: 'name',
-                            emptyText: 'All',
-                            width: 60,
-                            anchor: '100%',
-                            listConfig: {maxHeight: 111, minWidth: 60},
-                            listeners: {
-                                change: 'cbxDateFromDay_changeHandler'
-                            }
+                            triggerAction: 'all'
                         },
-                        {xtype: 'tbspacer', width: 15},
                         {
-                            xtype: 'label',
-                            html: 'To:',
-                            align: 'center',
-                            fieldStyle: 'text-align: center;',
-                            padding: '8px 7px 8px 0px'
+                            xtype: 'fieldcontainer',
+                            fieldLabel: 'From',
+                            labelWidth: 35,
+                            layout: 'hbox',
+                            defaults: {margin: '0 0 0 0'},
+                            items: [
+                                {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-cmbDateFromYear',
+                                    queryMode: 'local',
+                                    triggerAction: 'all',
+                                    autoSelect: false,
+                                    enableKeyEvents: true,
+                                    forceSelection: true,
+                                    caseSensitive: true,
+                                    editable: false,
+                                    valueField: 'code',
+                                    displayField: 'name',
+                                    width: 55,
+                                    listConfig: {maxHeight: 111, minWidth: 70},
+                                    listeners: {
+                                        change: 'cbxDateFromYear_changeHandler'
+                                    }
+                                },
+                                {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-cmbDateFromMonth',
+                                    queryMode: 'local',
+                                    triggerAction: 'all',
+                                    editable: false,
+                                    autoSelect: false,
+                                    enableKeyEvents: true,
+                                    caseSensitive: true,
+                                    valueField: 'code', displayField: 'name',
+                                    listConfig: {minWidth: 60},
+                                    width: 50,
+                                    listeners: {
+                                        change: 'cbxDateFromMonth_changeHandler'
+                                    }
+                                },
+                                {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-cmbDateFromDay',
+                                    queryMode: 'local',
+                                    triggerAction: 'all',
+                                    editable: false,
+                                    autoSelect: false,
+                                    enableKeyEvents: true,
+                                    caseSensitive: true,
+                                    valueField: 'code', displayField: 'name',
+                                    emptyText: 'All',
+                                    width: 45,
+                                    listConfig: {maxHeight: 111, minWidth: 60},
+                                    listeners: {
+                                        change: 'cbxDateFromDay_changeHandler'
+                                    }
+                                }
+                            ]
                         },
-                        {xtype: 'tbspacer', width: 4},
                         {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbDateToYear',
-                            queryMode: 'local',
-                            triggerAction: 'all',
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            forceSelection: true,
-                            caseSensitive: true,
-                            editable: false,
-                            valueField: 'code',
-                            displayField: 'name',
-                            width: 70,
-                            hiddenLabel: false,
-                            listConfig: {maxHeight: 111, minWidth: 70}
-                        },
-                        {xtype: 'tbspacer', width: 4},
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbDateToMonth',
-                            labelAlign: 'right',
-                            queryMode: 'local',
-                            triggerAction: 'all',
-                            editable: false,
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            caseSensitive: true,
-                            valueField: 'code', displayField: 'name',
-                            listConfig: {minWidth: 60},
-                            width: 60,
-                            anchor: '100%'
-                        },
-                        {xtype: 'tbspacer', width: 4},
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbDateToDay',
-                            labelAlign: 'right',
-                            queryMode: 'local',
-                            triggerAction: 'all',
-                            editable: false,
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            caseSensitive: true,
-                            valueField: 'code',
-                            displayField: 'name',
-                            emptyText: 'All',
-                            labelWidth: 0,
-                            width: 60,
-                            anchor: '100%',
-                            listConfig: {maxHeight: 111, minWidth: 60}
-                        },
-                        // </editor-fold>
-                        {xtype: 'tbspacer', width: 15},
-                        {
-                            xtype: 'label',
-                            html: 'Flag Flown:',
-                            align: 'center',
-                            fieldStyle: 'text-align: center;',
-                            padding: '8px 7px 8px 0px'
+                            xtype: 'fieldcontainer',
+                            fieldLabel: 'To',
+                            labelWidth: 20,
+                            layout: 'hbox',
+                            defaults: {margin: '0 0 0 0'},
+                            items: [
+                                {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-cmbDateToYear',
+                                    queryMode: 'local',
+                                    triggerAction: 'all',
+                                    autoSelect: false,
+                                    enableKeyEvents: true,
+                                    forceSelection: true,
+                                    caseSensitive: true,
+                                    editable: false,
+                                    valueField: 'code',
+                                    displayField: 'name',
+                                    width: 55,
+                                    listConfig: {maxHeight: 111, minWidth: 70}
+                                },
+                                {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-cmbDateToMonth',
+                                    queryMode: 'local',
+                                    triggerAction: 'all',
+                                    editable: false,
+                                    autoSelect: false,
+                                    enableKeyEvents: true,
+                                    caseSensitive: true,
+                                    valueField: 'code', displayField: 'name',
+                                    listConfig: {minWidth: 60},
+                                    width: 50
+                                },
+                                {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-cmbDateToDay',
+                                    queryMode: 'local',
+                                    triggerAction: 'all',
+                                    editable: false,
+                                    autoSelect: false,
+                                    enableKeyEvents: true,
+                                    caseSensitive: true,
+                                    valueField: 'code',
+                                    displayField: 'name',
+                                    emptyText: 'All',
+                                    width: 45,
+                                    listConfig: {maxHeight: 111, minWidth: 60}
+                                }
+                            ]
                         },
                         {
                             xtype: 'combo',
                             id: prototype.id + '-cmbFlagFlown',
+                            fieldLabel: 'Flag Flown',
+                            labelWidth: 70,
+                            width: 150,
                             store: new Ext.data.SimpleStore({
                                 fields: ['code', 'name'],
                                 data: [
@@ -219,7 +215,6 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                             caseSensitive: false,
                             autoSelect: true,
                             editable: false,
-                            width: 78,
                             value: "",
                             typeAhead: true,
                             valueField: 'code', displayField: 'name',
@@ -237,17 +232,12 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 keypress: 'onTextKeypress'
                             }
                         },
-                        {xtype: 'tbspacer', width: 15},
-                        {
-                            xtype: 'label',
-                            html: 'Carrier:',
-                            align: 'center',
-                            fieldStyle: 'text-align: center;',
-                            padding: '8px 7px 8px 0px'
-                        },
                         {
                             xtype: 'combo',
                             id: prototype.id + '-cmbCarrier',
+                            fieldLabel: 'Carrier',
+                            labelWidth: 50,
+                            width: 150,
                             store: new Ext.data.SimpleStore({
                                 fields: ['code', 'name'],
                                 data: [
@@ -260,7 +250,6 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                             caseSensitive: false,
                             autoSelect: true,
                             editable: false,
-                            width: 82,
                             value: "",
                             typeAhead: true,
                             valueField: 'code', displayField: 'name',
@@ -277,28 +266,98 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 }
                             }
                         },
-                        {xtype: 'tbspacer', width: 15},
-                        {
-                            xtype: 'label',
-                            html: 'Flight Number:',
-                            align: 'center',
-                            fieldStyle: 'text-align: center;',
-                            padding: '8px 7px 8px 0px'
-                        },
                         {
                             xtype: 'textfield',
                             id: prototype.id + '-txtFlight',
-                            fieldStyle: 'text-align:center',
+                            fieldLabel: 'Flight Number',
+                            labelWidth: 90,
+                            width: 130,
                             enforceMaxLength: true,
                             maskRe: /[0-9]/,
                             maxLength: 4,
-                            width: 50,
                             enableKeyEvents: true,
                             listeners: {
                                 keypress: 'onTextKeypress'
                             }
                         },
-                        {xtype: 'tbspacer', width: 15},
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtTKT',
+                            fieldLabel: 'Ticket',
+                            labelWidth: 45,
+                            width: 145,
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/,
+                            maxLength: 15,
+                            enableKeyEvents: true,
+                            listeners: {
+                                change: 'onValidarChange',
+                                keypress: 'BuscarTKT_keyDownHandler'
+                            }
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtROLL',
+                            fieldLabel: 'Rolling',
+                            labelWidth: 50,
+                            width: 90,
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/,
+//                    maxLength: 2,
+                            enableKeyEvents: true,
+                            listeners: {
+//                                change: 'onValidarChange',
+                                keypress: 'BuscarTKT_keyDownHandler'
+                            }
+                        },
+                        {
+                            xtype: 'fieldcontainer',
+                            fieldLabel: 'Scan Tickets',
+                            labelWidth: 80,
+                            layout: 'hbox',
+                            defaults: {margin: '0 5 0 0'},
+                            items: [
+                                {
+                                    xtype: 'datefield',
+                                    id: prototype.id + '-txtFilterDatem',
+                                    format: 'Y/m/d',
+                                    formatText: '',
+                                    invalidText: 'Type the date in the format: YYYY/MM/DD',
+                                    minValue: new Date(1990, 00, 01),
+                                    maxValue: new Date(),
+                                    maskRe: /[0-9/]/,
+                                    fieldStyle: 'text-align:center;color:blue;',
+                                    editable: true,
+                                    enforceMaxLength: true,
+                                    maxLength: 10,
+                                    width: 82,
+                                    autoEl: {
+                                        tag: 'label',
+                                        'data-qtip': 'Format valid YYYY/MM/DD'
+                                    }
+                                },
+                                {
+                                    xtype: 'button',
+                                    id: prototype.id + '-btnScanTicket',
+                                    iconCls: 'prx-icon-update',
+                                    tooltip: 'Scan Tickets',
+                                    border: true,
+                                    listeners: {
+                                        click: 'btnScanTicket_clickHandler'
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'checkboxfield',
+                            id: prototype.id + '-chkManifest',
+                            boxLabel: '<b>Flight Manifest</b>',
+                            checked: false,
+                            width: 130,
+                            listeners: {
+                                change: 'btnSearch_click'
+                            }
+                        },
                         {
                             xtype: 'checkboxfield',
                             id: prototype.id + '-chkObs',
@@ -308,33 +367,29 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                             listeners: {
                                 change: 'onChangeChkObs'
                             }
-                        },
-                        {xtype: 'tbspacer', width: 15},
-                        {
-                            xtype: 'checkboxfield',
-                            id: prototype.id + '-chkManifest',
-                            boxLabel: '<b>Flight Manifest</b>',
-                            checked: false,
-                            width: 120,
-                            listeners: {
-                                change: 'btnSearch_click'
-                            }
-                        },
-                        {xtype: 'tbspacer', width: 50},
+                        }
+                    ]
+                },
+                // ================= FILA 2 =================
+                {
+                    margin: '0 0 4 0',
+                    items: [
                         {
                             xtype: 'form',
                             id: prototype.id + '-form-01',
                             border: false,
+                            width: 330,
+                            bodyPadding: 0,
                             bodyStyle: 'background-color: #E3EAF9;',
                             items: [{
                                     xtype: 'filefield',
                                     id: prototype.id + '-file',
                                     name: 'excelfile',
-//                                fieldLabel: '<strong style="font-weight:bold;color:#0B333C;">Update Excel</strong>',
+                                    fieldLabel: 'Update Excel',
                                     allowBlank: true,
                                     accept: '.xlsx, .xls',
-                                    labelWidth: 85,
-                                    width: 160,
+                                    labelWidth: 100,
+                                    width: 330,
                                     buttonText: 'Select excel...',
                                     regex: /(.)+((\.xlsx)|(\.xls)|(\.csv)(\w)?)$/i,
                                     regexText: 'Only XLS and XLSX formats are accepted',
@@ -347,229 +402,110 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                     }
                                 }]
                         },
-                        {xtype: 'tbspacer', width: 20},
                         {
                             xtype: 'button',
                             id: prototype.id + '-btn-upload',
-                            margin: '2 0 0 0',
-                            width: 60,
-                            html: '<strong style="color:white;">UPDATE</strong>',
+                            width: 110,
+                            html: '<strong style="color:white;">Update Excel</strong>',
                             style: 'background:#24678D;color:white;font-weight:bold;',
                             border: false,
                             listeners: {
                                 click: 'onFileLoad'
                             }
-                        }
-                    ]
-                },
-                {
-                    xtype: 'panel',
-                    layout: 'hbox',
-                    style: 'border-top: 4px #ffffff solid;border-left: 0px;',
-                    defaults: {
-                        padding: '5px 1px 5px 1px',
-                        anchor: '100%'
-                    },
-                    items: [
-                        {xtype: 'tbspacer', width: 7},
-                        {
-                            xtype: 'label',
-                            html: 'Ticket:',
-                            align: 'center',
-                            fieldStyle: 'text-align: center;',
-                            padding: '7px 7px 6px 0px'
                         },
                         {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtTKT',
-                            fieldStyle: 'text-align:center',
-                            enforceMaxLength: true,
-                            maskRe: /[0-9]/,
-                            maxLength: 15,
-                            width: 100,
-                            enableKeyEvents: true,
-                            listeners: {
-                                change: 'onValidarChange',
-                                keypress: 'BuscarTKT_keyDownHandler'
-                            }
+                            xtype: 'form',
+                            id: prototype.id + '-form-01_INF',
+                            border: false,
+                            width: 330,
+                            bodyPadding: 0,
+                            bodyStyle: 'background-color: #E3EAF9;',
+                            items: [{
+                                    xtype: 'filefield',
+                                    id: prototype.id + '-file_INF',
+                                    name: 'excelfile_INF',
+                                    fieldLabel: 'Update INF',
+                                    allowBlank: true,
+                                    accept: '.xlsx, .xls',
+                                    labelWidth: 100,
+                                    width: 330,
+                                    buttonText: 'Select excel...',
+                                    regex: /(.)+((\.xlsx)|(\.xls)|(\.csv)(\w)?)$/i,
+                                    regexText: 'Only XLS and XLSX formats are accepted',
+                                    buttonConfig: {
+                                        text: '<strong>Select file</strong>',
+                                        width: 80
+                                    },
+                                    listeners: {
+                                        //change: 'onUploadChange'
+                                    }
+                                }]
                         },
-                        {xtype: 'tbspacer', width: 10},
-                        {
-                            xtype: 'label',
-                            html: 'Rolling:',
-                            align: 'center',
-                            fieldStyle: 'text-align: center;',
-                            padding: '7px 7px 6px 0px'
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id + '-txtROLL',
-                            fieldStyle: 'text-align:center',
-                            enforceMaxLength: true,
-                            maskRe: /[0-9]/,
-//                            maxLength: 2,
-                            width: 40,
-                            enableKeyEvents: true,
-                            listeners: {
-//                                change: 'onValidarChange',
-                                keypress: 'BuscarTKT_keyDownHandler'
-                            }
-                        },
-                        {xtype: 'tbspacer', width: 5},
-                        {
-                            xtype: 'label',
-                            id: prototype.id + '-labelFSabre',
-                            html: 'Scan Sabre:',
-                            hidden: true,
-                            align: 'center',
-                            fieldStyle: 'text-align: center;',
-                            padding: '7px 7px 6px 0px'
-                        },
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbFSabre',
-                            store: new Ext.data.SimpleStore({
-                                fields: ['code', 'name'],
-                                data: [
-                                    ["", "All"], ["0", "Not Found"], ["1", "Found"],
-                                    ["2", "Found but not matching coupon"], ["4", "No Revenue(Employes/Oth)"], ["5", "Manual"], ["6", "BPO Found"]
-                                ]
-                            }),
-                            queryMode: 'local',
-                            hidden: true,
-                            allowBlank: true,
-                            forceSelection: true,
-                            caseSensitive: false,
-                            autoSelect: true,
-                            editable: false,
-                            width: 200,
-                            value: "",
-                            typeAhead: true,
-                            valueField: 'code', displayField: 'name',
-                            enableKeyEvents: true,
-                            triggerAction: 'all',
-                            listeners: {
-                                change: 'cmbFSabre_changeHandler'
-                            }
-                        },
-                        {xtype: 'tbspacer', width: 0},
-                        {
-                            xtype: 'label',
-                            id: prototype.id + '-labelScanTicket',
-                            text: 'Scan Tickets',
-                            style: 'text-align:left;font-weight:bold;',
-                            padding: '8 0'
-                        },
-                        {xtype: 'tbspacer', width: 10},
-                        {
-                            xtype: 'datefield',
-                            id: prototype.id + '-txtFilterDatem',
-                            format: 'Y/m/d',
-                            formatText: '',
-                            invalidText: 'Type the date in the format: YYYY/MM/DD',
-                            minValue: new Date(1990, 00, 01),
-                            maxValue: new Date(),
-                            maskRe: /[0-9/]/,
-                            fieldStyle: 'text-align:center;color:blue;',
-                            editable: true,
-                            enforceMaxLength: true,
-                            maxLength: 10,
-                            width: 90,
-                            autoEl: {
-                                tag: 'label',
-                                'data-qtip': 'Format valid YYYY/MM/DD'
-                            }
-                        },
-                        {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btnScanTicket',
-//                            html: '<strong>Process</strong>',
-                            iconCls: 'prx-icon-update',
-                            tooltip: 'Scan Tickets',
-                            border: true,
-//                            margin: '2 0',
-//                            width: 80,
+                            id: prototype.id + '-btn-upload_INF',
+                            width: 110,
+                            html: '<strong style="color:white;">Update INF</strong>',
+                            style: 'background:#24678D;color:white;font-weight:bold;',
+                            border: false,
                             listeners: {
-                                click: 'btnScanTicket_clickHandler'
+                                click: 'onFileLoad_INF'
                             }
                         },
-                        {xtype: 'tbspacer', width: 10},
-//                        {
-//                            xtype: 'label',
-//                            id: prototype.id + '-labelScanTicket',
-//                            html: 'Scan Tickets',
-////                            hidden: true,
-//                            align: 'center',
-//                            fieldStyle: 'text-align: center;',
-//                            padding: '7px 7px 6px 0px'
-//                        },
-//                        {
-//                            xtype: 'button',
-//                            id: prototype.id + '-btnScanTicket',
-//                            iconCls: 'prx-icon-update',
-//                            tooltip: 'Scan Tickets',
-////                            hidden: true,
-//                            listeners: {
-//                                click: 'btnScanTicket_clickHandler'
-//                            }
-//                        },
-//                        {xtype: 'tbspacer', width: 25},
                         {
-                            xtype: 'label',
-                            html: 'Flight Date:',
-                            align: 'center',
-                            fieldStyle: 'text-align: center;',
-                            padding: '7px 7px 6px 0px'
+                            xtype: 'fieldcontainer',
+                            fieldLabel: 'Flight Date',
+                            labelWidth: 70,
+                            layout: 'hbox',
+                            defaults: {margin: '0 0 0 0'},
+                            items: [
+                                {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-cmbAnioContador',
+                                    queryMode: 'local',
+                                    triggerAction: 'all',
+                                    autoSelect: false,
+                                    enableKeyEvents: true,
+                                    forceSelection: true,
+                                    caseSensitive: true,
+                                    editable: false,
+                                    valueField: 'code',
+                                    displayField: 'name',
+                                    width: 55,
+                                    listConfig: {maxHeight: 111, minWidth: 70}
+                                },
+                                {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-cmbMesContador',
+                                    queryMode: 'local',
+                                    triggerAction: 'all',
+                                    editable: false,
+                                    autoSelect: false,
+                                    enableKeyEvents: true,
+                                    caseSensitive: true,
+                                    valueField: 'code', displayField: 'name',
+                                    listConfig: {minWidth: 60},
+                                    width: 50
+                                }
+                            ]
                         },
-                        {xtype: 'tbspacer', width: 4},
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbAnioContador',
-                            queryMode: 'local',
-                            triggerAction: 'all',
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            forceSelection: true,
-                            caseSensitive: true,
-                            editable: false,
-                            valueField: 'code',
-                            displayField: 'name',
-                            width: 70,
-                            listConfig: {maxHeight: 111, minWidth: 70}
-                        },
-//                        {xtype: 'tbspacer', width: 4},
-                        {
-                            xtype: 'combo',
-                            id: prototype.id + '-cmbMesContador',
-                            labelAlign: 'right',
-                            queryMode: 'local',
-                            triggerAction: 'all',
-                            editable: false,
-                            autoSelect: false,
-                            enableKeyEvents: true,
-                            caseSensitive: true,
-                            valueField: 'code', displayField: 'name',
-                            listConfig: {minWidth: 60},
-                            width: 60,
-                            anchor: '100%'
-                        },
-                        {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnActualizarContador',
-                            html: '<strong style="color:white;">Upd. Counter</strong>',
+                            width: 110,
+                            html: '<strong style="color:white;">Update Counter</strong>',
                             style: 'background:#24678D;color:white;font-weight:bold;',
                             border: false,
-                            margin: '2 0 0 0',
                             listeners: {
                                 click: 'btnActualizarContador_click'
                             }
                         },
-                        {xtype: 'tbspacer', width: 30},
                         {
                             xtype: 'combo',
                             id: prototype.id + '-cmbControl',
+                            fieldLabel: 'Control',
+                            labelWidth: 55,
+                            width: 165,
                             store: new Ext.data.SimpleStore({
                                 fields: ['code', 'name'],
                                 data: [
@@ -577,13 +513,11 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 ]
                             }),
                             queryMode: 'local',
-//                            hidden: true,
                             allowBlank: true,
                             forceSelection: true,
                             caseSensitive: false,
                             autoSelect: true,
                             editable: false,
-                            width: 110,
                             value: "ODS",
                             typeAhead: true,
                             valueField: 'code', displayField: 'name',
@@ -593,7 +527,6 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 change: 'changeControl'
                             }
                         },
-                        {xtype: 'tbspacer', width: 3},
                         {
                             xtype: 'button',
                             id: prototype.id + '-btnRefresh',
@@ -603,50 +536,40 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                 click: 'actualizar'
                             }
                         },
-                        {xtype: 'tbspacer', width: 3},
                         {
                             xtype: 'textfield',
                             id: prototype.id + '-txtNENV',
-                            fieldStyle: 'text-align:center',
-                            editable: false,
-                            width: 30
+                            width: 30,
+                            editable: false
                         },
-                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'textfield',
                             id: prototype.id + '-txtDPRDA',
-                            fieldStyle: 'text-align:center',
-                            editable: false,
-                            width: 100
+                            width: 100,
+                            editable: false
                         }
                     ]
                 },
+                // ================= FILA 3 =================
                 {
-                    xtype: 'panel',
-                    id: prototype.id + '-waa',
-                    hidden: false,
-                    layout: 'hbox',
-                    style: 'border-top: 4px #ffffff solid;border-left: 0px;',
-                    defaults: {
-                        padding: '5px 1px 5px 1px',
-                        anchor: '100%'
-                    },
+                    margin: '0 0 0 0',
                     items: [
-                        {xtype: 'tbspacer', width: 5},
                         {
                             xtype: 'form',
-                            id: prototype.id + '-form-01_INF',
+                            id: prototype.id + '-form-01_VLO',
                             border: false,
+                            width: 330,
+                            bodyPadding: 0,
                             bodyStyle: 'background-color: #E3EAF9;',
                             items: [{
                                     xtype: 'filefield',
-                                    id: prototype.id + '-file_INF',
-                                    name: 'excelfile_INF',
-//                                fieldLabel: '<strong style="font-weight:bold;color:#0B333C;">Update INF</strong>',
+                                    id: prototype.id + '-file_VLO',
+                                    name: 'excelfile_VLO',
+                                    fieldLabel: 'Cierre de Vuelo',
                                     allowBlank: true,
                                     accept: '.xlsx, .xls',
-                                    labelWidth: 85,
-                                    width: 150,
+                                    labelWidth: 100,
+                                    width: 330,
                                     buttonText: 'Select excel...',
                                     regex: /(.)+((\.xlsx)|(\.xls)|(\.csv)(\w)?)$/i,
                                     regexText: 'Only XLS and XLSX formats are accepted',
@@ -659,30 +582,96 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                     }
                                 }]
                         },
-                        {xtype: 'tbspacer', width: 20},
                         {
                             xtype: 'button',
-                            id: prototype.id + '-btn-upload_INF',
-                            margin: '2 0 0 0',
-                            width: 90,
-                            html: '<strong style="color:white;">Update INF</strong>',
+                            id: prototype.id + '-btn-upload_VLO',
+                            width: 110,
+                            html: '<strong style="color:white;">Process File</strong>',
                             style: 'background:#24678D;color:white;font-weight:bold;',
                             border: false,
                             listeners: {
-                                click: 'onFileLoad_INF'
+                                click: 'onClickFileLoad_VLO'
                             }
                         },
-                        {xtype: 'tbspacer', width: 60},
                         {
-                            xtype: 'panel',
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtManifestName',
+                            fieldStyle: 'text-align: left; font-size: 12px;',
+                            fieldLabel: 'Manifest Name',
+                            labelAlign: 'left',
+                            labelWidth: 100,
+                            emptyText: 'e.g. LIM_0019_20260724',
+                            enforceMaxLength: true,
+                            maskRe: /[A-Za-z0-9_]/,
+                            maxLength: 20,
+                            width: 330,
+                            enableKeyEvents: true,
+                            listeners: {
+                                change: 'onUpperValue',
+                                keypress: 'onManifestNameKeypress'
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btnLoadManifest',
+                            width: 110,
+                            html: '<strong style="color:white;">Load Manifest</strong>',
+                            style: 'background:#24678D;color:white;font-weight:bold;',
+                            border: false,
+                            listeners: {
+                                click: 'btnLoadManifest_click'
+                            }
+                        },
+                        {
+                            xtype: 'container',
+                            layout: {
+                                type: 'hbox',
+                                align: 'middle'
+                            },
+                            items: [
+                                {
+                                    xtype: 'label',
+                                    id: prototype.id + '-labelFSabre',
+                                    html: 'Scan Sabre:',
+                                    hidden: true,
+                                    align: 'center',
+                                    fieldStyle: 'text-align: center;',
+                                    padding: '0 7px 0 0'
+                                },
+                                {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-cmbFSabre',
+                                    hidden: true,
+                                    store: new Ext.data.SimpleStore({
+                                        fields: ['code', 'name'],
+                                        data: [
+                                            ["", "All"], ["0", "Not Found"], ["1", "Found"],
+                                            ["2", "Found but not matching coupon"], ["4", "No Revenue(Employes/Oth)"], ["5", "Manual"], ["6", "BPO Found"]
+                                        ]
+                                    }),
+                                    queryMode: 'local',
+                                    allowBlank: true,
+                                    forceSelection: true,
+                                    caseSensitive: false,
+                                    autoSelect: true,
+                                    editable: false,
+                                    width: 275,
+                                    value: "",
+                                    typeAhead: true,
+                                    valueField: 'code', displayField: 'name',
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all',
+                                    listeners: {
+                                        change: 'cmbFSabre_changeHandler'
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'container',
                             id: prototype.id + '-filter_3',
                             hidden: true,
-                            border: false,
-                            layout: 'hbox',
-                            bodyStyle: 'background-color: #E3EAF9;',
-                            items: [
-                                {xtype: 'tbspacer', width: 10},
-                                {
+                            items: [{
                                     xtype: 'combo',
                                     id: prototype.id + '-cmb_Diff',
                                     store: new Ext.data.SimpleStore({
@@ -694,12 +683,13 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                     }),
                                     queryMode: 'local',
                                     fieldLabel: 'ODS vs VCR',
-                                    //                            hidden: true,
                                     allowBlank: true,
                                     forceSelection: true,
                                     caseSensitive: false,
                                     autoSelect: true,
                                     editable: false,
+                                    labelAlign: 'right',
+                                    labelStyle: 'font-size: 12px;',
                                     labelWidth: 75,
                                     width: 150,
                                     value: "N",
@@ -710,55 +700,7 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Filters', {
                                     listeners: {
                                         change: 'onDIFF'
                                     }
-                                }
-                            ]
-                        },
-                        {xtype: 'tbspacer', width: 665},
-                        {
-                            xtype: 'label',
-                            html: 'Cierre de Vuelo:',
-                            align: 'center',
-                            fieldStyle: 'text-align: center;',
-                            padding: '7px 7px 6px 0px'
-                        },
-                        {
-                            xtype: 'form',
-                            id: prototype.id + '-form-01_VLO',
-                            border: false,
-                            bodyStyle: 'background-color: #E3EAF9;',
-                            items: [{
-                                xtype: 'filefield',
-                                id: prototype.id + '-file_VLO',
-                                name: 'excelfile_VLO',
-//                                fieldLabel: '<strong style="font-weight:bold;color:#0B333C;">Update VLO</strong>',
-                                allowBlank: true,
-                                accept: '.xlsx, .xls',
-                                labelWidth: 85,
-                                width: 250,
-                                buttonText: 'Select excel...',
-                                regex: /(.)+((\.xlsx)|(\.xls)|(\.csv)(\w)?)$/i,
-                                regexText: 'Only XLS and XLSX formats are accepted',
-                                buttonConfig: {
-                                    text : '<strong>Select file</strong>',
-                                    width: 80
-                                },
-                                listeners:{
-                                    //change: 'onUploadChange'
-                                }
-                            }]
-                        },
-                        {xtype: 'tbspacer', width: 20},
-                        {
-                            xtype: 'button',
-                            id:prototype.id+'-btn-upload_VLO',
-                            margin: '2 0 0 0',
-                            width: 90,
-                            html: '<strong style="color:white;">Process File</strong>',
-                            style: 'background:#24678D;color:white;font-weight:bold;',
-                            border: false,
-                            listeners:{
-                                click: 'onClickFileLoad_VLO'
-                            }
+                                }]
                         }
                     ]
                 }
