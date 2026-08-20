@@ -88,9 +88,9 @@ public class FlightConciliationController extends BaseController {
     private MasterDAO masterDAO;
 
     // <editor-fold defaultstate="collapsed" desc="Manual Manifest Load - background job tracking">
-    private static final ConcurrentHashMap<String, ManifestLoadJob> MANIFEST_JOBS = new ConcurrentHashMap<String, ManifestLoadJob>();
+   // private static final ConcurrentHashMap<String, ManifestLoadJob> MANIFEST_JOBS = new ConcurrentHashMap<String, ManifestLoadJob>();
 
-    private static class ManifestLoadJob {
+   /* private static class ManifestLoadJob {
 
         volatile String status = "RUNNING"; // RUNNING, DONE, ERROR
         volatile int exitCode = -1;
@@ -98,7 +98,7 @@ public class FlightConciliationController extends BaseController {
         Process process;
     }
     // </editor-fold>
-
+*/
     @RequestMapping(value = "/obtainDataCombo")
     public @ResponseBody
     String obtainDataCombo(ModelMap map, HttpServletRequest request) {
@@ -3326,7 +3326,7 @@ public class FlightConciliationController extends BaseController {
         return new Gson().toJson(map);
     }
 
-    // <editor-fold defaultstate="collapsed" desc="Manual Manifest Load">
+   /* // <editor-fold defaultstate="collapsed" desc="Manual Manifest Load">
     @RequestMapping(value = "/loadManifest")
     public @ResponseBody
     String loadManifest(ModelMap map, HttpServletRequest request) {
@@ -3428,7 +3428,7 @@ public class FlightConciliationController extends BaseController {
         return new Gson().toJson(map);
     }
     // </editor-fold>
-
+   */
     @RequestMapping(value = "/searchControlODS")
     public @ResponseBody
     String searchControlODS(ModelMap map, HttpServletRequest request) {
