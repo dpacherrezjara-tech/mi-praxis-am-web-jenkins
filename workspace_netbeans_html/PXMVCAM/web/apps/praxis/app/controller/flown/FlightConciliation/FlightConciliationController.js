@@ -1973,8 +1973,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         });
 
     },
-
-    // <editor-fold defaultstate="collapsed" desc="Manual Manifest Load">
+     // <editor-fold defaultstate="collapsed" desc="Manual Manifest Load">
     onManifestNameKeypress: function (obj, e, eOpts) {
         if (e.getKey() === e.ENTER) {
             this.btnLoadManifest_click();
@@ -2099,5 +2098,6 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.FlightConciliationCon
         });
     }
     // </editor-fold>
+
 
 });

@@ -71,7 +71,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.NestedServletException;
-
+import java.io.BufferedReader;
+import java.util.concurrent.ConcurrentHashMap;
+import java.io.InputStreamReader;
 // </editor-fold>
 /**
  *
@@ -4105,4 +4107,119 @@ public class FlightConciliationController extends BaseController {
         }
         return new Gson().toJson(map);
     }
+    
+    private static final ConcurrentHashMap<String, ManifestLoadJob> MANIFEST_JOBS = new ConcurrentHashMap<String, ManifestLoadJob>();
+
+    private static class ManifestLoadJob {
+
+        volatile String status = "RUNNING"; // RUNNING, DONE, ERROR
+        volatile int exitCode = -1;
+        final List<String> lines = Collections.synchronizedList(new ArrayList<String>());
+        Process process;
+    }
+
+
+
+ // <editor-fold defaultstate="collapsed" desc="Manual Manifest Load">
+    @RequestMapping(value = "/loadManifest")
+    public @ResponseBody
+    String loadManifest(ModelMap map, HttpServletRequest request) {
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+
+            String manifestName = request.getParameter("manifestName");
+            if (manifestName == null || !manifestName.trim().matches("^[A-Z]{3}_\\d{3,5}_\\d{8}$")) {
+                map.put("success", false);
+                map.put("sesion", "Invalid Manifest Name.");
+                return new Gson().toJson(map);
+            }
+            manifestName = manifestName.trim();
+
+            ManifestLoadJob existing = MANIFEST_JOBS.get(manifestName);
+            if (existing != null && "RUNNING".equals(existing.status)) {
+                map.put("success", false);
+                map.put("sesion", "This manifest is already being loaded.");
+                return new Gson().toJson(map);
+            }
+
+            String jarPath = serverSession.propertySession.get("RUTA_FLICONCI_JAR").toString();
+
+            ProcessBuilder pb = new ProcessBuilder("java", "-jar", jarPath, manifestName);
+            pb.redirectErrorStream(true);
+
+            final ManifestLoadJob job = new ManifestLoadJob();
+            job.process = pb.start();
+            MANIFEST_JOBS.put(manifestName, job);
+
+            Thread reader = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(job.process.getInputStream()));
+                        String line;
+                        while ((line = br.readLine()) != null) {
+                            job.lines.add(line);
+                        }
+                    } catch (IOException e) {
+                        job.lines.add("ERROR reading process output: " + e.getMessage());
+                    }
+                    try {
+                        int exit = job.process.waitFor();
+                        job.exitCode = exit;
+                        job.status = (exit == 0) ? "DONE" : "ERROR";
+                    } catch (InterruptedException e) {
+                        job.status = "ERROR";
+                    }
+                }
+            });
+            reader.setDaemon(true);
+            reader.start();
+
+            map.put("success", true);
+            map.put("msjOption", "Manifest load started.");
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", "Error starting manifest load. " + ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "/loadManifestStatus")
+    public @ResponseBody
+    String loadManifestStatus(ModelMap map, HttpServletRequest request) {
+        try {
+            String manifestName = request.getParameter("manifestName");
+            int fromLine = request.getParameter("fromLine") == null ? 0 : Integer.parseInt(request.getParameter("fromLine"));
+
+            ManifestLoadJob job = manifestName == null ? null : MANIFEST_JOBS.get(manifestName.trim());
+            if (job == null) {
+                map.put("success", false);
+                map.put("sesion", "No load job found for this Manifest Name.");
+                return new Gson().toJson(map);
+            }
+
+            List<String> newLines;
+            synchronized (job.lines) {
+                int total = job.lines.size();
+                if (fromLine < 0) {
+                    fromLine = 0;
+                }
+                if (fromLine > total) {
+                    fromLine = total;
+                }
+                newLines = new ArrayList<String>(job.lines.subList(fromLine, total));
+            }
+
+            map.put("success", true);
+            map.put("status", job.status);
+            map.put("lines", newLines);
+            map.put("nextFromLine", fromLine + newLines.size());
+            map.put("exitCode", job.exitCode);
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", "Error retrieving manifest load status. " + ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    // </editor-fold>
 }
