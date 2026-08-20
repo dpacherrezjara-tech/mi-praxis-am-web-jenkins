@@ -161,6 +161,9 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterCCAM.DataEntryAccounting
         if (A1819FFIN === '') {
             A1819FFIN = '99999999';
         }
+        if (IN_A1819FFIN_OLD === '') {
+            IN_A1819FFIN_OLD = '99999999';
+        }
         return {
             strOption: strOption,
             A1819CCUST: '139',
