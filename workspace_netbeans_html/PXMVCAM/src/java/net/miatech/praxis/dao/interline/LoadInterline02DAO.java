@@ -359,6 +359,7 @@ public class LoadInterline02DAO {
                 data.A020TOTDEB = rst.getDouble("A050TOTDEB");
                 data.A020NETO = rst.getDouble("A050NETO");
                 data.A020USER = rst.getString("A050USER").trim();
+                data.A020USERR = rst.getString("A050USERR").trim();
                 data.A020SDATE = rst.getString("A050SDATE").trim();
                 data.A020ACEPTA = rst.getDouble("A050ACEPTA");
                 data.A020TOTHAB = rst.getDouble("A050TOTHAB");
@@ -1899,7 +1900,9 @@ public class LoadInterline02DAO {
                     objRtn.CUPON = rs01.getString("CUPON");
                     objRtn.strTicket = rs01.getString("CCIA") + " " + rs01.getString("FORMA") + rs01.getString("SERIE") + " " + rs01.getString("CUPON");
                     objRtn.FCONT = rs01.getString("FCONT");
+                    objRtn.A1964FCONT = rs01.getString("A1964FCONT");
                     objRtn.strFormatDate2 = Functions.getMonthConvert(objRtn.FCONT);
+                    objRtn.A1964FCONT = Functions.getMonthConvert(objRtn.A1964FCONT);
                     objRtn.ZONA = rs01.getString("ZONA");
                     objRtn.CDEPART = rs01.getString("CDEPART");
                     objRtn.CARRIVA = rs01.getString("CARRIVA");
@@ -2621,15 +2624,15 @@ public class LoadInterline02DAO {
         ResultSet rs01 = null;
         Connection cnx = null;
         
-        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03337(?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03337_2(?,?,?,?,?,?,?,?,?,?, ?, ?)}";
         
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
-            cstmt.registerOutParameter(7, Types.INTEGER);
-            cstmt.registerOutParameter(8, Types.INTEGER);
             cstmt.registerOutParameter(9, Types.INTEGER);
             cstmt.registerOutParameter(10, Types.INTEGER);
+            cstmt.registerOutParameter(11, Types.INTEGER);
+            cstmt.registerOutParameter(12, Types.INTEGER);
 
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, filter.IN_FECHA_FROM);
@@ -2637,16 +2640,18 @@ public class LoadInterline02DAO {
             cstmt.setString(4, filter.TUSO);
             cstmt.setString(5, IN_PERIOD);
             cstmt.setString(6, strFLAG);
-            cstmt.setInt(7, filter.page.PAGNUM);
-            cstmt.setInt(8, filter.page.PAGROW);
-            cstmt.setInt(9, filter.page.TOTPAG);
-            cstmt.setInt(10, filter.page.TOTROW);
+            cstmt.setString(7, filter.IN_CIA);           
+            cstmt.setString(8, filter.IN_FINPERIOD);
+            cstmt.setInt(9, filter.page.PAGNUM);
+            cstmt.setInt(10, filter.page.PAGROW);
+            cstmt.setInt(11, filter.page.TOTPAG);
+            cstmt.setInt(12, filter.page.TOTROW);
             cstmt.execute();
 
-            filter.page.PAGNUM = cstmt.getInt(7);
-            filter.page.PAGROW = cstmt.getInt(8);
-            filter.page.TOTPAG = cstmt.getInt(9);
-            filter.page.TOTROW = cstmt.getInt(10);
+            filter.page.PAGNUM = cstmt.getInt(9);
+            filter.page.PAGROW = cstmt.getInt(10);
+            filter.page.TOTPAG = cstmt.getInt(11);
+            filter.page.TOTROW = cstmt.getInt(12);
 
             rs01 = cstmt.getResultSet();
 

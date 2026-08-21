@@ -131,10 +131,10 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAppliedPaymentDet', {
                                     {text: 'Mda<br>Pago', dataIndex: 'A3977MDA', align: 'center', width: 60},
                                     {
                                         text: 'Total', dataIndex: 'A3977TOT', width: 80, align: 'right',
-                                        summaryType: 'sum',
-                                        summaryRenderer: function (value, summaryData, dataIndex) {
-                                            return Ext.util.Format.number(value, '0,000.00');
-                                        },
+//                                        summaryType: 'sum',
+//                                        summaryRenderer: function (value, summaryData, dataIndex) {
+//                                            return Ext.util.Format.number(value, '0,000.00');
+//                                        },
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                                             //metaData.style = 'font-weight:bold;color:green;';     
                                             return Ext.util.Format.number(value, '0,000.00');
@@ -152,11 +152,22 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.InfoGridAppliedPaymentDet', {
                                         }
                                     },
                                     {
-                                        text: 'Saldo', dataIndex: 'A3977SALD', width: 80, align: 'right',
-                                        summaryType: 'sum',
-                                        summaryRenderer: function (value, summaryData, dataIndex) {
+                                        text: 'Ajuste', dataIndex: 'A3977TAJUS', width: 80, align: 'right',
+//                                        summaryType: 'sum',
+//                                        summaryRenderer: function (value, summaryData, dataIndex) {
+//                                            return Ext.util.Format.number(value, '0,000.00');
+//                                        }
+                                        renderer: function (value, metaData, record, rowIndex, colIndex, store) {
+                                            //metaData.style = 'font-weight:bold;color:green;';     
                                             return Ext.util.Format.number(value, '0,000.00');
-                                        },
+                                        }
+                                    },
+                                    {
+                                        text: 'Saldo', dataIndex: 'A3977SALD', width: 80, align: 'right',
+//                                        summaryType: 'sum',
+//                                        summaryRenderer: function (value, summaryData, dataIndex) {
+//                                            return Ext.util.Format.number(value, '0,000.00');
+//                                        }
                                         renderer: function (value, metaData, record, rowIndex, colIndex, store) {
                                             //metaData.style = 'font-weight:bold;color:green;';     
                                             return Ext.util.Format.number(value, '0,000.00');

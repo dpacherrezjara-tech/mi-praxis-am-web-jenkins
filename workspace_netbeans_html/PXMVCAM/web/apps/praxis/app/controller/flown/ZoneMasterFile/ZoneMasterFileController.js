@@ -173,7 +173,7 @@ Ext.define('Ext.Praxis.controller.flown.ZoneMasterFile.ZoneMasterFileController'
 //        this.btnSearch_click();
     },
     setGridData: function(obj, val) {
-
+        win.lblUser_toolTip("Estructura: A1708");
         this.getSearchParams(val);
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.ZoneMasterFile.GridData', {
             proxy: {
@@ -203,7 +203,7 @@ Ext.define('Ext.Praxis.controller.flown.ZoneMasterFile.ZoneMasterFileController'
         Ext.getCmp('vZoneMasterFile-paggin').bindStore(storeGridDatas);
     },
     setGridData2: function(obj, val) {
-
+        win.lblUser_toolTip("Estructura: A1708");
         this.getSearchParams(val);
         var storeGridDatas2 = Ext.create('Ext.Praxis.store.flown.ZoneMasterFile.GridDataCityPair', {
             proxy: {
@@ -233,7 +233,7 @@ Ext.define('Ext.Praxis.controller.flown.ZoneMasterFile.ZoneMasterFileController'
         // Ext.getCmp('vZoneMasterFile-paggin').bindStore(storeGridDatas2);
     },
     setGridData3: function(obj, val) {
-
+        win.lblUser_toolTip("Estructura: A1708");
         this.getSearchParams(val);
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.ZoneMasterFile.GridData', {
             proxy: {

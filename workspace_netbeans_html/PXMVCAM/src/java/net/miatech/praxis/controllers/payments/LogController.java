@@ -5,9 +5,12 @@ import com.google.gson.Gson;
 import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import net.miatech.praxis.Sales.A4373;
+import net.miatech.praxis.Sales.A4373Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.logic.payments.LoadPaymentLogic;
-import net.miatech.praxis.payment.filter.A2289Filter;
+import net.miatech.praxis.payment.old.A2289Filter;
+import net.miatech.praxis.payment.old.A4168Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
@@ -27,7 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class LogController extends BaseController {
 
     private static final Logger logError = Logger.getLogger("errorLog");
-    
+
     @RequestMapping(value = "/search")
     public @ResponseBody
     String search(ModelMap map, HttpServletRequest request) {
@@ -38,17 +41,17 @@ public class LogController extends BaseController {
             filter.page.TOTROW = -1;
             filter.page.START = 0;
             filter.page.LIMIT = 0;
-            
+
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit"));
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
             filter.page.PAGROW = 20;
             start = (start != 0 ? start : 0);
             filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
-            
+
             LoadPaymentLogic logic = new LoadPaymentLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A2289Filter> listaData = logic.loadSQP00885(filter);
-        
+
             map.put("success", true);
             map.put("data", listaData);
             map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
@@ -61,7 +64,45 @@ public class LogController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+               
+    /*NUEVO RFTX*/
+    @RequestMapping(value = "/searchRFTX")
+    public @ResponseBody
+    String searchRFTX(ModelMap map, HttpServletRequest request) {   
+        
+        //A2289Filter filter = new A2289Filter();
+        A4373Filter filter = new A4373Filter ();
+        
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, "ViewCommController :  searchRFTX");
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            filter.TOTROW = -1;
+            filter.START = 0;
+            filter.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit"));
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.page.PAGROW = 20;
+            start = (start != 0 ? start : 0);
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+
+            LoadPaymentLogic logic = new LoadPaymentLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            List<A4373Filter> listaData = logic.loadSQP04826(filter);
+
+            map.put("success", true);
+            map.put("data", listaData);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+    }
+
     @RequestMapping(value = "/searchCompleteDetail")
     public @ResponseBody
     String searchCompleteDetail(ModelMap map, HttpServletRequest request) {
@@ -69,13 +110,47 @@ public class LogController extends BaseController {
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, "ViewCommController :  search");
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
-            
+
             LoadPaymentLogic logic = new LoadPaymentLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A2289Filter> listaData = logic.loadSQP00888(filter);
-        
+
             map.put("success", true);
             map.put("listaCompleteDetail", listaData);
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "/searchNewLog")
+    public @ResponseBody
+    String searchNewLog(ModelMap map, HttpServletRequest request) {
+        A4168Filter filter = new A4168Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, "ViewCommController :  searchNewLog");
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            filter.page.TOTROW = -1;
+            filter.page.START = 0;
+            filter.page.LIMIT = 0;
+
+            int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit"));
+            int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
+            filter.page.PAGROW = 20;
+            start = (start != 0 ? start : 0);
+            filter.page.PAGNUM = (start / filter.page.PAGROW) + 1;
+
+            LoadPaymentLogic logic = new LoadPaymentLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            List<A4168Filter> listaData = logic.loadSQP04467(filter);
+
+            map.put("success", true);
+            map.put("data", listaData);
+            map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
         } catch (SQLException e) {
             map.put("success", false);
             map.put("sesion", SESSION_CONTROL);

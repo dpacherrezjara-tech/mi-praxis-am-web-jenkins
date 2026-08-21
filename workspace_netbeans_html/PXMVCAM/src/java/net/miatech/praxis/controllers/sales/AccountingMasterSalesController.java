@@ -13,6 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.A1740Filter;
@@ -68,6 +69,7 @@ public class AccountingMasterSalesController extends BaseController {
             filter.A1740CATEG = request.getParameter("A1740CATEG").trim();
             filter.A1740CTA = request.getParameter("A1740CTA").trim();
             filter.A1740SCTA = request.getParameter("A1740SCTA").trim();
+            filter.A1740OLD_REGISTERS = request.getParameter("A1740OLD_REGISTERS").trim();
             
             int limit = request.getParameter("limit") == null ? -1 : Integer.parseInt(request.getParameter("limit"));
             int start = request.getParameter("start") == null ? 0 : Integer.parseInt(request.getParameter("start"));
@@ -78,6 +80,11 @@ public class AccountingMasterSalesController extends BaseController {
             logic = new AccountingMasterSalesLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
             listaData = logic.setPX126S02A1740(filter);
+            if (filter.A1740OLD_REGISTERS.equals("false")) {
+                listaData = listaData.stream().filter(reg
+                        -> !reg.A1740FFIN.equals("9999/99/99")
+                ).collect(Collectors.toList());
+            }
             logic = null;
             map.put("success", true);
             map.put("total", listaData.size() > 0 ? listaData.get(0).page.TOTROW : 0);
@@ -120,7 +127,8 @@ public class AccountingMasterSalesController extends BaseController {
             filter.IN_A1740TIPO_OLD = request.getParameter("IN_A1740TIPO_OLD");
             filter.IN_A1740SUBTI_OLD = request.getParameter("IN_A1740SUBTI_OLD");
             filter.IN_A1740CATEG_OLD = request.getParameter("IN_A1740CATEG_OLD");
-            
+            filter.IN_A1740FINI_OLD = request.getParameter("IN_A1740FINI_OLD");
+            filter.IN_A1740FFIN_OLD = request.getParameter("IN_A1740FFIN_OLD");
             logic = new AccountingMasterSalesLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
             String result = logic.accountMasterMaintance(filter, strOption);
@@ -148,10 +156,17 @@ public class AccountingMasterSalesController extends BaseController {
             filter.A1740CATEG = request.getParameter("A1740CATEG").trim();
             filter.A1740CTA = request.getParameter("A1740CTA").trim();
             filter.A1740SCTA = request.getParameter("A1740SCTA").trim();
+            filter.A1740OLD_REGISTERS = request.getParameter("A1740OLD_REGISTERS").trim();
 
             logic = new AccountingMasterSalesLogic();
             logic.setSession(this.serverSession.getServerSession());
             List<A1740Filter> listaData = logic.loadPX126S02A1740EXCEL(filter);
+            
+            if (filter.A1740OLD_REGISTERS.equals("false")) {
+                listaData = listaData.stream().filter(reg
+                        -> !reg.A1740FFIN.equals("9999/99/99")
+                ).collect(Collectors.toList());
+            }
 
             // <editor-fold defaultstate="collapsed" desc="Estilo del Excel">
             Workbook workbook = new XSSFWorkbook();
@@ -233,6 +248,8 @@ public class AccountingMasterSalesController extends BaseController {
             CH_13.setCellValue("Country Location");
             CH_14.setCellValue("Client");
             CH_15.setCellValue("Effectiveness");
+            CH_16.setCellValue("Fecha Inicio");
+            CH_17.setCellValue("Fecha Fin");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 1, 1));
@@ -250,6 +267,8 @@ public class AccountingMasterSalesController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 13));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 15));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 16));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 17));
 
             CH_00.setCellStyle(headerStyle);
             CH_01.setCellStyle(headerStyle);
@@ -267,6 +286,8 @@ public class AccountingMasterSalesController extends BaseController {
             CH_13.setCellStyle(headerStyle);
             CH_14.setCellStyle(headerStyle);
             CH_15.setCellStyle(headerStyle);
+            CH_16.setCellStyle(headerStyle);
+            CH_17.setCellStyle(headerStyle);
 
             ++vj;
             //</editor-fold>
@@ -290,6 +311,8 @@ public class AccountingMasterSalesController extends BaseController {
                 CH_13 = row.createCell(13);
                 CH_14 = row.createCell(14);
                 CH_15 = row.createCell(15);
+                CH_16 = row.createCell(16);
+                CH_17 = row.createCell(17);
 
                 CH_00.setCellValue(listaData.get(vi).A1740TITRA);
                 CH_01.setCellValue(listaData.get(vi).A1740TIPO);
@@ -307,6 +330,8 @@ public class AccountingMasterSalesController extends BaseController {
                 CH_13.setCellValue(listaData.get(vi).A1740INTNU);
                 CH_14.setCellValue(listaData.get(vi).A1740CLIE);
                 CH_15.setCellValue(listaData.get(vi).A1740FINI);
+                CH_16.setCellValue(listaData.get(vi).A1740FINI);
+                CH_17.setCellValue(listaData.get(vi).A1740FFIN);
                 
 
                 CH_00.setCellStyle(bodyStyle);
@@ -325,6 +350,8 @@ public class AccountingMasterSalesController extends BaseController {
                 CH_13.setCellStyle(bodyStyle);
                 CH_14.setCellStyle(bodyStyle);
                 CH_15.setCellStyle(bodyStyle);
+                CH_16.setCellStyle(bodyStyle);
+                CH_17.setCellStyle(bodyStyle);
                 // </editor-fold>
                 iter.next();
                 ++vi;
@@ -346,6 +373,8 @@ public class AccountingMasterSalesController extends BaseController {
             sheet.autoSizeColumn(13, true);
             sheet.autoSizeColumn(14, true);
             sheet.autoSizeColumn(15, true);
+            sheet.autoSizeColumn(16, true);
+            sheet.autoSizeColumn(17, true);
 
             //String fileNameDownload = String.format("ADM Report - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
             String fileNameDownload = String.format(

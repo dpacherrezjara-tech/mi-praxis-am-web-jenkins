@@ -72,6 +72,7 @@ public class CalendarControlARCController extends BaseController {
             logic = new CalendarControlARCLogic();
             logic.setSession((IServerSession) serverSession.getServerSession());
             filter.IN_A1527PPED = request.getParameter("IN_A1527PPED");
+            filter.IN_VERSION = request.getParameter("IN_VERSION");
             oList = logic.loadPX036S01A1527(filter);
             String vl_qtr = "";
             String vl_month = "";
@@ -83,7 +84,8 @@ public class CalendarControlARCController extends BaseController {
             String vl_sunday = "", vl_sunday_commELW = "", vl_sunday_commIAP = "", vl_sunday_commIAR = "";
             Integer vl_sunday_cant = 0, vl_sunday_error = 0, vl_sunday_cantSale = 0, vl_sunday_cantELW = 0, vl_sunday_cantIAP = 0, vl_sunday_cantIAR = 0;
             String vl_monday = "";
-            String vl_tuesday = "";
+            String vl_tuesday = "", vl_tuesday_commELW = "", vl_tuesday_commIAP = "", vl_tuesday_commIAR = "";
+            Integer vl_tuesday_cant = 0, vl_tuesday_error = 0, vl_tuesday_cantSale = 0, vl_tuesday_cantELW = 0, vl_tuesday_cantIAP = 0, vl_tuesday_cantIAR = 0;
             String vl_wednesday = "", vl_wednesday_commELW = "", vl_wednesday_commIAP = "", vl_wednesday_commIAR = "";
             Integer vl_wednesday_cant = 0, vl_wednesday_error = 0, vl_wednesday_cantSale = 0, vl_wednesday_cantELW = 0, vl_wednesday_cantIAP = 0, vl_wednesday_cantIAR = 0;
             String vl_thursday = "", vl_thursday_commELW = "", vl_thursday_commIAP = "", vl_thursday_commIAR = "";
@@ -93,6 +95,7 @@ public class CalendarControlARCController extends BaseController {
             String vl_sunday_St = "#000000";
             String vl_wednesday_St = "#000000";
             String vl_thursday_St = "#000000";
+            String vl_tuesday_St = "#000000";
             int contFechas = 0;
             int contMonth = 0;
             int contGeneral = 0;
@@ -139,6 +142,16 @@ public class CalendarControlARCController extends BaseController {
                     fechas.put("SUNDAY_COLOR", vl_sunday_St);
                     fechas.put("MONDAY", vl_monday);
                     fechas.put("TUESDAY", vl_tuesday);
+                    fechas.put("TUESDAY_COMMELW", vl_tuesday_commELW);
+                    fechas.put("TUESDAY_COMMIAP", vl_tuesday_commIAP);
+                    fechas.put("TUESDAY_COMMIAR", vl_tuesday_commIAR);
+                    fechas.put("TUESDAY_CANT", vl_tuesday_cant);
+                    fechas.put("TUESDAY_ERROR", vl_tuesday_error);
+                    fechas.put("TUESDAY_CANTSALE", vl_tuesday_cantSale);
+                    fechas.put("TUESDAY_CANTELW", vl_tuesday_cantELW);
+                    fechas.put("TUESDAY_CANTIAP", vl_tuesday_cantIAP);
+                    fechas.put("TUESDAY_CANTIAR", vl_tuesday_cantIAR);
+                    fechas.put("TUESDAY_COLOR", vl_tuesday_St);
                     fechas.put("WEDNESDAY", vl_wednesday);
                     fechas.put("WEDNESDAY_COMMELW", vl_wednesday_commELW);
                     fechas.put("WEDNESDAY_COMMIAP", vl_wednesday_commIAP);
@@ -201,6 +214,15 @@ public class CalendarControlARCController extends BaseController {
                     vl_sunday_cantIAR = 0;
                     vl_monday = "";
                     vl_tuesday = "";
+                    vl_tuesday_commELW = "";
+                    vl_tuesday_commIAP = "";
+                    vl_tuesday_commIAR = "";
+                    vl_tuesday_cant = 0;
+                    vl_tuesday_error = 0;
+                    vl_tuesday_cantSale = 0;
+                    vl_tuesday_cantELW = 0;
+                    vl_tuesday_cantIAP = 0;
+                    vl_tuesday_cantIAR = 0;
                     vl_wednesday = "";
                     vl_wednesday_commELW = "";
                     vl_wednesday_commIAP = "";
@@ -224,6 +246,7 @@ public class CalendarControlARCController extends BaseController {
                     vl_friday_St = "#000000";
                     vl_saturday_St = "#000000";
                     vl_sunday_St = "#000000";
+                    vl_tuesday_St = "#000000";
                     vl_wednesday_St = "#000000";
                     vl_thursday_St = "#000000";
                     vl_week = oList.get(i).A1527PDIDS;
@@ -232,104 +255,221 @@ public class CalendarControlARCController extends BaseController {
                         flagUlt = "Y";
                     }
                 }
-                switch (oList.get(i).A1527PDIDC) {
-                    case "1":
-                        vl_friday = oList.get(i).A1527SODA;
-                        vl_friday_commELW = oList.get(i).A1698_COMMEN_ELW;
-                        vl_friday_commIAP = oList.get(i).A1698_COMMEN_IAP;
-                        vl_friday_commIAR = oList.get(i).A1698_COMMEN_IAR;
-                        vl_friday_cant = oList.get(i).A1698_TAPES;
-                        vl_friday_error = oList.get(i).A1698_ERRORS;
-                        vl_friday_cantSale = oList.get(i).A1698_SALEWO;
-                        vl_friday_cantELW = oList.get(i).A1698_COUNT_ELW;
-                        vl_friday_cantIAP = oList.get(i).A1698_COUNT_IAP;
-                        vl_friday_cantIAR = oList.get(i).A1698_COUNT_IAR;
-                        vl_thursday2 = oList.get(i).A1527CINTA;
-                        vl_fechaDisbursment = oList.get(i).A1527DESEM;
-                        if (Integer.parseInt(oList.get(i).A1527SODA) <= Integer.parseInt(fechaActual)) {
-                            vl_friday_St = Style(oList.get(i).A1698_TAPES, oList.get(i).A1698_SALEWO, oList.get(i).A1698_ERRORS);
-                        }
-                        break;
-                    case "2":
-                        vl_saturday = oList.get(i).A1527SODA;
-                        vl_saturday_commELW = oList.get(i).A1698_COMMEN_ELW;
-                        vl_saturday_commIAP = oList.get(i).A1698_COMMEN_IAP;
-                        vl_saturday_commIAR = oList.get(i).A1698_COMMEN_IAR;
-                        vl_saturday_cant = oList.get(i).A1698_TAPES;
-                        vl_saturday_error = oList.get(i).A1698_ERRORS;
-                        vl_saturday_cantSale = oList.get(i).A1698_SALEWO;
-                        vl_saturday_cantELW = oList.get(i).A1698_COUNT_ELW;
-                        vl_saturday_cantIAP = oList.get(i).A1698_COUNT_IAP;
-                        vl_saturday_cantIAR = oList.get(i).A1698_COUNT_IAR;
-                        vl_thursday2 = oList.get(i).A1527CINTA;
-                        vl_fechaDisbursment = oList.get(i).A1527DESEM;
-                        if (Integer.parseInt(oList.get(i).A1527SODA) <= Integer.parseInt(fechaActual)) {
-                            vl_saturday_St = Style(oList.get(i).A1698_TAPES, oList.get(i).A1698_SALEWO, oList.get(i).A1698_ERRORS);
-                        }
-                        break;
-                    case "3":
-                        vl_sunday = oList.get(i).A1527SODA;
-                        vl_sunday_commELW = oList.get(i).A1698_COMMEN_ELW;
-                        vl_sunday_commIAP = oList.get(i).A1698_COMMEN_IAP;
-                        vl_sunday_commIAR = oList.get(i).A1698_COMMEN_IAR;
-                        vl_sunday_cant = oList.get(i).A1698_TAPES;
-                        vl_sunday_error = oList.get(i).A1698_ERRORS;
-                        vl_sunday_cantSale = oList.get(i).A1698_SALEWO;
-                        vl_sunday_cantELW = oList.get(i).A1698_COUNT_ELW;
-                        vl_sunday_cantIAP = oList.get(i).A1698_COUNT_IAP;
-                        vl_sunday_cantIAR = oList.get(i).A1698_COUNT_IAR;
-                        vl_thursday2 = oList.get(i).A1527CINTA;
-                        vl_fechaDisbursment = oList.get(i).A1527DESEM;
-                        if (Integer.parseInt(oList.get(i).A1527SODA) <= Integer.parseInt(fechaActual)) {
-                            vl_sunday_St = Style(oList.get(i).A1698_TAPES, oList.get(i).A1698_SALEWO, oList.get(i).A1698_ERRORS);
-                        }
-                        break;
-                    case "4":
-                        vl_monday = oList.get(i).A1527SODA;
-                        vl_thursday2 = oList.get(i).A1527CINTA;
-                        vl_fechaDisbursment = oList.get(i).A1527DESEM;
-                        break;
-                    case "5":
-                        vl_tuesday = oList.get(i).A1527SODA;
-                        vl_thursday2 = oList.get(i).A1527CINTA;
-                        vl_fechaDisbursment = oList.get(i).A1527DESEM;
-                        break;
-                    case "6":
-                        vl_wednesday = oList.get(i).A1527SODA;
-                        vl_wednesday_commELW = oList.get(i).A1698_COMMEN_ELW;
-                        vl_wednesday_commIAP = oList.get(i).A1698_COMMEN_IAP;
-                        vl_wednesday_commIAR = oList.get(i).A1698_COMMEN_IAR;
-                        vl_wednesday_cant = oList.get(i).A1698_TAPES;
-                        vl_wednesday_error = oList.get(i).A1698_ERRORS;
-                        vl_wednesday_cantSale = oList.get(i).A1698_SALEWO;
-                        vl_wednesday_cantELW = oList.get(i).A1698_COUNT_ELW;
-                        vl_wednesday_cantIAP = oList.get(i).A1698_COUNT_IAP;
-                        vl_wednesday_cantIAR = oList.get(i).A1698_COUNT_IAR;
-                        vl_thursday2 = oList.get(i).A1527CINTA;
-                        vl_fechaDisbursment = oList.get(i).A1527DESEM;
-                        if (Integer.parseInt(oList.get(i).A1527SODA) <= Integer.parseInt(fechaActual)) {
-                            vl_wednesday_St = Style(oList.get(i).A1698_TAPES, oList.get(i).A1698_SALEWO, oList.get(i).A1698_ERRORS);
-                        }
-                        break;
-                    case "7":
-                        vl_thursday = oList.get(i).A1527SODA;
-                        vl_thursday_commELW = oList.get(i).A1698_COMMEN_ELW;
-                        vl_thursday_commIAP = oList.get(i).A1698_COMMEN_IAP;
-                        vl_thursday_commIAR = oList.get(i).A1698_COMMEN_IAR;
-                        vl_thursday_cant = oList.get(i).A1698_TAPES;
-                        vl_thursday_error = oList.get(i).A1698_ERRORS;
-                        vl_thursday_cantSale = oList.get(i).A1698_SALEWO;
-                        vl_thursday_cantELW = oList.get(i).A1698_COUNT_ELW;
-                        vl_thursday_cantIAP = oList.get(i).A1698_COUNT_IAP;
-                        vl_thursday_cantIAR = oList.get(i).A1698_COUNT_IAR;
-                        vl_thursday2 = oList.get(i).A1527CINTA;
-                        vl_fechaDisbursment = oList.get(i).A1527DESEM;
-                        if (Integer.parseInt(oList.get(i).A1527SODA) <= Integer.parseInt(fechaActual)) {
-                            vl_thursday_St = Style(oList.get(i).A1698_TAPES, oList.get(i).A1698_SALEWO, oList.get(i).A1698_ERRORS);
-                        }
-                        break;
+
+                if (filter.IN_VERSION.equals("2")) {
+                    switch (oList.get(i).A1527PDIDC) {
+                        case "3":
+                            vl_friday = oList.get(i).A1527SODA;
+                            vl_friday_commELW = oList.get(i).A1698_COMMEN_ELW;
+                            vl_friday_commIAP = oList.get(i).A1698_COMMEN_IAP;
+                            vl_friday_commIAR = oList.get(i).A1698_COMMEN_IAR;
+                            vl_friday_cant = oList.get(i).A1698_TAPES;
+                            vl_friday_error = oList.get(i).A1698_ERRORS;
+                            vl_friday_cantSale = oList.get(i).A1698_SALEWO;
+                            vl_friday_cantELW = oList.get(i).A1698_COUNT_ELW;
+                            vl_friday_cantIAP = oList.get(i).A1698_COUNT_IAP;
+                            vl_friday_cantIAR = oList.get(i).A1698_COUNT_IAR;
+                            vl_thursday2 = oList.get(i).A1527CINTA;
+                            vl_fechaDisbursment = oList.get(i).A1527DESEM;
+                            if (Integer.parseInt(oList.get(i).A1527SODA) <= Integer.parseInt(fechaActual)) {
+                                vl_friday_St = Style(oList.get(i).A1698_TAPES, oList.get(i).A1698_SALEWO, oList.get(i).A1698_ERRORS);
+                            }
+                            break;
+                        case "4":
+                            vl_saturday = oList.get(i).A1527SODA;
+                            vl_saturday_commELW = oList.get(i).A1698_COMMEN_ELW;
+                            vl_saturday_commIAP = oList.get(i).A1698_COMMEN_IAP;
+                            vl_saturday_commIAR = oList.get(i).A1698_COMMEN_IAR;
+                            vl_saturday_cant = oList.get(i).A1698_TAPES;
+                            vl_saturday_error = oList.get(i).A1698_ERRORS;
+                            vl_saturday_cantSale = oList.get(i).A1698_SALEWO;
+                            vl_saturday_cantELW = oList.get(i).A1698_COUNT_ELW;
+                            vl_saturday_cantIAP = oList.get(i).A1698_COUNT_IAP;
+                            vl_saturday_cantIAR = oList.get(i).A1698_COUNT_IAR;
+                            vl_thursday2 = oList.get(i).A1527CINTA;
+                            vl_fechaDisbursment = oList.get(i).A1527DESEM;
+                            if (Integer.parseInt(oList.get(i).A1527SODA) <= Integer.parseInt(fechaActual)) {
+                                vl_saturday_St = Style(oList.get(i).A1698_TAPES, oList.get(i).A1698_SALEWO, oList.get(i).A1698_ERRORS);
+                            }
+                            break;
+                        case "5":
+                            vl_sunday = oList.get(i).A1527SODA;
+                            /*
+                            vl_sunday_commELW = oList.get(i).A1698_COMMEN_ELW;
+                            vl_sunday_commIAP = oList.get(i).A1698_COMMEN_IAP;
+                            vl_sunday_commIAR = oList.get(i).A1698_COMMEN_IAR;
+                            vl_sunday_cant = oList.get(i).A1698_TAPES;
+                            vl_sunday_error = oList.get(i).A1698_ERRORS;
+                            vl_sunday_cantSale = oList.get(i).A1698_SALEWO;
+                            vl_sunday_cantELW = oList.get(i).A1698_COUNT_ELW;
+                            vl_sunday_cantIAP = oList.get(i).A1698_COUNT_IAP;
+                            vl_sunday_cantIAR = oList.get(i).A1698_COUNT_IAR;
+                            */
+                            vl_thursday2 = oList.get(i).A1527CINTA;
+                            vl_fechaDisbursment = oList.get(i).A1527DESEM;
+                            /*
+                            if (Integer.parseInt(oList.get(i).A1527SODA) <= Integer.parseInt(fechaActual)) {
+                                vl_sunday_St = Style(oList.get(i).A1698_TAPES, oList.get(i).A1698_SALEWO, oList.get(i).A1698_ERRORS);
+                            }
+                            */
+                            break;
+                        case "6":
+                            vl_monday = oList.get(i).A1527SODA;
+                            vl_thursday2 = oList.get(i).A1527CINTA;
+                            vl_fechaDisbursment = oList.get(i).A1527DESEM;
+                            break;
+                        case "7":
+                            vl_tuesday = oList.get(i).A1527SODA;
+                            vl_tuesday_commELW = oList.get(i).A1698_COMMEN_ELW;
+                            vl_tuesday_commIAP = oList.get(i).A1698_COMMEN_IAP;
+                            vl_tuesday_commIAR = oList.get(i).A1698_COMMEN_IAR;
+                            vl_tuesday_cant = oList.get(i).A1698_TAPES;
+                            vl_tuesday_error = oList.get(i).A1698_ERRORS;
+                            vl_tuesday_cantSale = oList.get(i).A1698_SALEWO;
+                            vl_tuesday_cantELW = oList.get(i).A1698_COUNT_ELW;
+                            vl_tuesday_cantIAP = oList.get(i).A1698_COUNT_IAP;
+                            vl_tuesday_cantIAR = oList.get(i).A1698_COUNT_IAR;
+                            vl_thursday2 = oList.get(i).A1527CINTA;
+                            vl_fechaDisbursment = oList.get(i).A1527DESEM;
+                            if (Integer.parseInt(oList.get(i).A1527SODA) <= Integer.parseInt(fechaActual)) {
+                                vl_tuesday_St = Style(oList.get(i).A1698_TAPES, oList.get(i).A1698_SALEWO, oList.get(i).A1698_ERRORS);
+                            }
+                            break;
+                        case "1":
+                            vl_wednesday = oList.get(i).A1527SODA;
+                            vl_wednesday_commELW = oList.get(i).A1698_COMMEN_ELW;
+                            vl_wednesday_commIAP = oList.get(i).A1698_COMMEN_IAP;
+                            vl_wednesday_commIAR = oList.get(i).A1698_COMMEN_IAR;
+                            vl_wednesday_cant = oList.get(i).A1698_TAPES;
+                            vl_wednesday_error = oList.get(i).A1698_ERRORS;
+                            vl_wednesday_cantSale = oList.get(i).A1698_SALEWO;
+                            vl_wednesday_cantELW = oList.get(i).A1698_COUNT_ELW;
+                            vl_wednesday_cantIAP = oList.get(i).A1698_COUNT_IAP;
+                            vl_wednesday_cantIAR = oList.get(i).A1698_COUNT_IAR;
+                            vl_thursday2 = oList.get(i).A1527CINTA;
+                            vl_fechaDisbursment = oList.get(i).A1527DESEM;
+                            if (Integer.parseInt(oList.get(i).A1527SODA) <= Integer.parseInt(fechaActual)) {
+                                vl_wednesday_St = Style(oList.get(i).A1698_TAPES, oList.get(i).A1698_SALEWO, oList.get(i).A1698_ERRORS);
+                            }
+                            break;
+                        case "2":
+                            vl_thursday = oList.get(i).A1527SODA;
+                            vl_thursday_commELW = oList.get(i).A1698_COMMEN_ELW;
+                            vl_thursday_commIAP = oList.get(i).A1698_COMMEN_IAP;
+                            vl_thursday_commIAR = oList.get(i).A1698_COMMEN_IAR;
+                            vl_thursday_cant = oList.get(i).A1698_TAPES;
+                            vl_thursday_error = oList.get(i).A1698_ERRORS;
+                            vl_thursday_cantSale = oList.get(i).A1698_SALEWO;
+                            vl_thursday_cantELW = oList.get(i).A1698_COUNT_ELW;
+                            vl_thursday_cantIAP = oList.get(i).A1698_COUNT_IAP;
+                            vl_thursday_cantIAR = oList.get(i).A1698_COUNT_IAR;
+                            vl_thursday2 = oList.get(i).A1527CINTA;
+                            vl_fechaDisbursment = oList.get(i).A1527DESEM;
+                            if (Integer.parseInt(oList.get(i).A1527SODA) <= Integer.parseInt(fechaActual)) {
+                                vl_thursday_St = Style(oList.get(i).A1698_TAPES, oList.get(i).A1698_SALEWO, oList.get(i).A1698_ERRORS);
+                            }
+                            break;
+                    }
+                } else {
+                    switch (oList.get(i).A1527PDIDC) {
+                        case "1":
+                            vl_friday = oList.get(i).A1527SODA;
+                            vl_friday_commELW = oList.get(i).A1698_COMMEN_ELW;
+                            vl_friday_commIAP = oList.get(i).A1698_COMMEN_IAP;
+                            vl_friday_commIAR = oList.get(i).A1698_COMMEN_IAR;
+                            vl_friday_cant = oList.get(i).A1698_TAPES;
+                            vl_friday_error = oList.get(i).A1698_ERRORS;
+                            vl_friday_cantSale = oList.get(i).A1698_SALEWO;
+                            vl_friday_cantELW = oList.get(i).A1698_COUNT_ELW;
+                            vl_friday_cantIAP = oList.get(i).A1698_COUNT_IAP;
+                            vl_friday_cantIAR = oList.get(i).A1698_COUNT_IAR;
+                            vl_thursday2 = oList.get(i).A1527CINTA;
+                            vl_fechaDisbursment = oList.get(i).A1527DESEM;
+                            if (Integer.parseInt(oList.get(i).A1527SODA) <= Integer.parseInt(fechaActual)) {
+                                vl_friday_St = Style(oList.get(i).A1698_TAPES, oList.get(i).A1698_SALEWO, oList.get(i).A1698_ERRORS);
+                            }
+                            break;
+                        case "2":
+                            vl_saturday = oList.get(i).A1527SODA;
+                            vl_saturday_commELW = oList.get(i).A1698_COMMEN_ELW;
+                            vl_saturday_commIAP = oList.get(i).A1698_COMMEN_IAP;
+                            vl_saturday_commIAR = oList.get(i).A1698_COMMEN_IAR;
+                            vl_saturday_cant = oList.get(i).A1698_TAPES;
+                            vl_saturday_error = oList.get(i).A1698_ERRORS;
+                            vl_saturday_cantSale = oList.get(i).A1698_SALEWO;
+                            vl_saturday_cantELW = oList.get(i).A1698_COUNT_ELW;
+                            vl_saturday_cantIAP = oList.get(i).A1698_COUNT_IAP;
+                            vl_saturday_cantIAR = oList.get(i).A1698_COUNT_IAR;
+                            vl_thursday2 = oList.get(i).A1527CINTA;
+                            vl_fechaDisbursment = oList.get(i).A1527DESEM;
+                            if (Integer.parseInt(oList.get(i).A1527SODA) <= Integer.parseInt(fechaActual)) {
+                                vl_saturday_St = Style(oList.get(i).A1698_TAPES, oList.get(i).A1698_SALEWO, oList.get(i).A1698_ERRORS);
+                            }
+                            break;
+                        case "3":
+                            vl_sunday = oList.get(i).A1527SODA;
+                            vl_sunday_commELW = oList.get(i).A1698_COMMEN_ELW;
+                            vl_sunday_commIAP = oList.get(i).A1698_COMMEN_IAP;
+                            vl_sunday_commIAR = oList.get(i).A1698_COMMEN_IAR;
+                            vl_sunday_cant = oList.get(i).A1698_TAPES;
+                            vl_sunday_error = oList.get(i).A1698_ERRORS;
+                            vl_sunday_cantSale = oList.get(i).A1698_SALEWO;
+                            vl_sunday_cantELW = oList.get(i).A1698_COUNT_ELW;
+                            vl_sunday_cantIAP = oList.get(i).A1698_COUNT_IAP;
+                            vl_sunday_cantIAR = oList.get(i).A1698_COUNT_IAR;
+                            vl_thursday2 = oList.get(i).A1527CINTA;
+                            vl_fechaDisbursment = oList.get(i).A1527DESEM;
+                            if (Integer.parseInt(oList.get(i).A1527SODA) <= Integer.parseInt(fechaActual)) {
+                                vl_sunday_St = Style(oList.get(i).A1698_TAPES, oList.get(i).A1698_SALEWO, oList.get(i).A1698_ERRORS);
+                            }
+                            break;
+                        case "4":
+                            vl_monday = oList.get(i).A1527SODA;
+                            vl_thursday2 = oList.get(i).A1527CINTA;
+                            vl_fechaDisbursment = oList.get(i).A1527DESEM;
+                            break;
+                        case "5":
+                            vl_tuesday = oList.get(i).A1527SODA;
+                            vl_thursday2 = oList.get(i).A1527CINTA;
+                            vl_fechaDisbursment = oList.get(i).A1527DESEM;
+                            break;
+                        case "6":
+                            vl_wednesday = oList.get(i).A1527SODA;
+                            vl_wednesday_commELW = oList.get(i).A1698_COMMEN_ELW;
+                            vl_wednesday_commIAP = oList.get(i).A1698_COMMEN_IAP;
+                            vl_wednesday_commIAR = oList.get(i).A1698_COMMEN_IAR;
+                            vl_wednesday_cant = oList.get(i).A1698_TAPES;
+                            vl_wednesday_error = oList.get(i).A1698_ERRORS;
+                            vl_wednesday_cantSale = oList.get(i).A1698_SALEWO;
+                            vl_wednesday_cantELW = oList.get(i).A1698_COUNT_ELW;
+                            vl_wednesday_cantIAP = oList.get(i).A1698_COUNT_IAP;
+                            vl_wednesday_cantIAR = oList.get(i).A1698_COUNT_IAR;
+                            vl_thursday2 = oList.get(i).A1527CINTA;
+                            vl_fechaDisbursment = oList.get(i).A1527DESEM;
+                            if (Integer.parseInt(oList.get(i).A1527SODA) <= Integer.parseInt(fechaActual)) {
+                                vl_wednesday_St = Style(oList.get(i).A1698_TAPES, oList.get(i).A1698_SALEWO, oList.get(i).A1698_ERRORS);
+                            }
+                            break;
+                        case "7":
+                            vl_thursday = oList.get(i).A1527SODA;
+                            vl_thursday_commELW = oList.get(i).A1698_COMMEN_ELW;
+                            vl_thursday_commIAP = oList.get(i).A1698_COMMEN_IAP;
+                            vl_thursday_commIAR = oList.get(i).A1698_COMMEN_IAR;
+                            vl_thursday_cant = oList.get(i).A1698_TAPES;
+                            vl_thursday_error = oList.get(i).A1698_ERRORS;
+                            vl_thursday_cantSale = oList.get(i).A1698_SALEWO;
+                            vl_thursday_cantELW = oList.get(i).A1698_COUNT_ELW;
+                            vl_thursday_cantIAP = oList.get(i).A1698_COUNT_IAP;
+                            vl_thursday_cantIAR = oList.get(i).A1698_COUNT_IAR;
+                            vl_thursday2 = oList.get(i).A1527CINTA;
+                            vl_fechaDisbursment = oList.get(i).A1527DESEM;
+                            if (Integer.parseInt(oList.get(i).A1527SODA) <= Integer.parseInt(fechaActual)) {
+                                vl_thursday_St = Style(oList.get(i).A1698_TAPES, oList.get(i).A1698_SALEWO, oList.get(i).A1698_ERRORS);
+                            }
+                            break;
+                    }
                 }
-                
+
                 // Insertar la ultima semana
                 if (i == oList.size() - 1 && flagUlt.equals("")) {
                     fechas.put("FRIDAY", vl_friday);
@@ -367,6 +507,16 @@ public class CalendarControlARCController extends BaseController {
                     fechas.put("SUNDAY_COLOR", vl_sunday_St);
                     fechas.put("MONDAY", vl_monday);
                     fechas.put("TUESDAY", vl_tuesday);
+                    fechas.put("TUESDAY_COMMELW", vl_tuesday_commELW);
+                    fechas.put("TUESDAY_COMMIAP", vl_tuesday_commIAP);
+                    fechas.put("TUESDAY_COMMIAR", vl_tuesday_commIAR);
+                    fechas.put("TUESDAY_CANT", vl_tuesday_cant);
+                    fechas.put("TUESDAY_ERROR", vl_tuesday_error);
+                    fechas.put("TUESDAY_CANTSALE", vl_tuesday_cantSale);
+                    fechas.put("TUESDAY_CANTELW", vl_tuesday_cantELW);
+                    fechas.put("TUESDAY_CANTIAP", vl_tuesday_cantIAP);
+                    fechas.put("TUESDAY_CANTIAR", vl_tuesday_cantIAR);
+                    fechas.put("TUESDAY_COLOR", vl_tuesday_St);
                     fechas.put("WEDNESDAY", vl_wednesday);
                     fechas.put("WEDNESDAY_COMMELW", vl_wednesday_commELW);
                     fechas.put("WEDNESDAY_COMMIAP", vl_wednesday_commIAP);
@@ -429,6 +579,16 @@ public class CalendarControlARCController extends BaseController {
                     vl_sunday_cantIAR = 0;
                     vl_monday = "";
                     vl_tuesday = "";
+                    vl_tuesday = "";
+                    vl_tuesday_commELW = "";
+                    vl_tuesday_commIAP = "";
+                    vl_tuesday_commIAR = "";
+                    vl_tuesday_cant = 0;
+                    vl_tuesday_error = 0;
+                    vl_tuesday_cantSale = 0;
+                    vl_tuesday_cantELW = 0;
+                    vl_tuesday_cantIAP = 0;
+                    vl_tuesday_cantIAR = 0;
                     vl_wednesday = "";
                     vl_wednesday_commELW = "";
                     vl_wednesday_commIAP = "";
@@ -452,10 +612,11 @@ public class CalendarControlARCController extends BaseController {
                     vl_friday_St = "#000000";
                     vl_saturday_St = "#000000";
                     vl_sunday_St = "#000000";
+                    vl_tuesday_St = "#000000";
                     vl_wednesday_St = "#000000";
                     vl_thursday_St = "#000000";
                 }
-                
+
                 HashMap month = new HashMap();
                 HashMap week = new HashMap();
 
@@ -540,23 +701,23 @@ public class CalendarControlARCController extends BaseController {
 
         return new Gson().toJson(map);
     }
-    
-    String Style(Integer cant,Integer cantSale,Integer error){
+
+    String Style(Integer cant, Integer cantSale, Integer error) {
         String style = "#FF0000";
-        if(cant == 1){
-            if(cantSale > 0){
+        if (cant >= 1) {
+            if (cantSale > 0) {
                 style = "#FFCC00";
-            }else{
-                if(error == 0){
+            } else {
+                if (error == 0) {
                     style = "#339900";
-                }else{
+                } else {
                     style = "#CC9900";
                 }
             }
         }
         return style;
-    }    
-    
+    }
+
 //    String Style(Integer cant, Integer cantSale, Integer error) {
 //        String style = "";
 //        if (cant == 0) {
@@ -600,7 +761,6 @@ public class CalendarControlARCController extends BaseController {
 //        }
 //        return style;
 //    }
-
     @RequestMapping(value = "/updateObservation")
     public @ResponseBody
     String updateObservation(HttpServletRequest request) {

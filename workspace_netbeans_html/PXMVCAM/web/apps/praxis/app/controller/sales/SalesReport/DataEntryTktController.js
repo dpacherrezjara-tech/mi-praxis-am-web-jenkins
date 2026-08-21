@@ -233,6 +233,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryTktController', {
             Ext.getCmp(prototype.idSale + '-panelDetalles').hide();
             if (file.A720TKVOID === 'V'){
                 Ext.getCmp(prototype.idSale + '-panelDetalles').show();
+                Ext.getCmp(prototype.idSale +'-det-btnFOPVoid').show();
                 /*var img = new Ext.XTemplate('<img src="{src}">');
                 var images = [
                    {src:'resources/img/icon/void.png'}
@@ -277,7 +278,8 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryTktController', {
                 IN_CUPON2: '',
                 IN_CUPON3: '',
                 IN_CUPON4: '',
-                IN_FORCE: ''
+                IN_FORCE: '',
+                IN_IDFIL: file.A720IDFIL
             };
 
             Ext.Ajax.request({
@@ -665,6 +667,8 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryTktController', {
         var bean = {};
         bean.TDNR = Ext.getCmp(prototype.idSale + '-det-lblCia').getValue().trim() + Ext.getCmp(prototype.idSale + '-det-lblDocumento').getValue().trim();
         bean.FUENTE = meDET.ORIG;//Ext.getCmp(prototype.idSale + '-det-lblSource').getValue().trim().substr(0, 3);
+        bean.SEQTKT = this.view.params.rec.data.A720SEQ;
+        bean.IDFILE = Ext.getCmp(prototype.idSale + '-det-lblFileId').getValue().trim();
         if (bean.TDNR !== '' && bean.FUENTE !== '') {
             bean.A720TKVOID = '';//this.gloA720TKVOID;
             this.searchDelivery(bean);
@@ -696,6 +700,46 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryTktController', {
                 console.log('server-side failure with status code ' + response.status);
             }
         });
+    },
+    onFopVoid:function(obj){
+        let me = this;
+        let record = me.view.params.rec.data;
+        let lblDocumento = Ext.getCmp(prototype.idSale + '-det-lblDocumento').getValue().trim();
+        const {A720CIA,DOCUMENTO,A720SEQ,A720GRUPO,A720UFORMA} = record;
+        let stVoid =A720UFORMA;
+        let objReq = {
+            AIRLINE:'139',
+            CIA:A720CIA,
+            FORMA:DOCUMENTO.substring(0,4),
+            SERIE:DOCUMENTO.substring(4,10),
+            SEQ:A720SEQ,
+            GRUPO:A720GRUPO,
+            TIPO:'SALE'
+        };
+        if (Ext.getCmp(prototype.idSale + '-det-lblCia').getValue().length !== 3) {
+            Ext.Msg.alert('.: PRAXIS :.', 'Invalid Cia', function (btn, text) {
+                if (btn === 'ok') {
+                    this.onFocus('-det-lblCia');
+                }
+            });
+            return;
+        }
+        if (Ext.getCmp(prototype.idSale + '-det-lblDocumento').getValue().length !== 10) {
+            Ext.Msg.alert('.: PRAXIS :.', 'Invalid Document', function (btn, text) {
+                if (btn === 'ok') {
+                    this.onFocus('-det-lblDocumento');
+                }
+            });
+            return;
+        }
+        if(stVoid === 'VOID'&& lblDocumento !== ''){
+            let win = new Ext.Praxis.view.sales.SalesReportForm.DataEntryFOPVoid({
+                params: {
+                    objReq: objReq
+                }
+            });
+            win.show();
+        }
     }
 });
 

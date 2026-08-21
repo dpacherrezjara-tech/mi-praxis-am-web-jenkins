@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.BankAccountingVoucherDAO;
-import net.miatech.praxis.payment.A2364;
+import net.miatech.praxis.payment.old.A2364;
 
 /**
  *

@@ -175,6 +175,24 @@ Ext.define('Ext.Praxis.view.sales.AccountingTaxdetailForm.AccountingTaxdetailFor
                                             }
                                         },
                                         {
+                                            xtype: 'combo',
+                                            fieldLabel: 'Modo',
+                                            id: prototype.idAccountingTaxdetail + '-Modo',
+                                            labelAlign: 'left',
+                                            queryMode: 'local',
+                                            valueField: 'code',
+                                            displayField: 'name',
+                                            emptyText: '[SELECTED]',
+                                            labelWidth: 40,
+                                            labelClsExtra: 'prx-label-search',
+                                            width: 150,
+                                            required: true,
+                                            disabled: false,
+                                            listConfig: {
+                                                minWidth: 150
+                                            }
+                                        },
+                                        {
                                             xtype: 'datefield',
                                             id: prototype.idAccountingTaxdetail + '-txtFilterDateFrom',
                                             fieldLabel: 'From',
@@ -441,6 +459,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingTaxdetailForm.AccountingTaxdetailFor
                                     align: 'center'
                                 },
                                 items: [
+                                    {text: 'Modo', width: 80, dataIndex: 'MODO'},
                                     {text: 'Processing<br> Date', width: 80, dataIndex: 'FECPROC'},
                                     {text: 'Sales<br> Date', width: 80, dataIndex: 'FECVTA'},
                                     {text: 'Group', width: 80, dataIndex: 'GRUPO'},

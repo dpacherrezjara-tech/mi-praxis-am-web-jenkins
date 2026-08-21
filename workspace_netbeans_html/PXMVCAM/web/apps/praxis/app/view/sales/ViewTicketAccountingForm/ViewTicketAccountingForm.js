@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.sales.ViewTicketAccountingForm.ViewTicketAccountingF
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1850,
+                                        width: 1870,
                                         align: 'center'
                                     },
                                     items: [
@@ -70,13 +70,13 @@ Ext.define('Ext.Praxis.view.sales.ViewTicketAccountingForm.ViewTicketAccountingF
                                         {
                                             xtype: 'panel',
                                             height: 570,
-                                            width: 1850,
+                                            width: 1870,
                                             layout: 'fit',
                                             items: [
                                                 {
                                                     xtype: 'panel',
                                                     id: prototype.id + '-centerC-panel01',
-                                                    width: 1850,
+                                                    width: 1870,
                                                     layout: 'border',
                                                     align: 'center',
                                                     border: true,

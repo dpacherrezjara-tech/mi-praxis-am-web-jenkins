@@ -1,21 +1,23 @@
-
 prototype.id = 'MerchantNumberForm';
-prototype.url = CONTEXTPATH + '/MerchantNumber';
+prototype.url = CONTEXTPATH + '/MerchantNumberTmz';
+prototype.width = 1850;
+prototype.height = 630;
+//fechaActual = new Date(),mesActual = fechaActual.getMonth(),anioActual = fechaActual.getFullYear();
 
 Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.MerchantNumberForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.MerchantNumberForm',
     requires: [
+        'Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberController',
         'Ext.Praxis.view.payments.MerchantNumberForm.Options',
         'Ext.Praxis.view.payments.MerchantNumberForm.Filters',
-        'Ext.Praxis.view.payments.MerchantNumberForm.Info',
-        'Ext.Praxis.controller.payments.MerchantNumber.MerchantNumberController'
+        'Ext.Praxis.view.payments.MerchantNumberForm.Grids.MerchantsGrid',
+        'Ext.Praxis.view.payments.MerchantNumberForm.DataEntrys.MerchantMaintenanceDataEntry'
     ],
     controller: 'MerchantNumberController',
     layout: {
         type: 'fit'
     },
-    padding: '0 0 0 0',
     border: false,
     defaults: {
         border: false
@@ -32,17 +34,12 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.MerchantNumberForm', {
                     border: false,
                     bodyCls: 'colorFondo',
                     layout: 'fit',
-//                    defaults: {
-//                        border: false,
-//                        autoScroll: true
-//                    },
                     items: [
                         {
                             xtype: 'panel',
                             region: 'center',
-                            width: 980,
+                            width: prototype.width,
                             layout: 'border',
-                            
                             items: [
                                 {
                                     region: 'center',
@@ -54,51 +51,40 @@ Ext.define('Ext.Praxis.view.payments.MerchantNumberForm.MerchantNumberForm', {
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1600,
+                                        width: prototype.width,
                                         align: 'center'
                                     },
                                     items: [
                                         {
                                             xtype: prototype.id + '-options'
-                                        }
-                                        ,
+                                        },
                                         {
-                                            xtype: prototype.id + '-filters',
                                             id: prototype.id + '-contentFilter',
-                                            hidden: true
-                                        }
-                                        ,
-                                        {
                                             xtype: 'panel',
-                                            height: 600,
-                                            width: 1600,
-                                            layout: 'fit',
+                                            border: false,
+                                            defaults: {
+                                                width: prototype.width,
+                                                align: 'center'
+                                            },
                                             items: [
                                                 {
-                                                    xtype: 'panel',
-                                                    id: prototype.id + '-centerC-panel01',
-                                                    width: 1600,
-                                                    layout: 'border',
-                                                    align: 'center',
-                                                    border: true,
-                                                    defaults: {
-                                                        border: false
-                                                    },
-                                                    bodyStyle: 'background-color: white;',
-                                                    items: [
-                                                        {
-                                                            region: 'center',
-                                                            xtype: prototype.id + '-info',
-                                                            id: prototype.id + '-contentInfo'
-                                                        }
-                                                    ]
+                                                    xtype: prototype.id + '-filters'
                                                 }
                                             ]
+                                        },
+                                        {
+                                            xtype: 'panel',
+                                            id: prototype.id + '-mainContent',
+                                            height: prototype.height,
+                                            bodyStyle: 'background-color: #E3EAF9;',
+                                            layout: {
+                                                type: 'vbox',
+                                                align: 'center'
+                                            }
                                         }
-                                   ]
+                                    ]
                                 }
                             ]
-                            
                         }
                     ]
                 }

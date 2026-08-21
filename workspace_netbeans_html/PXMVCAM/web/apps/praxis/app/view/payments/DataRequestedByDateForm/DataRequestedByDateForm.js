@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataRequestedByDate
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1750,
+                                        width: 1900,
                                         align: 'center'
                                     },
                                     items: [
@@ -69,13 +69,13 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.DataRequestedByDate
                                         {
                                             xtype: 'panel',
                                             height: 700,
-                                            width: 1750,
+                                            width: 1900,
                                             layout: 'fit',
                                             items: [
                                                 {
                                                     xtype: 'panel',
                                                     id: prototype.id + '-centerC-panel01',
-                                                    width: 1750,
+                                                    width: 1900,
                                                     layout: 'border',
                                                     align: 'center',
                                                     border: true,

@@ -2,7 +2,7 @@
 Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailSalesAuditAcceptedController', {
     extend: 'Ext.app.ViewController',
     alias: 'controller.DataEntryDetailSalesAuditAcceptedController',
-    urlWin01:  CONTEXTPATH + '/SalesAuditAccepted',
+    urlWin01: CONTEXTPATH + '/SalesAuditAccepted',
     bean: {},
     beanTKT: {},
     beanTKTORI: {},
@@ -99,7 +99,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailS
         me.bean.VP_CIA = rec.get('A1672CIA');
         me.bean.VP_FRMSRIE = rec.get('A1672FORMA') + "" + rec.get('A1672SERIE');
         me.bean.VP_SEQ = rec.get('A1672SEQ');
-        me.bean.VP_IDFILE='';
+        me.bean.VP_IDFILE = rec.get('A1672IDFIL');
         me.bean.VP_TRNCU = rec.get('A1672TRNCU');
         me.bean.VP_CUPON = rec.get('A1672CUPON');
         me.bean.A1672AGENT = rec.get('A1672AGENT');
@@ -111,12 +111,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailS
         mask.show();
         Ext.Ajax.request({
             url: me.urlWin01 + '/loadTicketComponent/',
-            params: {beanString: JSON.stringify(me.bean)},
+            params: { beanString: JSON.stringify(me.bean) },
             success: function (response, options) { //records, operation, success
                 mask.hide();
                 var res = Ext.JSON.decode(response.responseText);
-                if (res.success) {
-
+                if (res.success) { 
                     Ext.getCmp(prototype.id1 + '-txtExchType').hide();
                     Ext.getCmp(prototype.id1 + '-txtRefundType').hide();
                     Ext.getCmp(prototype.id1 + '-gridComponent2').getStore().removeAll();
@@ -127,7 +126,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailS
                     Ext.getCmp(prototype.id1 + '-gridComponentOldSALES').getStore().loadData(res.lstComponent);
                     Ext.getCmp(prototype.id1 + '-gridComponentOldRFND').getStore().removeAll();
                     Ext.getCmp(prototype.id1 + '-gridComponentOldRFND').getStore().loadData(res.lstComponent);
-
+                    Ext.getCmp(prototype.id1 + '-txtDynamic').setValue(Ext.String.trim(res.beanADM.A1672DINAM));
+                     
                     Ext.getCmp(prototype.id1 + '-gridComponentOLD').getStore().removeAll();
                     Ext.getCmp(prototype.id1 + '-gridComponentOLD').getStore().loadData(res.lstComponentOld);
 
@@ -139,14 +139,14 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailS
 
                     var GridgridComponent = new Array();
 
-                    GridgridComponent.push({"VP_OPTION": 'Fare', "A1672FADIF": res.beanADM.A1672FADIF, "A1672FMORI": res.beanADM.A1672FMORI, "A1672FAORI": res.beanADM.A1672FAORI},
-                            {"VP_OPTION": 'Q', "A1672FADIF": res.beanADM.A1672QDIF, "A1672FMORI": res.beanADM.A1672QMORI, "A1672FAORI": res.beanADM.A1672QORIG},
-                            {"VP_OPTION": 'Tax', "A1672FADIF": res.beanADM.A1672TXDIF, "A1672FMORI": res.beanADM.A1672TXMIA, "A1672FAORI": res.beanADM.A1672TXAGT},
-                            {"VP_OPTION": 'Commission', "A1672FADIF": res.beanADM.A1672CODIF, "A1672FMORI": res.beanADM.A1672COMIA, "A1672FAORI": res.beanADM.A1672COAGT},
-                            {"VP_OPTION": 'Over Comm', "A1672FADIF": res.beanADM.A1672SCDIF, "A1672FMORI": res.beanADM.A1672SCMIA, "A1672FAORI": res.beanADM.A1672SCAGT},
-                            {"VP_OPTION": 'Tax On Comm', "A1672FADIF": res.beanADM.A1672OVDIF, "A1672FMORI": res.beanADM.A1672OVMIA, "A1672FAORI": res.beanADM.A1672OVAGT},
-                            {"VP_OPTION": 'Net' + " (" + res.beanADM.A1672MONTT + ") ", "A1672FADIF": res.beanADM.A1672TTDIF, "A1672FMORI": res.beanADM.A1672TTMIA, "A1672FAORI": res.beanADM.A1672TTAGT}
-                            );
+                    GridgridComponent.push({ "VP_OPTION": 'Fare', "A1672FADIF": res.beanADM.A1672FADIF, "A1672FMORI": res.beanADM.A1672FMORI, "A1672FAORI": res.beanADM.A1672FAORI },
+                        { "VP_OPTION": 'Q', "A1672FADIF": res.beanADM.A1672QDIF, "A1672FMORI": res.beanADM.A1672QMORI, "A1672FAORI": res.beanADM.A1672QORIG },
+                        { "VP_OPTION": 'Tax', "A1672FADIF": res.beanADM.A1672TXDIF, "A1672FMORI": res.beanADM.A1672TXMIA, "A1672FAORI": res.beanADM.A1672TXAGT },
+                        { "VP_OPTION": 'Commission', "A1672FADIF": res.beanADM.A1672CODIF, "A1672FMORI": res.beanADM.A1672COMIA, "A1672FAORI": res.beanADM.A1672COAGT },
+                        { "VP_OPTION": 'Over Comm', "A1672FADIF": res.beanADM.A1672SCDIF, "A1672FMORI": res.beanADM.A1672SCMIA, "A1672FAORI": res.beanADM.A1672SCAGT },
+                        { "VP_OPTION": 'Tax On Comm', "A1672FADIF": res.beanADM.A1672OVDIF, "A1672FMORI": res.beanADM.A1672OVMIA, "A1672FAORI": res.beanADM.A1672OVAGT },
+                        { "VP_OPTION": 'Net' + " (" + res.beanADM.A1672MONTT + ") ", "A1672FADIF": res.beanADM.A1672TTDIF, "A1672FMORI": res.beanADM.A1672TTMIA, "A1672FAORI": res.beanADM.A1672TTAGT }
+                    );
                     Ext.getCmp(prototype.id1 + '-gridComponent').getStore().removeAll();
                     Ext.getCmp(prototype.id1 + '-gridComponent').getStore().loadData(GridgridComponent);
                     //para el delivery
@@ -176,6 +176,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailS
                     });
 
                     Ext.getCmp(prototype.id1 + '-txtDatePlace').setValue(Ext.String.trim(res.lstFaximil.DAIS));
+                    console.log(res.lstFaximil.strIssExc);
+
                     if (res.lstFaximil.strIssExc !== '') {
                         Ext.getCmp(prototype.id1 + '-txtIssExc').setText(Ext.String.trim(res.lstFaximil.strIssExc.substring(2, 16)));
                     } else {
@@ -221,16 +223,16 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailS
                     var TotalTax = 0;
                     for (var iTax = 0; iTax < res.lstFaximil.lstTaxes.length; iTax++) {
                         strTax += Ext.String.trim(String(res.lstFaximil.lstTaxes[iTax])) + '\n';
-                         var arrayDeCadenas = String(res.lstFaximil.lstTaxes[iTax]).split(' ');
-                         inTotalTax=parseFloat(arrayDeCadenas[1]);
-                         TotalTax = TotalTax + inTotalTax;
+                        var arrayDeCadenas = String(res.lstFaximil.lstTaxes[iTax]).split(' ');
+                        inTotalTax = parseFloat(arrayDeCadenas[1]);
+                        TotalTax = TotalTax + inTotalTax;
                     }
                     Ext.getCmp(prototype.id1 + '-txtTaxes').setValue(strTax);
-                    if(TotalTax !==0){
-                        if(Ext.String.trim(res.beanADM.A1672MONET) !==''){
-                            Ext.getCmp(prototype.id1 + '-txtTotal').setValue(Ext.String.trim(res.beanADM.A1672MONET) +" "+ Ext.util.Format.number(TotalTax, '0,000.00'));
-                        }else{
-                            Ext.getCmp(prototype.id1 + '-txtTotal').setValue(Ext.String.trim(res.beanADM.A1672CURRENCY) +" "+ Ext.util.Format.number(TotalTax, '0,000.00'));
+                    if (TotalTax !== 0) {
+                        if (Ext.String.trim(res.beanADM.A1672MONET) !== '') {
+                            Ext.getCmp(prototype.id1 + '-txtTotal').setValue(Ext.String.trim(res.beanADM.A1672MONET) + " " + Ext.util.Format.number(TotalTax, '0,000.00'));
+                        } else {
+                            Ext.getCmp(prototype.id1 + '-txtTotal').setValue(Ext.String.trim(res.beanADM.A1672CURRENCY) + " " + Ext.util.Format.number(TotalTax, '0,000.00'));
                         }
                     }
 
@@ -266,11 +268,11 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailS
                         target: prototype.id1 + '-txtError',
                         html: '' + Ext.String.trim(res.beanADM.A1672ERROR)
                     });
-                    
-                    Ext.getCmp(prototype.id1 + '-txtTktOrig').setValue(Ext.String.trim(res.beanADM.A1672CIAOR +""+ res.beanADM.A1672FOROR +""+res.beanADM.A1672SEROR));
+
+                    Ext.getCmp(prototype.id1 + '-txtTktOrig').setValue(Ext.String.trim(res.beanADM.A1672CIAOR + "" + res.beanADM.A1672FOROR + "" + res.beanADM.A1672SEROR));
                     var tip = Ext.create('Ext.tip.ToolTip', {
                         target: prototype.id1 + '-txtTktOrig',
-                        html: '' + Ext.String.trim(res.beanADM.A1672CIAOR +""+ res.beanADM.A1672FOROR +""+res.beanADM.A1672SEROR)
+                        html: '' + Ext.String.trim(res.beanADM.A1672CIAOR + "" + res.beanADM.A1672FOROR + "" + res.beanADM.A1672SEROR)
                     });
                     Ext.getCmp(prototype.id1 + '-txtSaleDate').setValue(Ext.String.trim(res.beanADM.A1672FVENT));
                     Ext.getCmp(prototype.id1 + '-txtSaleCity').setValue(Ext.String.trim(res.beanADM.A1672CTYVT));
@@ -335,12 +337,12 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailS
                         Ext.getCmp(prototype.id1 + '-txtPenalty2').setValue(Ext.String.trim(res.beanADM.A1672MONTT));
                         //Ext.getCmp(prototype.id1 + '-txtTktOrig').setValue(Ext.String.trim(rec.get('A1672CIA') + "" + rec.get('A1672FORMA') + "" + rec.get('A1672SERIE')));
 
-                       // Ext.getCmp(prototype.id1 + '-txtAgentOrig').setValue(Ext.String.trim(rec.get('A1672AGENT')));
+                        // Ext.getCmp(prototype.id1 + '-txtAgentOrig').setValue(Ext.String.trim(rec.get('A1672AGENT')));
                         Ext.getCmp(prototype.id1 + '-txtAgentOrig').setValue(Ext.String.trim(rec.get('A1672AGENT')));
                         var tip = Ext.create('Ext.tip.ToolTip', {
-                        target: prototype.id1 + '-txtAgentOrig',
-                        html: '' + Ext.String.trim(rec.get('A1672AGENT'))
-                    });
+                            target: prototype.id1 + '-txtAgentOrig',
+                            html: '' + Ext.String.trim(rec.get('A1672AGENT'))
+                        });
                         Ext.getCmp(prototype.id1 + '-txtFecUsoOrig').setValue(Ext.String.trim(res.beanADM.A1672FECSL));
                         Ext.getCmp(prototype.id1 + '-txtQty').setValue(Ext.String.trim(res.beanADM.A1672QTYTK));
                         Ext.getCmp(prototype.id1 + '-txtPlace').setValue(Ext.String.trim(res.beanADM.A1672CEMIO));
@@ -423,8 +425,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailS
 
                     //console.log();
                 } else {
-                    global.Msg({msg: "Data not found.", icon: 2, fn: function () {
-                        }});
+                    global.Msg({
+                        msg: "Data not found.", icon: 2, fn: function () {
+                        }
+                    });
                 }
                 /*if(res.data.length > 0){
                  Ext.getCmp(prototype.id4 + '-gridSeguimieto').getStore().loadData(res.data);
@@ -495,7 +499,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailS
         var win = new Ext.Praxis.view.screens.CtrlDeliveryAudiForm({
             params: {
                 TDNR: rec.get('A1672CIA') + "" + rec.get('A1672FORMA') + "" + rec.get('A1672SERIE'),
-                FTE: rec.get('A1672FUENT')
+                FTE: rec.get('A1672FUENT'),
+                IDFIL: rec.get('A1672IDFIL'),
+                TRNCU: Ext.getCmp(prototype.id1 + '-txtTrnx').getValue()
             }
         });
         win.show();
@@ -537,16 +543,26 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailS
         win.show();
     },
     onPDIClick: function () {
-        var me = this;
-        rec = me.view.params.rec;
-        rec = rec === null || rec === undefined ? {} : rec;
-        var win = new Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.DataEntryDetailsPDI({
+        // console.log("onPDIClick");
+        let me = this;
+        let rec = me.view.params.rec;
+
+        if (!rec) {
+            console.warn('No record found');
+            return;
+        }
+
+        // console.log('params', rec.data);
+
+        const dataEntry = Ext.create('Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.DataEntryDetailsPDI', {
+            id: prototype.id + '-DataEntryDetailsPDI',
             params: {
                 rec: rec,
                 url01: me.urlWin01
             }
         });
-        win.show();
+
+        dataEntry.show();
     },
     onCloseClick: function (btn) {
         this.view.close();
@@ -572,15 +588,16 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailS
         me.beanTKT.A1672PAIVT = Ext.getCmp(prototype.id1 + '-txtPaiVta').getValue();
         me.beanTKT.A1672AGENT = Ext.getCmp(prototype.id1 + '-txtAgentF').getValue();
         me.beanTKT.A1672FUENT = Ext.getCmp(prototype.id1 + '-txtSRC').getValue();
+        me.beanTKT.A1672IDFIL = rec.get('A1672IDFIL');
 
         Ext.Ajax.request({
             url: me.urlWin01 + '/loadASRFacsimilProrate/',
-            params: {beanString: JSON.stringify(me.beanTKT)},
+            params: { beanString: JSON.stringify(me.beanTKT) },
             success: function (response, options) { //records, operation, success
                 mask.hide();
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
-                     Ext.getCmp(prototype.id1 + '-txtupdateTKTOri').show();
+                    Ext.getCmp(prototype.id1 + '-txtupdateTKTOri').show();
                     //para el delivery
                     var strRestrict = '';
                     for (var i = 0; i < res.lstFaximil.lstReg46Restrict.length; i++) {
@@ -608,6 +625,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailS
                     });
 
                     Ext.getCmp(prototype.id1 + '-txtDatePlace').setValue(Ext.String.trim(res.lstFaximil.DAIS));
+
+                    console.log(res.lstFaximil.strIssExc);
                     if (res.lstFaximil.strIssExc !== '') {
                         Ext.getCmp(prototype.id1 + '-txtIssExc').setText(Ext.String.trim(res.lstFaximil.strIssExc.substring(2, 16)));
                     } else {
@@ -671,8 +690,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailS
 
                     //console.log(res.beanFaximil);
                 } else {
-                    global.Msg({msg: "Data not found.", icon: 2, fn: function () {
-                        }});
+                    global.Msg({
+                        msg: "Data not found.", icon: 2, fn: function () {
+                        }
+                    });
                 }
             }
         });
@@ -684,15 +705,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailS
             msg: 'Please Wait....'
         });
         mask.show();
-        var TKTORI= Ext.getCmp(prototype.id1 + '-txtNUMBERTKT').getEl().dom.innerHTML;
-        me.beanTKTORI.VP_FRMSRIE = TKTORI.replace('-','') ;
+        var TKTORI = Ext.getCmp(prototype.id1 + '-txtNUMBERTKT').getEl().dom.innerHTML;
+        me.beanTKTORI.VP_FRMSRIE = TKTORI.replace('-', '');
         me.beanTKTORI.A1672PAIVT = Ext.getCmp(prototype.id1 + '-txtPaiVta').getValue();
         me.beanTKTORI.A1672AGENT = Ext.getCmp(prototype.id1 + '-txtAgentF').getValue();
         me.beanTKTORI.A1672FUENT = Ext.getCmp(prototype.id1 + '-txtSRC').getValue();
 
         Ext.Ajax.request({
             url: me.urlWin01 + '/loadASRFacsimilProrate/',
-            params: {beanString: JSON.stringify(me.beanTKTORI)},
+            params: { beanString: JSON.stringify(me.beanTKTORI) },
             success: function (response, options) { //records, operation, success
                 mask.hide();
                 Ext.getCmp(prototype.id1 + '-txtupdateTKTOri').hide();
@@ -788,8 +809,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntryDetailS
 
                     //console.log(res.beanFaximil);
                 } else {
-                    global.Msg({msg: "Data not found.", icon: 2, fn: function () {
-                        }});
+                    global.Msg({
+                        msg: "Data not found.", icon: 2, fn: function () {
+                        }
+                    });
                 }
             }
         });

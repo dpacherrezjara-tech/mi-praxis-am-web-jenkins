@@ -19,6 +19,7 @@ public class A730 {
     public String A730FORMA = "";
     public String A730SERIE = "";
     public String A730FECVTA = "";
+    public String A720TKVOID = "";
     public String A730FLAG = "";
     public int A730NSEQ = 0;
     public String TRANS = "";
@@ -189,5 +190,11 @@ public class A730 {
     public String A730TDOC = "";
     public String A730RFIC = "";
     public String A730RFIS = "";
+    
+    public String CPN_REF = "";
+    public String A4373CUPN1 = "";
+    public String A4373CUPN2 = "";
+    public String A4373CUPN3 = "";
+    public String A4373CUPN4 = "";
     
 }

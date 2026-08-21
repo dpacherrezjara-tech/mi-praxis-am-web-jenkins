@@ -16,7 +16,7 @@ import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.payments.RejectionReportLogic;
-import net.miatech.praxis.payment.filter.A2288Filter;
+import net.miatech.praxis.payment.old.A2288Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;

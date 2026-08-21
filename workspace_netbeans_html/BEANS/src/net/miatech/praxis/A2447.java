@@ -33,6 +33,7 @@ public class A2447 {
     public String A2447HREVI = "";
     public String A2447INDCO = "";
     public String A2447COD = "";
+    public Double A2447CHARG = 0.00;
     public Double A2447COMBA = 0.00;
     public Double A2447IVACB = 0.00;
     public String A2447COD2 = "";

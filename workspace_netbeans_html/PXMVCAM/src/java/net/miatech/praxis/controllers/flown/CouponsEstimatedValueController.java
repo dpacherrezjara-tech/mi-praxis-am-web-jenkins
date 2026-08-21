@@ -7,8 +7,11 @@ package net.miatech.praxis.controllers.flown;
 
 import com.google.gson.Gson;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -20,6 +23,7 @@ import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.flown.CouponsEstimatedValueLogic;
 import net.miatech.utils.Functions;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -72,7 +76,7 @@ public class CouponsEstimatedValueController extends BaseController {
     }
 
     public List<A1692Filter> getList(HttpServletRequest request, Boolean bExcel) {
-        
+
         String beanString = "";
         Gson gson = new Gson();
         logic = new CouponsEstimatedValueLogic();
@@ -96,7 +100,7 @@ public class CouponsEstimatedValueController extends BaseController {
 //            filter.IN_TIPOFECHA = Integer.parseInt(request.getParameter("IN_TIPOFECHA"));
 //            filter.IN_FECHA_FROM = request.getParameter("IN_FECHA_FROM");
 //            filter.IN_FECHA_TO = request.getParameter("IN_FECHA_TO");
-            
+
             beanString = request.getParameter("beanString");
             filter = gson.fromJson(beanString, A1692Filter.class);
             filter.page.TOTROW = -1;
@@ -122,279 +126,368 @@ public class CouponsEstimatedValueController extends BaseController {
 
         return lst;
     }
-    
+
+//    @RequestMapping(value = "getXLSX")
+//    public @ResponseBody
+//    void getXLSX(HttpServletRequest request, HttpServletResponse response) {
+//        System.out.println("PendingAccountingCoupons : getXLSX");
+//
+//        String fileNameDownload = String.format("PendingAccountingCoupons - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+//
+//        try {
+//
+//            Workbook workbook;
+//            File file = File.createTempFile(fileNameDownload, ".xlsx");
+//            List<A1692Filter> listaData = this.getList(request, true);
+//
+//            System.out.println("Tamaño de lista devuelta : " + listaData.size());
+//
+//            workbook = new XSSFWorkbook();
+//
+//            Sheet sheet = workbook.createSheet("ReasonCodeReport");
+//
+//            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
+//            CellStyle bodyStyle = workbook.createCellStyle();
+//            Font headerFont = workbook.createFont();
+//
+//            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
+//            headerFont.setColor(IndexedColors.BLACK.getIndex());
+//
+//            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
+//            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+//            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
+//            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+//            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
+//            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+//            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
+//            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+//            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
+//            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
+//            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+//            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+//            headerStyle.setFont(headerFont);
+//
+//            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
+//            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+//            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
+//            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+//            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
+//            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+//            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
+//            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+//            Integer vi = 0;
+//            Integer vj = 0; //Almacena el numero de fila
+//            Iterator iter = listaData.iterator();
+//
+//            // ====== CREANDO TITULOS ======================================
+//            Row row = sheet.createRow(vj);
+//
+//            Cell CH1_00 = row.createCell(0);
+//            Cell CH1_01 = row.createCell(1);
+//            Cell CH1_02 = row.createCell(2);
+//            Cell CH1_03 = row.createCell(3);
+//            Cell CH1_04 = row.createCell(4);
+//            Cell CH1_05 = row.createCell(5);
+//            Cell CH1_06 = row.createCell(6);
+//            Cell CH1_07 = row.createCell(7);
+//            Cell CH1_08 = row.createCell(8);
+//            Cell CH1_09 = row.createCell(9);
+//            Cell CH1_10 = row.createCell(10);
+//            Cell CH1_11 = row.createCell(11);
+//            Cell CH1_12 = row.createCell(12);
+//            Cell CH1_13 = row.createCell(13);
+//            Cell CH1_14 = row.createCell(14);
+//            Cell CH1_15 = row.createCell(15);
+//            Cell CH1_16 = row.createCell(16);
+//            Cell CH1_17 = row.createCell(17);
+//            Cell CH1_18 = row.createCell(18);
+//
+//            CH1_00.setCellValue("Tickets");
+//            CH1_01.setCellValue("Seq");
+//            CH1_02.setCellValue("Status");
+//            CH1_03.setCellValue("Flight");
+//            CH1_04.setCellValue("VCR Date");
+//            CH1_05.setCellValue("Flight");
+//            CH1_06.setCellValue("City");
+//            CH1_07.setCellValue("Leg");
+//            CH1_08.setCellValue("Zone");
+//            CH1_09.setCellValue("Carrier");
+//            CH1_10.setCellValue("Fare");
+//            CH1_11.setCellValue("Class");
+//            CH1_12.setCellValue("Sales Value");
+//            CH1_14.setCellValue("Estimated Value");
+//            CH1_15.setCellValue("Exch.");
+//            CH1_16.setCellValue("Estimated Value");
+//            CH1_17.setCellValue("Create");
+//            CH1_18.setCellValue("Flag");
+//
+//            CH1_00.setCellStyle(headerStyle);
+//            CH1_01.setCellStyle(headerStyle);
+//            CH1_02.setCellStyle(headerStyle);
+//            CH1_03.setCellStyle(headerStyle);
+//            CH1_04.setCellStyle(headerStyle);
+//            CH1_05.setCellStyle(headerStyle);
+//            CH1_06.setCellStyle(headerStyle);
+//            CH1_07.setCellStyle(headerStyle);
+//            CH1_08.setCellStyle(headerStyle);
+//            CH1_09.setCellStyle(headerStyle);
+//            CH1_10.setCellStyle(headerStyle);
+//            CH1_11.setCellStyle(headerStyle);
+//            CH1_12.setCellStyle(headerStyle);
+//            CH1_13.setCellStyle(headerStyle);
+//            CH1_14.setCellStyle(headerStyle);
+//            CH1_15.setCellStyle(headerStyle);
+//            CH1_16.setCellStyle(headerStyle);
+//            CH1_17.setCellStyle(headerStyle);
+//            CH1_18.setCellStyle(headerStyle);
+//
+//            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
+//            sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
+//            sheet.addMergedRegion(new CellRangeAddress(0, 1, 1, 1));
+//            sheet.addMergedRegion(new CellRangeAddress(0, 1, 2, 2));
+//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 3));
+//            sheet.addMergedRegion(new CellRangeAddress(0, 1, 4, 4));
+//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5));
+//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 6));
+//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 7));
+//            sheet.addMergedRegion(new CellRangeAddress(0, 1, 8, 8));
+//            sheet.addMergedRegion(new CellRangeAddress(0, 1, 9, 9));
+//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 10, 10));
+//            sheet.addMergedRegion(new CellRangeAddress(0, 1, 11, 11));
+//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 13));
+//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
+//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 15));
+//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 16));
+//            sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 17));
+//            sheet.addMergedRegion(new CellRangeAddress(0, 1, 18, 18));
+//
+//            //*******************
+//            
+//            ++vj;
+//            Row row2 = sheet.createRow(vj);
+//            Cell CH2_00 = row2.createCell(0);
+//            Cell CH2_01 = row2.createCell(1);
+//            Cell CH2_02 = row2.createCell(2);
+//            Cell CH2_03 = row2.createCell(3);
+//            Cell CH2_04 = row2.createCell(4);
+//            Cell CH2_05 = row2.createCell(5);
+//            Cell CH2_06 = row2.createCell(6);
+//            Cell CH2_07 = row2.createCell(7);
+//            Cell CH2_08 = row2.createCell(8);
+//            Cell CH2_09 = row2.createCell(9);
+//            Cell CH2_10 = row2.createCell(10);
+//            Cell CH2_11 = row2.createCell(11);
+//            Cell CH2_12 = row2.createCell(12);
+//            Cell CH2_13 = row2.createCell(13);
+//            Cell CH2_14 = row2.createCell(14);
+//            Cell CH2_15 = row2.createCell(15);
+//            Cell CH2_16 = row2.createCell(16);
+//            Cell CH2_17 = row2.createCell(17);
+//
+//            CH2_03.setCellValue("Date");
+//            CH2_05.setCellValue("Number");
+//            CH2_06.setCellValue("Pair");
+//            CH2_07.setCellValue("Sec.");
+//            CH2_10.setCellValue("Basis");
+//            CH2_12.setCellValue("Flag");
+//            CH2_13.setCellValue("USD");
+//            CH2_14.setCellValue("USD");
+//            CH2_15.setCellValue("Rate");
+//            CH2_16.setCellValue("MXN");
+//            CH2_17.setCellValue("Date");
+//
+//            CH2_00.setCellStyle(headerStyle);
+//            CH2_01.setCellStyle(headerStyle);
+//            CH2_02.setCellStyle(headerStyle);
+//            CH2_03.setCellStyle(headerStyle);
+//            CH2_04.setCellStyle(headerStyle);
+//            CH2_05.setCellStyle(headerStyle);
+//            CH2_06.setCellStyle(headerStyle);
+//            CH2_07.setCellStyle(headerStyle);
+//            CH2_08.setCellStyle(headerStyle);
+//            CH2_09.setCellStyle(headerStyle);
+//            CH2_10.setCellStyle(headerStyle);
+//            CH2_11.setCellStyle(headerStyle);
+//            CH2_12.setCellStyle(headerStyle);
+//            CH2_13.setCellStyle(headerStyle);
+//            CH2_14.setCellStyle(headerStyle);
+//            CH2_15.setCellStyle(headerStyle);
+//            CH2_16.setCellStyle(headerStyle);
+//            CH2_17.setCellStyle(headerStyle);
+//            
+//            //          ========================================================
+//            ++vj;
+//            while (iter.hasNext()) {
+//
+//                row = sheet.createRow(vj);
+//                Cell rcell0 = row.createCell(0);
+//                Cell rcell1 = row.createCell(1);
+//                Cell rcell2 = row.createCell(2);
+//                Cell rcell3 = row.createCell(3);
+//                Cell rcell4 = row.createCell(4);
+//                Cell rcell5 = row.createCell(5);
+//                Cell rcell6 = row.createCell(6);
+//                Cell rcell7 = row.createCell(7);
+//                Cell rcell8 = row.createCell(8);
+//                Cell rcell9 = row.createCell(9);
+//                Cell rcel20 = row.createCell(10);
+//                Cell rcel21 = row.createCell(11);
+//                Cell rcel22 = row.createCell(12);
+//                Cell rcel23 = row.createCell(13);
+//                Cell rcel24 = row.createCell(14);
+//                Cell rcel25 = row.createCell(15);
+//                Cell rcel26 = row.createCell(16);
+//                Cell rcel27 = row.createCell(17);
+//                Cell rcel28 = row.createCell(18);
+//
+//                rcell0.setCellValue(listaData.get(vi).strTicket);
+//                rcell1.setCellValue(listaData.get(vi).SEQ);
+//                rcell2.setCellValue(listaData.get(vi).strDescSTVAL);
+//                rcell3.setCellValue(listaData.get(vi).strFormatDate2);
+//                rcell4.setCellValue(listaData.get(vi).strFormatDate);
+//                rcell5.setCellValue(listaData.get(vi).NFLIGHT);
+//                rcell6.setCellValue(listaData.get(vi).strDescripcion);
+//                rcell7.setCellValue(listaData.get(vi).LEGSEQ);
+//                rcell8.setCellValue(listaData.get(vi).ZONA);
+//                rcell9.setCellValue(listaData.get(vi).CARR);
+//                rcel20.setCellValue(listaData.get(vi).FBASE);
+//                rcel21.setCellValue(listaData.get(vi).CLAS);
+//                rcel22.setCellValue(listaData.get(vi).strFVAL);
+//                rcel23.setCellValue(listaData.get(vi).VCPN);
+//                rcel24.setCellValue(listaData.get(vi).VCPMX);
+//                rcel25.setCellValue(listaData.get(vi).TCMUS);
+//                rcel26.setCellValue(listaData.get(vi).VCPUS);
+//                rcel27.setCellValue(listaData.get(vi).strFormatFVTA);
+//                rcel28.setCellValue(listaData.get(vi).strDescSTNEW);
+//
+//                iter.next();
+//                ++vi;
+//                ++vj;
+//            }
+//            sheet.autoSizeColumn(0, true);
+//            sheet.autoSizeColumn(1, true);
+//            sheet.autoSizeColumn(2, true);
+//            sheet.autoSizeColumn(3, true);
+//            sheet.autoSizeColumn(4, true);
+//            sheet.autoSizeColumn(5, true);
+//            sheet.autoSizeColumn(6, true);
+//            sheet.autoSizeColumn(7, true);
+//            sheet.autoSizeColumn(8, true);
+//            sheet.autoSizeColumn(9, true);
+//            sheet.autoSizeColumn(10, true);
+//            sheet.autoSizeColumn(11, true);
+//            sheet.autoSizeColumn(12, true);
+//            sheet.autoSizeColumn(13, true);
+//            sheet.autoSizeColumn(14, true);
+//            sheet.autoSizeColumn(15, true);
+//            sheet.autoSizeColumn(16, true);
+//            sheet.autoSizeColumn(17, true);
+//            sheet.autoSizeColumn(18, true);
+//            /**
+//             * fileNameDownload = Nombre de descarga
+//             */
+//            response.setContentType("application/vnd.openxml");
+//            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
+//
+//            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
+//            workbook.write(response.getOutputStream());
+//            fos.close();
+//
+//        } catch (IOException e) {
+//            throw new SpringException(e);
+//        }
+//    }
     @RequestMapping(value = "getXLSX")
     public @ResponseBody
     void getXLSX(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("PendingAccountingCoupons : getXLSX");
 
-        String fileNameDownload = String.format("PendingAccountingCoupons - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        System.out.println("PendingAccountingCoupons : getTXT");
+        String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
 
         try {
-
-            Workbook workbook;
-            File file = File.createTempFile(fileNameDownload, ".xlsx");
             List<A1692Filter> listaData = this.getList(request, true);
 
-            System.out.println("Tamaño de lista devuelta : " + listaData.size());
-
-            workbook = new XSSFWorkbook();
-
-            Sheet sheet = workbook.createSheet("ReasonCodeReport");
-
-            XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
-            CellStyle bodyStyle = workbook.createCellStyle();
-            Font headerFont = workbook.createFont();
-
-            headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
-            headerFont.setColor(IndexedColors.BLACK.getIndex());
-
-            headerStyle.setBorderRight(CellStyle.BORDER_THIN);
-            headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            headerStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            headerStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setBorderTop(CellStyle.BORDER_THIN);
-            headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-            headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
-            headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
-            headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
-            headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
-            headerStyle.setFont(headerFont);
-
-            bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
-            bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
-            bodyStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderLeft(CellStyle.BORDER_THIN);
-            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
-            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            int len = listaData.size();
             Integer vi = 0;
-            Integer vj = 0; //Almacena el numero de fila
-            Iterator iter = listaData.iterator();
+            String fileName = "PendingAccountingCoupons - " + Functions.getFechaActual() + ".txt";
+            File file = new File(rutaFile + "\\" + fileName + ".txt");
 
-            // ====== CREANDO TITULOS ======================================
-            Row row = sheet.createRow(vj);
-
-            Cell CH1_00 = row.createCell(0);
-            Cell CH1_01 = row.createCell(1);
-            Cell CH1_02 = row.createCell(2);
-            Cell CH1_03 = row.createCell(3);
-            Cell CH1_04 = row.createCell(4);
-            Cell CH1_05 = row.createCell(5);
-            Cell CH1_06 = row.createCell(6);
-            Cell CH1_07 = row.createCell(7);
-            Cell CH1_08 = row.createCell(8);
-            Cell CH1_09 = row.createCell(9);
-            Cell CH1_10 = row.createCell(10);
-            Cell CH1_11 = row.createCell(11);
-            Cell CH1_12 = row.createCell(12);
-            Cell CH1_13 = row.createCell(13);
-            Cell CH1_14 = row.createCell(14);
-            Cell CH1_15 = row.createCell(15);
-            Cell CH1_16 = row.createCell(16);
-            Cell CH1_17 = row.createCell(17);
-            Cell CH1_18 = row.createCell(18);
-
-            CH1_00.setCellValue("Tickets");
-            CH1_01.setCellValue("Seq");
-            CH1_02.setCellValue("Status");
-            CH1_03.setCellValue("Flight");
-            CH1_04.setCellValue("VCR Date");
-            CH1_05.setCellValue("Flight");
-            CH1_06.setCellValue("City");
-            CH1_07.setCellValue("Leg");
-            CH1_08.setCellValue("Zone");
-            CH1_09.setCellValue("Carrier");
-            CH1_10.setCellValue("Fare");
-            CH1_11.setCellValue("Class");
-            CH1_12.setCellValue("Sales Value");
-            CH1_14.setCellValue("Estimated Value");
-            CH1_15.setCellValue("Exch.");
-            CH1_16.setCellValue("Estimated Value");
-            CH1_17.setCellValue("Create");
-            CH1_18.setCellValue("Flag");
-
-            CH1_00.setCellStyle(headerStyle);
-            CH1_01.setCellStyle(headerStyle);
-            CH1_02.setCellStyle(headerStyle);
-            CH1_03.setCellStyle(headerStyle);
-            CH1_04.setCellStyle(headerStyle);
-            CH1_05.setCellStyle(headerStyle);
-            CH1_06.setCellStyle(headerStyle);
-            CH1_07.setCellStyle(headerStyle);
-            CH1_08.setCellStyle(headerStyle);
-            CH1_09.setCellStyle(headerStyle);
-            CH1_10.setCellStyle(headerStyle);
-            CH1_11.setCellStyle(headerStyle);
-            CH1_12.setCellStyle(headerStyle);
-            CH1_13.setCellStyle(headerStyle);
-            CH1_14.setCellStyle(headerStyle);
-            CH1_15.setCellStyle(headerStyle);
-            CH1_16.setCellStyle(headerStyle);
-            CH1_17.setCellStyle(headerStyle);
-            CH1_18.setCellStyle(headerStyle);
-
-            //CellRangeAddress(int firstRow, int lastRow, int firstCol, int lastCol)
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 0, 0));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 1, 1));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 2, 2));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 3, 3));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 4, 4));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 5, 5));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 6, 6));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 7));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 8, 8));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 9, 9));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 10, 10));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 11, 11));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 13));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 15));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 16));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 17));
-            sheet.addMergedRegion(new CellRangeAddress(0, 1, 18, 18));
-
-            //*******************
-            
-            ++vj;
-            Row row2 = sheet.createRow(vj);
-            Cell CH2_00 = row2.createCell(0);
-            Cell CH2_01 = row2.createCell(1);
-            Cell CH2_02 = row2.createCell(2);
-            Cell CH2_03 = row2.createCell(3);
-            Cell CH2_04 = row2.createCell(4);
-            Cell CH2_05 = row2.createCell(5);
-            Cell CH2_06 = row2.createCell(6);
-            Cell CH2_07 = row2.createCell(7);
-            Cell CH2_08 = row2.createCell(8);
-            Cell CH2_09 = row2.createCell(9);
-            Cell CH2_10 = row2.createCell(10);
-            Cell CH2_11 = row2.createCell(11);
-            Cell CH2_12 = row2.createCell(12);
-            Cell CH2_13 = row2.createCell(13);
-            Cell CH2_14 = row2.createCell(14);
-            Cell CH2_15 = row2.createCell(15);
-            Cell CH2_16 = row2.createCell(16);
-            Cell CH2_17 = row2.createCell(17);
-
-            CH2_03.setCellValue("Date");
-            CH2_05.setCellValue("Number");
-            CH2_06.setCellValue("Pair");
-            CH2_07.setCellValue("Sec.");
-            CH2_10.setCellValue("Basis");
-            CH2_12.setCellValue("Flag");
-            CH2_13.setCellValue("USD");
-            CH2_14.setCellValue("USD");
-            CH2_15.setCellValue("Rate");
-            CH2_16.setCellValue("MXN");
-            CH2_17.setCellValue("Date");
-
-            CH2_00.setCellStyle(headerStyle);
-            CH2_01.setCellStyle(headerStyle);
-            CH2_02.setCellStyle(headerStyle);
-            CH2_03.setCellStyle(headerStyle);
-            CH2_04.setCellStyle(headerStyle);
-            CH2_05.setCellStyle(headerStyle);
-            CH2_06.setCellStyle(headerStyle);
-            CH2_07.setCellStyle(headerStyle);
-            CH2_08.setCellStyle(headerStyle);
-            CH2_09.setCellStyle(headerStyle);
-            CH2_10.setCellStyle(headerStyle);
-            CH2_11.setCellStyle(headerStyle);
-            CH2_12.setCellStyle(headerStyle);
-            CH2_13.setCellStyle(headerStyle);
-            CH2_14.setCellStyle(headerStyle);
-            CH2_15.setCellStyle(headerStyle);
-            CH2_16.setCellStyle(headerStyle);
-            CH2_17.setCellStyle(headerStyle);
-            
-            //          ========================================================
-            ++vj;
-            while (iter.hasNext()) {
-
-                row = sheet.createRow(vj);
-                Cell rcell0 = row.createCell(0);
-                Cell rcell1 = row.createCell(1);
-                Cell rcell2 = row.createCell(2);
-                Cell rcell3 = row.createCell(3);
-                Cell rcell4 = row.createCell(4);
-                Cell rcell5 = row.createCell(5);
-                Cell rcell6 = row.createCell(6);
-                Cell rcell7 = row.createCell(7);
-                Cell rcell8 = row.createCell(8);
-                Cell rcell9 = row.createCell(9);
-                Cell rcel20 = row.createCell(10);
-                Cell rcel21 = row.createCell(11);
-                Cell rcel22 = row.createCell(12);
-                Cell rcel23 = row.createCell(13);
-                Cell rcel24 = row.createCell(14);
-                Cell rcel25 = row.createCell(15);
-                Cell rcel26 = row.createCell(16);
-                Cell rcel27 = row.createCell(17);
-                Cell rcel28 = row.createCell(18);
-
-                rcell0.setCellValue(listaData.get(vi).strTicket);
-                rcell1.setCellValue(listaData.get(vi).SEQ);
-                rcell2.setCellValue(listaData.get(vi).strDescSTVAL);
-                rcell3.setCellValue(listaData.get(vi).strFormatDate2);
-                rcell4.setCellValue(listaData.get(vi).strFormatDate);
-                rcell5.setCellValue(listaData.get(vi).NFLIGHT);
-                rcell6.setCellValue(listaData.get(vi).strDescripcion);
-                rcell7.setCellValue(listaData.get(vi).LEGSEQ);
-                rcell8.setCellValue(listaData.get(vi).ZONA);
-                rcell9.setCellValue(listaData.get(vi).CARR);
-                rcel20.setCellValue(listaData.get(vi).FBASE);
-                rcel21.setCellValue(listaData.get(vi).CLAS);
-                rcel22.setCellValue(listaData.get(vi).strFVAL);
-                rcel23.setCellValue(listaData.get(vi).VCPN);
-                rcel24.setCellValue(listaData.get(vi).VCPMX);
-                rcel25.setCellValue(listaData.get(vi).TCMUS);
-                rcel26.setCellValue(listaData.get(vi).VCPUS);
-                rcel27.setCellValue(listaData.get(vi).strFormatFVTA);
-                rcel28.setCellValue(listaData.get(vi).strDescSTNEW);
-
-                iter.next();
-                ++vi;
-                ++vj;
+            if (file.exists()) {
+                file.delete();
             }
-            sheet.autoSizeColumn(0, true);
-            sheet.autoSizeColumn(1, true);
-            sheet.autoSizeColumn(2, true);
-            sheet.autoSizeColumn(3, true);
-            sheet.autoSizeColumn(4, true);
-            sheet.autoSizeColumn(5, true);
-            sheet.autoSizeColumn(6, true);
-            sheet.autoSizeColumn(7, true);
-            sheet.autoSizeColumn(8, true);
-            sheet.autoSizeColumn(9, true);
-            sheet.autoSizeColumn(10, true);
-            sheet.autoSizeColumn(11, true);
-            sheet.autoSizeColumn(12, true);
-            sheet.autoSizeColumn(13, true);
-            sheet.autoSizeColumn(14, true);
-            sheet.autoSizeColumn(15, true);
-            sheet.autoSizeColumn(16, true);
-            sheet.autoSizeColumn(17, true);
-            sheet.autoSizeColumn(18, true);
-            /**
-             * fileNameDownload = Nombre de descarga
-             */
-            response.setContentType("application/vnd.openxml");
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
 
-            FileOutputStream fos = new FileOutputStream(file.getAbsolutePath());
-            workbook.write(response.getOutputStream());
-            fos.close();
+            if (listaData.get(0).IN_TYPE.equals("S")) {
+                PrintWriter writer = new PrintWriter(file, "UTF-8");
+                String cadena;
+                cadena = "Tickets|Seq|Status|Flight Date|RFIC|Reason Code|Free Description|Carrier|Sales Flag|Sales USD|Estimated USD|Exch.Rate|Estimated MXN|Create Date";
+                writer.println("" + cadena);
+
+                for (vi = 0; vi < len; vi++) {
+                    cadena = "";
+                    cadena += "" + listaData.get(vi).strTicket + "|";
+                    cadena += "" + listaData.get(vi).SEQ + "|";
+                    cadena += "" + listaData.get(vi).strDescSTVAL + "|";
+                    cadena += "" + listaData.get(vi).strFormatDate2 + "|";
+                    cadena += "" + listaData.get(vi).RFIC + "|";
+                    cadena += "" + listaData.get(vi).RECODE + "|";
+                    cadena += "" + listaData.get(vi).DESC_RECODE + "|";
+                    cadena += "" + listaData.get(vi).CARR + "|";
+                    cadena += "" + listaData.get(vi).strFVAL + "|";
+                    cadena += "" + listaData.get(vi).VCPN + "|";
+                    cadena += "" + listaData.get(vi).VCPMX + "|";
+                    cadena += "" + listaData.get(vi).TCMUS + "|";
+                    cadena += "" + listaData.get(vi).VCPUS + "|";
+                    cadena += "" + listaData.get(vi).strFormatFVTA + "|";
+                    cadena = cadena.replaceAll("null", "");
+                    writer.println("" + cadena);
+                }
+                writer.flush();
+                writer.close();
+            } else {
+                PrintWriter writer = new PrintWriter(file, "UTF-8");
+                String cadena;
+                cadena = "Tickets|Seq|Status|Flight Date|VCR Date|Flight Number|City Pair|Leg Sec.|Zone|Carrier|Fare Basis|Class|Sales Value Flag|Sales Value USD|Estimated Value USD|Exch. Rate|Estimated Value MXN|Create Date|Flag";
+                writer.println("" + cadena);
+
+                for (vi = 0; vi < len; vi++) {
+                    cadena = "";
+                    cadena += "" + listaData.get(vi).strTicket + "|";
+                    cadena += "" + listaData.get(vi).SEQ + "|";
+                    cadena += "" + listaData.get(vi).strDescSTVAL + "|";
+                    cadena += "" + listaData.get(vi).strFormatDate2 + "|";
+                    cadena += "" + listaData.get(vi).strFormatDate + "|";
+                    cadena += "" + listaData.get(vi).NFLIGHT + "|";
+                    cadena += "" + listaData.get(vi).strDescripcion + "|";
+                    cadena += "" + listaData.get(vi).LEGSEQ + "|";
+                    cadena += "" + listaData.get(vi).ZONA + "|";
+                    cadena += "" + listaData.get(vi).CARR + "|";
+                    cadena += "" + listaData.get(vi).FBASE + "|";
+                    cadena += "" + listaData.get(vi).CLAS + "|";
+                    cadena += "" + listaData.get(vi).strFVAL + "|";
+                    cadena += "" + listaData.get(vi).VCPN + "|";
+                    cadena += "" + listaData.get(vi).VCPMX + "|";
+                    cadena += "" + listaData.get(vi).TCMUS + "|";
+                    cadena += "" + listaData.get(vi).VCPUS + "|";
+                    cadena += "" + listaData.get(vi).strFormatFVTA + "|";
+                    cadena += "" + listaData.get(vi).strDescSTNEW;
+                    cadena = cadena.replaceAll("null", "");
+                    writer.println("" + cadena);
+                }
+                writer.flush();
+                writer.close();
+            }
+
+            response.setContentType("application/text");
+            response.setHeader("Content-Disposition", "attachment;filename=\"" + fileName + ".txt" + "\"");
+            InputStream is = new FileInputStream(rutaFile + "\\" + fileName + ".txt");
+            IOUtils.copy(is, response.getOutputStream());
+            response.flushBuffer();
 
         } catch (IOException e) {
             throw new SpringException(e);
         }
     }
 
-    
 //    @RequestMapping(value = "getXLSX")
 //    public @ResponseBody
 //    void GetXLSX(HttpServletRequest request, HttpServletResponse response) {

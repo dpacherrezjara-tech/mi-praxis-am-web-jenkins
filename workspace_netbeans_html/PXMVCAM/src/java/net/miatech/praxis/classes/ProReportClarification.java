@@ -29,7 +29,7 @@ import java.io.FileOutputStream;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
-import net.miatech.praxis.payment.filter.A2331Filter;
+import net.miatech.praxis.payment.old.A2331Filter;
 import net.miatech.utils.Functions;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -196,17 +196,27 @@ public class ProReportClarification {
 
     }
 
-    public boolean createReportPDF_CCW(String folio, A2331Filter aclaracion) {
+    public boolean createReportPDF_CCW(String folio, A2331Filter aclaracion, String RUTA_DOWNLOAD) {
         //Call Center y Web
         boolean success = true;
         String strNomFile = "Folio_" + folio;
         NumberFormat nfDbl = NumberFormat.getInstance(java.util.Locale.US);
         nfDbl.setMinimumFractionDigits(2);
         nfDbl.setMaximumFractionDigits(2);
-
         try {
 
-            fileTmp01 = File.createTempFile(strNomFile + "_", ".pdf");
+//            fileTmp01 = File.createTempFile(strNomFile + "_", ".pdf");
+            
+            fileTmp01 = new File(RUTA_DOWNLOAD + "\\" + strNomFile + ".pdf");
+            File parentDir = fileTmp01.getParentFile();
+            if (parentDir != null && !parentDir.exists()) {
+                boolean dirsCreated = parentDir.mkdirs(); 
+                if (!dirsCreated) {
+                    System.err.println("No se pudieron crear los directorios en la ruta: " + parentDir.getAbsolutePath());
+
+                }
+            }   
+            
             lstFileTmp.add(fileTmp01);
             PYi = 550;
             Hlng = 20;

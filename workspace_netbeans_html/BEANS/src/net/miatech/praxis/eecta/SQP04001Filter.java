@@ -16,7 +16,7 @@ public class SQP04001Filter {
     public String VP_CDCLI = "";
     
     public A3981 rpteCab = new A3981();
-    public A3958 rpteDet = new A3958();
+    public A3958 rpteDet = new A3958();    
     public A3961 tbl_misl= new A3961();
     public A3953 tbl_client = new A3953();
     //

@@ -184,7 +184,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrInterline', {
                                                             var strDescripcion2 = record.data.strDescripcion2;
                                                             var color = '';
                                                             if (strDescripcion2 === 'rojo') {
-                                                                color = '#9C0101';
+                                                                color = '#fa0505';
                                                             } else {
                                                                 color = '#020202';
                                                             }
@@ -315,7 +315,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrInterline', {
                                                             var strDescripcion2 = record.data.strDescripcion2;
                                                             var color = '';
                                                             if (strDescripcion2 === 'rojo') {
-                                                                color = '#9C0101';
+                                                                color = '#fa0505';
                                                             } else {
                                                                 color = '#020202';
                                                             }
@@ -339,6 +339,112 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrInterline', {
                     ]
                 }
 
+            ]
+        },
+        {
+            xtype: 'panel',
+            id: prototype.id + '-boxMainData_interline2',
+            width: 1350, //1350 para ocultar la ultima columna 
+            hidden: false,
+            layout: {
+                type: 'hbox',
+                align: 'center',
+                pack: 'center'
+            },
+            defaults: {
+                bodyStyle: 'background: transparent;',
+                border: false,
+                align: 'center',
+                margin: "0 15 0 0"  // (top, right, bottom, left)
+            },
+            items: [
+                {
+                    xtype: 'panel',
+                    bodyStyle: 'background-color: #E3EAEF;',
+                    padding: '5 0 0 5',
+                    hidden: false,
+                    border: true,
+                    layout: {
+                        type: 'vbox'
+                    },
+                    items: [
+                        {
+                            xtype: 'cartesian',
+                            id: prototype.id + '-ChtExchangeMB_01112',
+                            width: 1480,
+                            border: false,
+                            height: 280,
+                            background: '#D1E8FE',
+                            captions: {
+                                title: {
+                                    text: ' Billing 2024 - USD ',
+                                    alignTo: 'chart'
+                                }
+                            },
+                            animation: {
+                                duration: 200
+                            },
+                            interactions: ['itemhighlight'],
+                            legend: {
+                                docked: 'bottom',
+                                background: '#E3EAEF'
+                            },
+                            axes: [{
+                                    type: 'numeric3d',
+                                    position: 'left',
+                                    fields: ['TNETOCARGRA', 'TNETGRA'],
+                                    grid: true,
+                                    title: '',
+                                    renderer: function (obj, value) {
+                                        if (value > 1) {
+                                            if ((value / 1000).toString().length > 3) {
+                                                return  ' ' + Ext.util.Format.number((value / 1000000), '0.0') + 'M';
+                                            } else {
+                                                return  ' ' + Ext.util.Format.number((value / 1000), '0') + 'K';
+                                            }
+                                        } else {
+                                            return '';
+                                        }
+                                    }
+                                }, {
+                                    type: 'category3d',
+                                    position: 'bottom',
+                                    grid: true,
+                                    title: {
+                                        text: '',
+                                        translationX: -30
+                                    }
+                                }],
+                            series: [{
+                                    type: 'bar3d',
+                                    stacked: false,
+                                    title: ['Outgoing', 'Incoming'],
+                                    xField: 'strFormatDateGRA',
+                                    yField: ['TNETOCARGRA', 'TNETGRA'],
+                                    colors: ['#67BFFF', '#ffff99'],
+                                    highlight: true,
+                                    style: {
+                                        inGroupGapWidth: -7,
+                                        minGapWidth: 2,
+                                        maxBarWidth: 1000
+                                    },
+                                    tooltip: {
+                                        trackMouse: true,
+                                        height: 28,
+                                        renderer: function (toolTip, record, ctx) {
+                                            var label = '';
+                                            if (ctx.field === 'TNETOCARGRA') {
+                                                label = 'Outgoing Billing';
+                                            } else if (ctx.field === 'TNETGRA') {
+                                                label = 'Incoming Billing';
+                                            }
+                                            toolTip.setHtml(label + ' : ' + '<b>' + Ext.util.Format.number(record.get(ctx.field), '0,000') + '</b>');
+                                        }
+                                    },
+                                }]
+                        }
+                    ]
+                }
             ]
         }
         ,
@@ -473,7 +579,7 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrInterline', {
                         {
                             xtype: 'grid',
                             id: prototype.id + '-gridData_INT_2',
-                            width: 683,
+                            width: 783,
                             columnLines: true,
                             margin: "5 0 0 0",
                             features: [{
@@ -563,6 +669,18 @@ Ext.define('Ext.Praxis.view.screens.Dashboard01Form.tabs.ScrInterline', {
                                                     console.log(data);
                                                     metaData.style = 'text-align:right; margin-right:3px ';
                                                     return '<b>' + Ext.util.Format.number(data.totA050TUA2, '0,000') + '<b>';
+                                                }
+                                            },
+                                            {text: '%', dataIndex: 'PERCNET', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    metaData.style = "background:#E1FFE1;text-align:right";
+                                                    return Ext.util.Format.number(value, '0,000.00') + '%';
+                                                },
+                                                summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridData_INT_2').getStore().getData().items[0].data;
+                                                    console.log(data);
+                                                    metaData.style = 'text-align:right; margin-right:3px ';
+                                                    return '<b>' + Ext.util.Format.number(data.totPERCNET, '0,000.00')+ '%' + '<b>';
                                                 }
                                             },
                                         ]

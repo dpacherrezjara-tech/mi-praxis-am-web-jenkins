@@ -11,7 +11,7 @@ import java.util.List;
 import net.miatech.beans.A1686Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.ClarificationLoadDAO;
-import net.miatech.praxis.payment.filter.A2331Filter;
+import net.miatech.praxis.payment.old.A2331Filter;
 
 /**
  *
@@ -26,12 +26,12 @@ public class ClarificationLoadLogic {
 
     }
     
-    public String loadPX413SQP02535(String strBanco,String ruta) throws SQLException, IOException, Exception {
-        return ClarificationLoadDAO.loadPX413SQP02535(strBanco,ruta);
+    public String loadPX413SQP02535(List<String> listaExcelString , String strBanco, int fil, String horaActual) throws SQLException, IOException, Exception {
+        return ClarificationLoadDAO.loadPX413SQP02535(listaExcelString,strBanco,fil,horaActual);
     }
     
-    public String loadPX413PRO10570(String strBanco, String strHora) throws SQLException, Exception {
-        return ClarificationLoadDAO.loadPX413PRO10570(strBanco, strHora);
+    public String loadPX413PRO10570(String strBanco, String strHora, String type_file) throws SQLException, Exception {
+        return ClarificationLoadDAO.loadPX413PRO10570(strBanco, strHora,type_file);
     }
     
     public String loadPX413SQP03598(List<A1686Filter> lstExcel) throws SQLException, IOException, Exception {

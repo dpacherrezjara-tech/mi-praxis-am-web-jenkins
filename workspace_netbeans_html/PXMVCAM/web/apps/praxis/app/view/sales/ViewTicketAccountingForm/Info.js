@@ -170,7 +170,7 @@ Ext.define('Ext.Praxis.view.sales.ViewTicketAccountingForm.Info', {
                                             return Ext.util.Format.number(value, '0,000.00');
                                         }
                                     },
-                                    {text: 'Debit Loc', width: 100, dataIndex: 'CREDITO',
+                                    {text: 'Credit Loc', width: 100, dataIndex: 'CREDITO',
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                             var font = record.data.NTARJ === 'TOTAL' ? 'bold' : 'normal';
                                             var background = record.data.NTARJ === 'TOTAL' ? '#FBD705' : '#99FFCC';
@@ -199,7 +199,7 @@ Ext.define('Ext.Praxis.view.sales.ViewTicketAccountingForm.Info', {
                                     {text: 'F.OPEN', width: 80, dataIndex: 'FOPEN'},
                                     {text: 'VRIC', width: 80, dataIndex: 'VRIC'},
                                     {text: 'PFC', width: 80, dataIndex: 'PFC'},
-                                    {text: 'IATAVTA', width: 80, dataIndex: 'IATAVTA'},
+                                    {text: 'IATAVTA-PS', width: 100, dataIndex: 'IATAVTA'},
                                     {text: 'FECUSO', width: 80, dataIndex: 'FECUSO'},
                                     {text: 'CTA', width: 250, dataIndex: 'CTA',
                                         renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {

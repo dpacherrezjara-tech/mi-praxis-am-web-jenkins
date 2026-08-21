@@ -972,7 +972,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.AuditTw.AuditTwController', {
         var strOrderBy = this.createOrderBy();
         var strOrderByEtiquetas = me.orderbyEtiquetas;
 //        var check = Ext.getCmp(prototype.id + '-chkSelGB').checked;
-
+        var cmbSELECTED = Ext.getCmp(prototype.id + '-cmbFunction').getValue();
+        
         me.searchParams = {
             IN_FECHA_FROM: IN_FECHA_FROM,
             IN_FECHA_TO: IN_FECHA_TO,
@@ -989,7 +990,8 @@ Ext.define('Ext.Praxis.controller.salesaudit.AuditTw.AuditTwController', {
             strSelect: '',
             strSelectA: '',
             strSelectN: '',
-            RN: ''
+            RN: '',
+            cmbSELECTED: cmbSELECTED
         };
 
 
@@ -1377,6 +1379,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.AuditTw.AuditTwController', {
     configurarGridData: function() {
         this.hideColumns();
         var arr2 = Ext.getCmp(prototype.id + '-panelListColumns').getStore().data.items;
+        var vgridData = Ext.getCmp(prototype.id + '-gridData');
         var numColumns = me.searchParams.RN;
 //        var check = Ext.getCmp(prototype.id + '-chkSelGB').checked;
         var anchoGrilla = numColumns * 100 + 2;
@@ -1391,7 +1394,18 @@ Ext.define('Ext.Praxis.controller.salesaudit.AuditTw.AuditTwController', {
         Ext.getCmp(prototype.id + '-gridData').setWidth(anchoGrilla);
         for (var i = 0; i < numColumns; i++) {
             Ext.getCmp(prototype.id + '-campo' + (i + 1)).show();
-            Ext.getCmp(prototype.id + '-campo' + (i + 1)).setText(arr2[i].data["DCOLHDG"]);
+            Ext.getCmp(prototype.id + '-campo' + (i + 1)).setText(arr2[i].data["DCOLHDG"]);   
+        }
+        //SE AGREGO LOS CAMPOS EN DURO A PETICION DE --- EN 20231004
+        if(Ext.getCmp(prototype.id + '-cmbFunction').getValue()==='UK'){
+                Ext.getCmp(prototype.id + '-campo64').show();
+                Ext.getCmp(prototype.id + '-campo64').setText("ENDORSEMENT");
+                
+                Ext.getCmp(prototype.id + '-campo65').show();
+                Ext.getCmp(prototype.id + '-campo65').setText("INDIC CPN");
+                
+                Ext.getCmp(prototype.id + '-campo66').show();
+                Ext.getCmp(prototype.id + '-campo66').setText("USED");
         }
 //        if (check && (numColumns>0)) {
         if (numColumns>0) {
@@ -1941,7 +1955,34 @@ Ext.define('Ext.Praxis.controller.salesaudit.AuditTw.AuditTwController', {
             
             
         }
-
+        //SE AGREGO LOS CAMPOS EN DURO A PETICION DE --- EN 20231004
+        var data = {
+                dataIndex: "column64",
+                text: 'ENDORSEMENT',
+                align : "left",
+                type : "string",
+                width : 600,
+                level : 1
+            };
+            columns.push(data);
+        var data = {
+                dataIndex: "column65",
+                text: 'INDIC CPN',
+                align : "left",
+                type : "string",
+                width : 100,
+                level : 1
+            };
+            columns.push(data);    
+        var data = {
+                dataIndex: "column66",
+                text: 'USED',
+                align : "left",
+                type : "string",
+                width : 70,
+                level : 1
+            };
+            columns.push(data);    
         return columns;
     },
     onChangeBox: function() {

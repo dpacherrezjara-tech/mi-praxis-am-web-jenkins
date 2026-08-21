@@ -225,15 +225,15 @@ public class RFNDTicketcontrolFormController extends BaseController {
                 CH_08 = row.createCell(8);
 
                 CH_00.setCellValue(listaData.get(vi).A3648FREGI);
-                CH_01.setCellValue(listaData.get(vi).A3648FAPPI);
-                CH_02.setCellValue(listaData.get(vi).A3648FAUTO);
-                CH_03.setCellValue(listaData.get(vi).A3648FOLIO);
-                CH_04.setCellValue(listaData.get(vi).A3648TKT);
+                //CH_01.setCellValue(listaData.get(vi).A3648FAPPI);
+                //CH_02.setCellValue(listaData.get(vi).A3648FAUTO);
+                //CH_03.setCellValue(listaData.get(vi).A3648FOLIO);
+                //CH_04.setCellValue(listaData.get(vi).A3648TKT);
 
-                CH_05.setCellValue(listaData.get(vi).A3648REGAS);
+                //CH_05.setCellValue(listaData.get(vi).A3648REGAS);
                 CH_06.setCellValue(listaData.get(vi).A3648FLAG);
                 CH_07.setCellValue(listaData.get(vi).A3648STATO);
-                CH_08.setCellValue(listaData.get(vi).A3648STATU);
+                //CH_08.setCellValue(listaData.get(vi).A3648STATU);
                 
 
                 CH_00.setCellStyle(bodyStyle);

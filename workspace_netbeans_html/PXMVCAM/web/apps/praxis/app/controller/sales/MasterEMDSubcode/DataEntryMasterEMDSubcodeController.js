@@ -26,7 +26,10 @@ Ext.define('Ext.Praxis.controller.sales.MasterEMDSubcode.DataEntryMasterEMDSubco
                 Ext.getCmp(prototype.id + '-txtA1772SUBCD2').focus();
                 break;
         }
+        
+        global.AccessControlMaganerByMode(this.p);
     },
+    
     getDataInputs: function(rec) {
         Ext.getCmp(prototype.id + '-txtA1772SUBCD2').setValue(rec.get('A1772SUBCD'));
         Ext.getCmp(prototype.id + '-txtA1772RFIC2').setValue(rec.get('A1772RFIC'));

@@ -16,6 +16,12 @@
 .prx-icon-add {
   background-image: url("../img/botones/add.png");
 }
+.prx-icon-query {
+  background-image: url("../img/botones/query.png");
+}
+.prx-icon-user {
+  background-image: url("../img/botones/user.png");
+}
 .prx-icon-back {
   background-image: url("../img/botones/back.png");
 }
@@ -30,6 +36,12 @@
 }
 .prx-icon-save {
   background-image: url("../img/botones/24x24/1337982029_3floppy_unmount.png");
+}
+.prx-icon-save-blue-16 {
+  background-image: url("../img/botones/16x16/icons8-save-blue-16.png");
+}
+.prx-icon-save-blue-24 {
+  background-image: url("../img/botones/24x24/icons8-save-blue-24.png");
 }
 .prx-icon-update {
   background-image: url("../img/botones/24x24/1337982080_system-software-update.png");
@@ -68,6 +80,12 @@
 .prx-icon-image-log {
   background-image: url("../img/botones/log.png");
 }
+.prx-icon-image-log_tem {
+  background-image: url("../img/icon/16x16/log_tem1.png");
+}
+.prx-icon-image-list-error {
+  background-image: url("../img/botones/list-error.png");
+}
 .prx-icon-image-trash {
   background-image: url("../img/icon/trash.png");
 }
@@ -91,6 +109,15 @@
 }
 .prx-icon-104-ticket {
  background-image: url("../img/botones/1400098721_cv.png");
+}
+.prx-icon-rules {
+ background-image: url("../img/botones/16x16/rules.png");
+}
+.prx-icon-logfile {
+ background-image: url("../img/botones/16x16/log-file.png");
+}
+.prx-icon-log {
+ background-image: url("../img/botones/16x16/log.png");
 }
 .prx-icon-pdf {
  background-image: url("../img/botones/16x16/pdf.png");
@@ -134,4 +161,29 @@
 .prx-icon-graph-pie {
   background-image: url("../img/icon/graph_pie.png");
   
+}
+
+.prx-icon-downloadfile {
+    background-image: url("../img/icon/downloadfile.png");
+    background-size: 16px;
+}
+
+.prx-icon-reload {
+    background-image: url("../img/icon/reload.png");
+    background-size: 16px;
+}
+
+.prx-icon-cancel-action {
+    background-image: url("../img/icon/cancel.png");
+    background-size: 16px;
+}
+
+.prx-icon-bpo-comment {
+    background-image: url("../img/icon/26x26/comments.png");
+    background-size: 16px;
+}
+
+.prx-icon-new {
+    background-image: url("../img/botones/new.png");
+    background-size: 16px;
 }

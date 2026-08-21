@@ -77,7 +77,20 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterCCAMForm.Info', {
                             {text: 'Equipment', width: 90, dataIndex: 'A1819EQUI'},
                             {text: 'Inter <br>Company', width: 70, dataIndex: 'A1819ICIA'},
                                 
-                           
+                           {
+                                text: 'Initial Date', width: 100, dataIndex: 'A1819FINI',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:left;";
+                                    return value;
+                                }
+                            },
+                            {
+                                text: 'End Date', width: 100, dataIndex: 'A1819FFIN',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:left;";
+                                    return value;
+                                }
+                            },
                             {
                                 sortable: false,
                                 xtype: 'actioncolumn',

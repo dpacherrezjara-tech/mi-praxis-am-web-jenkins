@@ -20,14 +20,14 @@ import net.miatech.praxis.dao.flown.FlightConciliationDAO;
 public class FlightConciliationLogic {
 
     private FlightConciliationDAO objDAO = new FlightConciliationDAO();
-    
+
     public FlightConciliationLogic() {
     }
-    
+
     public FlightConciliationLogic(IServerSession ss) {
         objDAO.setSession(ss);
     }
-    
+
     public void setSession(IServerSession ss) {
         objDAO.setSession(ss);
     }
@@ -45,17 +45,17 @@ public class FlightConciliationLogic {
     }
 
     public List<A1691Filter> loadPX095S15A1691(A1691Filter filter) throws SQLException, Exception {
-        return objDAO.loadPX095S15A1691(filter); 
+        return objDAO.loadPX095S15A1691(filter);
     }
-    
+
     public List<A3729Filter> loadPX095SGGA3729(A3729Filter filter) throws SQLException, Exception {
         return objDAO.loadPX095SGGA3729(filter);
     }
-    
+
     public List<A3729Filter> loadPX095SQP04286(A3729Filter filter) throws SQLException, Exception {
         return objDAO.loadPX095SQP04286(filter);
     }
-    
+
     public List<A1692Filter> loadPX095S05A1692(A1691Filter2 filter, String strTipo, HashMap<String, String> hmPaises) throws SQLException, Exception {
         return objDAO.loadPX095S05A1692(filter, strTipo, hmPaises);
     }
@@ -70,6 +70,10 @@ public class FlightConciliationLogic {
 
     public String loadPX095S03A1691(A1691Filter filter, String strOption) throws SQLException {
         return objDAO.loadPX095S03A1691(filter, strOption);
+    }
+
+    public String loadPX095SQP04753(A3729Filter filter) throws SQLException {
+        return objDAO.loadPX095SQP04753(filter);
     }
 
     public A1692Filter loadPX095S06A1692(String strTicket, String strSeq, HashMap<String, String> hmAeropuertos, HashMap<String, String> hmPaises) throws SQLException, Exception {
@@ -99,26 +103,31 @@ public class FlightConciliationLogic {
     public A2149 insertFavoriteMenu(A2149 filter) throws Exception {
         return objDAO.insertFavoriteMenu(filter);
     }
+
     public A2149 deleteFavoriteMenu(A2149 filter) throws Exception {
         return objDAO.deleteFavoriteMenu(filter);
     }
-    
-    public A1692Filter loadPX095S06A1692_1(String strTicket, String strSeq, String seqRol, HashMap<String, String> hmAeropuertos, HashMap<String, String> hmPaises) throws SQLException,Exception {
+
+    public A1692Filter loadPX095S06A1692_1(String strTicket, String strSeq, String seqRol, HashMap<String, String> hmAeropuertos, HashMap<String, String> hmPaises) throws SQLException, Exception {
         return objDAO.loadPX095S06A1692_1(strTicket, strSeq, seqRol, hmAeropuertos, hmPaises);
     }
-    
+
     public HashMap loadSQP03651() throws SQLException, Exception {
         return objDAO.loadSQP03651();
     }
-    
+
+    public void actualizarContador(String anio, String mes) throws SQLException, Exception {
+        objDAO.actualizarContador(anio, mes);
+    }
+
     public A3729Filter SQP04282(List<A3729Filter> lstData) throws Exception {
         return objDAO.SQP04282(lstData);
     }
-    
+
     public A3729Filter SQP04400(List<A3729Filter> lstData) throws Exception {
         return objDAO.SQP04400(lstData);
     }
-    
+
     public String SQP04320(A3729Filter filter) throws SQLException, Exception {
         return objDAO.SQP04320(filter);
     }
@@ -126,11 +135,20 @@ public class FlightConciliationLogic {
     public boolean SQP04321(A3729Filter filter) throws SQLException, Exception {
         return objDAO.SQP04321(filter);
     }
-    
+
     public String SQP04323(A3729Filter filter) throws SQLException, Exception {
         return objDAO.SQP04323(filter);
     }
+
+    public String SQP04550(A3729Filter filter) throws SQLException, Exception {
+        return objDAO.SQP04550(filter);
+    }
+
+    public String loadSQP05035(List<A1691Filter> listaTkt) throws SQLException, Exception {
+        return objDAO.loadSQP05035(listaTkt);
+    }
     
-    
-    
+    public String SQP03414_20(A3729Filter filter) throws SQLException, Exception {
+        return objDAO.SQP03414_20(filter);
+    }
 }

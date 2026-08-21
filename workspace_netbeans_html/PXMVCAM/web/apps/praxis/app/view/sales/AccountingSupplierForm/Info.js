@@ -25,7 +25,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingSupplierForm.Info', {
             defaults: {
                 bodyStyle: 'background: transparent;',
                 border: false,
-                width: 1300,
+                width: 1410,
                 height: 500,
                 align: 'center'
             },
@@ -45,54 +45,67 @@ Ext.define('Ext.Praxis.view.sales.AccountingSupplierForm.Info', {
 
                         },
                         items: [
-                            {text: 'Nbr.', width: 60, dataIndex: 'RN'},
-                            {text: 'Type', width: 70, dataIndex: 'A1806TIPOC'},
-                            {text: 'Supplier', width: 250, dataIndex: 'A1806PROVE'},
-                            {text: 'Supplier Nbr.', width: 100, dataIndex: 'A1806NUM'},
-                            {text: 'Subsidiary', width: 100, dataIndex: 'A1806REFE'},
-                            {text: 'Company', width: 80, dataIndex: 'A1806CIA'},
-                            {text: 'Unit', width: 80, dataIndex: 'A1806UNIDA'},
-                            {text: 'C. Cost', width: 80, dataIndex: 'A1806CENCO',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                            { text: 'Nbr.', width: 60, dataIndex: 'RN' },
+                            { text: 'Type', width: 70, dataIndex: 'A1806TIPOC' },
+                            { text: 'Supplier', width: 250, dataIndex: 'A1806PROVE' },
+                            { text: 'Supplier Nbr.', width: 100, dataIndex: 'A1806NUM' },
+                            { text: 'Subsidiary', width: 140, dataIndex: 'A1806REFE' },
+                            { text: 'Currency', width: 100, dataIndex: 'A1806MONED' },
+                            { text: 'Company', width: 80, dataIndex: 'A1806CIA' },
+                            { text: 'Unit', width: 80, dataIndex: 'A1806UNIDA' },
+                            {
+                                text: 'C. Cost', width: 80, dataIndex: 'A1806CENCO',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
 
                                     metaData.style = 'text-align :left ; margin-left : 3px ';
                                     return value;
-                                }},
-                            {text: 'Location', width: 80, dataIndex: 'A1806UBICA',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                }
+                            },
+                            {
+                                text: 'Location', width: 80, dataIndex: 'A1806UBICA',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
 
                                     metaData.style = 'text-align :left ; margin-left : 3px ';
                                     return value;
-                                }},
-                            {text: 'Account', width: 80, dataIndex: 'A1806CUENT',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                }
+                            },
+                            {
+                                text: 'Account', width: 80, dataIndex: 'A1806CUENT',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
 
                                     metaData.style = 'text-align :left ; margin-left : 3px ';
                                     return value;
-                                }},
-                            {text: 'Sub. <br> Account', width: 80, dataIndex: 'A1806SUBCT',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                }
+                            },
+                            {
+                                text: 'Sub. <br> Account', width: 80, dataIndex: 'A1806SUBCT',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
 
                                     metaData.style = 'text-align :left ; margin-left : 3px ';
                                     return value;
-                                }},
-                            {text: 'Equipment', width: 80, dataIndex: 'A1806EQUI',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                }
+                            },
+                            {
+                                text: 'Equipment', width: 80, dataIndex: 'A1806EQUI',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
 
                                     metaData.style = 'text-align :left ; margin-left : 3px ';
                                     return value;
-                                }},
-                            {text: 'Inter <br> Company', width: 80, dataIndex: 'A1806INCIA',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                }
+                            },
+                            {
+                                text: 'Inter <br> Company', width: 80, dataIndex: 'A1806INCIA',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
 
                                     metaData.style = 'text-align :left ; margin-left : 3px ';
                                     return value;
-                                }},
+                                }
+                            },
                             {
                                 sortable: false,
                                 xtype: 'actioncolumn',
                                 text: 'Edit',
-                                width: 70,
+                                width: 50,
                                 align: 'center',
                                 items: [
                                     {
@@ -126,7 +139,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingSupplierForm.Info', {
                     items: [
                         {
                             xtype: 'panel',
-                            width: 1300,
+                            width: 1410,
                             height: 25,
                             layout: {
                                 type: 'hbox',
@@ -155,7 +168,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingSupplierForm.Info', {
                                     text: '0',
                                     width: 50
                                 },
-                                {xtype: 'tbspacer', width: 100},
+                                { xtype: 'tbspacer', width: 100 },
                                 {
                                     text: 'Total found',
                                     width: 80

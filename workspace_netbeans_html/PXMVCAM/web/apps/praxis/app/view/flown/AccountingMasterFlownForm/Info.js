@@ -61,6 +61,8 @@ Ext.define('Ext.Praxis.view.flown.AccountingMasterFlownForm.Info', {
                             {text: 'Account', width: 60, dataIndex: 'A1740CTA'},
                             {text: 'Sub Account', width: 90, dataIndex: 'A1740SCTA'},
                             {text: 'Equipment', width: 80, dataIndex: 'A1740EQUI'},
+                            {text: 'Initial Date', width: 100, dataIndex: 'A1740FINI'},
+                            {text: 'End Date', width: 100, dataIndex: 'A1740FFIN'},
                             {text: 'Inter Company', width: 100, dataIndex: 'A1740ICIA'},
                             {text: 'Country Location', width: 120, dataIndex: 'A1740INTNU'},
                             {text: 'Client', width: 270, dataIndex: 'A1740CLIE'},

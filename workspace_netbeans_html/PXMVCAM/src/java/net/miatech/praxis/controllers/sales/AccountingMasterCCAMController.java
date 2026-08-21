@@ -38,6 +38,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -94,6 +95,7 @@ public class AccountingMasterCCAMController extends BaseController {
             filter.A1819NATU = request.getParameter("A1819NATU");
             filter.A1819CTA = request.getParameter("A1819CTA");
             filter.A1819SCTA = request.getParameter("A1819SCTA");
+            filter.OLD_REGISTERS = request.getParameter("OLD_REGISTERS").equals("true") ? "0" : "1";
 
             System.out.println("----------------- Parametros --------------------- ");
             System.out.println(" limit : " + request.getParameter("limit"));
@@ -359,7 +361,7 @@ public class AccountingMasterCCAMController extends BaseController {
             filter.A1819FINI = request.getParameter("A1819FINI");
             filter.A1819FFIN = request.getParameter("A1819FFIN");
             filter.IN_A1819TACC_OLD = request.getParameter("IN_A1819TACC_OLD");             
-        
+            
            
              msj = logic.accountADMMaintance(filter, strOption);      
             

@@ -90,6 +90,10 @@ public class S0001A713Filter extends A713 {
     public double A713PRSCM1 = 0.00;   
     public double A713VALOL1 = 0.00;
     public String A713MDARVA = "";
+    public double A713LRRCM1 = 0.00;
+    public double A713LRSCM1 = 0.00;
+    public double A713LYQ1 = 0.00;
+    public double A713LIV1 = 0.00;
     
     public String BPREV = "";
     public String BPADRE = "";

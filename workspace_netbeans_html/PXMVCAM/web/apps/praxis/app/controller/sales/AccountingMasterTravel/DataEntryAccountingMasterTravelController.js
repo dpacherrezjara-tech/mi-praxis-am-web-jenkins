@@ -11,35 +11,70 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTravel.DataEntryAccounti
     url: CONTEXTPATH + '/AccountingMasterTravel',
     lblA1838TIPO: '',
     lblA1838AGENT: '',
+    lblFINIOld: '',
+    lblFFINOld: '',
     /**
      * Constructor
      */
-    init: function(view) {
+    init: function (view) {
         var me = this;
     },
     /**
      * Se ejecuta luego de haber cargado todos los componentes
      */
-    afterRender: function() {
+    // afterRender: function() {
+    //     var p = this.view.params;
+
+    //     switch (p.action) {
+    //         case 'I':
+    //             Ext.getCmp(prototype.id + '-btn-delete').hide();
+    //             Ext.getCmp(prototype.id + '-btn-update').hide();
+    //             Ext.getCmp(prototype.id + '-btn-save').show();
+    //             break;
+    //         case 'U':
+    //             this.getDataInputs();
+    //             Ext.getCmp(prototype.id + '-btn-save').hide();
+    //             Ext.getCmp(prototype.id + '-btn-update').show();
+    //             Ext.getCmp(prototype.id + '-btn-delete').show();
+    //             break;
+    //     }
+    //     global.AccessControlMaganer();
+
+    // },
+    afterRender: function () {
         var p = this.view.params;
+
+        global.AccessControlMaganer();
+
+        const btnSave = Ext.getCmp(prototype.id + '-btn-save');
+        const btnUpdate = Ext.getCmp(prototype.id + '-btn-update');
+        const btnDelete = Ext.getCmp(prototype.id + '-btn-delete');
+        // const btnCancel = Ext.getCmp(prototype.id + '-btn-cancel');
 
         switch (p.action) {
             case 'I':
-                Ext.getCmp(prototype.id + '-btn-delete').hide();
-                Ext.getCmp(prototype.id + '-btn-update').hide();
-                Ext.getCmp(prototype.id + '-btn-save').show();
+                //    if (btnCancel) btnCancel.show();
+                if (btnSave && accessSelect.PERMC === 'Y')
+                    btnSave.show();
+
+                if (btnUpdate) btnUpdate.hide();
+                if (btnDelete) btnDelete.hide();
                 break;
             case 'U':
                 this.getDataInputs();
-                Ext.getCmp(prototype.id + '-btn-save').hide();
-                Ext.getCmp(prototype.id + '-btn-update').show();
-                Ext.getCmp(prototype.id + '-btn-delete').show();
+                if (btnSave) btnSave.hide();
+                // if (btnCancel) btnCancel.show();
+
+                if (btnUpdate && accessSelect.PERMM === 'Y')
+                    btnUpdate.show();
+
+                if (btnDelete && accessSelect.PERME === 'Y')
+                    btnDelete.show();
                 break;
         }
-        global.AccessControlMaganer();
 
     },
-    getDataInputs: function() {
+    getDataInputs: function () {
         var p = this.view.params;
         var data = p.rec.data;
 
@@ -55,21 +90,25 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTravel.DataEntryAccounti
         Ext.getCmp(prototype.id + '-txtA1838EQUI').setValue(data.A1838EQUI);
         Ext.getCmp(prototype.id + '-txtA1838INCIA').setValue(data.A1838INCIA);
         Ext.getCmp(prototype.id + '-txtA1838FINI').setValue(data.A1838FINI);
-     Ext.getCmp(prototype.id + '-txtA1838FFIN').setValue(data.A1838FFIN === "99999999" ? "" : data.A1838FFIN);
-    //    Ext.getCmp(prototype.id + '-txtA1838FFIN').setValue(data.A1838FFIN );
+        Ext.getCmp(prototype.id + '-txtA1838FFIN').setValue(data.A1838FFIN === "99999999" ? "" : data.A1838FFIN);
+        //    Ext.getCmp(prototype.id + '-txtA1838FFIN').setValue(data.A1838FFIN );
         Ext.getCmp(prototype.id + '-txtUSCR').setValue(data.A1838REGIS);
         Ext.getCmp(prototype.id + '-txtFECR').setValue(data.A1838FREGI);
         Ext.getCmp(prototype.id + '-txtHOCR').setValue(data.A1838HREGI);
         Ext.getCmp(prototype.id + '-txtUSUP').setValue(data.A1838REGVI);
         Ext.getCmp(prototype.id + '-txtFEUP').setValue(data.A1838FREVI);
         Ext.getCmp(prototype.id + '-txtHOUP').setValue(data.A1838HREVI);
-        
+
         console.log(data.txtA1838FFIN);
 
         this.lblA1838TIPO = data.A1838TIPO;
         this.lblA1838AGENT = data.A1838AGENT;
+        this.lblFINIOld = Ext.util.Format.date(data.A1838FINI, 'Ymd');
+        var fecha = Ext.Date.parse(data.A1838FFIN, 'Y/m/d');
+        this.lblFFINOld = fecha ? Ext.util.Format.date(fecha, 'Ymd') : '99999999';
+        
     },
-    getDataEntryValues: function(strOption) {
+    getDataEntryValues: function (strOption) {
 
 
         var A1838CCUST = '139';
@@ -89,9 +128,12 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTravel.DataEntryAccounti
         var IN_A1838TIPO_OLD = this.lblA1838TIPO;
         var IN_A1838AGENT_OLD = this.lblA1838AGENT;
 
-//        if (A1838FFIN === '') {
-//            A1838FFIN = '99999999';
-//        }
+        if (A1838FFIN === '') {
+            A1838FFIN = '99999999';
+        }
+        if(this.lblFFINOld === ''){
+            this.lblFFINOld = '99999999';
+        }
         return {
             strOption: strOption,
             A1838CCUST: '139',
@@ -109,11 +151,13 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTravel.DataEntryAccounti
             A1838FINI: A1838FINI,
             A1838FFIN: A1838FFIN,
             IN_A1838TIPO_OLD: IN_A1838TIPO_OLD,
-            IN_A1838AGENT_OLD: IN_A1838AGENT_OLD
+            IN_A1838AGENT_OLD: IN_A1838AGENT_OLD,
+            IN_A1838FINI_OLD: this.lblFINIOld,
+            IN_A1838FFIN_OLD: this.lblFFINOld
 
         };
     },
-    onSaveClick: function(btn) {
+    onSaveClick: function (btn) {
 
         var strMsg = this.validateForm();
 
@@ -130,7 +174,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTravel.DataEntryAccounti
                 scope: this,
                 icon: Ext.MessageBox.QUESTION,
                 modal: true,
-                fn: function(btn) {
+                fn: function (btn) {
                     if (btn === 'yes') {
                         this.view.params.action = "I";
                         this.crud();
@@ -139,7 +183,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTravel.DataEntryAccounti
             });
         }
     },
-    crud: function() {
+    crud: function () {
         var p = this.view.params;
         var strOption = p.action;
         console.log(this.getDataEntryValues(strOption));
@@ -149,7 +193,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTravel.DataEntryAccounti
             method: 'POST',
             timeout: 60000000,
             params: this.getDataEntryValues(strOption),
-            success: function(response, options) {
+            success: function (response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 var msg = res.msg;
 
@@ -157,7 +201,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTravel.DataEntryAccounti
                 global.Msg({
                     msg: msg,
                     icon: 1,
-                    fn: function() {
+                    fn: function () {
                         //exito
                         Ext.getCmp(prototype.id + '-dataEntry').close();
                         Ext.getCmp(prototype.id + '-btnSearch').fireEvent('click', {});
@@ -166,7 +210,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTravel.DataEntryAccounti
             }
         });
     },
-    onUpdateClick: function(btn) {
+    onUpdateClick: function (btn) {
 
 
         var strMsg = this.validateForm();
@@ -184,7 +228,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTravel.DataEntryAccounti
                 buttons: Ext.MessageBox.YESNO,
                 icon: Ext.MessageBox.QUESTION,
                 modal: true,
-                fn: function(btn) {
+                fn: function (btn) {
                     if (btn === 'yes') {
                         this.view.params.action = "U";
 
@@ -195,7 +239,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTravel.DataEntryAccounti
         }
     }
     ,
-    onDeleteClick: function(btn) {
+    onDeleteClick: function (btn) {
 
         Ext.Msg.show({
             title: '.:PRAXIS:.',
@@ -204,7 +248,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTravel.DataEntryAccounti
             scope: this,
             icon: Ext.MessageBox.QUESTION,
             modal: true,
-            fn: function(btn) {
+            fn: function (btn) {
                 if (btn === 'yes') {
                     this.view.params.action = "D";
 
@@ -213,7 +257,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTravel.DataEntryAccounti
             }
         });
     },
-    validateForm: function() {
+    validateForm: function () {
 
         var mensaje = "";
         var txtA1838TIPO = Ext.getCmp(prototype.id + '-txtA1838TIPO').getValue();
@@ -222,10 +266,10 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterTravel.DataEntryAccounti
         }
         return mensaje;
     },
-    onCancelClick: function(btn){
+    onCancelClick: function (btn) {
         this.view.close();
     },
-    onUpperValue: function(field, newValue, oldValue) {
+    onUpperValue: function (field, newValue, oldValue) {
         field.setValue(newValue.toUpperCase());
     }
 

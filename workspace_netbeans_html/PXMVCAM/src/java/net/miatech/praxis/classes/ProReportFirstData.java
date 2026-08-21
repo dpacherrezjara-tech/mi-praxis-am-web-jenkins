@@ -33,7 +33,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import net.miatech.praxis.payment.filter.A2338Filter;
+import net.miatech.praxis.payment.old.A2338Filter;
 
 /**
  *

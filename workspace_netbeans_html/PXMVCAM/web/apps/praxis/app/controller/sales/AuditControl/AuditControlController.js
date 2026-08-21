@@ -199,6 +199,7 @@ Ext.define('Ext.Praxis.controller.sales.AuditControl.AuditControlController', {
         Ext.getCmp(prototype.id + '-txtDateProc').setValue('');
         Ext.getCmp(prototype.id + '-txtDateFrom').setValue('');
         Ext.getCmp(prototype.id + '-txtDateTo').setValue('');
+        Ext.getCmp(prototype.id + '-txtSEQ').setValue('');
         Ext.getCmp(prototype.id + '-cboModulo').setValue('');
         Ext.getCmp(prototype.id + '-cboEstado').setValue('');
     },

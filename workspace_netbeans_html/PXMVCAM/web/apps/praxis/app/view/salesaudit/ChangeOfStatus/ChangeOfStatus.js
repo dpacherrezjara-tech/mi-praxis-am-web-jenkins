@@ -251,7 +251,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ChangeOfStatus.ChangeOfStatus',{
                                             }
                                         },
                                         {
-                                            xtype: 'textfield',
+                                            xtype: 'textfield',hidden:true,
                                             id: prototype.id + '-txthora1',
                                             maskRe: /^-?[0-9]*(\.[0-9]{1,2})?$/,
                                             fieldLabel: 'Start hour',
@@ -263,7 +263,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ChangeOfStatus.ChangeOfStatus',{
                                             }
                                         },
                                         {
-                                            xtype: 'textfield',
+                                            xtype: 'textfield',hidden:true,
                                             id: prototype.id + '-txthora2',
                                             maskRe: /^-?[0-9]*(\.[0-9]{1,2})?$/,
                                             fieldLabel: 'End hour',
@@ -281,7 +281,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ChangeOfStatus.ChangeOfStatus',{
                                             xtype: 'combo',
                                             id: prototype.id + '-CmbStatus',
                                             fieldLabel: 'Status',
-                                            queryMode: 'local',
+                                            queryMode: 'local', hidden: true,
                                             displayField: 'name',
                                             valueField: 'code',
                                             width: 250,
@@ -303,6 +303,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ChangeOfStatus.ChangeOfStatus',{
                                             id: prototype.id + '-txtCurrency',
                                             fieldLabel: 'Currency',
                                             maskRe: /[A-Z,a-z,Ñ,ñ]/,
+                                            hidden:true,
                                             maxLength: 3,
                                             enforceMaxLength: 3,
                                             labelWidth: 50,
@@ -472,27 +473,14 @@ Ext.define('Ext.Praxis.view.salesaudit.ChangeOfStatus.ChangeOfStatus',{
                                     {text: 'Praxis',
                                         columns: [
                                             {text: 'Ticket', dataIndex: 'A3676TIKET',width: 100},
-                                            { text: 'CPN',dataIndex: 'A3676CUPON',width: 40},
-                                            {text: 'Cur.',dataIndex: 'A3676CUR',width: 40},
-                                            {text: 'Net.',dataIndex: 'A3676MONTO',width: 70,align: 'right',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    return win.formatDblNumber(value);
-                                                }
-                                            }
+                                            { text: 'CPN',dataIndex: 'A3676CUPON',width: 40}
+                                            
                                         ]
                                     },
                                     {text: 'Robot',
                                         columns: [
                                              {text: 'Ticket', dataIndex: 'A3676TKT',width: 100},
                                              { text: 'CPN',dataIndex: 'A3676CPNRB',width: 40},
-                                             {text: 'Cur.',dataIndex: 'A3676CURRB',width: 40},
-                                             {text: 'Net.',dataIndex: 'A3676MONRB',width: 70,align: 'right',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    return win.formatDblNumber(value);
-                                                }
-                                            }
                                         ]
                                     },
                                     {
@@ -543,11 +531,11 @@ Ext.define('Ext.Praxis.view.salesaudit.ChangeOfStatus.ChangeOfStatus',{
                                         align: 'left',
                                         renderer: 'onRendererToltip'
                                     },
-                                    {
+                                    /*{
                                         text: 'Hour',
                                         dataIndex: 'A3676HRECE',
                                         width: 50
-                                    },
+                                    },*/
                                     {
                                         text: 'Type',
                                         dataIndex: 'A3676TIDOC',

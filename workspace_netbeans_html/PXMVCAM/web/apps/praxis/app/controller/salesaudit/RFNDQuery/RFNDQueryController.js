@@ -9,6 +9,9 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
 
     beanTMP: {},
     beanUpdate: {},
+    bean: {},
+    bean2: {},
+    bean3: {},
 
     /**
      * Constructor
@@ -19,67 +22,177 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
     },
 
     OnBeforeShow: function () {
-        /*
-         * Solucion temporal para el reinicio de variables
-         */
-        // console.log('Antes de mostrar...');
-        prototype.id = 'RFNDQuery';
-        prototype.id01 = 'DetailRefundQueryRFND';
-        prototype.id2 = 'DetailTicket';
-        prototype.id3 = 'RFNDAddTax';
-        prototype.id4 = 'DetailTicketHistory';
-        prototype.id05 = 'RFNDFileViewer';
+        prototype.idRFNDQuery = 'RFNDQuery';
+        prototype.idDetailTicket = 'DetailTicket';
+        prototype.idRFNDFormRazones = 'FNDFormRazones';
+        prototype.idRFNDDIRFileViewer = 'RFNDDIRFileViewer';
+        prototype.idDetailTicketHistory = 'DetailTicketHistory';
         prototype.url02 = CONTEXTPATH + '/RFNDPending';
         prototype.url01 = CONTEXTPATH + '/RFNDQuery';
         prototype.url3 = CONTEXTPATH + '/RFNDUserMaintenance';
-        prototype.widthWindow = 1366;
+        prototype.widthWindow = 1400;
         prototype.heightWindow = 768;
+
     },
 
     /**
      * Se ejecuta luego de haber cargado todos los componentes
      */
     afterRender: function () {
-        // alert('Controlador cargado correctamente...')
-        this.setStoresFilters();
-        this.onLoadUsers();
-        this.setStoresGrids();
+        var me = this;
+        me.setStoresFilters();
+        me.onLoadUsers();
+        me.setStoresGrids();
+        Ext.getCmp(prototype.idRFNDQuery + '-pagginator-01').getCmpPaginator().on('beforechange', me.onPagingBeforeChange01, me);
+    },
+    onPagingBeforeChange01: function (obj, page, opts) {
+        var me = this;
+        obj.store.proxy.extraParams = me.bean;
+    },
+    onCmbSearchAfterRender: function (obj) {
+        obj.setValue('2');
+    },
+    OnAmountInteger: function (value, summaryData, dataIndex) {
+        return Ext.util.Format.number(value, '0,000');
+    },
+    onColumnIntegerRenderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+        if (value !== 0) {
+            metaData.style = "background-color: #86C8BC !important";
+            //Ext.util.Format.number(value, '0,000.00');
+        }
+        return value;
 
-        Ext.getCmp(prototype.id + '-pagginator-01').getCmpPaginator().on('beforechange', me.onPagingBeforeChange01, this);
+        //return Ext.util.Format.number(value, '0,000');
+    },
+    onColumnNotIntegerRenderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+        if (value !== 0) {
+            metaData.style = "background-color: #f1c97d !important";
+            //Ext.util.Format.number(value, '0,000.00');
+        }
+        return value;
+
+        //return Ext.util.Format.number(value, '0,000');
+    },
+    onColumnAmountRenderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+        metaData.style = "background:#D5F4D5 !important";
+        return Ext.util.Format.number(value, '0,000.00');
+    },
+    OnAmountSummary: function (value, summaryData, dataIndex) {
+        return Ext.util.Format.number(value, '0,000.00');
+    },
+    onCmbSearchChange: function (obj, records, eOpts) {
+        var txtFilterDateFrom = Ext.getCmp(prototype.idRFNDQuery + '-txtFilterDateFrom');
+        var txtFilterDateTo = Ext.getCmp(prototype.idRFNDQuery + '-txtFilterDateTo');
+        var txtCia = Ext.getCmp(prototype.idRFNDQuery + '-txtCia');
+        var txtFrmaSerie = Ext.getCmp(prototype.idRFNDQuery + '-txtFrmaSerie');
+        var txtfolio = Ext.getCmp(prototype.idRFNDQuery + '-txtFrmaFolio');
+        if (obj.getValue() === "2" || obj.getValue() === "4" || obj.getValue() === "5") {
+            txtFilterDateFrom.show();
+            txtFilterDateTo.show();
+            txtCia.hide();
+            txtFrmaSerie.hide();
+            txtfolio.hide();
+            Ext.getCmp(prototype.idRFNDQuery + '-txtFrmaSerie').setValue("");
+            Ext.getCmp(prototype.idRFNDQuery + '-txtCia').setValue("");
+            Ext.getCmp(prototype.idRFNDQuery + '-txtFrmaFolio').setValue("");
+        } else if (obj.getValue() === "1") {
+            txtfolio.show();
+            txtFilterDateFrom.hide();
+            txtFilterDateTo.hide();
+            txtCia.hide();
+            txtFrmaSerie.hide();
+            Ext.getCmp(prototype.idRFNDQuery + '-txtCia').setValue("");
+            Ext.getCmp(prototype.idRFNDQuery + '-txtFilterDateFrom').setValue("");
+            Ext.getCmp(prototype.idRFNDQuery + '-txtFilterDateTo').setValue("");
+        } else if (obj.getValue() === "3") {
+            txtFilterDateFrom.hide();
+            txtFilterDateTo.hide();
+            txtCia.show();
+            txtFrmaSerie.show();
+            txtfolio.hide();
+            Ext.getCmp(prototype.idRFNDQuery + '-txtCia').setValue("139");
+            Ext.getCmp(prototype.idRFNDQuery + '-txtFilterDateFrom').setValue("");
+            Ext.getCmp(prototype.idRFNDQuery + '-txtFilterDateTo').setValue("");
+            Ext.getCmp(prototype.idRFNDQuery + '-txtFrmaFolio').setValue("");
+        } else {
+            txtFilterDateFrom.hide();
+            txtFilterDateTo.hide();
+            txtCia.hide();
+            txtFrmaSerie.hide();
+            txtfolio.hide();
+            Ext.getCmp(prototype.idRFNDQuery + '-txtFrmaSerie').setValue("");
+            Ext.getCmp(prototype.idRFNDQuery + '-txtCia').setValue("");
+            Ext.getCmp(prototype.idRFNDQuery + '-txtFrmaFolio').setValue("");
+        }
     },
     setStoresFilters: function () {
-        var cmbSearch = Ext.getCmp(prototype.id + '-search-type');
-        var cmbStatus = Ext.getCmp(prototype.id + '-CmbStatus');
+        var cmbSearch = Ext.getCmp(prototype.idRFNDQuery + '-search-type');
+        var cmbStatus = Ext.getCmp(prototype.idRFNDQuery + '-CmbStatus');
+        var CmbStatusBPO = Ext.getCmp(prototype.idRFNDQuery + '-CmbStatusBPO');
+        //var CmbType = Ext.getCmp(prototype.idRFNDQuery + '-CmbType');
+        var cmbOptionTKT = Ext.getCmp(prototype.idRFNDQuery + '-de-cmbOptionTKT');
 
         cmbSearch.bindStore(Ext.create('Ext.data.Store', {
             data: [
-                {"code": "", "name": "SELECTED"},
-                //{ "code": "5", "name": "AGENCY"},
-                {"code": "4", "name": "APPLICATION DATE"},
-                {"code": "6", "name": "AUTHORISED - REJECTED / DATE"},
-                {"code": "2", "name": "FOLIO"},
-                //{ "code": "7", "name": "NO ASSIGNMENT"},
-                {"code": "1", "name": "SYSTEM DATE"},
+                {"code": "4", "name": "AUTHORISED - REJECTED / DATE"},
+                {"code": "5", "name": "CAPTURED BY ROBOT"},
+                {"code": "1", "name": "FOLIO"},
+                {"code": "2", "name": "SYSTEM DATE"},
                 {"code": "3", "name": "TICKET"}
+
             ]
         }));
+
 
         cmbStatus.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "", "name": "ALL"},
-                {"code": "A", "name": "ASSIGNED TO THE AUDITOR"},
+                {"code": "A", "name": "IN PROCESS"},
+                {"code": "E", "name": "ERROR PROCESS"},
                 {"code": "F", "name": "AUTHORISED"},
-                {"code": "E", "name": "ERROR IN THE PROCESS"},
-                {"code": "C", "name": "INCONSISTENCY WITH THE ROBOT"},
                 {"code": "Y", "name": "PENDING"},
-                {"code": "R", "name": "REJECTED"},
-                {"code": "X", "name": "REMOVED"}
+                {"code": "R", "name": "REJECT"},
+                {"code": "B", "name": "GIVE USE IN PRAXIS"},
+                {"code": "C", "name": "REACTIVATION"}
+
             ]
         }));
-    },
 
+        CmbStatusBPO.bindStore(Ext.create('Ext.data.Store', {
+            data: [
+                {"code": "", "name": "ALL"},
+                {"code": "Y", "name": "PENDING"},
+                {"code": "A", "name": "ASSIGNED TO AUDITOR"},
+                {"code": "C", "name": "USES CPN"},
+                {"code": "E", "name": "SENT TO SABRE"},
+                {"code": "D", "name": "RETURNED FROM SABRE"},
+                {"code": "L", "name": "CAPTURED BPO"},
+                {"code": "R", "name": "SENT TO BPO"},
+                {"code": "F", "name": "SENT TO TO THE PORTAL"},
+                {"code": "G", "name": "PENDING TO THE PORTAL"}
+
+            ]
+        }));
+
+        /*CmbType.bindStore(Ext.create('Ext.data.Store', {
+         data: [
+         {"code": "", "name": "ALL"},
+         {"code": "MA", "name": "LAYOUT DETAIL"},
+         {"code": "GP", "name": "LAYOUT TOTAL"}
+         
+         
+         ]
+         }));*/
+        cmbOptionTKT.bindStore(Ext.create('Ext.data.Store', {
+            data: [
+                {"code": "1", "name": "TICKET"},
+                {"code": "2", "name": "IATA RFND"}
+            ]
+        }));
+
+    },
     onLoadUsers: function () {
-        var cmbUser = Ext.getCmp(prototype.id + '-txtUser');
+        var cmbUser = Ext.getCmp(prototype.idRFNDQuery + '-CmbAudit');
         var store = Ext.create('Ext.data.Store', {
             proxy: {
                 type: 'ajax',
@@ -100,12 +213,32 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
         });
         cmbUser.setStore(store);
     },
-
+    onCmbStatusAfterRender: function (obj) {
+        obj.setValue('');
+    },
+    onCmbStatusAfterRender2: function (obj) {
+        obj.setValue('1');
+    },
+    onRendererColumnAttr: function (value, metaData, record, rowIndex, colIndex, store, view) {
+        metaData.tdAttr = 'data-qtip="' + value + '"';
+        return value;
+    },
+    onRendererColumnOnTime: function (value, metaData, record, rowIndex, colIndex, store, view) {
+        switch (String(record.get('A3648ESTADO'))) {
+            case 'A':
+                value = 'green';
+                break;
+            default:
+                value = 'red';
+        }
+        return '<i class="fas fa-circle" style="font-size: 16px; color:' + value + ';"></i>';
+    },
     setStoresGrids: function () {
-        var grid00 = Ext.getCmp(prototype.id + '-grid');
-
+        var gridData = Ext.getCmp(prototype.idRFNDQuery + '-grid');
+        var gridCabe = Ext.getCmp(prototype.idRFNDQuery + '-gridCabe');
+        //
         var store00 = Ext.create('Ext.data.Store', {
-            storeId: prototype.id + '-store-grid00',
+            storeId: prototype.idRFNDQuery + '-store-grid00',
             pageSize: 20,
             proxy: {
                 type: 'ajax',
@@ -118,269 +251,203 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
                 }
             }
         });
-
-        grid00.setStore(store00);
-
-        Ext.getCmp(prototype.id + '-pagginator-01').setStore(store00);
-    },
-
-    onPagingBeforeChange01: function (obj, page, opts) {
-        obj.store.proxy.extraParams = this.beanTMP;
-    },
-
-    onCmbSearchAfterRender: function (obj) {
-        obj.setValue('');
-    },
-
-    onCmbSearchChange: function (obj, newValue, oldValue, eOpts) {
-        // console.log(String(newValue))
-        var txtIATA = Ext.getCmp(prototype.id + '-txtIATA');
-        var txtDateFrom = Ext.getCmp(prototype.id + '-txtFilterDateFrom');
-        var txtDateTo = Ext.getCmp(prototype.id + '-txtFilterDateTo');
-        var txtHora1 = Ext.getCmp(prototype.id + '-txthora1');
-        var txtHora2 = Ext.getCmp(prototype.id + '-txthora2');
-        var txtCia = Ext.getCmp(prototype.id + '-txtCia');
-        var txtForma = Ext.getCmp(prototype.id + '-txtFrmaSerie');
-        var txtSeq = Ext.getCmp(prototype.id + '-txtSeq');
-        var txtNumber = Ext.getCmp(prototype.id + '-txtNumber');
-        var cmbStatus = Ext.getCmp(prototype.id + '-CmbStatus');
-        var txtCountry = Ext.getCmp(prototype.id + '-cmbCountry');
-        var txtUser = Ext.getCmp(prototype.id + '-txtUser');
-        var boxFilter02 = Ext.getCmp(prototype.id + '-box-filter-02');
-        switch (String(newValue)) {
-            case '1':
-            case '4':
-            case '6':
-                txtIATA.hide();
-                cmbStatus.show();
-                txtDateFrom.show();
-                txtDateTo.show();
-                txtHora1.hide();
-                txtHora2.hide();
-                txtCia.hide();
-                txtForma.hide();
-                txtSeq.hide();
-                txtNumber.hide();
-
-                boxFilter02.show();
-
-                if (String(newValue) === '6') {
-                    txtHora1.show();
-                    txtHora2.show();
-                } else {
-                    txtHora1.setValue('');
-                    txtHora2.setValue('');
+        //
+        var store01 = Ext.create('Ext.data.Store', {
+            storeId: prototype.idRFNDQuery + '-store-grid00',
+            pageSize: 20,
+            proxy: {
+                type: 'ajax',
+                url: prototype.url01 + '/searchDetail',
+                timeout: 60000000,
+                reader: {
+                    type: 'json',
+                    rootProperty: 'data',
+                    totalProperty: 'total'
                 }
-                break;
-            case '2':
-            case '3':
-                txtIATA.hide();
-                cmbStatus.hide();
-                txtDateFrom.hide();
-                txtDateTo.hide();
-                txtHora1.hide();
-                txtHora2.hide();
-                txtCia.show();
-                txtForma.hide();
-                txtSeq.hide();
-                txtNumber.show();
-
-                boxFilter02.show();
-
-                if (String(newValue) === '3') {
-                    txtForma.show();
-                    txtSeq.show();
-                    txtNumber.hide();
-                }
-                break;
-            case '5':
-                txtIATA.show();
-                cmbStatus.show();
-                txtDateFrom.hide();
-                txtDateTo.hide();
-                txtHora1.hide();
-                txtHora2.hide();
-                txtCia.hide();
-                txtForma.hide();
-                txtSeq.hide();
-                txtNumber.hide();
-
-                boxFilter02.show();
-                break;
-            case '7':
-                txtIATA.hide();
-                cmbStatus.hide();
-                txtDateFrom.hide();
-                txtDateTo.hide();
-                txtHora1.hide();
-                txtHora2.hide();
-                txtCia.hide();
-                txtForma.hide();
-                txtSeq.hide();
-                txtNumber.hide();
-                txtCountry.hide();
-                txtUser.hide();
-
-                boxFilter02.hide();
-                boxFilter02.setBorder(false);
-        }
-    },
-
-    onCmbStatusAfterRender: function (obj) {
-        obj.setValue('');
-    },
-
-    onCmbStatusChange: function (obj, newValue, oldValue, eOpts) {
-
-    },
-
-    onSearchClick: function (btn) {
-        var me = this;
-        var form = Ext.getCmp(prototype.id + '-contenedor-filters-form').getForm();
-
-        var grid = Ext.getCmp(prototype.id + '-grid');
-        var store = grid.getStore();
-        store.removeAll();
-
-        var comboBy = String(Ext.getCmp(prototype.id + '-search-type').getValue());
-        if (comboBy != '7') {
-            if (comboBy == '') {
-                Ext.Msg.alert('.: PRAXIS :.', 'SELECT Of By');
-                return;
-            }
-        }
-
-        if (comboBy == '1' || comboBy == '4' || comboBy == '6') {
-            if (Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue()) != '') {
-                if (Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue()) == '') {
-                    Ext.Msg.alert('.: PRAXIS :.', 'Enter Date To');
-                    return;
-                }
-            }
-            if (Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue()) != '') {
-                if (Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue()) == '') {
-                    Ext.Msg.alert('.: PRAXIS :.', 'Enter Date From');
-                    return;
-                }
-            }
-
-            /*if (Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue()) !== '' &&
-                    Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue()) !== '') {
-                if (global.validate_fechaMayorQue(Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue()), Ext.String.trim(Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue()))) {
-                    Ext.Msg.alert('.: PRAXIS :.', 'the starting date must be less than the end date');
-                    return;
-                }
-            }*/
-        }
-
-        /*if ( comboBy == '6' ){
-         if ( Ext.String.trim(Ext.getCmp(prototype.id+'-txthora1').getValue()) != '' &&
-         Ext.String.trim(Ext.getCmp(prototype.id+'-txthora2').getValue()) != '' ){
-         Ext.Msg.alert('.: PRAXIS :.', 'the starting hour must be less than the end hour');
-         return;
-         }
-         }*/
-
-        if (comboBy == '2' || comboBy == '3' || comboBy == '5') {
-            if (comboBy == '2') {
-                me.beanTMP.IN_DOCUMET = Ext.String.trim(Ext.getCmp(prototype.id + '-txtNumber').getValue());
-            } else {
-                me.beanTMP.IN_DOCUMET = '';
-            }
-            if (comboBy == '3') {
-                me.beanTMP.IN_CIA = Ext.String.trim(Ext.getCmp(prototype.id + '-txtCia').getValue());
-                me.beanTMP.IN_FORMA = Ext.String.trim(Ext.getCmp(prototype.id + '-txtFrmaSerie').getValue().substr(0, 4));
-                me.beanTMP.IN_SERIE = Ext.String.trim(Ext.getCmp(prototype.id + '-txtFrmaSerie').getValue().substr(4, 10));
-                me.beanTMP.IN_SEQ = Ext.String.trim(Ext.getCmp(prototype.id + '-txtSeq').getValue());
-            } else {
-                me.beanTMP.IN_CIA = '';
-                me.beanTMP.IN_FORMA = '';
-                me.beanTMP.IN_SERIE = '';
-                me.beanTMP.IN_SEQ = '';
-            }
-            me.beanTMP.IN_DATEFROM = '';
-            me.beanTMP.IN_DATETO = '';
-        }
-
-        if (comboBy == '1' || comboBy == '4' || comboBy == '6') {
-            if (comboBy == '6') {
-                me.beanTMP.IN_FORMA = Ext.String.trim(Ext.getCmp(prototype.id + '-txthora1').getValue());
-                me.beanTMP.IN_SERIE = Ext.String.trim(Ext.getCmp(prototype.id + '-txthora2').getValue());
-            } else {
-                me.beanTMP.IN_FORMA = '';
-                me.beanTMP.IN_SERIE = '';
-            }
-            me.beanTMP.IN_DATEFROM = Ext.getCmp(prototype.id + '-txtFilterDateFrom').getRawValue();
-            me.beanTMP.IN_DATETO = Ext.getCmp(prototype.id + '-txtFilterDateTo').getRawValue();
-
-            me.beanTMP.IN_CIA = '';
-            me.beanTMP.IN_DOCUMET = '';
-            me.beanTMP.IN_SEQ = '';
-        }
-
-        me.beanTMP.IN_OPTION = comboBy;
-        me.beanTMP.IN_STATUS = Ext.getCmp(prototype.id + '-CmbStatus').getValue();
-        me.beanTMP.IN_COUNTRY = Ext.String.trim(Ext.getCmp(prototype.id + '-cmbCountry').getValue());
-        me.beanTMP.IN_USER = Ext.getCmp(prototype.id + '-txtUser').getValue();
-        me.beanTMP.IN_USER = me.beanTMP.IN_USER == 'ALL' ? '' : me.beanTMP.IN_USER;
-        me.beanTMP.IN_IATA = Ext.String.trim(Ext.getCmp(prototype.id + '-txtIATA').getValue());
-
-        /*
-         * El valor obtenido del checkbox se interpreta de forma inversa para 
-         * aprovechar el uso de la variable bexcel
-         */
-        me.beanTMP.pexcel = Ext.getCmp(prototype.id + '-pagination').getValue() ? 0 : 1;
-
-        store.loadPage(1, {
-            params: me.beanTMP,
-            callback: function (records, operation, success) {
-                Ext.getCmp(prototype.id + '-pagination').enable();
             }
         });
 
+        gridCabe.setStore(store00);
+        gridData.setStore(store01);
+
+        Ext.getCmp(prototype.idRFNDQuery + '-pagginator-01').setStore(store00);
+    },
+    onExcelClick: function (obj, e) {
+        this.onSearchClick(true);
+    },
+    onExcelClick2: function (obj, e) {
+        var me = this;
+        //if (me.bean2.length > 0) {
+        me.exportExcel(prototype.url01 + '/getXLSX2?beanString=' + encodeURI(JSON.stringify(me.bean2)));
+        //}
     },
     onSearchkey: function (f, e) {
-        if (e.getKey() == e.ENTER) {
+        if (e.getKey() === e.ENTER) {
             this.onSearchClick();
         }
 
     },
-    onchange: function (field, newValue, oldValue) {
-        field.setValue(newValue.toUpperCase());
-    },
+    onSearchClick: function (obj, e) {
+        var me = this;
+        me.bean.IN_OPTION = Ext.getCmp(prototype.idRFNDQuery + '-search-type').getValue();
+        me.bean.IN_DATEFROM = Ext.getCmp(prototype.idRFNDQuery + '-txtFilterDateFrom').getRawValue();
+        me.bean.IN_DATETO = Ext.getCmp(prototype.idRFNDQuery + '-txtFilterDateTo').getRawValue();
+        me.bean.IN_TICKET = Ext.getCmp(prototype.idRFNDQuery + '-txtCia').getValue() + '' + Ext.getCmp(prototype.idRFNDQuery + '-txtFrmaSerie').getValue();
+        me.bean.IN_COUNTRY = '';//Ext.getCmp(prototype.idRFNDQuery + '-CmbType').getValue();
+        me.bean.IN_IATA = Ext.getCmp(prototype.idRFNDQuery + '-txtIATA').getValue();
+        me.bean.IN_FLAG = Ext.getCmp(prototype.idRFNDQuery + '-CmbStatus').getValue();
+        me.bean.IN_STATUSBPO = Ext.getCmp(prototype.idRFNDQuery + '-CmbStatusBPO').getValue();
+        me.bean.IN_USER = Ext.getCmp(prototype.idRFNDQuery + '-CmbAudit').getValue();
+        me.bean.IN_FOLIO = Ext.getCmp(prototype.idRFNDQuery + '-txtFrmaFolio').getValue();
+        if (me.bean.IN_USER === 'ALL') {
+            me.bean.IN_USER = '';
+        }
+        me.bean.pexcel = 0;
+        if (me.bean.IN_OPTION === '') {
+            Ext.MessageBox.alert('PRAXIS', "Select search type", function (btn, text) {
+                if (btn === 'ok' || btn === 'cancel')
+                    setTimeout("Ext.getCmp(prototype.idRFNDQuery + '-search-type').focus();", 100);
+            });
+            return;
 
-    onPaginationChkChange: function (obj, newValue, oldValue, eOpts) {
-        Ext.getCmp(prototype.id + '-btn-search').fireEvent('click', {});
-        if (!newValue) {
-            Ext.getCmp(prototype.id + '-pagginator-01').disable();
-            //   Ext.getCmp(prototype.id + '-pagginator-legend').hide();
+        }
+        if (me.bean.IN_OPTION === '') {
+            Ext.MessageBox.alert('PRAXIS', "Select search type", function (btn, text) {
+                if (btn === 'ok' || btn === 'cancel')
+                    setTimeout("Ext.getCmp(prototype.idRFNDQuery + '-search-type').focus();", 100);
+            });
+            return;
+
+        }
+        if (me.bean.IN_OPTION === "1") {
+            if (me.bean.IN_FOLIO === '') {
+                Ext.MessageBox.alert('PRAXIS', "Insert Folio", function (btn, text) {
+                    if (btn === 'ok' || btn === 'cancel')
+                        setTimeout("Ext.getCmp(prototype.idRFNDQuery + '-txtFrmaFolio').focus();", 100);
+                });
+                return;
+            }
+        }
+        if (me.bean.IN_OPTION === "3") {
+            if (Ext.getCmp(prototype.idRFNDQuery + '-txtCia').getValue() === '') {
+                Ext.MessageBox.alert('PRAXIS', "Select search type", function (btn, text) {
+                    if (btn === 'ok' || btn === 'cancel')
+                        setTimeout("Ext.getCmp(prototype.idRFNDQuery + '-txtCia').focus();", 100);
+                });
+                return;
+            }
+            if (Ext.getCmp(prototype.idRFNDQuery + '-txtFrmaSerie').getValue() === '') {
+                Ext.MessageBox.alert('PRAXIS', "Select search type", function (btn, text) {
+                    if (btn === 'ok' || btn === 'cancel')
+                        setTimeout("Ext.getCmp(prototype.idRFNDQuery + '-txtFrmaSerie').focus();", 100);
+                });
+                return;
+            }
+        }
+
+        if (me.bean.IN_OPTION === "2" || me.bean.IN_OPTION === "4") {
+            if (me.bean.IN_DATEFROM !== '') {
+                if (me.bean.IN_DATETO === '') {
+                    global.Msg({msg: 'Enter Date To'});
+                    return;
+                }
+            }
+            if (me.bean.IN_DATETO !== '') {
+                if (me.bean.IN_DATEFROM === '') {
+                    global.Msg({msg: 'Enter Date From'});
+                    return;
+                }
+            }
+            if (me.bean.IN_DATEFROM !== '' && me.bean.IN_DATETO !== '') {
+
+                if (global.existeFecha(me.bean.IN_DATEFROM) !== '') {
+                    Ext.MessageBox.alert('PRAXIS', global.existeFecha(me.bean.IN_DATEFROM), function (btn, text) {
+                        if (btn === 'ok' || btn === 'cancel')
+                            setTimeout("Ext.getCmp(prototype.idRFNDQuery + '-txtFilterDateFrom').focus();", 100);
+                    });
+                    return;
+                }
+
+                if (global.existeFecha(me.bean.IN_DATETO) !== '') {
+                    Ext.MessageBox.alert('PRAXIS', global.existeFecha(me.bean.IN_DATETO), function (btn, text) {
+                        if (btn === 'ok' || btn === 'cancel')
+                            setTimeout("Ext.getCmp(prototype.idRFNDQuery + '-txtFilterDateTo').focus();", 100);
+                    });
+                    return;
+                }
+            }
+        }
+
+        me.SearchReport(me.bean, obj === true ? obj : false);
+    },
+    SearchReport: function (bean, bExcel) {
+        var me = this;
+        if (bExcel) {
+            me.exportExcel(prototype.url01 + '/getXLSX?beanString=' + encodeURI(JSON.stringify(bean)));
         } else {
-            Ext.getCmp(prototype.id + '-pagginator-01').enable();
-            // Ext.getCmp(prototype.id + '-pagginator-legend').show();
+            Ext.getCmp(prototype.idRFNDQuery + '-lbl-total2').setText('0');
+            Ext.getCmp(prototype.idRFNDQuery + '-grid').getStore().removeAll();
+            Ext.getCmp(prototype.idRFNDQuery + '-gridCabe').getStore().removeAll();
+            Ext.getCmp(prototype.idRFNDQuery + '-gridCabe').getStore().loadPage(1, {
+                params: bean,
+                callback: function (records, operation, success) {
+                    if (records.length === 0) {
+                        global.Msg({msg: "Data not found.", icon: 2, fn: function () {
+                            }});
+
+                    }
+
+                }
+            });
         }
     },
-
-    onRendererColumnAgency: function (value, metaData, record, rowIndex, colIndex, store, view) {
-        metaData.tdAttr = 'data-qtip="' + value + '"';
-        return value
+    exportExcel: function (_path) {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Download Excel ?',
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function (btn) {
+                if (btn === 'ok') {
+                    global.getFile(_path);
+                }
+            }
+        });
     },
-
-    onRendererColumnPassenger: function (value, metaData, record, rowIndex, colIndex, store, view) {
-        metaData.tdAttr = 'data-qtip="' + value + '"';
-        return value
+    onDetailClick: function (grid, rowIndex, colIndex) {
+        var rec = grid.getStore().getAt(rowIndex);
+        rec = rec === null || rec === undefined ? {} : rec;
+        var win = new Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicket({
+            params: {
+                rec: rec,
+                action: 'FORMQUERYRFND'
+            }
+        });
+        win.show();
     },
-
-    onRendererColumnReason: function (value, metaData, record, rowIndex, colIndex, store, view) {
-        metaData.tdAttr = 'data-qtip="' + value + '"';
-        return value
+    onClearClick: function (obj, e) {
+        Ext.getCmp(prototype.idRFNDQuery + '-grid').getStore().removeAll();
+        Ext.getCmp(prototype.idRFNDQuery + '-search-type').setValue('1');
+        Ext.getCmp(prototype.idRFNDQuery + '-txtCia').setValue('139');
+        Ext.getCmp(prototype.idRFNDQuery + '-txtFrmaSerie').setValue('');
+        //Ext.getCmp(prototype.idRFNDQuery + '-CmbType').setValue('');
+        Ext.getCmp(prototype.idRFNDQuery + '-txtIATA').setValue('');
+        Ext.getCmp(prototype.idRFNDQuery + '-CmbStatus').setValue('');
+        Ext.getCmp(prototype.idRFNDQuery + '-CmbStatusBPO').setValue('');
     },
 
     onRendererColumnStatus: function (value, metaData, record, rowIndex, colIndex, store, view) {
         var color = '#FFFFFF';
-        switch (Ext.String.trim(String(record.get('A3647FLAG')))) {
+        switch (String(record.get('A3648FLAG'))) {
+            case 'E':
+                color = '#F78181';
+                value = 'ERROR PROCESS';
+                break;
             case 'A':
                 color = '#81BEF7';
-                value = 'ASSIGNED TO AUDITOR';
+                value = 'IN PROCESS';
                 break;
             case 'R':
                 color = '#F78181';
@@ -394,109 +461,205 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
                 color = '#CCFF00';
                 value = 'PENDING';
                 break;
-            case 'X':
-                color = '#FF0000';
-                value = 'VOID';
-                break;
-            case 'D':
-                color = '#FF9966';
-                value = 'REEMBOLSABLE';
-                break;
-            case 'J':
-                color = '#69D3F8';
-                value = '';
-                break;
-            case 'G':
-                color = '#0099FF';
-                value = 'NO REEMBOLSABLE';
-                break;
             case 'B':
-                color = '#CC9966';
-                value = 'CHANGE FOR ANOTHER';
+                color = '#FF9966';
+                value = 'GIVE USE IN PRAXIS';
                 break;
             case 'C':
-                color = '#D329E8';
-                value = 'INCONSISTENCY WITH THE ROBOT';
-                break;
-            case '':
-                color = '#FF0000';
-                value = 'PENDING ASSIGNED';
-                break;
-            case 'E':
-                color = '#F2A60D';
-                value = 'ERROR IN THE PROCESS';
+                color = '#F781D8';
+                value = 'REACTIVATION';
                 break;
         }
-
         metaData.tdAttr = 'data-qtip="' + value + '"';
         metaData.style = "font-weight:bold !important; background:" + color + " !important";
         return value;
     },
+    onRendererColumnProcess: function (value, metaData, record, rowIndex, colIndex, store, view) {
+        switch (String(record.get('A3648PROCE'))) {
+            case 'D':
+                value = 'DETAIL';
+                break;
+            case 'T':
+                value = 'TOTAL';
+                break;
+        }
+        metaData.tdAttr = 'data-qtip="' + value + '"';
+        return value;
+    },
+    onRendererColumnBase: function (value, metaData, record, rowIndex, colIndex, store, view) {
 
-    onRendererColumnOnTime: function (value, metaData, record, rowIndex, colIndex, store, view) {
-        switch (String(record.get('A3647SEMAF'))) {
-            case 'ORANGE':
-                value = 'orange';
+        switch (String(record.get('A4076BASE'))) {
+            case 'UAT':
+                value = 'UATP';
                 break;
-            case 'GREEN':
-                value = 'green';
+            case 'CON':
+                value = 'CONTRACARGO';
                 break;
-            default:
-                value = 'red';
+            case 'CAM':
+                value = 'CAMEPA';
+                break;
+            case 'ATC':
+                value = 'CUSTOMER SERVICE';
+                break;
+            case 'VDI':
+                value = 'DIRECT SALE';
+                break;
+            case 'MAN':
+                value = 'MAN';
+                break;
+        }
+        metaData.tdAttr = 'data-qtip="' + value + '"';
+        //metaData.style = "font-weight:bold !important; background:" + color + " !important";
+        return value;
+    },
+    onRendererColumnStatuscab: function (value, metaData, record, rowIndex, colIndex, store, view) {
+
+        switch (String(record.get('A4076FLAG'))) {
+            case 'E':
+                value = 'KO';
+                break;
+            case 'A':
+                value = 'OK';
+                break;
+        }
+        metaData.tdAttr = 'data-qtip="' + value + '"';
+        return value;
+    },
+    onRendererColumnOnCab: function (value, metaData, record, rowIndex, colIndex, store, view) {
+        if (record.get('A3647DIAS') <= 3) {
+            value = 'green';
+        } else {
+            value = 'red';
         }
         return '<i class="fas fa-circle" style="font-size: 16px; color:' + value + ';"></i>';
     },
-
-    onDetailClick: function (grid, rowIndex, colIndex) {
-        var rec = grid.getStore().getAt(rowIndex);
-        this.winDataEntry('FORMQUERYRFND', rec);
+    onRendererColumnOnPreme: function (value, metaData, record, rowIndex, colIndex, store, view) {
+        metaData.style = "font-weight:bold !important; color:#244066 !important; cursor: pointer !important; text-decoration: underline;";
+        return '<span onclick="Ext.getCmp(prototype.idRFNDQuery + \'-Contenedor\').getController().searchform_detalle(' + rowIndex + ');">' + value + '</span>'
     },
-
-    onUpdateClick: function (grid, rowIndex, colIndex) {
-        var rec = grid.getStore().getAt(rowIndex);
+    searchform_detalle_actualiza: function () {
         var me = this;
-        if (Ext.String.trim(rec.get('A3647FLAG')) === 'F' || Ext.String.trim(rec.get('A3647FLAG')) === 'R') {
-            if (Ext.String.trim(rec.get('A3647FLAG')) === 'F') {
-                var fechaInicio = new Date(rec.get('A3647FAUTO').substring(0, 4) + '-' + rec.get('A3647FAUTO').substring(6, 4) + '-' + rec.get('A3647FAUTO').substring(8, 6));//new Date(rec.get('A3389FAUTO'));
-                var fechaFin = new Date();
-                var diff_in_millisenconds = (Math.round((fechaFin.getTime() - fechaInicio.getTime()) / (1000 * 60 * 60 * 24)));
-                if (diff_in_millisenconds !== 1) {
-                    Ext.Msg.alert('.: PRAXIS :.', 'The date must not be longer than one day');
-                    return;
+        Ext.getCmp(prototype.idRFNDQuery + '-grid').getStore().removeAll();
+        Ext.getCmp(prototype.idRFNDQuery + '-grid').getStore().loadPage(1, {
+            params: {
+                beanString: JSON.stringify(me.bean2)
+
+            }, callback: function (records, operation, success) {
+                if (records.length !== 0) {
+                    Ext.getCmp(prototype.idRFNDQuery + '-lbl-total2').setText(records.length);
+                } else {
+                    Ext.getCmp(prototype.idRFNDQuery + '-lbl-total2').setText('0');
+                    global.Msg({msg: "Data not found.", icon: 2, fn: function () {
+                        }});
+
+                }
+
+            }
+        });
+
+    },
+    searchform_detalle2: function () {
+        var me = this;
+        //
+        Ext.getCmp(prototype.idRFNDQuery + '-grid').getStore().removeAll();
+        Ext.getCmp(prototype.idRFNDQuery + '-grid').getStore().loadPage(1, {
+            params: {
+                beanString: JSON.stringify(me.bean2)
+
+            }, callback: function (records, operation, success) {
+                if (records.length !== 0) {
+                    Ext.getCmp(prototype.idRFNDQuery + '-lbl-total2').setText(records.length);
+                } else {
+                    Ext.getCmp(prototype.idRFNDQuery + '-lbl-total2').setText('0');
+                    global.Msg({msg: "Data not found.", icon: 2, fn: function () {
+                        }});
+
+                }
+
+            }
+        });
+
+    },
+    searchform_detalle: function (rowIndex) {
+        var me = this;
+        var grid = Ext.getCmp(prototype.idRFNDQuery + '-gridCabe');
+        var store = grid.getStore();
+        var rec = store.getAt(rowIndex);
+        me.bean2.IN_PREME = rec.data.A3647PREME;
+        me.bean2.IN_ANIO = rec.data.A3647ANIO;
+        me.bean2.IN_DATEFROM = rec.data.A3647FREGI;
+        me.bean2.IN_USER = rec.data.A3647REGAS;
+        if (Ext.getCmp(prototype.idRFNDQuery + '-txtFrmaSerie').getValue() !== '') {
+            me.bean2.IN_TICKET = Ext.getCmp(prototype.idRFNDQuery + '-txtCia').getValue() + "" + Ext.getCmp(prototype.idRFNDQuery + '-txtFrmaSerie').getValue();
+        } else {
+            me.bean2.IN_TICKET = '';
+        }
+
+        me.bean2.IN_IATA = Ext.getCmp(prototype.idRFNDQuery + '-txtIATA').getValue();
+        //
+        Ext.getCmp(prototype.idRFNDQuery + '-grid').getStore().removeAll();
+        Ext.getCmp(prototype.idRFNDQuery + '-grid').getStore().loadPage(1, {
+            params: {
+                beanString: JSON.stringify(me.bean2)
+
+            }, callback: function (records, operation, success) {
+                if (records.length !== 0) {
+                    Ext.getCmp(prototype.idRFNDQuery + '-lbl-total2').setText(records.length);
+                } else {
+                    Ext.getCmp(prototype.idRFNDQuery + '-lbl-total2').setText('0');
+                    global.Msg({msg: "Data not found.", icon: 2, fn: function () {
+                        }});
+
+                }
+
+            }
+        });
+
+    },
+    img_clickHandler_save: function () {
+        var lstNew = new Array();
+        var grid = Ext.getCmp(prototype.idRFNDQuery + '-gridCabe');
+        if (grid.getSelectionModel().hasSelection()) {
+            var selection = grid.getSelectionModel().getSelected();
+            for (var i = 0; i < selection.length; i++) {
+                var row = grid.getSelectionModel().getSelection()[i];
+                if (row.get('CANTPEN') > 0) {
+                    lstNew.push(row.data);
                 }
             }
-            me.beanUpdate.IN_STATUS = rec.get('A3647FLAG');
-            me.beanUpdate.IN_PREME = rec.get('A3647PREME');
-            me.beanUpdate.A3647EMAIL = rec.get('A3647EMAIL');
-            me.beanUpdate.A3647FOLIO = rec.get('A3647FOLIO');
-            me.beanUpdate.IN_ANIO = rec.get('A3647ANIO');
-            //////
+        } else {
+            global.Msg({msg: 'You must select at least one record'});
+            return;
+        }
 
+        if (lstNew.length > 0) {
             global.Msg({
-                msg: 'Update Status?',
+                msg: 'Are you sure to Save?',
                 icon: 3,
                 buttons: 3,
                 fn: function (btn) {
                     if (btn === 'yes') {
-                        var mask = new Ext.LoadMask(Ext.getCmp(prototype.id + '-contenedor-form'), {
+                        var mask = new Ext.LoadMask(Ext.getCmp(prototype.idRFNDQuery + '-Contenedor'), {
                             msg: 'Please Wait....'
                         });
                         mask.show();
                         Ext.Ajax.request({
-                            url: prototype.url01 + '/ProcesaMantenimiento/',
+                            url: prototype.url + '/ProcesaMantenimientoStatus/',
                             timeout: 60000000,
                             method: 'POST',
-                            params: {beanString: JSON.stringify(me.beanUpdate)},
+                            params: {beanlst: JSON.stringify(lstNew)},
                             success: function (response, options) {
                                 mask.hide();
                                 var res = Ext.JSON.decode(response.responseText);
+                                //console.log(res.data);
                                 var vp_icon = 0;
                                 if (res.data === 'RECORD INSERTED') {
                                     vp_icon = 1;
                                 }
                                 global.Msg({msg: res.data, icon: vp_icon, fn: function () {
                                         if (vp_icon === 1) {
-                                            me.onSearchClick();
+                                            Ext.getCmp(prototype.idRFNDQuery + '-Contenedor').getController().onSearchClick();
+                                            me.searchform_detalle_actualiza();
                                         }
 
 
@@ -508,49 +671,104 @@ Ext.define('Ext.Praxis.controller.salesaudit.RFNDQuery.RFNDQueryController', {
                 }
             });
 
-
-
-            // rec.get('A3389FAUTO')
-
         } else {
-            Ext.Msg.alert('.: PRAXIS :.', 'The status must be REJECTED or AUTHORISED');
+            Ext.Msg.alert('.: PRAXIS :.', 'You must select at least one record');
+            return;
         }
-        //alert('novo '+String(rec.get('A3389FLAG')));
-        // this.winDataEntry('FORMQUERYRFND', rec);
     },
+    onClickBtnFilter: function () {
+        var option = Ext.getCmp(prototype.idRFNDQuery + '-panelFilter1');
+        if (option.isVisible()) {
+            option.setVisible(false);
+            Ext.getCmp(prototype.idRFNDQuery + '-tbspacer2').show();
+            Ext.getCmp(prototype.idRFNDQuery + '-tbspacer1').hide();
+        } else {
+            option.setVisible(true);
+            Ext.getCmp(prototype.idRFNDQuery + '-tbspacer1').show();
+            Ext.getCmp(prototype.idRFNDQuery + '-tbspacer2').hide();
+        }
+    },
+    onTextKeypress: function (f, e) {
+        if (e.getKey() === e.ENTER) {
+            this.onClickBtnSearch();
+        }
 
-    winDataEntry: function (action, rec) {
-        action = action == null || action == undefined ? 'I' : action;
-        rec = rec == null || rec == undefined ? {} : rec;
-        var win = new Ext.Praxis.view.salesaudit.RFNDQuery.DetailRefundQueryRFND({
-            params: {
-                action: action,
-                rec: rec,
-                url01: prototype.url01,
-                url02: prototype.url02
+    },
+    onClickBtnSearch: function () {
+        var me = this;
+        var txtTKT = Ext.getCmp(prototype.idRFNDQuery + '-de-txtTKT').getValue();
+        var txtIata = Ext.getCmp(prototype.idRFNDQuery + '-de-txtIata').getValue();
+        if (txtTKT !== '') {
+            if (txtTKT.length !== 13) {
+                Ext.MessageBox.alert('PRAXIS', 'The ticket has to be 13 characters', function (btn, text) {
+                    if (btn === 'ok' || btn === 'cancel')
+                        setTimeout("Ext.getCmp(prototype.idRFNDQuery + '-de-txtTKT').focus();", 100);
+                });
+                return;
             }
-        });
-        win.show();
-    },
+        }
+        if (txtIata !== '') {
+            if (txtIata.length !== 8) {
+                Ext.MessageBox.alert('PRAXIS', 'The IATA has to be 8 characters', function (btn, text) {
+                    if (btn === 'ok' || btn === 'cancel')
+                        setTimeout("Ext.getCmp(prototype.idRFNDQuery + '-de-txtIata').focus();", 100);
+                });
+                return;
+            }
+        }//data.TICKET !== undefined
+        if (me.bean2.IN_PREME !== undefined) {
 
-    onExcelClick: function (obj) {
-        if (Ext.Object.getSize(this.beanTMP) > 0) {
-            Ext.Msg.show({
-                title: '.:PRAXIS:.',
-                msg: 'Download Excel ?',
-                buttons: Ext.MessageBox.OKCANCEL,
-                scope: this,
-                icon: Ext.MessageBox.QUESTION,
-                modal: true,
-                fn: function (btn) {
-                    if (btn === 'ok') {
-                        global.getFile(prototype.url + '/getXLSX?beanString=' + encodeURI(JSON.stringify(this.beanTMP)));
+            me.bean3.IN_PREME = me.bean2.IN_PREME;
+            me.bean3.IN_ANIO = me.bean2.IN_ANIO;
+            me.bean3.IN_DATEFROM = me.bean2.IN_DATEFROM;
+            me.bean3.IN_USER = me.bean2.IN_USER;
+            me.bean3.IN_TKT = txtTKT;
+            me.bean3.IN_IATA = txtIata;
+
+            Ext.getCmp(prototype.idRFNDQuery + '-grid').getStore().removeAll();
+            Ext.getCmp(prototype.idRFNDQuery + '-grid').getStore().loadPage(1, {
+                params: {
+                    beanString: JSON.stringify(me.bean3)
+
+                }, callback: function (records, operation, success) {
+                    if (records.length !== 0) {
+                        Ext.getCmp(prototype.idRFNDQuery + '-lbl-total2').setText(records.length);
+                    } else {
+                        Ext.getCmp(prototype.idRFNDQuery + '-lbl-total2').setText('0');
+                        global.Msg({msg: "Data not found.", icon: 2, fn: function () {
+                            }});
+
                     }
+
                 }
             });
+        } else {
+            global.Msg({msg: "You must first select the header.", icon: 2, fn: function () {
+                }});
         }
+
+
     },
+    onchange: function (field, newValue, oldValue) {
+        field.setValue(newValue.toUpperCase());
+    },
+    onChangeComboTkt: function (obj, val) {
+        switch (val) {
+            case '1':
+                Ext.getCmp(prototype.idRFNDQuery + '-de-txtTKT').show();
+                Ext.getCmp(prototype.idRFNDQuery + '-de-txtIata').hide();
+                Ext.getCmp(prototype.idRFNDQuery + '-de-txtIata').setValue("");
+                setTimeout("Ext.getCmp(prototype.idRFNDQuery + '-de-txtTKT').focus();", 100);
+                //this.onFocus(prototype.idRFNDQuery + '-de-txtTKT');
+                break;
+            case '2':
+                Ext.getCmp(prototype.idRFNDQuery + '-de-txtIata').show();
+                Ext.getCmp(prototype.idRFNDQuery + '-de-txtTKT').hide();
+                Ext.getCmp(prototype.idRFNDQuery + '-de-txtTKT').setValue("");
+                setTimeout("Ext.getCmp(prototype.idRFNDQuery + '-de-txtIata').focus();", 100);
+                //this.onFocus(prototype.idRFNDQuery + '-de-txtIata');
+                break;
+        }
+    }
 
 });
-
-

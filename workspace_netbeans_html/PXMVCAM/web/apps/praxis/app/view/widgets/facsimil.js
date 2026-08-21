@@ -415,50 +415,16 @@ Ext.define('Ext.Praxis.view.widgets.facsimil', {
                                     {
                                         xtype: 'panel',
                                         layout: 'hbox',
-                                        defaults: {
-                                            xtype: 'textfield',
-                                            labelCls: 'cls-facsimil-label',
-                                            readOnly: true
-                                        },
                                         items: [
                                             {
-                                                fieldLabel: 'Tax',
+                                                xtype:'textarea',
+                                                fieldLabel: 'Taxes',
                                                 id: me.id + '-txtTax1',
                                                 labelWidth: 50,
-                                                flex: 1
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        xtype: 'panel',
-                                        layout: 'hbox',
-                                        defaults: {
-                                            xtype: 'textfield',
-                                            labelCls: 'cls-facsimil-label',
-                                            readOnly: true
-                                        },
-                                        items: [
-                                            {
-                                                fieldLabel: 'Tax',
-                                                id: me.id + '-txtTax2',
-                                                labelWidth: 50,
-                                                flex: 1
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        xtype: 'panel',
-                                        layout: 'hbox',
-                                        defaults: {
-                                            xtype: 'textfield',
-                                            labelCls: 'cls-facsimil-label',
-                                            readOnly: true
-                                        },
-                                        items: [
-                                            {
-                                                fieldLabel: 'Tax',
-                                                id: me.id + '-txtTax3',
-                                                labelWidth: 50,
+                                                autoScroll:true,
+                                                fieldStyle:'font-size: 10px !important;font-family:"Courier New"',
+                                                labelCls: 'cls-facsimil-label',
+                                                readOnly:true,
                                                 flex: 1
                                             }
                                         ]
@@ -652,6 +618,7 @@ Ext.define('Ext.Praxis.view.widgets.facsimil', {
         bean104.FUENTE = params.IN_FTE;
         bean104.TDNR = params.IN_CIA + params.IN_FORMA + params.IN_SERIE;
         bean104.TRNC = params.IN_TRX;
+        bean104.IDFILE = params.IN_IDFIL;
 
         me.beanGrid = bean104;
 
@@ -714,24 +681,20 @@ Ext.define('Ext.Praxis.view.widgets.facsimil', {
         }
 
         if (bean.lstTaxes.length > 0) {
-            Ext.getCmp(me.id + '-txtTax1').setValue(bean.lstTaxes[0]);
-        }
-
-        if (bean.lstTaxes.length > 1) {
-            Ext.getCmp(me.id + '-txtTax2').setValue(bean.lstTaxes[1]);
-        }
-
-        if (bean.lstTaxes.length > 2) {
-            Ext.getCmp(me.id + '-txtTax3').setValue(bean.lstTaxes[2]);
+            let txtTaxes = '';
+            bean.lstTaxes.forEach(tax=>{
+                txtTaxes = txtTaxes + tax + '\n';
+            });
+            Ext.getCmp(me.id + '-txtTax1').setValue(txtTaxes);
         }
 
         var total = 0;
-        if (this.tiene_numeros(bean.TOTL.substring(0, 3)) === 1) {
+        if (this.tiene_numeros(bean.TOTL.substring(0, 3).replace('.','')) === 1) {
             total = bean.TOTL;
         } else {
-            total = bean.TOTL.substring(3, bean.TOTL.length - 1);
+            total = bean.TOTL.substring(3, bean.TOTL.length);
         }
-        if (Ext.String.trim(Ext.getCmp(me.id + '-txtEqvFare').getValue().substring(0, 3)).length > 0 > 0) {
+        if (Ext.String.trim(Ext.getCmp(me.id + '-txtEqvFare').getValue().substring(0, 3)).length > 0) {
             Ext.getCmp(me.id + '-txtTotal').setValue(Ext.String.trim(Ext.getCmp(me.id + '-txtEqvFare').getValue().substring(0, 3)) + '' + Ext.util.Format.number(total, '0,000.00'));
         } else {
             Ext.getCmp(me.id + '-txtTotal').setValue(Ext.String.trim(bean.CUTP1) + '' + Ext.util.Format.number(total, '0,000.00'));
@@ -779,7 +742,7 @@ Ext.define('Ext.Praxis.view.widgets.facsimil', {
             method: 'POST',
             timeout: 60000000,
             params: {beanString: JSON.stringify(param)},
-            //beforerequest: Ext.getCmp(me.id).mask('Loading...', ''),
+            beforerequest: Ext.getCmp(me.id).mask('Loading...', ''),
             success: function (response, opts) {
                 //Ext.getBody().unmask();
                 var res = Ext.JSON.decode(response.responseText);
@@ -792,15 +755,16 @@ Ext.define('Ext.Praxis.view.widgets.facsimil', {
                         } else {
                             me.loadDataGrid(res.lstFaximil.lstReg63);
                         }
-                        //Ext.getCmp(me.id).unmask('Loading...', '');
+                        
                     } else {
                         global.Msg({msg: 'Data not Found.'});
                     }
                 } else
                     global.Msg({msg: res.sesion});
+                Ext.getCmp(me.id).unmask('Loading...', '');
             },
             failure: function (response, opts) {
-                //Ext.getCmp(me.id).unmask();
+                Ext.getCmp(me.id).unmask();
                 console.log('server-side failure with status code ' + response.status);
             }
         });

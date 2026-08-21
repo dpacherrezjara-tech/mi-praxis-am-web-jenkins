@@ -101,6 +101,7 @@ public class VouchersIssuedVersusClaimsDAO {
                 objRtn.A4213AMOTK = rs01.getDouble("A4213AMOTK");
                 objRtn.A4213MDATK = rs01.getString("A4213MDATK");
                 objRtn.A4213TARIF = rs01.getDouble("A4213TARIF");
+                objRtn.A4213TFOP = rs01.getDouble("A4213TFOP");
                 objRtn.A4213PAX = rs01.getString("A4213PAX");
                 objRtn.A4213FLG = rs01.getString("A4213FLG");
                 objRtn.A4213STAF = rs01.getString("A4213STAF");

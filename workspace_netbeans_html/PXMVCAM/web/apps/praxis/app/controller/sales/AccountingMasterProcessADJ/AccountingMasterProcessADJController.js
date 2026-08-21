@@ -31,7 +31,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcessADJ.AccountingMas
                 Ext.getCmp(prototype.id+'-boxDateFilter').show();
                 Ext.getCmp(prototype.id+'-boxPeriodFilter').hide();
                 break;
-            case 'PADJMV':
+            case 'PMASSIVE':
                 Ext.getCmp(prototype.id+'-boxDateFilter').show();
                 Ext.getCmp(prototype.id+'-boxPeriodFilter').hide();
                 break;
@@ -140,7 +140,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcessADJ.AccountingMas
         // <editor-fold defaultstate="collapsed" desc="llenarData">
         var cboModulo = this.getValue('cboModulo');
         switch (cboModulo) {
-            case 'PSALES': case 'PFLOWN': case 'PADJMA': case 'PCADUCOS': case 'PPSALES': case 'PADM': case 'PFOB': case 'PCONSORTIA':
+            case 'PSALES': case 'PFLOWN': case 'PADJMA': case 'PMASSIVE': case 'PCADUCOS': case 'PPSALES': case 'PADM': case 'PFOB': case 'PCONSORTIA':
                 searchParams.IN_FECHA_PROCESO = Ext.util.Format.date(Ext.getCmp(prototype.id+'-txtDateFrom').getValue(), 'Ymd');
                 searchParams.IN_FECHA_ACUSE = Ext.util.Format.date(Ext.getCmp(prototype.id+'-txtDateTo').getValue(), 'Ymd');
                 break;

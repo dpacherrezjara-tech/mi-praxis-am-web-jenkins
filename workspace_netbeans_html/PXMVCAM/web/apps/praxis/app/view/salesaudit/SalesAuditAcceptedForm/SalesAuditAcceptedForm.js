@@ -245,6 +245,30 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.SalesAuditAccepted
                                                 specialkey: 'onSearchkey'
                                             }
                                         },
+                                        /*{
+                                            xtype: 'combobox',
+                                            name: 'IN_PROCESS',
+                                            id: prototype.id + '-Processes',
+                                            fieldLabel: 'Processes',
+                                            store: Ext.create('Ext.data.SimpleStore', {
+                                                fields: ['code', 'name'],
+                                                data: [
+                                                    ['', 'Select'],
+                                                    ['AUTO', 'Automatic'],
+                                                    ['VOUC', '0425']
+                                                ]
+                                            }),
+                                            labelWidth: 70,
+                                            width: 170,
+                                            displayField: 'name',
+                                            valueField: 'code',
+                                            queryMode: 'local',
+                                            editable: false,
+                                            value: '',
+                                            listeners: { 
+                                                select: 'onCmbSourceSelect' 
+                                            }
+                                        },*/
                                         {
                                             xtype: 'combo',
                                             id: prototype.id + '-ComboSource',
@@ -705,6 +729,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.SalesAuditAccepted
                                 },
                                 items: [
                                     {text: 'Ticket Nbr', dataIndex: 'strTicket', width: 110},
+                                    {text: 'Base', dataIndex: 'A1672BASE', width: 55},
                                     {text: 'Source', dataIndex: 'A1672FUENT', width: 55},
                                     {text: 'Channel', dataIndex: 'A1672CANAL', width: 60},
                                     {text: 'Country', dataIndex: 'A1672PAIVT', width: 60},

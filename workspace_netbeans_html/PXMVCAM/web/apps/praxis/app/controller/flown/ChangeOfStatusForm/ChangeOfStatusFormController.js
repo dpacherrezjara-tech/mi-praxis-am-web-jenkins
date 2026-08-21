@@ -33,8 +33,8 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
         //this.setUser();
         this.setStoresFilters();
         this.setStoresGrids();
-
         Ext.getCmp(prototype.id + '-pagginator-01').getCmpPaginator().on('beforechange', me.onPagingBeforeChange01, this);
+        this.onSearchClick();
     },
     setStoresFilters: function () {
         var cmbSearch = Ext.getCmp(prototype.id + '-search-type');
@@ -47,47 +47,51 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
         cmbSearch.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "", "name": "SELECTED"},
-                {"code": "4", "name": "PROCESSING DATE"},
-                {"code": "1", "name": "REFERENCE"},
+                //{"code": "4", "name": "PROCESSING DATE"},
+                //{"code": "1", "name": "REFERENCE"},
                 {"code": "2", "name": "SYSTEM DATE"},
-                {"code": "3", "name": "TICKET"},
-                {"code": "5", "name": "TICKET FATHER"}
+                {"code": "3", "name": "TICKET PRAXIS"},
+                {"code": "5", "name": "TICKET ROBOT"}
             ]
         }));
 
         cmbStatusIni.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "", "name": "ALL"},
-                {"code": "CPNStat_EXCH", "name": "CPNStat_EXCH"},
-                {"code": "CPNStat_CHECKIN", "name": "CPNStat_CHECKIN"},
+                {"code": "EXCH", "name": "CPNStat_EXCH"},
+                {"code": "CTRL", "name": "CPNStat_CTRL"},
+                {"code": "CKIN", "name": "CPNStat_CHECKIN"},
                 {"code": "CPNStat_HISTORICALTICKET", "name": "CPNStat_HISTORICALTICKET"},
-                {"code": "CPNStat_NOGO", "name": "CPNStat_NOGO"},
-                {"code": "CPNStat_OK", "name": "CPNStat_OK"},
-                {"code": "CPNStat_RNFD", "name": "CPNStat_RNFD"},
-                {"code": "CPNStat_UNDET", "name": "CPNStat_UNDET"},
-                {"code": "CPNStat_USED", "name": "CPNStat_USED"},
-                {"code": "CPNStat_VOID", "name": "CPNStat_VOID"}
+                {"code": "NOGO", "name": "CPNStat_NOGO"},
+                {"code": "OK", "name": "CPNStat_OK"},
+                {"code": "RFND", "name": "CPNStat_RNFD"},
+                {"code": "UNDET", "name": "CPNStat_UNDET"},
+                {"code": "USED", "name": "CPNStat_USED"},
+                {"code": "VOID", "name": "CPNStat_VOID"}
             ]
         }));
 
         cmbStatusFin.bindStore(Ext.create('Ext.data.Store', {
             data: [
                 {"code": "", "name": "ALL"},
-                {"code": "CPNStat_CHECKIN", "name": "CPNStat_CHECKIN"},
-                {"code": "CPNStat_EXCH", "name": "CPNStat_EXCH"},
+                {"code": "EXCH", "name": "CPNStat_EXCH"},
+                {"code": "CTRL", "name": "CPNStat_CTRL"},
+                {"code": "CKIN", "name": "CPNStat_CHECKIN"},
                 {"code": "CPNStat_HISTORICALTICKET", "name": "CPNStat_HISTORICALTICKET"},
-                {"code": "CPNStat_NOGO", "name": "CPNStat_NOGO"},
-                {"code": "CPNStat_OK", "name": "CPNStat_OK"},
-                {"code": "CPNStat_RFND", "name": "CPNStat_RFND"},
-                {"code": "CPNStat_UNDET", "name": "CPNStat_UNDET"},
-                {"code": "CPNStat_USED", "name": "CPNStat_USED"},
-                {"code": "CPNStat_VOID", "name": "CPNStat_VOID"}
+                {"code": "NOGO", "name": "CPNStat_NOGO"},
+                {"code": "OK", "name": "CPNStat_OK"},
+                {"code": "RFND", "name": "CPNStat_RNFD"},
+                {"code": "UNDET", "name": "CPNStat_UNDET"},
+                {"code": "USED", "name": "CPNStat_USED"},
+                {"code": "VOID", "name": "CPNStat_VOID"}
             ]
         }));
 
         cmbOrigen.bindStore(Ext.create('Ext.data.Store', {
             data: [
-                {"code": "NO", "name": "CADUCO"}
+                {"code": "CDI", "name": "CADUCO INMEDIATO"},
+                {"code": "CDN", "name": "CADUCO NATURAL"},
+                {"code": "US", "name": "EMD STAND ALONE"}
             ]
         }));
 
@@ -109,7 +113,7 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
             data: [
                 {"code": "", "name": "ALL"},
                 {"code": "1", "name": "TKT"},
-                {"code": "2", "name": "CPN"}
+                {"code": "2", "name": "EMD"}
 
             ]
         }));
@@ -142,7 +146,7 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
         obj.store.proxy.extraParams = this.beanTMP;
     },
     onCmbSearchAfterRender: function (obj) {
-        obj.setValue('');
+        obj.setValue('2');
     },
     onCmbSearchChange: function (obj, newValue, oldValue, eOpts) {
         // console.log(String(newValue))
@@ -200,7 +204,7 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
         obj.setValue('');
     },
     onCmbStatusOrigen: function (obj, newValue, oldValue, eOpts) {
-        obj.setValue('NO');
+        obj.setValue('CDN');
     },
     onSearchClick: function (btn) {
         var me = this;
@@ -247,7 +251,7 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
         me.beanTMP.IN_HORAINI = Ext.String.trim(Ext.getCmp(prototype.id + '-txthora1').getValue());
         me.beanTMP.IN_HORAFIN = Ext.String.trim(Ext.getCmp(prototype.id + '-txthora2').getValue());
         me.beanTMP.IN_STATUS = Ext.String.trim(Ext.getCmp(prototype.id + '-CmbStatus').getValue());
-        me.beanTMP.IN_CURRENCY = Ext.String.trim(Ext.getCmp(prototype.id + '-txtCurrency').getValue());
+        me.beanTMP.IN_CURRENCY = Ext.getCmp(prototype.id + '-tktpraxis').getValue() ? 'I' : '';//Ext.String.trim(Ext.getCmp(prototype.id + '-txtCurrency').getValue());
         me.beanTMP.IN_COUNTRY = Ext.String.trim(Ext.getCmp(prototype.id + '-txtCountry').getValue());
         me.beanTMP.IN_STATUSINI = Ext.String.trim(Ext.getCmp(prototype.id + '-CmbStatusIni').getValue());
         me.beanTMP.IN_STATUSFIN = Ext.String.trim(Ext.getCmp(prototype.id + '-CmbStatusFin').getValue());
@@ -262,6 +266,9 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
             params: me.beanTMP,
             callback: function (records, operation, success) {
                 Ext.getCmp(prototype.id + '-pagination').enable();
+                if (records.length === 0) {
+                    global.Msg({msg: 'Data Not Found.'});
+                }
             }
         });
 
@@ -284,6 +291,9 @@ Ext.define('Ext.Praxis.controller.flown.ChangeOfStatusForm.ChangeOfStatusFormCon
             Ext.getCmp(prototype.id + '-pagginator-01').enable();
             // Ext.getCmp(prototype.id + '-pagginator-legend').show();
         }
+    },
+    onTktPraxisChkChange: function (obj, newValue, oldValue, eOpts) {
+        this.onSearchClick();
     },
     onRendererToltip: function (value, metaData, record, rowIndex, colIndex, store, view) {
         metaData.tdAttr = 'data-qtip="' + value + '"';

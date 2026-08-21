@@ -9,6 +9,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
     beanCLAtot: '',
     beanCLA: '',
     beanNewAmex: '',
+    beanAuditCom: '',
     paginActual: '',
     drillDown: [],
     lstCountry: [],
@@ -22,6 +23,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
     searchParamsClari: {},
     searchParamsClariTot: {},
     searchParamsNewAmex: {},
+    searchParamsAuditCom: {},
     paramsDetail: {},
     dataObtain: {},
     dataGrid: [],
@@ -174,6 +176,10 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
             this.mostrarCiertosFiltros(false);
             Ext.getCmp(prototype.id + '-lblTitulo').setText('Credit Card New');
 
+        } else if (type === '21') {
+            this.mostrarCiertosFiltrosAC(false);
+            Ext.getCmp(prototype.id + '-lblTitulo').setText('Audit Commission');
+
         } else {
             Ext.getCmp(prototype.id + '-lblTitulo').setText('By Month / Year');
         }
@@ -188,6 +194,18 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
         Ext.getCmp(prototype.id + '-lblTARJ').setVisible(visible);
         Ext.getCmp(prototype.id + '-lblFINSUMO').setVisible(visible);
         Ext.getCmp(prototype.id + '-cmbFINSUMO').setVisible(visible);
+    },
+    mostrarCiertosFiltrosAC: function (visible) {
+        Ext.getCmp(prototype.id + '-chkEECC').setVisible(visible);
+        Ext.getCmp(prototype.id + '-cmbFTE').setVisible(visible);
+        Ext.getCmp(prototype.id + '-lblFTE').setVisible(visible);
+        Ext.getCmp(prototype.id + '-cmbTARJ').setVisible(visible);
+        Ext.getCmp(prototype.id + '-lblTARJ').setVisible(visible);
+        Ext.getCmp(prototype.id + '-lblFINSUMO').setVisible(visible);
+        Ext.getCmp(prototype.id + '-cmbFINSUMO').setVisible(visible);
+        Ext.getCmp(prototype.id + '-rbgType').setVisible(visible);
+        Ext.getCmp(prototype.id + '-hboxFilter2').setVisible(visible);
+        Ext.getCmp(prototype.id + '-hboxFilterAudit').setVisible(true);
     },
     obtainData: function () {
         var storeComboDataYear = win.getStoreYear(false);
@@ -221,7 +239,8 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                 ["11", "By Phase Status"],
                 ["12", "General Total"],
                 ["13", "By Clarification"],
-                ["20", "Credit Card New"]
+                ["20", "Credit Card New"],
+                ["21", "Audit Commission"]
             ]
         }));
         cmbType.setValue("1");
@@ -303,6 +322,10 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.create('Ext.data.Store', {data: res.lstCountry, autoLoad: true})
                             );
                     Ext.getCmp(prototype.id + '-cmbPais').setValue('');
+                    Ext.getCmp(prototype.id + '-cmbPaises').bindStore(
+                            Ext.create('Ext.data.Store', {data: res.lstCountry, autoLoad: true})
+                            );
+                    Ext.getCmp(prototype.id + '-cmbPaises').setValue('');
 
                     Ext.getCmp(prototype.id + '-cmbBank').bindStore(
                             Ext.create('Ext.data.Store', {data: res.lstBank, autoLoad: true})
@@ -330,6 +353,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
         me.bean.IN_TOP = 0;
         me.bean.IN_FINSUMO = Ext.getCmp(prototype.id + '-cmbFINSUMO').getValue();
         me.bean.IN_BANK = Ext.getCmp(prototype.id + '-cmbBank').getValue();
+        me.bean.IN_RANGE = Ext.getCmp(prototype.id + '-txtRange').getValue();
 
         var op2 = Ext.getCmp(prototype.id + '-rbgType').getValue();
         me.bean.IN_TDOC = op2.rbgTDOC;
@@ -351,7 +375,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
     btnSearch_click: function (obj, e) {
         this.setFormatParameter();
         var typeSearch = Ext.getCmp(prototype.id + '-cmbType').getValue();
-
+        console.log(typeSearch);
         if (typeSearch === '2') {
 //            roScrDashboardPayment.searchCountry(bean);
             this.searchCountry();
@@ -367,20 +391,16 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                 case 'MONTH':
                     Ext.getCmp(prototype.id + '-lblShow').hide();
                     Ext.getCmp(prototype.id + '-cmbCASH').hide();
-//                    roScrDashboardPayment.searchPayDelay(bean);
                     this.searchPayDelay();
                     break;
                 case 'COUNTRY':
                     Ext.getCmp(prototype.id + '-lblShow').hide();
                     Ext.getCmp(prototype.id + '-cmbCASH').hide();
-//                    roScrDashboardPayment.searchPayDelayCountry(bean);
                     this.searchPayDelayCountry();
                     break;
                 case 'CARD':
-
                     Ext.getCmp(prototype.id + '-lblShow').show();
                     Ext.getCmp(prototype.id + '-cmbCASH').show();
-//                    bean.SCARCOD     = String(cmbCASH.selectedItem.data);
                     me.bean.SCARCOD = Ext.getCmp(prototype.id + '-cmbCASH').getValue();
                     var beanString = JSON.stringify(me.bean);
                     searchParamsCard = {
@@ -388,6 +408,16 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                         bean: me.bean
                     };
                     this.searchPayDelayCard();
+                    break;
+                case 'MERCHANT':
+                    Ext.getCmp(prototype.id + '-lblShow').hide();
+                    Ext.getCmp(prototype.id + '-cmbCASH').hide();
+//                    var beanString = JSON.stringify(me.bean);
+//                    searchParamsCard = {
+//                        beanString: beanString,
+//                        bean: me.bean
+//                    };
+                    this.searchPayDelayMerchant();
                     break;
             }
         } else if (typeSearch === '6') {
@@ -505,6 +535,22 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
             };
 
             this.searchNewAmex();
+        } else if (typeSearch === '21') {
+
+            me.beanAuditCom = {};
+
+            me.beanAuditCom.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
+            me.beanAuditCom.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
+            me.beanAuditCom.IN_CURRENCY = Ext.getCmp(prototype.id + '-cmbFTE').getValue();
+            me.beanAuditCom.IN_SCOUNTRY = Ext.getCmp(prototype.id + '-cmbPaises').getValue();
+
+            var beanString = JSON.stringify(me.beanAuditCom);
+            searchParamsAuditCom = {
+                beanString: beanString,
+                bean: me.beanAuditCom
+            };
+
+            this.searchAuditCom();
         } else {
             this.search();
         }
@@ -1031,12 +1077,12 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.getCmp(prototype.id + '-totASALES').setText('0');
                             Ext.getCmp(prototype.id + '-totPERC').setText('0');
 
-                            Ext.getCmp(prototype.id + '-totQDAY5').setText('0');
-                            Ext.getCmp(prototype.id + '-totADAY5').setText('0');
-                            Ext.getCmp(prototype.id + '-totQDAY10').setText('0');
-                            Ext.getCmp(prototype.id + '-totADAY10').setText('0');
-                            Ext.getCmp(prototype.id + '-totQDAY15').setText('0');
-                            Ext.getCmp(prototype.id + '-totADAY15').setText('0');
+                            Ext.getCmp(prototype.id + '-totQDAY30').setText('0');
+                            Ext.getCmp(prototype.id + '-totADAY30').setText('0');
+                            Ext.getCmp(prototype.id + '-totQDAY60').setText('0');
+                            Ext.getCmp(prototype.id + '-totADAY60').setText('0');
+                            Ext.getCmp(prototype.id + '-totQDAY90').setText('0');
+                            Ext.getCmp(prototype.id + '-totADAY90').setText('0');
 
                             Ext.getCmp(prototype.id + '-totQOTHER').setText('0');
                             Ext.getCmp(prototype.id + '-totAOTHER').setText('0');
@@ -1047,9 +1093,9 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
 
                             Ext.getCmp(prototype.id + '-100%').setText('0%');
 
-                            Ext.getCmp(prototype.id + '-lblTotPERC_5').setText('0%');
-                            Ext.getCmp(prototype.id + '-lblTotPERC_10').setText('0%');
-                            Ext.getCmp(prototype.id + '-lblTotPERC_15').setText('0%');
+                            Ext.getCmp(prototype.id + '-lblTotPERC_30').setText('0%');
+                            Ext.getCmp(prototype.id + '-lblTotPERC_60').setText('0%');
+                            Ext.getCmp(prototype.id + '-lblTotPERC_90').setText('0%');
                             Ext.getCmp(prototype.id + '-lblTotPERC_O20').setText('0%');
                             Ext.getCmp(prototype.id + '-lblTotPERC_PEND').setText('0%');
                             global.Msg({
@@ -1061,13 +1107,21 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.getCmp(prototype.id + '-totQSALES').setText(Ext.util.Format.number(data.totQTY1, '0,000'));
                             Ext.getCmp(prototype.id + '-totASALES').setText(Ext.util.Format.number(data.totSVFOPUS1, '0,000'));
                             Ext.getCmp(prototype.id + '-totPERC').setText('100');
+                            var a = Ext.getCmp(prototype.id + '-txtRange').getValue();
+                            if (a === '') {
+                                a = 30;
+                            }
+                            Ext.getCmp(prototype.id + '-txtRange1A').setText('Days 1-' + a);
+                            Ext.getCmp(prototype.id + '-txtRange2A').setText('Days ' + ((a * 1) + 1) + '-' + (a * 2));
+                            Ext.getCmp(prototype.id + '-txtRange3A').setText('Days ' + ((a * 2) + 1) + '-' + (a * 3));
+                            Ext.getCmp(prototype.id + '-txtRange4A').setText('Over ' + ((a * 3) + 1));
 
-                            Ext.getCmp(prototype.id + '-totQDAY5').setText(Ext.util.Format.number(data.totQDAY5, '0,000'));
-                            Ext.getCmp(prototype.id + '-totADAY5').setText(Ext.util.Format.number(data.totADAY5, '0,000'));
-                            Ext.getCmp(prototype.id + '-totQDAY10').setText(Ext.util.Format.number(data.totQDAY10, '0,000'));
-                            Ext.getCmp(prototype.id + '-totADAY10').setText(Ext.util.Format.number(data.totADAY10, '0,000'));
-                            Ext.getCmp(prototype.id + '-totQDAY15').setText(Ext.util.Format.number(data.totQDAY15, '0,000'));
-                            Ext.getCmp(prototype.id + '-totADAY15').setText(Ext.util.Format.number(data.totADAY15, '0,000'));
+                            Ext.getCmp(prototype.id + '-totQDAY30').setText(Ext.util.Format.number(data.totQDAY30, '0,000'));
+                            Ext.getCmp(prototype.id + '-totADAY30').setText(Ext.util.Format.number(data.totADAY30, '0,000'));
+                            Ext.getCmp(prototype.id + '-totQDAY60').setText(Ext.util.Format.number(data.totQDAY60, '0,000'));
+                            Ext.getCmp(prototype.id + '-totADAY60').setText(Ext.util.Format.number(data.totADAY60, '0,000'));
+                            Ext.getCmp(prototype.id + '-totQDAY90').setText(Ext.util.Format.number(data.totQDAY90, '0,000'));
+                            Ext.getCmp(prototype.id + '-totADAY90').setText(Ext.util.Format.number(data.totADAY90, '0,000'));
 
                             Ext.getCmp(prototype.id + '-totQOTHER').setText(Ext.util.Format.number(data.totQOTHER, '0,000'));
                             Ext.getCmp(prototype.id + '-totAOTHER').setText(Ext.util.Format.number(data.totAOTHER, '0,000'));
@@ -1076,9 +1130,9 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.getCmp(prototype.id + '-totATOTAL').setText(Ext.util.Format.number(data.totdiff2, '0,000'));
                             Ext.getCmp(prototype.id + '-totPERTOT').setText(Ext.util.Format.number(data.totperc3, '0,000.00'));
 
-                            Ext.getCmp(prototype.id + '-lblTotPERC_5').setText(Ext.util.Format.number(data.perc_5, '0,000.00') + '%');
-                            Ext.getCmp(prototype.id + '-lblTotPERC_10').setText(Ext.util.Format.number(data.perc_10, '0,000.00') + '%');
-                            Ext.getCmp(prototype.id + '-lblTotPERC_15').setText(Ext.util.Format.number(data.perc_15, '0,000.00') + '%');
+                            Ext.getCmp(prototype.id + '-lblTotPERC_30').setText(Ext.util.Format.number(data.perc_30, '0,000.00') + '%');
+                            Ext.getCmp(prototype.id + '-lblTotPERC_60').setText(Ext.util.Format.number(data.perc_60, '0,000.00') + '%');
+                            Ext.getCmp(prototype.id + '-lblTotPERC_90').setText(Ext.util.Format.number(data.perc_90, '0,000.00') + '%');
                             Ext.getCmp(prototype.id + '-lblTotPERC_O20').setText(Ext.util.Format.number(data.perc_O20, '0,000.00') + '%');
                             Ext.getCmp(prototype.id + '-lblTotPERC_PEND').setText(Ext.util.Format.number(data.totperc3, '0,000.00') + '%');
                         }
@@ -1116,12 +1170,12 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.getCmp(prototype.id + '-totC_ASALES').setText('0');
                             Ext.getCmp(prototype.id + '-totC_PERC').setText('0');
 
-                            Ext.getCmp(prototype.id + '-totC_QDAY5').setText('0');
-                            Ext.getCmp(prototype.id + '-totC_ADAY5').setText('0');
-                            Ext.getCmp(prototype.id + '-totC_QDAY10').setText('0');
-                            Ext.getCmp(prototype.id + '-totC_ADAY10').setText('0');
-                            Ext.getCmp(prototype.id + '-totC_QDAY15').setText('0');
-                            Ext.getCmp(prototype.id + '-totC_ADAY15').setText('0');
+                            Ext.getCmp(prototype.id + '-totC_QDAY30').setText('0');
+                            Ext.getCmp(prototype.id + '-totC_ADAY30').setText('0');
+                            Ext.getCmp(prototype.id + '-totC_QDAY60').setText('0');
+                            Ext.getCmp(prototype.id + '-totC_ADAY60').setText('0');
+                            Ext.getCmp(prototype.id + '-totC_QDAY90').setText('0');
+                            Ext.getCmp(prototype.id + '-totC_ADAY90').setText('0');
 
                             Ext.getCmp(prototype.id + '-totC_QOTHER').setText('0');
                             Ext.getCmp(prototype.id + '-totC_AOTHER').setText('0');
@@ -1132,9 +1186,9 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
 
                             Ext.getCmp(prototype.id + '-100%Country').setText('0%');
 
-                            Ext.getCmp(prototype.id + '-lblTotC_PERC_5').setText('0%');
-                            Ext.getCmp(prototype.id + '-lblTotC_PERC_10').setText('0%');
-                            Ext.getCmp(prototype.id + '-lblTotC_PERC_15').setText('0%');
+                            Ext.getCmp(prototype.id + '-lblTotC_PERC_30').setText('0%');
+                            Ext.getCmp(prototype.id + '-lblTotC_PERC_60').setText('0%');
+                            Ext.getCmp(prototype.id + '-lblTotC_PERC_90').setText('0%');
                             Ext.getCmp(prototype.id + '-lblTotC_PERC_O20').setText('0%');
                             Ext.getCmp(prototype.id + '-lblTotC_PERC_PEND').setText('0%');
                             global.Msg({
@@ -1147,12 +1201,21 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.getCmp(prototype.id + '-totC_ASALES').setText(Ext.util.Format.number(data.totSVFOPUS1, '0,000'));
                             Ext.getCmp(prototype.id + '-totC_PERC').setText('100');
 
-                            Ext.getCmp(prototype.id + '-totC_QDAY5').setText(Ext.util.Format.number(data.totQDAY5, '0,000'));
-                            Ext.getCmp(prototype.id + '-totC_ADAY5').setText(Ext.util.Format.number(data.totADAY5, '0,000'));
-                            Ext.getCmp(prototype.id + '-totC_QDAY10').setText(Ext.util.Format.number(data.totQDAY10, '0,000'));
-                            Ext.getCmp(prototype.id + '-totC_ADAY10').setText(Ext.util.Format.number(data.totADAY10, '0,000'));
-                            Ext.getCmp(prototype.id + '-totC_QDAY15').setText(Ext.util.Format.number(data.totQDAY15, '0,000'));
-                            Ext.getCmp(prototype.id + '-totC_ADAY15').setText(Ext.util.Format.number(data.totADAY15, '0,000'));
+                            var a = Ext.getCmp(prototype.id + '-txtRange').getValue();
+                            if (a === '') {
+                                a = 30;
+                            }
+                            Ext.getCmp(prototype.id + '-txtRange11A').setText('Days 1-' + a);
+                            Ext.getCmp(prototype.id + '-txtRange22A').setText('Days ' + ((a * 1) + 1) + '-' + (a * 2));
+                            Ext.getCmp(prototype.id + '-txtRange33A').setText('Days ' + ((a * 2) + 1) + '-' + (a * 3));
+                            Ext.getCmp(prototype.id + '-txtRange44A').setText('Over ' + ((a * 3) + 1));
+
+                            Ext.getCmp(prototype.id + '-totC_QDAY30').setText(Ext.util.Format.number(data.totQDAY30, '0,000'));
+                            Ext.getCmp(prototype.id + '-totC_ADAY30').setText(Ext.util.Format.number(data.totADAY30, '0,000'));
+                            Ext.getCmp(prototype.id + '-totC_QDAY60').setText(Ext.util.Format.number(data.totQDAY60, '0,000'));
+                            Ext.getCmp(prototype.id + '-totC_ADAY60').setText(Ext.util.Format.number(data.totADAY60, '0,000'));
+                            Ext.getCmp(prototype.id + '-totC_QDAY90').setText(Ext.util.Format.number(data.totQDAY90, '0,000'));
+                            Ext.getCmp(prototype.id + '-totC_ADAY90').setText(Ext.util.Format.number(data.totADAY90, '0,000'));
 
                             Ext.getCmp(prototype.id + '-totC_QOTHER').setText(Ext.util.Format.number(data.totQOTHER, '0,000'));
                             Ext.getCmp(prototype.id + '-totC_AOTHER').setText(Ext.util.Format.number(data.totAOTHER, '0,000'));
@@ -1161,9 +1224,9 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.getCmp(prototype.id + '-totC_ATOTAL').setText(Ext.util.Format.number(data.totdiff2, '0,000'));
                             Ext.getCmp(prototype.id + '-totC_PERTOT').setText(Ext.util.Format.number(data.totperc3, '0,000.00'));
 
-                            Ext.getCmp(prototype.id + '-lblTotC_PERC_5').setText(Ext.util.Format.number(data.perc_5, '0,000.00') + '%');
-                            Ext.getCmp(prototype.id + '-lblTotC_PERC_10').setText(Ext.util.Format.number(data.perc_10, '0,000.00') + '%');
-                            Ext.getCmp(prototype.id + '-lblTotC_PERC_15').setText(Ext.util.Format.number(data.perc_15, '0,000.00') + '%');
+                            Ext.getCmp(prototype.id + '-lblTotC_PERC_30').setText(Ext.util.Format.number(data.perc_30, '0,000.00') + '%');
+                            Ext.getCmp(prototype.id + '-lblTotC_PERC_60').setText(Ext.util.Format.number(data.perc_60, '0,000.00') + '%');
+                            Ext.getCmp(prototype.id + '-lblTotC_PERC_90').setText(Ext.util.Format.number(data.perc_90, '0,000.00') + '%');
                             Ext.getCmp(prototype.id + '-lblTotC_PERC_O20').setText(Ext.util.Format.number(data.perc_O20, '0,000.00') + '%');
                             Ext.getCmp(prototype.id + '-lblTotC_PERC_PEND').setText(Ext.util.Format.number(data.totperc3, '0,000.00') + '%');
                         }
@@ -1201,12 +1264,12 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.getCmp(prototype.id + '-totCC_ASALES').setText('0');
                             Ext.getCmp(prototype.id + '-totCC_PERC').setText('0');
 
-                            Ext.getCmp(prototype.id + '-totCC_QDAY5').setText('0');
-                            Ext.getCmp(prototype.id + '-totCC_ADAY5').setText('0');
-                            Ext.getCmp(prototype.id + '-totCC_QDAY10').setText('0');
-                            Ext.getCmp(prototype.id + '-totCC_ADAY10').setText('0');
-                            Ext.getCmp(prototype.id + '-totCC_QDAY15').setText('0');
-                            Ext.getCmp(prototype.id + '-totCC_ADAY15').setText('0');
+                            Ext.getCmp(prototype.id + '-totCC_QDAY30').setText('0');
+                            Ext.getCmp(prototype.id + '-totCC_ADAY30').setText('0');
+                            Ext.getCmp(prototype.id + '-totCC_QDAY60').setText('0');
+                            Ext.getCmp(prototype.id + '-totCC_ADAY60').setText('0');
+                            Ext.getCmp(prototype.id + '-totCC_QDAY90').setText('0');
+                            Ext.getCmp(prototype.id + '-totCC_ADAY90').setText('0');
 
                             Ext.getCmp(prototype.id + '-totCC_QOTHER').setText('0');
                             Ext.getCmp(prototype.id + '-totCC_AOTHER').setText('0');
@@ -1217,9 +1280,9 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
 
                             Ext.getCmp(prototype.id + '-100%Card').setText('0%');
 
-                            Ext.getCmp(prototype.id + '-lblTotCC_PERC_5').setText('0%');
-                            Ext.getCmp(prototype.id + '-lblTotCC_PERC_10').setText('0%');
-                            Ext.getCmp(prototype.id + '-lblTotCC_PERC_15').setText('0%');
+                            Ext.getCmp(prototype.id + '-lblTotCC_PERC_30').setText('0%');
+                            Ext.getCmp(prototype.id + '-lblTotCC_PERC_60').setText('0%');
+                            Ext.getCmp(prototype.id + '-lblTotCC_PERC_90').setText('0%');
                             Ext.getCmp(prototype.id + '-lblTotCC_PERC_O20').setText('0%');
                             Ext.getCmp(prototype.id + '-lblTotCC_PERC_PEND').setText('0%');
                             global.Msg({
@@ -1232,12 +1295,21 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.getCmp(prototype.id + '-totCC_ASALES').setText(Ext.util.Format.number(data.totSVFOPUS1, '0,000'));
                             Ext.getCmp(prototype.id + '-totCC_PERC').setText('100');
 
-                            Ext.getCmp(prototype.id + '-totCC_QDAY5').setText(Ext.util.Format.number(data.totQDAY5, '0,000'));
-                            Ext.getCmp(prototype.id + '-totCC_ADAY5').setText(Ext.util.Format.number(data.totADAY5, '0,000'));
-                            Ext.getCmp(prototype.id + '-totCC_QDAY10').setText(Ext.util.Format.number(data.totQDAY10, '0,000'));
-                            Ext.getCmp(prototype.id + '-totCC_ADAY10').setText(Ext.util.Format.number(data.totADAY10, '0,000'));
-                            Ext.getCmp(prototype.id + '-totCC_QDAY15').setText(Ext.util.Format.number(data.totQDAY15, '0,000'));
-                            Ext.getCmp(prototype.id + '-totCC_ADAY15').setText(Ext.util.Format.number(data.totADAY15, '0,000'));
+                            var a = Ext.getCmp(prototype.id + '-txtRange').getValue();
+                            if (a === '') {
+                                a = 30;
+                            }
+                            Ext.getCmp(prototype.id + '-txtRange111A').setText('Days 1-' + a);
+                            Ext.getCmp(prototype.id + '-txtRange222A').setText('Days ' + ((a * 1) + 1) + '-' + (a * 2));
+                            Ext.getCmp(prototype.id + '-txtRange333A').setText('Days ' + ((a * 2) + 1) + '-' + (a * 3));
+                            Ext.getCmp(prototype.id + '-txtRange444A').setText('Over ' + ((a * 3) + 1));
+
+                            Ext.getCmp(prototype.id + '-totCC_QDAY30').setText(Ext.util.Format.number(data.totQDAY30, '0,000'));
+                            Ext.getCmp(prototype.id + '-totCC_ADAY30').setText(Ext.util.Format.number(data.totADAY30, '0,000'));
+                            Ext.getCmp(prototype.id + '-totCC_QDAY60').setText(Ext.util.Format.number(data.totQDAY60, '0,000'));
+                            Ext.getCmp(prototype.id + '-totCC_ADAY60').setText(Ext.util.Format.number(data.totADAY60, '0,000'));
+                            Ext.getCmp(prototype.id + '-totCC_QDAY90').setText(Ext.util.Format.number(data.totQDAY90, '0,000'));
+                            Ext.getCmp(prototype.id + '-totCC_ADAY90').setText(Ext.util.Format.number(data.totADAY90, '0,000'));
 
                             Ext.getCmp(prototype.id + '-totCC_QOTHER').setText(Ext.util.Format.number(data.totQOTHER, '0,000'));
                             Ext.getCmp(prototype.id + '-totCC_AOTHER').setText(Ext.util.Format.number(data.totAOTHER, '0,000'));
@@ -1246,9 +1318,9 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             Ext.getCmp(prototype.id + '-totCC_ATOTAL').setText(Ext.util.Format.number(data.totdiff2, '0,000'));
                             Ext.getCmp(prototype.id + '-totCC_PERTOT').setText(Ext.util.Format.number(data.totperc3, '0,000.00'));
 
-                            Ext.getCmp(prototype.id + '-lblTotCC_PERC_5').setText(Ext.util.Format.number(data.perc_5, '0,000.00') + '%');
-                            Ext.getCmp(prototype.id + '-lblTotCC_PERC_10').setText(Ext.util.Format.number(data.perc_10, '0,000.00') + '%');
-                            Ext.getCmp(prototype.id + '-lblTotCC_PERC_15').setText(Ext.util.Format.number(data.perc_15, '0,000.00') + '%');
+                            Ext.getCmp(prototype.id + '-lblTotCC_PERC_30').setText(Ext.util.Format.number(data.perc_30, '0,000.00') + '%');
+                            Ext.getCmp(prototype.id + '-lblTotCC_PERC_60').setText(Ext.util.Format.number(data.perc_60, '0,000.00') + '%');
+                            Ext.getCmp(prototype.id + '-lblTotCC_PERC_90').setText(Ext.util.Format.number(data.perc_90, '0,000.00') + '%');
                             Ext.getCmp(prototype.id + '-lblTotCC_PERC_O20').setText(Ext.util.Format.number(data.perc_O20, '0,000.00') + '%');
                             Ext.getCmp(prototype.id + '-lblTotCC_PERC_PEND').setText(Ext.util.Format.number(data.totperc3, '0,000.00') + '%');
                         }
@@ -1259,6 +1331,100 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
 
             global.clear();
             Ext.getCmp(prototype.id + '-gridDataPayDelayCard').bindStore(storeGridDatas);
+        }
+    },
+    // </editor-fold>
+    // <editor-fold defaultstate="collapsed" desc="searchPayDelayMerchant">
+    searchPayDelayMerchant: function () {
+        win.lblUser_toolTip("Estructura: A3020");
+        me.panelActual = '-boxPayDelayMerchant';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+//        console.log(searchParamsCard);
+        var msj = this.validateFields();
+        if (msj !== '') {
+            global.Msg({msg: msj
+            });
+        } else {
+            var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+                proxy: {
+                    url: prototype.url + '/searchPayDelayMerchant'
+                }, listeners: {
+                    beforeload: function (obj) {
+                        obj.proxy.extraParams = searchParamsCard;
+                    },
+                    load: function (obj) {
+                        if (obj.data.length === 0) {
+                            Ext.getCmp(prototype.id + '-totM_QSALES').setText('0');
+                            Ext.getCmp(prototype.id + '-totM_ASALES').setText('0');
+                            Ext.getCmp(prototype.id + '-totM_PERC').setText('0');
+
+                            Ext.getCmp(prototype.id + '-totM_QDAY30').setText('0');
+                            Ext.getCmp(prototype.id + '-totM_ADAY30').setText('0');
+                            Ext.getCmp(prototype.id + '-totM_QDAY60').setText('0');
+                            Ext.getCmp(prototype.id + '-totM_ADAY60').setText('0');
+                            Ext.getCmp(prototype.id + '-totM_QDAY90').setText('0');
+                            Ext.getCmp(prototype.id + '-totM_ADAY90').setText('0');
+
+                            Ext.getCmp(prototype.id + '-totM_QOTHER').setText('0');
+                            Ext.getCmp(prototype.id + '-totM_AOTHER').setText('0');
+
+                            Ext.getCmp(prototype.id + '-totM_QTOTAL').setText('0');
+                            Ext.getCmp(prototype.id + '-totM_ATOTAL').setText('0');
+                            Ext.getCmp(prototype.id + '-totM_PERTOT').setText('0');
+
+                            Ext.getCmp(prototype.id + '-100%merchant').setText('0%');
+
+                            Ext.getCmp(prototype.id + '-lblTotM_PERC_30').setText('0%');
+                            Ext.getCmp(prototype.id + '-lblTotM_PERC_60').setText('0%');
+                            Ext.getCmp(prototype.id + '-lblTotM_PERC_90').setText('0%');
+                            Ext.getCmp(prototype.id + '-lblTotM_PERC_O20').setText('0%');
+                            Ext.getCmp(prototype.id + '-lblTotM_PERC_PEND').setText('0%');
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        } else {
+                            var data = obj.data.items[0].data;
+//                            console.log(data);
+                            Ext.getCmp(prototype.id + '-totM_QSALES').setText(Ext.util.Format.number(data.totQTY1, '0,000'));
+                            Ext.getCmp(prototype.id + '-totM_ASALES').setText(Ext.util.Format.number(data.totSVFOPUS1, '0,000'));
+                            Ext.getCmp(prototype.id + '-totM_PERC').setText('100');
+
+                            var a = Ext.getCmp(prototype.id + '-txtRange').getValue();
+                            if (a === '') {
+                                a = 30;
+                            }
+                            Ext.getCmp(prototype.id + '-txtRange1111A').setText('Days 1-' + a);
+                            Ext.getCmp(prototype.id + '-txtRange2222A').setText('Days ' + ((a * 1) + 1) + '-' + (a * 2));
+                            Ext.getCmp(prototype.id + '-txtRange3333A').setText('Days ' + ((a * 2) + 1) + '-' + (a * 3));
+                            Ext.getCmp(prototype.id + '-txtRange4444A').setText('Over ' + ((a * 3) + 1));
+
+                            Ext.getCmp(prototype.id + '-totM_QDAY30').setText(Ext.util.Format.number(data.totQDAY30, '0,000'));
+                            Ext.getCmp(prototype.id + '-totM_ADAY30').setText(Ext.util.Format.number(data.totADAY30, '0,000'));
+                            Ext.getCmp(prototype.id + '-totM_QDAY60').setText(Ext.util.Format.number(data.totQDAY60, '0,000'));
+                            Ext.getCmp(prototype.id + '-totM_ADAY60').setText(Ext.util.Format.number(data.totADAY60, '0,000'));
+                            Ext.getCmp(prototype.id + '-totM_QDAY90').setText(Ext.util.Format.number(data.totQDAY90, '0,000'));
+                            Ext.getCmp(prototype.id + '-totM_ADAY90').setText(Ext.util.Format.number(data.totADAY90, '0,000'));
+
+                            Ext.getCmp(prototype.id + '-totM_QOTHER').setText(Ext.util.Format.number(data.totQOTHER, '0,000'));
+                            Ext.getCmp(prototype.id + '-totM_AOTHER').setText(Ext.util.Format.number(data.totAOTHER, '0,000'));
+
+                            Ext.getCmp(prototype.id + '-totM_QTOTAL').setText(Ext.util.Format.number(data.totdiff1, '0,000'));
+                            Ext.getCmp(prototype.id + '-totM_ATOTAL').setText(Ext.util.Format.number(data.totdiff2, '0,000'));
+                            Ext.getCmp(prototype.id + '-totM_PERTOT').setText(Ext.util.Format.number(data.totperc3, '0,000.00'));
+
+                            Ext.getCmp(prototype.id + '-lblTotM_PERC_30').setText(Ext.util.Format.number(data.perc_30, '0,000.00') + '%');
+                            Ext.getCmp(prototype.id + '-lblTotM_PERC_60').setText(Ext.util.Format.number(data.perc_60, '0,000.00') + '%');
+                            Ext.getCmp(prototype.id + '-lblTotM_PERC_90').setText(Ext.util.Format.number(data.perc_90, '0,000.00') + '%');
+                            Ext.getCmp(prototype.id + '-lblTotM_PERC_O20').setText(Ext.util.Format.number(data.perc_O20, '0,000.00') + '%');
+                            Ext.getCmp(prototype.id + '-lblTotM_PERC_PEND').setText(Ext.util.Format.number(data.totperc3, '0,000.00') + '%');
+                        }
+//                        me.setWidthPie();
+                    }
+                }
+            });
+
+            global.clear();
+            Ext.getCmp(prototype.id + '-gridDataPayDelayMerchant').bindStore(storeGridDatas);
         }
     },
     // </editor-fold>
@@ -1671,8 +1837,8 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                                 var list = obj.data;
                                 console.log(list);
 
-                                
-                                if(list.length >= 6){
+
+                                if (list.length >= 6) {
                                     for (var i = 0; i < 6; i++) {
                                         var item = {};
                                         item.perc4 = list.items[i].data.perc4;
@@ -1680,7 +1846,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                                         lstNew.push(item);
 
                                     }
-                                }else{
+                                } else {
                                     var item = {};
                                     item.perc4 = list.items[0].data.perc4;
                                     item.strDescription = list.items[0].data.strDescription + ' , ' + Ext.util.Format.number(item.perc4, '0,000.00') + '%';
@@ -1770,12 +1936,12 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                                 var sum = data.dblTotAMTCLARU - data.dblTotAMTBANK;
                                 var item = {};
 
-                                item.LABEL = 'Total Received - ' + Ext.util.Format.number(sum, '0,000.00');
+                                item.LABEL = 'Total Received - ' + Ext.util.Format.number(sum, '0,000');
                                 item.AMOUNT_ON_PERCENT = sum;
                                 lstTemp.push(item);
 
                                 item = {};
-                                item.LABEL = 'Total ChargedBack - ' + Ext.util.Format.number(data.dblTotAMTBANK, '0,000.00');
+                                item.LABEL = 'Total ChargedBack - ' + Ext.util.Format.number(data.dblTotAMTBANK, '0,000');
                                 item.AMOUNT_ON_PERCENT = data.dblTotAMTBANK;
                                 lstTemp.push(item);
 
@@ -1803,8 +1969,10 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
             var titIN_SELECT = '';
             if (IN_SELECT === 'CODEBANK') {
                 titIN_SELECT = 'Bank';
-            } else {
+            } else if (IN_SELECT === 'CARD'){
                 titIN_SELECT = 'Credit Card';
+            } else {
+                titIN_SELECT = 'Merchant';
             }
 
             var msj = this.validateFields();
@@ -1939,8 +2107,10 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
             var titIN_SELECT = '';
             if (IN_SELECT === 'CODEBANK') {
                 titIN_SELECT = 'Bank';
-            } else {
+            } else if (IN_SELECT === 'CARD'){
                 titIN_SELECT = 'Credit Card';
+            } else {
+                titIN_SELECT = 'Merchant';
             }
 
             var msj = this.validateFields();
@@ -2575,8 +2745,8 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                     obj.proxy.extraParams = searchParamsNewAmex;
                 },
                 load: function (obj) {
-                    console.log(obj.data);
-                    console.log(obj.data.items[0].data);
+                    //console.log(obj.data);
+                    //console.log(obj.data.items[0].data);
                     if (obj.data.length === 0) {
 //                        Ext.getCmp(prototype.id + '-lblFT_QTY1').setText('');
                         global.Msg({
@@ -2599,7 +2769,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
         Ext.getCmp(prototype.id + '-gridNewAmex').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-grafNewCC').bindStore(storeGridDatas);
     },
-    // </editor-fold>    
+    // </editor-fold>  
     OnviewNewAmexDetCountry: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.panelActual);
         me.panelActual = '-boxNewAmexByCountry';
@@ -2633,13 +2803,13 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             console.log(data);
 
                             Ext.getCmp(prototype.id + '-gridNewAmexByCountry').setTitle('<center style="font-size:12px;">Sales Date : ' + data.IN_FECHA + '</center>');
-                            
-                            
+
+
                             // --------------------------------- GRAFICO -----------------------------
                             var lstDataGrafic = obj.data.items;
                             var lstNew = [];
                             var tot = 0;
-                            
+
                             for (var i = 0; i < lstDataGrafic.length; i++) {
                                 if (i <= 1) {
                                     var item = {};
@@ -2655,7 +2825,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                             item2.percSales = tot;
                             item2.SCOUNTRY = 'Others, ' + Ext.util.Format.number(item2.percSales, '0,000.00') + '%';
                             lstNew.push(item2);
-                            
+
                             console.log(' ------------ NEW -------------');
                             console.log(lstNew);
 
@@ -2664,7 +2834,7 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                                 autoLoad: true
                             });
                             Ext.getCmp(prototype.id + '-chart_NewCC_Country').bindStore(storeGridDatasGrafic);
-                            
+
                         }
 //                        me.setWidthPie();
                     }
@@ -2675,6 +2845,258 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
             Ext.getCmp(prototype.id + '-gridNewAmexByCountry').bindStore(storeGridDatas);
             Ext.getCmp(prototype.id + '-gridNewAmexByCountry').setStore(storeGridDatas);
         }
+    },
+    // <editor-fold defaultstate="collapsed" desc="searchAuditCommision">
+    searchAuditCom: function () {
+        win.lblUser_toolTip("Estructura: A4448");
+        me.panelActual = '-boxAuditCom';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        Ext.getCmp(prototype.id + '-boxPaginacion').show();
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: prototype.url + '/searchAuditCom'
+            }, listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = searchParamsAuditCom;
+                },
+                load: function (obj) {
+                    var pag = Ext.getCmp(prototype.id + '-paggin9');
+                    var pagData = pag.getPageData();
+                    Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                    Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                    if (obj.data.length === 0) {
+//                        Ext.getCmp(prototype.id + '-lblFT_QTY1').setText('');
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        var data = obj.data.items[0].data;
+                        var lstAuditChart = [];
+                        var obj1 = {};
+                        obj1.perc1 = data.totSADJUST;
+                        obj1.strDescription = 'Paid to Bank';
+                        var obj2 = {};
+                        obj2.perc1 = data.totSFEEAMOU;
+                        obj2.strDescription = 'Calculated';
+                        var obj3 = {};
+                        obj3.perc1 = data.totDIF;
+                        obj3.strDescription = 'Overpaid';
+                        
+                        lstAuditChart.push(obj3);
+                        lstAuditChart.push(obj2);
+                        lstAuditChart.push(obj1);
+////                            console.log(data);
+//                        Ext.getCmp(prototype.id + '-lblFT_QTY1').setText(Ext.util.Format.number(data.totQTY1, '0,000'));
+//                        Ext.getCmp(prototype.id + '-lblFT_SVFOPUS1').setText(Ext.util.Format.number(data.totSVFOPUS1, '0,000'));
+//                        Ext.getCmp(prototype.id + '-lblFT_Perc1').setText('100.00');
+//                        Ext.getCmp(prototype.id + '-lblTotTAX1').setText(Ext.util.Format.number(data.perc3, '0,000.00') + '%');
+                        
+                       
+                        Ext.getCmp(prototype.id + '-displayChart_AuditComm').bindStore(
+                            Ext.create('Ext.data.Store', {data: lstAuditChart, autoLoad: true})
+                            );
+                    }
+                    me.setWidthPie();
+                }
+            }
+        });
+
+        global.clear();
+        Ext.getCmp(prototype.id + '-gridAuditCom').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-graficosAuditComm').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridAuditCom').setTitle('<center style="font-size:12px;">Currency: USD</center>');
+        Ext.getCmp(prototype.id + '-paggin9').bindStore(storeGridDatas);
+    },
+    // </editor-fold>  
+    OnviewAuditComByCard: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-boxAuditComByCard';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        me.paramsDetail.beanString = JSON.stringify(rowData.data);
+        this.SetOnGridAuditComByCard();
+    },
+    SetOnGridAuditComByCard: function () {
+        win.lblUser_toolTip("Estructura: A4448");
+        Ext.getCmp(prototype.id + '-boxPaginacion').show();
+        var msj = this.validateFields();
+        if (msj !== '') {
+            global.Msg({msg: msj
+            });
+        } else {
+            var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+                proxy: {
+                    url: prototype.url + '/searchAuditComByCard'
+                }, listeners: {
+                    beforeload: function (obj) {
+                        obj.proxy.extraParams = me.paramsDetail;
+                    },
+                    load: function (obj) {
+                        var pag = Ext.getCmp(prototype.id + '-paggin10');
+                        var pagData = pag.getPageData();
+                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                        if (obj.data.length === 0) {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        } else {
+                            console.log(obj.data);
+                            var data = obj.data.items[0].data;
+                            console.log(data);
+
+                            Ext.getCmp(prototype.id + '-gridAuditComByCard').setTitle('<center style="font-size:12px;">Sales Date : ' + data.strFormatDate + ' - Currency: USD</center>');
+
+                        }
+                        me.setWidthPie();
+                    }
+                }
+            });
+
+            global.clear();
+            Ext.getCmp(prototype.id + '-gridAuditComByCard').bindStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-gridAuditComByCard').setStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-paggin10').bindStore(storeGridDatas);
+        }
+    },
+    OnviewAuditComDetDay: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-boxAuditComByDay';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        var GA = {};
+        GA.IN_FECHA = rowData.data.SDATE;
+        GA.IN_SCOUNTRY = rowData.data.SCOUNTRY;
+        GA.IN_SCARCOD = rowData.data.SCARCOD;
+        GA.SCARCOD = rowData.data.SCARCOD;
+        GA.SDATE = rowData.data.SDATE;
+        GA.strFormatDate = rowData.data.strFormatDate;
+        console.log(GA);
+        me.paramsDetail.beanString = JSON.stringify(GA);
+        this.SetOnGridAuditComDetDay();
+    },
+    SetOnGridAuditComDetDay: function () {
+        win.lblUser_toolTip("Estructura: A4448");
+        Ext.getCmp(prototype.id + '-boxPaginacion').show();
+        var msj = this.validateFields();
+        if (msj !== '') {
+            global.Msg({msg: msj
+            });
+        } else {
+            var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+                proxy: {
+                    url: prototype.url + '/searchAuditComByDay'
+                }, listeners: {
+                    beforeload: function (obj) {
+                        obj.proxy.extraParams = me.paramsDetail;
+                    },
+                    load: function (obj) {
+                        var pag = Ext.getCmp(prototype.id + '-paggin11');
+                        var pagData = pag.getPageData();
+                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+
+                        if (obj.data.length === 0) {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        } else {
+                            console.log(obj.data);
+                            var data = obj.data.items[0].data;
+                            console.log(data);
+
+                            Ext.getCmp(prototype.id + '-gridAuditComByDay').setTitle('<center style="font-size:12px;">Sales Date : ' + data.strFormatDate + ' - Currency: USD - Credit Card:' + data.SCARCOD + ' </center>');
+
+                        }
+                        me.setWidthPie();
+                    }
+                }
+            });
+
+            global.clear();
+            Ext.getCmp(prototype.id + '-gridAuditComByDay').bindStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-gridAuditComByDay').setStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-paggin11').bindStore(storeGridDatas);
+        }
+    },
+    OnviewAuditComDetDayDAY: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+        me.drillDown.push(me.panelActual);
+        me.panelActual = '-boxAuditComByDayDAY';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        var GA = {};
+        GA.IN_FECHA_DIA = rowData.data.SDATE;
+        GA.IN_SCOUNTRY = rowData.data.SCOUNTRY;
+        GA.IN_SCARCOD = rowData.data.SCARCOD;
+        GA.SCARCOD = rowData.data.SCARCOD;
+        GA.SDATE = rowData.data.SDATE;
+        GA.strFormatDate = rowData.data.strFormatDate;
+        console.log(GA);
+        me.paramsDetail.beanString = JSON.stringify(GA);
+        this.SetOnGridAuditComDetDayDAY();
+    },
+    SetOnGridAuditComDetDayDAY: function () {
+        win.lblUser_toolTip("Estructura: A4448");
+
+        var msj = this.validateFields();
+        if (msj !== '') {
+            global.Msg({msg: msj
+            });
+        } else {
+            var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+                proxy: {
+                    url: prototype.url + '/searchAuditComByDayDAY'
+                }, listeners: {
+                    beforeload: function (obj) {
+                        obj.proxy.extraParams = me.paramsDetail;
+                    },
+                    load: function (obj) {
+                        var pag = Ext.getCmp(prototype.id + '-paggin12');
+                        var pagData = pag.getPageData();
+                        Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
+                        Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
+                        if (obj.data.length === 0) {
+                            global.Msg({
+                                msg: 'Data not found.'
+                            });
+                        } else {
+                            console.log(obj.data);
+                            var data = obj.data.items[0].data;
+                            console.log(data);
+
+                            Ext.getCmp(prototype.id + '-gridAuditComByDayDAY').setTitle('<center style="font-size:12px;">Sales Date : ' + data.strFormatDate + ' - Currency: USD - Credit Card:' + data.SCARCOD + ' </center>');
+
+                        }
+                        me.setWidthPie();
+                    }
+                }
+            });
+
+            global.clear();
+            Ext.getCmp(prototype.id + '-gridAuditComByDayDAY').bindStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-gridAuditComByDayDAY').setStore(storeGridDatas);
+            Ext.getCmp(prototype.id + '-paggin12').bindStore(storeGridDatas);
+        }
+    },
+    viewMasterTkt: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
+
+        prototypeProgram.view = 'program-pro-payments-control-form';
+        prototypeProgram.nprog = 'PX00000418';
+        prototypeProgram.title = 'Payments Control';
+        prototypeProgram.modulo = '';
+
+        var beanProMasterTicket = {};
+        beanProMasterTicket.IN_CIA = rowData.data.CCIA;
+        beanProMasterTicket.IN_FORMA = rowData.data.FORMA;
+        beanProMasterTicket.IN_SERIE = rowData.data.SERIE;
+        console.log(beanProMasterTicket);
+        //beanProMasterTicket.IN_SEQ = data.SEQRO;
+
+        win.displayProMasterTicket(this, 'ViewFlightConciliation', beanProMasterTicket);
     },
     cmbTDOC_changeHandler: function () {
         this.btnSearch_click();
@@ -2774,6 +3196,22 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
 //                console.log(me.panelActual);
                 global.getFile(prototype.url + '/getXLSX_2?beanString=' + searchParams.beanString);
                 break;
+            case  '-boxAuditCom':
+//                console.log(me.panelActual);
+                global.getFile(prototype.url + '/getXLSX_boxAuditCom?beanString=' + searchParamsAuditCom.beanString);
+                break; 
+            case  '-boxAuditComByCard':
+//                console.log(me.panelActual);
+                global.getFile(prototype.url + '/getXLSX_boxAuditComByCard?beanString=' + me.paramsDetail.beanString);
+                break;    
+            case  '-boxAuditComByDay':
+//                console.log(me.panelActual);
+                global.getFile(prototype.url + '/getXLSX_boxAuditComByDay?beanString=' + me.paramsDetail.beanString);
+                break;
+            case  '-boxAuditComByDayDAY':
+//                console.log(me.panelActual);
+                global.getFile(prototype.url + '/getXLSX_boxAuditComByDayDAY?beanString=' + me.paramsDetail.beanString);
+                break;
 //            case  '-boxGroupData':
 //                global.getFile(prototype.url + '/getXLSX?beanString=' + searchParams.beanString);
 //                break;
@@ -2826,6 +3264,18 @@ Ext.define('Ext.Praxis.controller.program.ProPaymentsControl.ProPaymentsControlC
                 break;
             case '-boxMainIata':
                 me.pagginActual = '-paggin7';
+                break;
+            case '-boxAuditCom':
+                me.pagginActual = '-paggin9';
+                break;
+            case '-boxAuditComByCard':
+                me.pagginActual = '-paggin10';
+                break;    
+            case '-boxAuditComByDay':
+                me.pagginActual = '-paggin11';
+                break;
+            case '-boxAuditComByDayDAY':
+                me.pagginActual = '-paggin12';
                 break;
 //            case '-boxByMerchant':
 //                me.pagginActual = '-paggin8';

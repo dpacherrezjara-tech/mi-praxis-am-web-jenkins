@@ -45,9 +45,9 @@ public class RFNDPendingController extends BaseController {
     private static final Logger logError = Logger.getLogger("errorLog");
     private RFNDPendingLogic logic;
 
-    @RequestMapping(value = "SearchQueryRefund")
+    @RequestMapping(value = "SearchPendiRefund")
     public @ResponseBody
-    String SearchQueryRefund(ModelMap map, HttpServletRequest request) {
+    String SearchPendiRefund(ModelMap map, HttpServletRequest request) {
         List<A3647Filter> lst;
         A3647Filter filter = new A3647Filter();
 
@@ -55,24 +55,22 @@ public class RFNDPendingController extends BaseController {
             logic = new RFNDPendingLogic();
             logic.setSession(this.serverSession.getServerSession());
 
-            int limit = Integer.parseInt(request.getParameter("limit").toString());
-            int start = Integer.parseInt(request.getParameter("start").toString());
+            int limit = Integer.parseInt(request.getParameter("limit"));
+            int start = Integer.parseInt(request.getParameter("start"));
 
-            int pExcel = Integer.parseInt(request.getParameter("pexcel").toString());
+            int pExcel = Integer.parseInt(request.getParameter("pexcel"));
             Boolean bExcel = pExcel == 1 ? true : false;
 
             filter.IN_OPTION = request.getParameter("IN_OPTION").trim();
-            filter.IN_CIA = request.getParameter("IN_CIA").trim();
-            filter.IN_FORMA = request.getParameter("IN_FORMA").trim();
-            filter.IN_SERIE = request.getParameter("IN_SERIE").trim();
-            filter.IN_SEQ = request.getParameter("IN_SEQ").trim();
-            filter.IN_FOLIO = request.getParameter("IN_DOCUMET").trim();
             filter.IN_DATEFROM = request.getParameter("IN_DATEFROM").trim();
             filter.IN_DATETO = request.getParameter("IN_DATETO").trim();
+            filter.IN_TICKET = request.getParameter("IN_TICKET").trim();
             filter.IN_COUNTRY = request.getParameter("IN_COUNTRY").trim();
-            filter.IN_STATUS = request.getParameter("IN_STATUS").trim();
-            filter.IN_USER = request.getParameter("IN_USER").trim();
             filter.IN_IATA = request.getParameter("IN_IATA").trim();
+            filter.IN_FLAG = request.getParameter("IN_FLAG").trim();
+            filter.IN_STATUS = request.getParameter("IN_STATUSBPO").trim();
+            filter.IN_USER = request.getParameter("IN_USER").trim();
+            filter.IN_FOLIO = request.getParameter("IN_FOLIO").trim();
 
             if (!bExcel) {
                 filter.page.PAGROW = 20;
@@ -83,7 +81,7 @@ public class RFNDPendingController extends BaseController {
                 filter.page.PAGNUM = 1;
             }
 
-            lst = logic.SearchReportQueryRFND(filter);
+            lst = logic.SearchPendiRefund(filter);
         } catch (Exception e) {
             throw new SpringException(e);
         }
@@ -103,9 +101,6 @@ public class RFNDPendingController extends BaseController {
         try {
             logic = new RFNDPendingLogic();
             logic.setSession(this.serverSession.getServerSession());
-
-            filter.IN_PAIS = request.getParameter("IN_PAIS").trim();
-
             lst = logic.SearchRFNDRazon(filter);
         } catch (Exception e) {
             throw new SpringException(e);

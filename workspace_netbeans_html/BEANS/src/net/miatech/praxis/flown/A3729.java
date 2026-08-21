@@ -10,7 +10,7 @@ package net.miatech.praxis.flown;
  * @author ggutierrez
  */
 public class A3729 {
-    
+
     public String CCUST = "";
     public String CHAIR = "";
     public String TICKET = "";
@@ -18,26 +18,33 @@ public class A3729 {
     public String FORMA = "";
     public String SERIE = "";
     public String CUPON = "";
-    
+
     public String NPAX = "";
+    public int QTYTOTPS = 0;
     public String FNAME = "";
     public String LNAME = "";
     public String SEQ = "";
     public String DFLIGHT = "";
     public String NFLIGHT = "";
+    public String FSENDFI = "";
     public String CDEPART = "";
     public String CARRIVA = "";
     public String STVAL = "";
-    
+
     public String TPAX = "";
     public String TPAX_V = "";
     public String LNKMVLO = "";
     public String STVCR = "";
-    
+
     public String FSABRE = "";
     public String STASABR = "";
-    public String FSALES = "";
-        
+    public String FSALES = "";    
+    
+    
+    public String OLD_CHAIR = "";    
+    public String OLD_TICKET = "";    
+    public String OLD_COUPON = "";    
+
     //Auditoria
     public String USCR = "";
     public String FECR = "";
@@ -45,5 +52,5 @@ public class A3729 {
     public String USUP = "";
     public String FEUP = "";
     public String HOUP = "";
-    
+
 }

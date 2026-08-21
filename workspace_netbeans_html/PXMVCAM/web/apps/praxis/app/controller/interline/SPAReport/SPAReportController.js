@@ -33,6 +33,8 @@ Ext.define('Ext.Praxis.controller.interline.SPAReport.SPAReportController', {
             autoDestroy: false,
             fields: ['data']
         });
+        
+        global.AccessControlManagerExport(prototype.id+'-btnExcel');
     },
     // <editor-fold defaultstate="collapsed" desc="Combo Date">
     cbxDateFromYear_changeHandler: function() {

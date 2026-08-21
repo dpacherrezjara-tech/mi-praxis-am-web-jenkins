@@ -472,6 +472,15 @@ Ext.define('Ext.Praxis.controller.salesaudit.RobotdisputeMyarcForm.RobotdisputeM
         }
         return '<i class="fas fa-circle" style="font-size: 16px; color:' + value + ';"></i>';
     },
+    
+     loadHistoryLogDetails: function (grid, td, rowIndex, cellIndex, e, record, tr, eOpts) {
+        const me = this;
+        const newWin = Ext.create('Ext.Praxis.view.salesaudit.RobotdisputeMyarcForm.RobotdisputeMyarcLog', {
+            id: prototype.id + '-RobotdisputeMyarcLog-1',
+            obj: record.data
+        });
+        newWin.show();
+    } 
 });
 
 

@@ -8,27 +8,16 @@ package net.miatech.praxis.controllers.sales;
 import com.google.gson.Gson;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.net.SocketException;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.miatech.beans.SQP00790Filter;
@@ -37,7 +26,9 @@ import net.miatech.beans.SQP00792Filter;
 import net.miatech.beans.SQP00793Filter;
 import net.miatech.beans.SQP00794Filter;
 import net.miatech.beans.SQP00795Filter;
+import net.miatech.beans.SQP04561Filter;
 import net.miatech.praxis.classes.ProMail;
+import net.miatech.praxis.classes.ProReportCommCTIA;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.sales.ConsortiaLogic;
@@ -60,7 +51,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import net.miatech.praxis.classes.ProReportCommCTIA;
 
 /**
  *
@@ -185,13 +175,18 @@ public class ConsortiaController extends BaseController {
         logic = new ConsortiaLogic();
         logic.setSession(this.serverSession.getServerSession());
         List<SQP00794Filter> lst;
+        
         boolean iboolean;
         SQP00791Filter objRtn;
         SQP00794Filter beanData = new SQP00794Filter();
-        SQP00795Filter beanDataRpt = new SQP00795Filter();
+        SQP00795Filter beanDataRpt = new SQP00795Filter();        
         SQP00791Filter filter = new SQP00791Filter();
         SQP00794Filter filter2 = new SQP00794Filter();
         SQP00795Filter filter3 = new SQP00795Filter();
+        
+        List<SQP04561Filter> beanDataRptAnc;
+        SQP04561Filter filter4 = new SQP04561Filter();
+        
 
         filter2.VP_A2444CCUST = request.getParameter("VP_A2447CCUST");
         filter2.VP_A2444IATA = request.getParameter("VP_A2447IATA");
@@ -204,12 +199,17 @@ public class ConsortiaController extends BaseController {
         filter3.VP_A2444LOTE = request.getParameter("VP_A2447LOTE");
 
         beanDataRpt = logic.loadPX117S03A1728(filter3);
-
+        
+        filter4.VP_CCUST = request.getParameter("VP_A2447CCUST");
+        filter4.VP_LOTE = request.getParameter("VP_A2447LOTE");
+        filter4.VP_IATA = request.getParameter("VP_A2447IATA");
+        beanDataRptAnc = logic.loadSQP04561(filter4);
+        
         ProReportCommCTIA proReportCommFOB = new ProReportCommCTIA();
-        proReportCommFOB.createReport(beanDataRpt);
+        proReportCommFOB.createReport(beanDataRpt, beanDataRptAnc);
 
         // Enviar el Mail            
-        iboolean = SendMail(beanData, proReportCommFOB);
+        iboolean = SendMail(beanData, proReportCommFOB);                
         if (iboolean) {
             // Registra Envio A1728 (Actualiza Estado)
             filter.VP_ACTION = request.getParameter("VP_ACTION");
@@ -483,7 +483,8 @@ public class ConsortiaController extends BaseController {
             CH1_07.setCellValue("IVA");
             CH1_08.setCellValue("Comm. +  IVA");
             CH1_09.setCellValue("Total Cash");
-            CH1_10.setCellValue("Total Cash - Commission");
+//            CH1_10.setCellValue("Total Cash - Commission");
+            CH1_10.setCellValue("Total");
             CH1_11.setCellValue("Send to FOB");
             CH1_13.setCellValue("Acuse");
             CH1_14.setCellValue("Received From FOB");

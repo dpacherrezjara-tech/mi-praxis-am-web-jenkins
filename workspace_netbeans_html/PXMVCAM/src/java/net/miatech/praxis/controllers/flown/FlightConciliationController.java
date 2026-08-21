@@ -2,12 +2,14 @@ package net.miatech.praxis.controllers.flown;
 
 // <editor-fold defaultstate="collapsed" desc="import">
 import com.google.gson.Gson;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.SocketException;
@@ -25,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -68,7 +71,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.NestedServletException;
-
+import java.io.BufferedReader;
+import java.util.concurrent.ConcurrentHashMap;
+import java.io.InputStreamReader;
 // </editor-fold>
 /**
  *
@@ -82,6 +87,18 @@ public class FlightConciliationController extends BaseController {
     private FlightConciliationLogic logic;
     private MasterDAO masterDAO;
 
+    // <editor-fold defaultstate="collapsed" desc="Manual Manifest Load - background job tracking">
+   // private static final ConcurrentHashMap<String, ManifestLoadJob> MANIFEST_JOBS = new ConcurrentHashMap<String, ManifestLoadJob>();
+
+   /* private static class ManifestLoadJob {
+
+        volatile String status = "RUNNING"; // RUNNING, DONE, ERROR
+        volatile int exitCode = -1;
+        final List<String> lines = Collections.synchronizedList(new ArrayList<String>());
+        Process process;
+    }
+    // </editor-fold>
+*/
     @RequestMapping(value = "/obtainDataCombo")
     public @ResponseBody
     String obtainDataCombo(ModelMap map, HttpServletRequest request) {
@@ -501,6 +518,43 @@ public class FlightConciliationController extends BaseController {
         return new Gson().toJson(map);
     }
 
+    @RequestMapping(value = "/executeScanTicket")
+    public @ResponseBody
+    String executeScanTicket(ModelMap map, HttpServletRequest request) {
+        //REALIZA INSERT, UPDATE O DELETE DE UN REGISTRO DEL A1691
+        A3729Filter filter = new A3729Filter();
+        String strOption = "";
+        String msj = "";
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+
+            logic = new FlightConciliationLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            msj = logic.loadPX095SQP04753(filter);
+
+            map.put("success", true);
+        } catch (SQLException e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        } catch (Exception e) {
+            msj = e.getMessage();
+            map.put("success", false);
+            map.put("sesion", "Se produjo un error. " + e.getMessage());
+        }
+
+        if (msj.toLowerCase().contains("duplicada")) {
+            msj = "Error: Duplicated record. Flight Manifest were not registered.";
+        }
+
+        map.put("msjOption", msj);
+        map.put("strOption", strOption);
+
+        return new Gson().toJson(map);
+    }
+
     /*PARA EL DATAENTRY DEL TICKET_FORM ***************************************/
     @RequestMapping(value = "/searchBeanTkt")
     public @ResponseBody
@@ -646,7 +700,7 @@ public class FlightConciliationController extends BaseController {
             msj = "Error: " + e.getMessage();
         }
         if (msj.toLowerCase().contains("duplicada")) {
-            msj = "Error: Duplicated record. Ticket were not registered.";
+            msj = "Error: Cupon ya existe.";
         }
         map.put("msjOption", msj);
         map.put("strOption", strOption);
@@ -1425,7 +1479,8 @@ public class FlightConciliationController extends BaseController {
         }
     }
 
-@RequestMapping(value = "getXLSXDetail")
+//EL EXCEL GENERADO SE UTILIZA COMO LAYOUT EN EL PROCESO 'CIERRE DE VUELO'    
+    @RequestMapping(value = "getXLSXDetail")
     public @ResponseBody
     void getXLSXDetail(HttpServletRequest request, HttpServletResponse response) {
         String fileNameDownload = String.format("Flight Conciliation Detail - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
@@ -1498,7 +1553,8 @@ public class FlightConciliationController extends BaseController {
             Cell cell50, cell51, cell52, cell53, cell54, cell55, cell56;
             Cell cell57, cell58, cell59, cell60, cell61, cell62, cell63;
             Cell cell64, cell65, cell66, cell67, cell68, cell69, cell70;
-            Cell cell71, cell72, cell73, cell74;
+            Cell cell71, cell72, cell73, cell74, cell75, cell76, cell77;
+            Cell cell78, cell79;
 
             // <editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
@@ -1523,11 +1579,16 @@ public class FlightConciliationController extends BaseController {
             cell67 = row.createCell(17);
             cell68 = row.createCell(18);
             cell69 = row.createCell(19);
-            cell70 = row.createCell(20);
-            cell71 = row.createCell(21);
-            cell72 = row.createCell(22);
-            cell73 = row.createCell(23);
-            cell74 = row.createCell(24);
+            cell79 = row.createCell(20);
+            cell70 = row.createCell(21);
+            cell71 = row.createCell(22);
+            cell72 = row.createCell(23);
+            cell73 = row.createCell(24);
+            cell74 = row.createCell(25);
+            cell75 = row.createCell(26);
+            cell76 = row.createCell(27);
+            cell77 = row.createCell(28);
+            cell78 = row.createCell(29);
 
             cell50.setCellValue("SSIM Data");
             cell57.setCellValue("Information PAX ODS");
@@ -1540,7 +1601,7 @@ public class FlightConciliationController extends BaseController {
             cell68.setCellValue("Total");
             cell69.setCellValue("Coupons");
             cell70.setCellValue("Flight Manifest");
-            cell73.setCellValue("Coupons");
+            cell78.setCellValue("Tickets");
 
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 6));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 7, 10));
@@ -1550,9 +1611,9 @@ public class FlightConciliationController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 16, 16));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 17));
             sheet.addMergedRegion(new CellRangeAddress(0, 2, 18, 18));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 19, 19));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 20, 22));
-            sheet.addMergedRegion(new CellRangeAddress(0, 0, 23, 24));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 19, 20));
+            sheet.addMergedRegion(new CellRangeAddress(0, 0, 21, 28));
+            sheet.addMergedRegion(new CellRangeAddress(0, 2, 29, 29));
 
             cell50.setCellStyle(headerStyle);
             cell51.setCellStyle(headerStyle);
@@ -1579,6 +1640,11 @@ public class FlightConciliationController extends BaseController {
             cell72.setCellStyle(headerStyle);
             cell73.setCellStyle(headerStyle);
             cell74.setCellStyle(headerStyle);
+            cell75.setCellStyle(headerStyle);
+            cell76.setCellStyle(headerStyle);
+            cell77.setCellStyle(headerStyle);
+            cell78.setCellStyle(headerStyle);
+            cell79.setCellStyle(headerStyle);
 
             ++vj;
             // </editor-fold>
@@ -1605,11 +1671,16 @@ public class FlightConciliationController extends BaseController {
             cell67 = row.createCell(17);
             cell68 = row.createCell(18);
             cell69 = row.createCell(19);
-            cell70 = row.createCell(20);
-            cell71 = row.createCell(21);
-            cell72 = row.createCell(22);
-            cell73 = row.createCell(23);
-            cell74 = row.createCell(24);
+            cell79 = row.createCell(20);
+            cell70 = row.createCell(21);
+            cell71 = row.createCell(22);
+            cell72 = row.createCell(23);
+            cell73 = row.createCell(24);
+            cell74 = row.createCell(25);
+            cell75 = row.createCell(26);
+            cell76 = row.createCell(27);
+            cell77 = row.createCell(28);
+            cell78 = row.createCell(29);
 
             cell50.setCellValue("Flight");
             cell52.setCellValue("Carrier");
@@ -1628,9 +1699,15 @@ public class FlightConciliationController extends BaseController {
             cell66.setCellValue("Qty");
             cell67.setCellValue("Qty");
             cell69.setCellValue("Valued");
+            cell79.setCellValue("Accounted");
             cell70.setCellValue("Received");
-            cell73.setCellValue("Diff");
-            cell74.setCellValue("Obs.");
+            cell71.setCellValue("Qty Detail");
+            cell72.setCellValue("Qty Total");
+            cell73.setCellValue("Qty NR");
+            cell74.setCellValue("Qty Insp");
+            cell75.setCellValue("Diff");
+            cell76.setCellValue("Obs. BPO");
+            cell77.setCellValue("Obs. SABRE");
 
             sheet.addMergedRegion(new CellRangeAddress(1, 1, 0, 1));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 2, 2));
@@ -1649,9 +1726,15 @@ public class FlightConciliationController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 16, 16));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 17, 17));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 19, 19));
-            sheet.addMergedRegion(new CellRangeAddress(1, 1, 20, 20));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 20, 20));
+            sheet.addMergedRegion(new CellRangeAddress(1, 1, 21, 21));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 22, 22));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 23, 23));
             sheet.addMergedRegion(new CellRangeAddress(1, 2, 24, 24));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 25, 25));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 26, 26));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 27, 27));
+            sheet.addMergedRegion(new CellRangeAddress(1, 2, 28, 28));
 
             cell50.setCellStyle(headerStyle);
             cell51.setCellStyle(headerStyle);
@@ -1678,6 +1761,11 @@ public class FlightConciliationController extends BaseController {
             cell72.setCellStyle(headerStyle);
             cell73.setCellStyle(headerStyle);
             cell74.setCellStyle(headerStyle);
+            cell75.setCellStyle(headerStyle);
+            cell76.setCellStyle(headerStyle);
+            cell77.setCellStyle(headerStyle);
+            cell78.setCellStyle(headerStyle);
+            cell79.setCellStyle(headerStyle);
 
             ++vj;
             // </editor-fold>
@@ -1704,11 +1792,16 @@ public class FlightConciliationController extends BaseController {
             cell67 = row.createCell(17);
             cell68 = row.createCell(18);
             cell69 = row.createCell(19);
-            cell70 = row.createCell(20);
-            cell71 = row.createCell(21);
-            cell72 = row.createCell(22);
-            cell73 = row.createCell(23);
-            cell74 = row.createCell(24);
+            cell79 = row.createCell(20);
+            cell70 = row.createCell(21);
+            cell71 = row.createCell(22);
+            cell72 = row.createCell(23);
+            cell73 = row.createCell(24);
+            cell74 = row.createCell(25);
+            cell75 = row.createCell(26);
+            cell76 = row.createCell(27);
+            cell77 = row.createCell(28);
+            cell78 = row.createCell(29);
 
             cell50.setCellValue("Date");
             cell51.setCellValue("Number");
@@ -1716,15 +1809,12 @@ public class FlightConciliationController extends BaseController {
             cell61.setCellValue("Date");
             cell64.setCellValue("Date");
             cell70.setCellValue("Date");
-            cell71.setCellValue("Qty");
-            cell72.setCellValue("Qty NR");
 
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 0, 0));
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 1, 1));
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 6, 6));
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 11, 11));
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 14, 14));
-            sheet.addMergedRegion(new CellRangeAddress(2, 2, 20, 20));
             sheet.addMergedRegion(new CellRangeAddress(2, 2, 21, 21));
 
             cell50.setCellStyle(headerStyle);
@@ -1752,6 +1842,11 @@ public class FlightConciliationController extends BaseController {
             cell72.setCellStyle(headerStyle);
             cell73.setCellStyle(headerStyle);
             cell74.setCellStyle(headerStyle);
+            cell75.setCellStyle(headerStyle);
+            cell76.setCellStyle(headerStyle);
+            cell77.setCellStyle(headerStyle);
+            cell78.setCellStyle(headerStyle);
+            cell79.setCellStyle(headerStyle);
 
             ++vj;
             // </editor-fold>
@@ -1779,11 +1874,16 @@ public class FlightConciliationController extends BaseController {
                 cell67 = row.createCell(17);
                 cell68 = row.createCell(18);
                 cell69 = row.createCell(19);
-                cell70 = row.createCell(20);
-                cell71 = row.createCell(21);
-                cell72 = row.createCell(22);
-                cell73 = row.createCell(23);
-                cell74 = row.createCell(24);
+                cell79 = row.createCell(20);
+                cell70 = row.createCell(21);
+                cell71 = row.createCell(22);
+                cell72 = row.createCell(23);
+                cell73 = row.createCell(24);
+                cell74 = row.createCell(25);
+                cell75 = row.createCell(26);
+                cell76 = row.createCell(27);
+                cell77 = row.createCell(28);
+                cell78 = row.createCell(29);
 
                 cell50.setCellValue(listaData.get(vi).strFormatDate);
                 cell51.setCellValue(listaData.get(vi).NFLIGHT);
@@ -1806,11 +1906,16 @@ public class FlightConciliationController extends BaseController {
                 cell67.setCellValue(listaData.get(vi).QCPNMA);
                 cell68.setCellValue(listaData.get(vi).QCPNTOT);
                 cell69.setCellValue(listaData.get(vi).QCPNVAL);
+                cell79.setCellValue(listaData.get(vi).QCPNCONTAB);
                 cell70.setCellValue(listaData.get(vi).strFormatDate3);
                 cell71.setCellValue(listaData.get(vi).QCPNFI);
-                cell72.setCellValue(listaData.get(vi).QCPNFRE);
-                cell73.setCellValue(listaData.get(vi).lngQDIFF);
-                cell74.setCellValue(listaData.get(vi).DESCRIP);
+                cell72.setCellValue(listaData.get(vi).QTYTOTPS);
+                cell73.setCellValue(listaData.get(vi).QCPNFRE);
+                cell74.setCellValue(listaData.get(vi).QCPHARB_ESP);
+                cell75.setCellValue(listaData.get(vi).lngQDIFF);
+                cell76.setCellValue(listaData.get(vi).DESCRIP);
+                cell77.setCellValue(listaData.get(vi).DESCRIP2);
+                cell78.setCellValue(listaData.get(vi).TKTS);
 
                 cell50.setCellStyle(bodyStyle);
                 cell51.setCellStyle(bodyStyle);
@@ -1837,6 +1942,11 @@ public class FlightConciliationController extends BaseController {
                 cell72.setCellStyle(bodyStyle);
                 cell73.setCellStyle(bodyStyle);
                 cell74.setCellStyle(bodyStyle);
+                cell75.setCellStyle(bodyStyle);
+                cell76.setCellStyle(bodyStyle);
+                cell77.setCellStyle(bodyStyle);
+                cell78.setCellStyle(bodyStyle);
+                cell79.setCellStyle(bodyStyle);
                 // </editor-fold>
                 iter.next();
                 ++vi;
@@ -1868,6 +1978,11 @@ public class FlightConciliationController extends BaseController {
             sheet.autoSizeColumn(22, true);
             sheet.autoSizeColumn(23, true);
             sheet.autoSizeColumn(24, true);
+            sheet.autoSizeColumn(25, true);
+            sheet.autoSizeColumn(26, true);
+            sheet.autoSizeColumn(27, true);
+            sheet.autoSizeColumn(28, true);
+            sheet.autoSizeColumn(29, true);
 
             response.setContentType("application/vnd.openxml");
             response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNameDownload + "\"");
@@ -1881,7 +1996,8 @@ public class FlightConciliationController extends BaseController {
             throw new SpringException(e);
         }
     }
-
+//EL EXCEL GENERADO SE UTILIZA COMO LAYOUT EN EL PROCESO 'CIERRE DE VUELO'
+    
     @RequestMapping(value = "getXLSXDetTkt2")
     public @ResponseBody
     void getXLSXDetTkt2(HttpServletRequest request, HttpServletResponse response) {
@@ -2636,14 +2752,14 @@ public class FlightConciliationController extends BaseController {
 //            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
 //            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
 //            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-            
+
             DataFormat fmt = workbook.createDataFormat();
             bodyStyle.setDataFormat(fmt.getFormat("@"));
-            
+
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
-             // ====== CREANDO TITULOS ======================================
+            // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
@@ -2663,7 +2779,7 @@ public class FlightConciliationController extends BaseController {
             Cell CH1_13 = row1.createCell(13);
             Cell CH1_14 = row1.createCell(14);
             Cell CH1_15 = row1.createCell(15);
-            
+
             CH1_0.setCellValue("Nbr");
             CH1_1.setCellValue("Flight");
             CH1_3.setCellValue("Last Name");
@@ -2678,7 +2794,7 @@ public class FlightConciliationController extends BaseController {
             CH1_12.setCellValue("VCR vs");
             CH1_13.setCellValue("Process Sabre");
             CH1_15.setCellValue("Flag");
-            
+
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
             CH1_2.setCellStyle(headerStyle);
@@ -2712,7 +2828,7 @@ public class FlightConciliationController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 13, 14));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 15, 15));
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
@@ -2780,7 +2896,7 @@ public class FlightConciliationController extends BaseController {
                 Cell rcell13 = row1.createCell(13);
                 Cell rcell14 = row1.createCell(14);
                 Cell rcell15 = row1.createCell(15);
-                
+
                 rcell8.setCellStyle(bodyStyle);
 
                 rcell0.setCellValue(listaData.get(vi).RN);
@@ -2884,14 +3000,14 @@ public class FlightConciliationController extends BaseController {
 //            bodyStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
 //            bodyStyle.setBorderTop(CellStyle.BORDER_THIN);
 //            bodyStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-           
+
             DataFormat fmt = workbook.createDataFormat();
             bodyStyle.setDataFormat(fmt.getFormat("@"));
 
             Integer vi = 0;
             Integer vj = 0; //Almacena el numero de fila
             Iterator iter = listaData.iterator();
-             // ====== CREANDO TITULOS ======================================
+            // ====== CREANDO TITULOS ======================================
 
             // ======  Nivel 1 ==========
             Row row1 = sheet.createRow(vj);
@@ -2925,7 +3041,7 @@ public class FlightConciliationController extends BaseController {
             CH1_11.setCellValue("VCR vs");
             CH1_12.setCellValue("Process Sabre");
             CH1_14.setCellValue("Flag");
-            
+
             CH1_0.setCellStyle(headerStyle);
             CH1_1.setCellStyle(headerStyle);
             CH1_2.setCellStyle(headerStyle);
@@ -2957,7 +3073,7 @@ public class FlightConciliationController extends BaseController {
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 12, 13));
             sheet.addMergedRegion(new CellRangeAddress(0, 0, 14, 14));
             ++vj;
-             //============================================
+            //============================================
 
             // ======  Nivel 2 ==========
             Row row2 = sheet.createRow(vj);
@@ -3022,9 +3138,9 @@ public class FlightConciliationController extends BaseController {
                 Cell rcell12 = row1.createCell(12);
                 Cell rcell13 = row1.createCell(13);
                 Cell rcell14 = row1.createCell(14);
-                                    
+
                 rcell7.setCellStyle(bodyStyle);
-                
+
                 rcell0.setCellValue(listaData.get(vi).RN);
                 rcell1.setCellValue(listaData.get(vi).DFLIGHT);
                 rcell2.setCellValue(listaData.get(vi).NFLIGHT);
@@ -3210,6 +3326,109 @@ public class FlightConciliationController extends BaseController {
         return new Gson().toJson(map);
     }
 
+   /* // <editor-fold defaultstate="collapsed" desc="Manual Manifest Load">
+    @RequestMapping(value = "/loadManifest")
+    public @ResponseBody
+    String loadManifest(ModelMap map, HttpServletRequest request) {
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+
+            String manifestName = request.getParameter("manifestName");
+            if (manifestName == null || !manifestName.trim().matches("^[A-Z]{3}_\\d{3,5}_\\d{8}$")) {
+                map.put("success", false);
+                map.put("sesion", "Invalid Manifest Name.");
+                return new Gson().toJson(map);
+            }
+            manifestName = manifestName.trim();
+
+            ManifestLoadJob existing = MANIFEST_JOBS.get(manifestName);
+            if (existing != null && "RUNNING".equals(existing.status)) {
+                map.put("success", false);
+                map.put("sesion", "This manifest is already being loaded.");
+                return new Gson().toJson(map);
+            }
+
+            String jarPath = serverSession.propertySession.get("RUTA_FLICONCI_JAR").toString();
+
+            ProcessBuilder pb = new ProcessBuilder("java", "-jar", jarPath, manifestName);
+            pb.redirectErrorStream(true);
+
+            final ManifestLoadJob job = new ManifestLoadJob();
+            job.process = pb.start();
+            MANIFEST_JOBS.put(manifestName, job);
+
+            Thread reader = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(job.process.getInputStream()));
+                        String line;
+                        while ((line = br.readLine()) != null) {
+                            job.lines.add(line);
+                        }
+                    } catch (IOException e) {
+                        job.lines.add("ERROR reading process output: " + e.getMessage());
+                    }
+                    try {
+                        int exit = job.process.waitFor();
+                        job.exitCode = exit;
+                        job.status = (exit == 0) ? "DONE" : "ERROR";
+                    } catch (InterruptedException e) {
+                        job.status = "ERROR";
+                    }
+                }
+            });
+            reader.setDaemon(true);
+            reader.start();
+
+            map.put("success", true);
+            map.put("msjOption", "Manifest load started.");
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", "Error starting manifest load. " + ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "/loadManifestStatus")
+    public @ResponseBody
+    String loadManifestStatus(ModelMap map, HttpServletRequest request) {
+        try {
+            String manifestName = request.getParameter("manifestName");
+            int fromLine = request.getParameter("fromLine") == null ? 0 : Integer.parseInt(request.getParameter("fromLine"));
+
+            ManifestLoadJob job = manifestName == null ? null : MANIFEST_JOBS.get(manifestName.trim());
+            if (job == null) {
+                map.put("success", false);
+                map.put("sesion", "No load job found for this Manifest Name.");
+                return new Gson().toJson(map);
+            }
+
+            List<String> newLines;
+            synchronized (job.lines) {
+                int total = job.lines.size();
+                if (fromLine < 0) {
+                    fromLine = 0;
+                }
+                if (fromLine > total) {
+                    fromLine = total;
+                }
+                newLines = new ArrayList<String>(job.lines.subList(fromLine, total));
+            }
+
+            map.put("success", true);
+            map.put("status", job.status);
+            map.put("lines", newLines);
+            map.put("nextFromLine", fromLine + newLines.size());
+            map.put("exitCode", job.exitCode);
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", "Error retrieving manifest load status. " + ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    // </editor-fold>
+   */
     @RequestMapping(value = "/searchControlODS")
     public @ResponseBody
     String searchControlODS(ModelMap map, HttpServletRequest request) {
@@ -3233,9 +3452,32 @@ public class FlightConciliationController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
+    @RequestMapping(value = "/actualizarContador")
+    public @ResponseBody
+    String actualizarContador(ModelMap map, HttpServletRequest request) {
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+
+            String mes = request.getParameter("mes").trim();
+            String anio = request.getParameter("anio").trim();
+
+            logic = new FlightConciliationLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            logic.actualizarContador(anio, mes);
+
+            map.put("success", true);
+        } catch (NumberFormatException | SQLException ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+
     //-------------------------------------------------------------------------------------------------------------
-    
     @RequestMapping(value = "/updateCouponA3729", method = RequestMethod.POST)
     public @ResponseBody
     String updateCouponA3729(ModelMap map, @RequestParam("excelfile") MultipartFile excelfile, HttpServletRequest request) throws IOException {
@@ -3245,17 +3487,17 @@ public class FlightConciliationController extends BaseController {
         String msjResult = "";
         String msjUpload = "";
         A3729Filter objResult = new A3729Filter();
-        
+
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-            
+
 //            String banco = request.getParameter("banco");
 //            String input = request.getParameter("input");
             String filename = excelfile.getOriginalFilename();
-            
+
             byte[] dataFile = excelfile.getBytes();
             objResult = updateCoupon(dataFile);
-            
+
             map.put("success", true);
             map.put("objResult", objResult);
         } catch (SQLException e) {
@@ -3267,35 +3509,35 @@ public class FlightConciliationController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
     private A3729Filter updateCoupon(byte[] bytes) throws Exception {
-        
+
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        
+
         logic = new FlightConciliationLogic();
         List<A3729Filter> lstData = new ArrayList<>();
         A3729Filter res = new A3729Filter();
-        
+
         String mensaje = "Hubo un error al actualizar los tickets", strHora = Functions.getHoraActual();
         int i = 0;
         boolean isOk = false;
-        
+
         try {
             String strSesion = UUID.randomUUID().toString();
             String strNomExcel = "Tickets_update." + strSesion + ".xlsx";
-            
+
             String strArchivo = "C:\\Dumps\\" + strNomExcel;
             File archivo = new File(strArchivo);
             FileOutputStream fs = new FileOutputStream(archivo);
-            
+
             fs.write(bytes);
             fs.flush();
             fs.close();
-         
+
             DataFormatter formatter = new DataFormatter();
-            String primeraCelda="";
+            String primeraCelda = "";
             boolean escribe = false;
-                
+
             FileInputStream file = new FileInputStream(new File(strArchivo));
             // leer archivo excel
             XSSFWorkbook worbook = new XSSFWorkbook(file);
@@ -3307,19 +3549,19 @@ public class FlightConciliationController extends BaseController {
 //            Row row;
             // se recorre cada fila hasta el final
             try {
-                while (rowIterator.hasNext() ) {
+                while (rowIterator.hasNext()) {
                     i++;
                     Row row = rowIterator.next();
-                    
-                    if(i > 2){
+
+                    if (i > 2) {
                         A3729Filter obj = new A3729Filter();
-                        
+
                         obj.DFLIGHT = getCellValue(row.getCell(1)).trim();
                         obj.NFLIGHT = getCellValue(row.getCell(2)).trim();
                         obj.LNAME = getCellValue(row.getCell(3)).trim();
                         obj.FNAME = getCellValue(row.getCell(4)).trim();
                         obj.desPAX = getCellValue(row.getCell(5)).trim();
-                        
+
                         if (obj.desPAX.equals("Adult")) {
                             obj.TPAX = "AD";
                         } else if (obj.desPAX.equals("Children")) {
@@ -3327,43 +3569,41 @@ public class FlightConciliationController extends BaseController {
                         } else if (obj.desPAX.equals("Infant")) {
                             obj.TPAX = "INF";
                         }
-                        
-                        
+
                         obj.CHAIR = getCellValue(row.getCell(6)).trim();
-                        
+
                         try {
-                            obj.strTicket = getCellValue(row.getCell(7)).trim().substring(0,13);
-                            obj.CUPON = getCellValue(row.getCell(7)).trim().substring(13,14);
+                            obj.strTicket = getCellValue(row.getCell(7)).trim().substring(0, 13);
+                            obj.CUPON = getCellValue(row.getCell(7)).trim().substring(13, 14);
                         } catch (Exception e) {
                             obj.strTicket = "";
                         }
-                        
-                        if(obj.strTicket.equals("")){
+
+                        if (obj.strTicket.equals("")) {
                             System.out.println("------------- NEXT -------------");
                             continue;
                         }
-                        
-                        
+
                         obj.desSTVAL = getCellValue(row.getCell(8)).trim();
-                        
+
                         if (obj.desSTVAL.trim().equals("No conciliado")) {
                             obj.STVAL = "1";
                         } else if (obj.desSTVAL.trim().equals("Conciliado")) {
                             obj.STVAL = "0";
                         }
-                        
+
                         obj.CDEPART = getCellValue(row.getCell(9)).trim();
                         obj.CARRIVA = getCellValue(row.getCell(10)).trim();
                         obj.desSTVCR = getCellValue(row.getCell(11)).trim();
-                        
+
                         if (obj.desSTVCR.trim().equals("Yes")) {
                             obj.STVCR = "Y";
                         } else if (obj.desSTVCR.trim().equals("")) {
                             obj.STVCR = "";
                         }
-                        
+
                         obj.descFSABRE = getCellValue(row.getCell(12)).trim();
-                        
+
                         if (obj.descFSABRE.trim().equals("Not Found")) {
                             obj.FSABRE = "0";
                         } else if (obj.descFSABRE.trim().equals("Found")) {
@@ -3374,51 +3614,49 @@ public class FlightConciliationController extends BaseController {
                             obj.FSABRE = "4";
                         } else if (obj.descFSABRE.trim().equals("Manual")) {
                             obj.FSABRE = "5";
+                        } else if (obj.descFSABRE.trim().equals("BPO Found")) {
+                            obj.FSABRE = "6";
                         }
-                        
-                        
+
                         obj.STASABR = getCellValue(row.getCell(13)).trim();
                         obj.descFSALES = getCellValue(row.getCell(14)).trim();
-                        
+
 //                        obj.CUPON = getCellValue(row.getCell(15)).trim();
-                        
 //                        if (obj.descFSALES.trim().equals("")) {
 //                            obj.FA720 = "";
 //                        } else {
 //                            obj.FA720 = "Yes";
 //                        }
-                        
                         lstData.add(obj);
 
                     }
                 }
-                
+
                 file.close();
-                
+
 //                for (A3729Filter cadDet : lstData) {
-                    System.out.println("Cantidad de registros a actualizar: " + lstData.size());
+                System.out.println("Cantidad de registros a actualizar: " + lstData.size());
 //                }
-               
-                logic.setSession( this.serverSession.getServerSession());
+
+                logic.setSession(this.serverSession.getServerSession());
                 res = logic.SQP04282(lstData);
-                
+
             } catch (Exception e) {
                 e.getMessage();
             }
-            
+
             //Eliminar temporal           
             archivo.delete();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return res;
-        
+
     }
-    
+
     //-------------------------------------------------------------------------------------------------------------
-    
     @RequestMapping(value = "/updateCouponA3729_INF", method = RequestMethod.POST)
     public @ResponseBody
     String updateCouponA3729_INF(ModelMap map, @RequestParam("excelfile_INF") MultipartFile excelfile_INF, HttpServletRequest request) throws IOException {
@@ -3428,14 +3666,14 @@ public class FlightConciliationController extends BaseController {
         String msjResult = "";
         String msjUpload = "";
         A3729Filter objResult = new A3729Filter();
-        
+
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             String filename = excelfile_INF.getOriginalFilename();
-            
+
             byte[] dataFile = excelfile_INF.getBytes();
             objResult = updateCoupon_INF(dataFile);
-            
+
             map.put("success", true);
             map.put("objResult", objResult);
         } catch (SQLException e) {
@@ -3447,35 +3685,35 @@ public class FlightConciliationController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-    
+
     private A3729Filter updateCoupon_INF(byte[] bytes) throws Exception {
-        
+
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        
+
         logic = new FlightConciliationLogic();
         List<A3729Filter> lstData = new ArrayList<>();
         A3729Filter res = new A3729Filter();
-        
+
         String mensaje = "Hubo un error al actualizar los infantes", strHora = Functions.getHoraActual();
         int i = 0;
         boolean isOk = false;
-        
+
         try {
             String strSesion = UUID.randomUUID().toString();
             String strNomExcel = "Tickets_update_INF." + strSesion + ".xlsx";
-            
+
             String strArchivo = "C:\\Dumps\\" + strNomExcel;
             File archivo = new File(strArchivo);
             FileOutputStream fs = new FileOutputStream(archivo);
-            
+
             fs.write(bytes);
             fs.flush();
             fs.close();
-         
+
             DataFormatter formatter = new DataFormatter();
-            String primeraCelda="";
+            String primeraCelda = "";
             boolean escribe = false;
-                
+
             FileInputStream file = new FileInputStream(new File(strArchivo));
             // leer archivo excel
             XSSFWorkbook worbook = new XSSFWorkbook(file);
@@ -3487,24 +3725,24 @@ public class FlightConciliationController extends BaseController {
 //            Row row;
             // se recorre cada fila hasta el final
             try {
-                while (rowIterator.hasNext() ) {
+                while (rowIterator.hasNext()) {
                     i++;
                     Row row = rowIterator.next();
-                    
-                    if(i > 2){
+
+                    if (i > 2) {
                         A3729Filter obj = new A3729Filter();
-                        
+
                         obj.DFLIGHT = getCellValue(row.getCell(1)).trim();
                         obj.NFLIGHT = getCellValue(row.getCell(2)).trim();
                         obj.LNAME = getCellValue(row.getCell(3)).trim();
                         obj.FNAME = getCellValue(row.getCell(4)).trim();
                         obj.desPAX = getCellValue(row.getCell(5)).trim();
-                        
-                        if(obj.LNAME.equals("") && obj.FNAME.equals("")){
-                          System.out.println("------------- NEXT -------------");
-                          continue;
+
+                        if (obj.LNAME.equals("") && obj.FNAME.equals("")) {
+                            System.out.println("------------- NEXT -------------");
+                            continue;
                         }
-                        
+
                         if (obj.desPAX.equals("Adult")) {
                             obj.TPAX = "AD";
                         } else if (obj.desPAX.equals("Children")) {
@@ -3512,37 +3750,37 @@ public class FlightConciliationController extends BaseController {
                         } else if (obj.desPAX.equals("Infant")) {
                             obj.TPAX = "INF";
                         }
-                        
+
                         obj.CHAIR = getCellValue(row.getCell(6)).trim();
-                        
+
                         try {
-                            obj.strTicket = getCellValue(row.getCell(7)).trim().substring(0,13);
-                            obj.CUPON = getCellValue(row.getCell(7)).trim().substring(13,14);
+                            obj.strTicket = getCellValue(row.getCell(7)).trim().substring(0, 13);
+                            obj.CUPON = getCellValue(row.getCell(7)).trim().substring(13, 14);
                         } catch (Exception e) {
                             obj.strTicket = "";
                             obj.CUPON = "";
                         }
-                        
+
                         obj.desSTVAL = getCellValue(row.getCell(8)).trim();
-                        
+
                         if (obj.desSTVAL.trim().equals("No conciliado")) {
                             obj.STVAL = "1";
                         } else if (obj.desSTVAL.trim().equals("Conciliado")) {
                             obj.STVAL = "0";
                         }
-                        
+
                         obj.CDEPART = getCellValue(row.getCell(9)).trim();
                         obj.CARRIVA = getCellValue(row.getCell(10)).trim();
                         obj.desSTVCR = getCellValue(row.getCell(11)).trim();
-                        
+
                         if (obj.desSTVCR.trim().equals("Yes")) {
                             obj.STVCR = "Y";
                         } else if (obj.desSTVCR.trim().equals("")) {
                             obj.STVCR = "";
                         }
-                        
+
                         obj.descFSABRE = getCellValue(row.getCell(12)).trim();
-                        
+
                         if (obj.descFSABRE.trim().equals("Not Found")) {
                             obj.FSABRE = "0";
                         } else if (obj.descFSABRE.trim().equals("Found")) {
@@ -3553,41 +3791,40 @@ public class FlightConciliationController extends BaseController {
                             obj.FSABRE = "4";
                         } else if (obj.descFSABRE.trim().equals("Manual")) {
                             obj.FSABRE = "5";
+                        } else if (obj.descFSABRE.trim().equals("BP Found")) {
+                            obj.FSABRE = "6";
                         }
-                        
-                        
+
                         obj.STASABR = getCellValue(row.getCell(13)).trim();     // USED - OK - LFTD - CKIN 
 //                        obj.descFSALES = getCellValue(row.getCell(14)).trim();
 
-                        
                         lstData.add(obj);
 
                     }
                 }
-                
+
                 file.close();
                 System.out.println("Cantidad de registros a actualizar: " + lstData.size());
-               
-                logic.setSession( this.serverSession.getServerSession());
+
+                logic.setSession(this.serverSession.getServerSession());
                 res = logic.SQP04400(lstData);
-                
+
             } catch (Exception e) {
                 e.getMessage();
             }
-            
+
             //Eliminar temporal           
             archivo.delete();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return res;
-        
+
     }
-    
+
     //-------------------------------------------------------------------------------------------------------------
-    
     public static String getCellValue(Cell cell) {
         String cellValue = "";
         DataFormatter formatter = new DataFormatter();
@@ -3634,14 +3871,13 @@ public class FlightConciliationController extends BaseController {
         }
         return cellValue.trim();
     }
-    
-    
+
     @RequestMapping(value = "MaintenanceA3729")
     public @ResponseBody
     String MaintenanceA3729(ModelMap map, HttpServletRequest request) throws Exception {
 
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        
+
         String option;
         String beanString;
         Gson gson = new Gson();
@@ -3656,13 +3892,11 @@ public class FlightConciliationController extends BaseController {
 
             logic = new FlightConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
-            
-            if(!filter.TICKET.equals("") && filter.TICKET_2.equals("")){
-                
+
+             if (filter.TICKET_2 == null || filter.TICKET_2.trim().isEmpty()) {
                 //Update normal, sin ticket 2
                 msj = logic.SQP04320(filter);
-            }else{
-                
+            } else {
                 //update con ticket 2
                 msj = logic.SQP04323(filter);
             }
@@ -3678,13 +3912,13 @@ public class FlightConciliationController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-
+    
     @RequestMapping(value = "validTktExists")
     public @ResponseBody
     String validTktExists(ModelMap map, HttpServletRequest request) throws Exception {
 
         Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
-        
+
         String option;
         String beanString;
         Gson gson = new Gson();
@@ -3700,11 +3934,11 @@ public class FlightConciliationController extends BaseController {
 
             logic = new FlightConciliationLogic();
             logic.setSession(this.serverSession.getServerSession());
-            
-            if(!filter.TICKET_2.equals("")){
+
+            if (!filter.TICKET_2.equals("")) {
                 existeTKT = logic.SQP04321(filter);
             }
-            
+
             map.put("success", true);
             map.put("existeTKT", existeTKT);
         } catch (NumberFormatException | SQLException ex) {
@@ -3716,6 +3950,276 @@ public class FlightConciliationController extends BaseController {
         }
         return new Gson().toJson(map);
     }
+
+    @RequestMapping(value = "deleteDuplicateA3729")
+    public @ResponseBody
+    String deleteDuplicateA3729(ModelMap map, HttpServletRequest request) throws Exception {
+
+        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+
+        String option;
+        String beanString;
+        Gson gson = new Gson();
+
+        A3729Filter filter = new A3729Filter();
+        String msj = "";
+
+        try {
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A3729Filter.class);
+
+            logic = new FlightConciliationLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            msj = logic.SQP04550(filter);
+
+            map.put("success", true);
+            map.put("Mensaje", msj);
+        } catch (NumberFormatException | SQLException ex) {
+            map.put("success", false);
+            map.put("Mensaje", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("Mensaje", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
     
+//    @RequestMapping(value = "/updateCouponA3729_INF", method = RequestMethod.POST)
+//    public @ResponseBody
+//    String updateCouponA3729_INF(ModelMap map, @RequestParam("excelfile_INF") MultipartFile excelfile_INF, HttpServletRequest request) throws IOException {
+
+    @RequestMapping(value = "updateCommA1816", method = RequestMethod.POST)
+    public @ResponseBody
+    String updateCommA1816(ModelMap map, @RequestParam("excelfile_VLO") MultipartFile excelfile, HttpServletRequest request) {
+        byte[] bytes = null;
+        boolean formatoCorrecto =false;
+        String msj="No existen registros por actualizar";
+        
+//        
+        Integer cont = 0;
+        try {
+            List<A1691Filter> lstManifiesto = new ArrayList<>(0);
+            A1691Filter obj = new A1691Filter();
+            
+            String filename = excelfile.getOriginalFilename();
+            XSSFWorkbook workbook = new XSSFWorkbook(excelfile.getInputStream());
+            Sheet datatypeSheet = workbook.getSheetAt(0);
+            Iterator<Row> iterator = datatypeSheet.iterator();
+            //HSSFCell cell;
+            while (iterator.hasNext()) {
+                
+                cont++;
+                Row sheet = iterator.next();
+                //Iterator<Cell> cellIterator = currentRow.iterator();
+                /*Validar orden de las cabeceras*/
+                if(cont==2){
+                    String cabecera1 = sheet.getCell(26)== null ? "" : sheet.getCell(26).toString().trim();
+                    String cabecera2 = sheet.getCell(27)== null ? "" : sheet.getCell(27).toString().trim();
+                    if(cabecera1.contains("BPO") && cabecera2.contains("SABRE")){
+                        formatoCorrecto = true;
+                    }else{
+                        System.out.println("Formato Incorrecto");
+                        break;
+                    }
+                }
+                        
+                if (formatoCorrecto && cont > 3) {
+                    if (sheet.getCell(0) != null) {            
+                        obj = new A1691Filter();                   
+                        obj.DFLIGHT = sheet.getCell(0)== null ? "" : sheet.getCell(0).toString().trim();
+                        obj.DFLIGHT = obj.DFLIGHT.replaceAll("-", "").trim();
+                        obj.NFLIGHT  = sheet.getCell(1)== null ? "" : sheet.getCell(1).toString().trim();
+                        obj.CDEPART = sheet.getCell(4)== null ? "" : sheet.getCell(4).toString().trim();
+                        obj.CARRIVA = sheet.getCell(5)== null ? "" : sheet.getCell(5).toString().trim();
+                        obj.strDescripcion = sheet.getCell(26)== null ? "" : sheet.getCell(26).toString().trim();
+                        if(obj.strDescripcion.length()>100){
+                            obj.strDescripcion = obj.strDescripcion.substring(0,100);
+                        }
+                        obj.strDescripcion2 = sheet.getCell(27)== null ? "" : sheet.getCell(27).toString().trim();
+                        if(obj.strDescripcion2.length()>100){
+                            obj.strDescripcion2 = obj.strDescripcion2.substring(0,100);
+                        }
+                        
+                        if(!obj.strDescripcion.trim().equals("")||!obj.strDescripcion2.trim().equals("") ){
+                            lstManifiesto.add(obj);
+                        }
+                        
+                    }
+                }
+            }
+                     
+            logic = new FlightConciliationLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+            if(!formatoCorrecto){
+                msj = "Formato Incorrecto";
+            }else{
+                if(lstManifiesto.size()>0){
+                    msj = logic.loadSQP05035(lstManifiesto);
+                }
+            }
+            
+            
+            map.put("success", true);
+            map.put("msj", msj);
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", ex.getMessage());
+            throw new SpringException(ex);
+        }
+        return new Gson().toJson(map);
+
+    }
+
+    @RequestMapping(value = "MaintenanceA3729INSERT")
+    public @ResponseBody
+    String MaintenanceA3729INSERT(ModelMap map, HttpServletRequest request) throws Exception {
+
+        Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+
+        String option;
+        String beanString;
+        Gson gson = new Gson();
+
+        A3729Filter filter = new A3729Filter();
+        String msj = "";
+
+        try {
+
+            beanString = request.getParameter("beanString");
+            filter = gson.fromJson(beanString, A3729Filter.class);
+
+            logic = new FlightConciliationLogic();
+            logic.setSession(this.serverSession.getServerSession());
+
+             msj = logic.SQP03414_20(filter);
+
+            map.put("success", true);
+            map.put("Mensaje", msj);
+        } catch (NumberFormatException | SQLException ex) {
+            map.put("success", false);
+            map.put("Mensaje", ex.getMessage());
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("Mensaje", ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
     
+    private static final ConcurrentHashMap<String, ManifestLoadJob> MANIFEST_JOBS = new ConcurrentHashMap<String, ManifestLoadJob>();
+
+    private static class ManifestLoadJob {
+
+        volatile String status = "RUNNING"; // RUNNING, DONE, ERROR
+        volatile int exitCode = -1;
+        final List<String> lines = Collections.synchronizedList(new ArrayList<String>());
+        Process process;
+    }
+
+
+
+ // <editor-fold defaultstate="collapsed" desc="Manual Manifest Load">
+    @RequestMapping(value = "/loadManifest")
+    public @ResponseBody
+    String loadManifest(ModelMap map, HttpServletRequest request) {
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+
+            String manifestName = request.getParameter("manifestName");
+            if (manifestName == null || !manifestName.trim().matches("^[A-Z]{3}_\\d{3,5}_\\d{8}$")) {
+                map.put("success", false);
+                map.put("sesion", "Invalid Manifest Name.");
+                return new Gson().toJson(map);
+            }
+            manifestName = manifestName.trim();
+
+            ManifestLoadJob existing = MANIFEST_JOBS.get(manifestName);
+            if (existing != null && "RUNNING".equals(existing.status)) {
+                map.put("success", false);
+                map.put("sesion", "This manifest is already being loaded.");
+                return new Gson().toJson(map);
+            }
+
+            String jarPath = serverSession.propertySession.get("RUTA_FLICONCI_JAR").toString();
+
+            ProcessBuilder pb = new ProcessBuilder("java", "-jar", jarPath, manifestName);
+            pb.redirectErrorStream(true);
+
+            final ManifestLoadJob job = new ManifestLoadJob();
+            job.process = pb.start();
+            MANIFEST_JOBS.put(manifestName, job);
+
+            Thread reader = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(job.process.getInputStream()));
+                        String line;
+                        while ((line = br.readLine()) != null) {
+                            job.lines.add(line);
+                        }
+                    } catch (IOException e) {
+                        job.lines.add("ERROR reading process output: " + e.getMessage());
+                    }
+                    try {
+                        int exit = job.process.waitFor();
+                        job.exitCode = exit;
+                        job.status = (exit == 0) ? "DONE" : "ERROR";
+                    } catch (InterruptedException e) {
+                        job.status = "ERROR";
+                    }
+                }
+            });
+            reader.setDaemon(true);
+            reader.start();
+
+            map.put("success", true);
+            map.put("msjOption", "Manifest load started.");
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", "Error starting manifest load. " + ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+
+    @RequestMapping(value = "/loadManifestStatus")
+    public @ResponseBody
+    String loadManifestStatus(ModelMap map, HttpServletRequest request) {
+        try {
+            String manifestName = request.getParameter("manifestName");
+            int fromLine = request.getParameter("fromLine") == null ? 0 : Integer.parseInt(request.getParameter("fromLine"));
+
+            ManifestLoadJob job = manifestName == null ? null : MANIFEST_JOBS.get(manifestName.trim());
+            if (job == null) {
+                map.put("success", false);
+                map.put("sesion", "No load job found for this Manifest Name.");
+                return new Gson().toJson(map);
+            }
+
+            List<String> newLines;
+            synchronized (job.lines) {
+                int total = job.lines.size();
+                if (fromLine < 0) {
+                    fromLine = 0;
+                }
+                if (fromLine > total) {
+                    fromLine = total;
+                }
+                newLines = new ArrayList<String>(job.lines.subList(fromLine, total));
+            }
+
+            map.put("success", true);
+            map.put("status", job.status);
+            map.put("lines", newLines);
+            map.put("nextFromLine", fromLine + newLines.size());
+            map.put("exitCode", job.exitCode);
+        } catch (Exception ex) {
+            map.put("success", false);
+            map.put("sesion", "Error retrieving manifest load status. " + ex.getMessage());
+        }
+        return new Gson().toJson(map);
+    }
+    // </editor-fold>
 }

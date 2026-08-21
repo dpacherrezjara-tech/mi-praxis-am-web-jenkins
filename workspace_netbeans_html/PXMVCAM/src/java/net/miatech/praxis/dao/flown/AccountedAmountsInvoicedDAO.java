@@ -57,60 +57,45 @@ public class AccountedAmountsInvoicedDAO {
         ResultSet rs01 = null;
         String SQLCLL01;
 
-        SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00865(?,?,?,?,?,?,?,?,?)}";
+        SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00865(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
-            if (filter.page.PAGNUM > 0) {
-                PAGINIT = (filter.page.PAGNUM - 1) * totRowsPag + 1;
-            }
 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
-            cstmt01.registerOutParameter(5, Types.INTEGER);
-            cstmt01.registerOutParameter(6, Types.INTEGER);
-            cstmt01.registerOutParameter(7, Types.INTEGER);
-            cstmt01.registerOutParameter(8, Types.INTEGER);
+            cstmt01.registerOutParameter(13, Types.INTEGER);
+            cstmt01.registerOutParameter(14, Types.INTEGER);
+            cstmt01.registerOutParameter(15, Types.INTEGER);
+            cstmt01.registerOutParameter(16, Types.INTEGER);
 
             cstmt01.setString(1, filter.IN_A2559CCUST);
             cstmt01.setString(2, filter.IN_FINI);
             cstmt01.setString(3, filter.IN_FFIN);
             cstmt01.setString(4, filter.IN_PARAM);
-            cstmt01.setInt(5, PAGINIT);
-            cstmt01.setInt(6, totRowsPag);
-            cstmt01.setInt(7, totRows);
-            cstmt01.setInt(8, filter.page.TOTROW);
-            cstmt01.setString(9, filter.IN_A2559MODO);
+            cstmt01.setString(5, filter.IN_FLAG);
+            
+            cstmt01.setString(6, filter.IN_FLOWN_FINI);
+            cstmt01.setString(7, filter.IN_FLOWN_FFIN);
+            cstmt01.setString(8, filter.IN_FLIGHT_FINI);
+            cstmt01.setString(9, filter.IN_FLIGHT_FFIN);
+            cstmt01.setString(10, filter.IN_BILLING_DATEFINI);
+            cstmt01.setString(11, filter.IN_BILLING_DATEFFIN);
+            cstmt01.setString(12, filter.IN_PERIOD);
+            
+            cstmt01.setInt(13, filter.page.PAGNUM);
+            cstmt01.setInt(14, filter.page.PAGROW);
+            cstmt01.setInt(15, filter.page.TOTPAG);
+            cstmt01.setInt(16, filter.page.TOTROW);
+            cstmt01.setString(17, filter.IN_A2559MODO);
 
             cstmt01.execute();
 
-            filter.page.PAGNUM = cstmt01.getInt(5);
-            filter.page.PAGROW = cstmt01.getInt(6);
-            filter.page.TOTPAG = cstmt01.getInt(7);
-            filter.page.TOTROW = cstmt01.getInt(8);
-
-            if (filter.page.TOTROW > 0 && filter.page.TOTROW == cstmt01.getInt(6)) {
-                totRows = filter.page.TOTROW;
-                totPAGS = filter.page.TOTPAG;
-            } else {
-                try {
-                    totRows = cstmt01.getInt(8);
-                    int total = (int) (totRows / 20);
-                    int resto = (totRows % 20);
-
-                    if (resto > 0) {
-                        totPAGS = total + 1;
-                    } else {
-                        totPAGS = total;
-                    }
-
-                } catch (Exception e) {
-                    totPAGS = totRows / totRowsPag;
-                }
-            }
-
-            filter.page.TOTPAG = totPAGS;
+            filter.page.PAGNUM = cstmt01.getInt(13);
+            filter.page.PAGROW = cstmt01.getInt(14);
+            filter.page.TOTPAG = cstmt01.getInt(15);
+            filter.page.TOTROW = cstmt01.getInt(16);
 
             rs01 = cstmt01.getResultSet();
 
@@ -138,8 +123,16 @@ public class AccountedAmountsInvoicedDAO {
                 objRtn.A2559DFARE = rs01.getDouble("DFARE");
                 objRtn.A2559DTAX = rs01.getDouble("DTAX");
                 objRtn.A2559DISC = rs01.getDouble("DISC");
+                objRtn.A2559FCOIC = Functions.FormatFecha(rs01.getString("A2559FCOIC").trim(), "yyyyMMdd", "yyyy-MM-dd");
+                objRtn.A2559TUSO = rs01.getString("A2559TUSO");
+                objRtn.A2559YQ = rs01.getDouble("A2559YQ");
+                objRtn.A2559TCAMB = rs01.getDouble("A2559TCAMB");
+                objRtn.A2559FYQ = rs01.getDouble("A2559FYQ");
+                objRtn.A2559TCAMF = rs01.getDouble("A2559TCAMF");
+                objRtn.DFQ = rs01.getDouble("DFQ");
+                objRtn.DCAMB = rs01.getDouble("DCAMB");
 
-                objRtn.page.PAGNUM = filter.page.PAGNUM / filter.page.PAGROW + 1;
+                objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
                 objRtn.page.TOTPAG = filter.page.TOTPAG;
                 objRtn.page.TOTROW = filter.page.TOTROW;

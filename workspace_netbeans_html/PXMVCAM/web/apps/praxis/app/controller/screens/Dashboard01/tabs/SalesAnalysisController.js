@@ -23,6 +23,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
     beanAllianceDet: {},
     beanAllianceDetPais: {},
     beanAllianceDetAgente: {},
+    beanSalesByTransaction: {},
     beanDetRoutingType: {},
     dataRoute_chart: [],
     dataFareType_chart: [],
@@ -40,7 +41,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
     init: function (view) {
         me = this;
         mePie = this;
+        meSales = this;
+        meSales2 = this;
         meCompare = this;
+        PAGESS = 'PAG1';
 //        prototype.id = 'Dashboard01Form';
 //        prototype.url = CONTEXTPATH + '/Dashboard01';
 //        prototype.urlMaster = CONTEXTPATH + '/MasterController';
@@ -110,13 +114,156 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
 
         console.log('1-----------------------SalesAnalysisController - afterweeeeeeeeeeee');
     },
+    btnDisplayHides: function () {
+        var elemento2 = Ext.getCmp(prototype.id + '-boxFORE');
+        var elemento = Ext.getCmp(prototype.id + '-boxSal_Fore');
+        if (elemento) {
+            // Verificar si el elemento está visible y cambiar su visibilidad
+            if (elemento.isVisible()) {
+//                Ext.getCmp(prototype.id + '-cmbDateFromMonth_FORE').show()
+                elemento.hide();
+                elemento2.show();
+            } else {
+                Ext.getCmp(prototype.id + '-cmbDateFromMonth_FORE').hide()
+                Ext.getCmp(prototype.id + '-BoxForeOptions').items.items[0].setValue(true);
+                elemento.show();
+                elemento2.hide();
+                this.setFormatParameter();
+                var valueRadio = Ext.getCmp(prototype.id + '-BoxForeOptions').getValue().rb;
+
+                switch (valueRadio) {
+                    case 'rbc1':   //Total
+                        this.loadForeChart();
+                        break;
+                    case 'rbc2':   //Channels
+//                        this.loadChannelsChart();
+                        global.Msg({msg: 'Under Construction'});
+                        break;
+                }
+            }
+        } else {
+            console.error("No se encontró ningún elemento con el ID especificado.");
+        }
+    },
+    btnDisplayBack: function () {
+        var elemento = Ext.getCmp(prototype.id + '-boxFORE');
+        var elemento2 = Ext.getCmp(prototype.id + '-boxSal_Fore');
+        if (elemento) {
+            // Verificar si el elemento está visible y cambiar su visibilidad
+            if (elemento.isVisible()) {
+                //NADINE
+            } else {
+//                Ext.getCmp(prototype.id + '-cmbDateFromMonth_FORE').show()
+                elemento.show();
+                elemento2.hide();
+            }
+        } else {
+            console.error("No se encontró ningún elemento con el ID especificado.");
+        }
+    },
+    chooseFore_clickHandler: function (obj, rb_new, rb_old, func) {
+
+        var valueRadio = rb_new.rb;
+//        this.hidePanelGraficos();
+        this.setFormatParameter();
+
+        switch (valueRadio) {
+            case 'rbc1':    //Total
+                Ext.getCmp(prototype.id + '-boxSal_Fore').show();
+                this.loadForeChart();
+                break;
+            case 'rbc2':    //Zones
+//                Ext.getCmp(prototype.id + '-boxSal_Channels_1').show();
+//                this.loadChannelsChart();
+                global.Msg({msg: 'Under Construction'});
+                break;
+
+        }
+    },
+    hidePanelGraficos: function () {
+        Ext.getCmp(prototype.id + '-boxSal_Fore').hide();
+//        Ext.getCmp(prototype.id + '-boxSal_Channels_1').hide();
+    },
+    loadForeChart: function () {
+        var storeGridDatas = Ext.create('Ext.Praxis.store.screens.GridData', {
+            proxy: {
+                url: prototype.url + '/loadForeChart'
+            }, listeners: {
+                beforeload: function (obj) {
+//                    Ext.getBody().mask('Loading...');
+                    obj.proxy.extraParams = {beanString: searchParams, dw_excel: false};
+                },
+                load: function (obj) {
+//                    Ext.getBody().unmask('Loading...');
+
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        var tickets = obj.data.items[0].data;
+
+                        Ext.getCmp(prototype.id + '-displayPolarFore').setTitle('<center style="font-size:14px;">' + 'Total ' + tickets.IN_YEAR + ' Coupons Qty' + '</center>');
+
+                        var lstQtys = [];
+
+                        var objTicket1 = {};
+                        objTicket1.QTY = tickets.TOT_QTYSALE;
+                        var descriptionsQTY1 = 'Sales: ' + Ext.util.Format.number(objTicket1.QTY, '0,000') + '';
+                        objTicket1.strDescription = 'Sales';
+                        objTicket1.strDescriptionQTY = descriptionsQTY1;
+                        lstQtys.push(objTicket1);
+
+                        var objTicket2 = {};
+                        objTicket2.QTY = tickets.TOT_QTYFLOWN;
+                        var descriptionsQTY2 = 'Flown: ' + Ext.util.Format.number(objTicket2.QTY, '0,000') + '';
+                        objTicket2.strDescription = 'Flown';
+                        objTicket2.strDescriptionQTY = descriptionsQTY2;
+                        lstQtys.push(objTicket2);
+
+                        var objTicket3 = {};
+                        objTicket3.QTY = tickets.TOT_QTYSALE - tickets.TOT_QTYFLOWN;
+                        var descriptionsQTY3 = 'Pending: ' + Ext.util.Format.number(objTicket3.QTY, '0,000') + '';
+                        objTicket3.strDescription = 'Pending';
+                        objTicket3.strDescriptionQTY = descriptionsQTY3;
+                        lstQtys.push(objTicket3);
+
+                        var storeGridQtys = Ext.create('Ext.data.Store', {
+                            data: lstQtys,
+                            autoLoad: true
+                        });
+
+                        Ext.getCmp(prototype.id + '-displayPolarFore').bindStore(storeGridQtys);
+//                        Ext.getCmp(prototype.id + '-displayPolarFore').bindStore(storeGridQtys);
+                    }
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-gridDataFore').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displayForeGraph').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridDataFore').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-displayForeGraph').setStore(storeGridDatas);
+    },
     inicio: function () {
 //        this.hidePagination_clickHandler();
         meSales.drillDown = [];
-        console.clear();
+//        console.clear();
         console.log('1-----------------------SalesAnalysisController - INICIOOOOOOOOOOO');
         this.setFormatParameter();
-
+        Ext.getCmp(prototype.id + '-cmbSalesRelleno').show();
+        Ext.getCmp(prototype.id + '-cmbTNUFilters').hide();
+        Ext.getCmp(prototype.id + '-cmbFOREFilters').hide();
+        Ext.getCmp(prototype.id + '-btnDisplayFore').hide();
+        Ext.getCmp(prototype.id + '-btnDisplayFore_2').hide();
+        Ext.getCmp(prototype.id + '-btnDisplay').show();
+        Ext.getCmp(prototype.id + '-btnDisplay_2').show();
+        Ext.getCmp(prototype.id + '-btnBack').show();
+        Ext.getCmp(prototype.id + '-btnBack_2').show();
+        Ext.getCmp(prototype.id + '-boxSal_Fore').hide();
+        Ext.getCmp(prototype.id + '-previous_FORE1').hide();
+        Ext.getCmp(prototype.id + '-next_FORE1').hide();
+        Ext.getCmp(prototype.id + '-previous_FORE1').hide();
+        Ext.getCmp(prototype.id + '-next_FORE1').hide();
         var opcion = "1";
 
         console.log(gloSelOpt);
@@ -187,6 +334,35 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 GROUPBY = 'COMPAREDAY';
                 this.loadCompareSaleDay();
                 break;
+            case "20"://BY TRANSACTION
+                GROUPBY = '';
+                this.loadSalesByTransaction();
+                break;
+            case "21"://TNU
+                GROUPBY = '';
+                Ext.getCmp(prototype.id + '-cmbSalesRelleno').hide();
+                Ext.getCmp(prototype.id + '-cmbTNUFilters').show();
+//                this.rbChangeTypeTNU();
+                this.loadTNURE();
+                break;
+            case "22"://FORECAST
+                GROUPBY = 'FORECAST';
+                Ext.getCmp(prototype.id + '-cmbSalesRelleno').hide();
+                Ext.getCmp(prototype.id + '-cmbFOREFilters').show();
+                Ext.getCmp(prototype.id + '-btnDisplayFore').show();
+                Ext.getCmp(prototype.id + '-btnDisplayFore_2').show();
+//                Ext.getCmp(prototype.id + '-cmbDateFromMonth_FORE').show();
+                Ext.getCmp(prototype.id + '-btnDisplay').hide();
+                Ext.getCmp(prototype.id + '-btnDisplay_2').hide();
+                Ext.getCmp(prototype.id + '-btnBack').hide();
+                Ext.getCmp(prototype.id + '-btnBack_2').hide();
+                Ext.getCmp(prototype.id + '-previous_FORE1').show();
+                Ext.getCmp(prototype.id + '-next_FORE1').show();
+                Ext.getCmp(prototype.id + '-previous_FORE2').hide();
+                Ext.getCmp(prototype.id + '-next_FORE2').hide();
+                this.PAGESS = 'PAG1';
+                this.loadFORE();
+                break;
         }
     },
     setFormatParameter: function () {
@@ -200,6 +376,8 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         Ext.getCmp(prototype.id + '-cmbDateToMonth').show();
         Ext.getCmp(prototype.id + '-lblTop').show();
         me.bean.strSelectedBy = gloSelOpt;
+
+        me.bean.IN_PER = Ext.getCmp(prototype.id + '-cmbDateFromYearNTU').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonthNTU').getValue();
 
         if (gloSelOpt === '19') {
             Ext.getCmp(prototype.id + '-cmbDateToYear').hide();
@@ -229,11 +407,18 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
             me.bean.IN_ONOFF = Ext.getCmp(prototype.id + '-radiogroupType_ca').getValue().rbgType_ca;
             me.bean.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
             me.bean.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
+        } else if (gloSelOpt === '22') {
+            me.bean.IN_FECHA_FROM_FORE = Ext.getCmp(prototype.id + '-cmbDateFromYear_FORE').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth_FORE').getValue();
+            me.bean.IN_FECHA_FROM_FORE_1 = Ext.getCmp(prototype.id + '-cmbDateFromYear_FORE').getValue();
+            me.bean.IN_FECHA_TO_FORE = Ext.getCmp(prototype.id + '-cmbDateToYear_FORE').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth_FORE').getValue();
         } else {
             me.bean.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
             me.bean.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
         }
-
+        me.bean.IN_FECHA_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue();
+        me.bean.IN_FECHA_TO = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth').getValue();
+        me.bean.IN_FECHA_FROM_FORE = Ext.getCmp(prototype.id + '-cmbDateFromYear_FORE').getValue() + Ext.getCmp(prototype.id + '-cmbDateFromMonth_FORE').getValue();
+        me.bean.IN_FECHA_TO_FORE = Ext.getCmp(prototype.id + '-cmbDateToYear_FORE').getValue() + Ext.getCmp(prototype.id + '-cmbDateToMonth_FORE').getValue();
         me.bean.strYearFrom = Ext.getCmp(prototype.id + '-cmbDateFromYear').getValue() + '';
         me.bean.strMonthFrom = Ext.getCmp(prototype.id + '-cmbDateFromMonth').getValue() + '';
         me.bean.strYearTo = Ext.getCmp(prototype.id + '-cmbDateToYear').getValue() + '';
@@ -250,7 +435,24 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         console.log(searchParams);
 
     },
+//    rbChangeTypeTNU: function(obj, rb_new, rb_old, func) {
+//        this.setFormatParameter();
+//        var selectedValue = Ext.getCmp(prototype.id + '-radiogroupTypeTNU').getValue().rbgType;
+//        console.log(selectedValue);
+//        switch (selectedValue) {
+//            case 'R':
+//                console.log('RESUMEN');
+//                this.loadTNURE();
+//                break;
+//            case 'S':
+//                console.log('VERSUS');
+//                this.loadTNUVS();
+//                break;
+//        }
+//    },
+
     search: function () {
+        this.setFormatParameter();
         win.lblUser_toolTip("Estructura: IMF080");
         this.showGrid('-boxMainData');
 //        me.panelActual = '-boxMainData';
@@ -261,10 +463,10 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
             url: prototype.url + '/searchTest',
             method: 'POST',
             timeout: 60000000,
-            beforerequest: Ext.getBody().mask('Loading...'),
+//            beforerequest: Ext.getBody().mask('Loading...'),
             params: {beanString: searchParams, dw_excel: false},
             success: function (response, options) {
-                Ext.getBody().unmask('Loading...');
+//                Ext.getBody().unmask('Loading...');
                 var res = Ext.JSON.decode(response.responseText);
                 console.log(res);
                 if (res.lstData.length === 0) {
@@ -352,7 +554,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         this.loadDDTpMCountryofSale(this.paramsCountryCity, this.beanCountryCity);
     },
     loadDDTpMCountryofSale: function (paramsCountryCity, bean) {
-        win.lblUser_toolTip("Estructura: IMF082");
+        win.lblUser_toolTip("Estructura: IMF081");
         var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
             proxy: {
                 url: prototype.url + '/loadDDTpMCountryofSale'
@@ -395,7 +597,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
             }
         });
 
-        global.clear();
+//        global.clear();
         Ext.getCmp(prototype.id + '-gridCountryofSale').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-paggin2').bindStore(storeGridDatas);
     },
@@ -485,13 +687,13 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
             }
         });
 
-        global.clear();
+//        global.clear();
         Ext.getCmp(prototype.id + '-gridDetailbyAgent').bindStore(storeGridDatas);
 //        Ext.getCmp(prototype.id + '-gridDetailbyAgentSL').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin3').bindStore(storeGridDatas);
     },
     loadCountryOfSale: function () {
-        win.lblUser_toolTip("Estructura: IMF082");
+        win.lblUser_toolTip("Estructura: IMF081");
 
         this.showGrid('-BoxCountryOfSale');
         Ext.Ajax.request({
@@ -606,9 +808,9 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 Ext.getCmp(prototype.id + '-lblTotalAlCPN').setText(Ext.util.Format.number(data.CUPONS_OFF, '0,000'));
                 Ext.getCmp(prototype.id + '-lblTotalAlAmount').setText(Ext.util.Format.number(data.AMOUNT_OFF, '0,000'));
                 Ext.getCmp(prototype.id + '-lblTotalAlAVG').setText(Ext.util.Format.number(data.totAVG, '0,000.00'));
-                Ext.getCmp(prototype.id + '-lblTotalPerGral').setText(Ext.util.Format.number(data.Perc4, '0,000.00'));
-                Ext.getCmp(prototype.id + '-lblTotalAL_QCPNSNR').setText(Ext.util.Format.number(data.CUPONS_OTHER, '0,000'));
-                Ext.getCmp(prototype.id + '-lblTotalAL_AMOUNTNR').setText(Ext.util.Format.number(data.AMOUNT_O, '0,000'));
+//                Ext.getCmp(prototype.id + '-lblTotalPerGral').setText(Ext.util.Format.number(data.Perc4, '0,000.00'));
+//                Ext.getCmp(prototype.id + '-lblTotalAL_QCPNSNR').setText(Ext.util.Format.number(data.CUPONS_OTHER, '0,000'));
+//                Ext.getCmp(prototype.id + '-lblTotalAL_AMOUNTNR').setText(Ext.util.Format.number(data.AMOUNT_O, '0,000'));
 
             }
         });
@@ -660,14 +862,14 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 },
                 load: function (obj) {
                     Ext.getBody().unmask('Loading...');
-                    
+
                     var pag = Ext.getCmp(prototype.id + '-paggin_loadCityPair');
                     var pagData = pag.getPageData();
-                    
+
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
                     Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
                     Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
-                    
+
                     if (obj.data.length === 0) {
                         global.Msg({msg: 'Data not found.'});
                     } else {
@@ -835,18 +1037,18 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 },
                 load: function (obj) {
                     Ext.getBody().unmask('Loading...');
-                    
+
                     var pag = Ext.getCmp(prototype.id + '-paggin_loadSalesAgent');
                     var pagData = pag.getPageData();
 //                    console.log(pagData);
                     Ext.getCmp(prototype.id + '-lbl-currentPage').setText(Ext.util.Format.number(pagData.currentPage, '0,000'));
                     Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
                     Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
-                    
+
                     if (obj.data.length === 0) {
                         global.Msg({msg: 'Data not found.'});
                     } else {
-                        
+
 //                        console.log(obj.data);
 //                        var data = obj.data.items[0].data;
 
@@ -855,7 +1057,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 }
             }
         });
-        
+
         Ext.getCmp(prototype.id + '-ADG_GridSalesAgent').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-ADG_GridSalesAgent').setStore(storeGridDatas);
         this.showPagination_clickHandler();
@@ -962,7 +1164,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         });
 //            global.clear();
 //        Ext.getCmp(prototype.id + '-gridDetailGDS').bindStore(storeGridDatas);
-        global.clear();
+//        global.clear();
 
         Ext.getCmp(prototype.id + '-gridDetRouting').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDetRouting').setStore(storeGridDatas);
@@ -1097,7 +1299,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         });
 //            global.clear();
 //        Ext.getCmp(prototype.id + '-gridDetailGDS').bindStore(storeGridDatas);
-        global.clear();
+//        global.clear();
 
         Ext.getCmp(prototype.id + '-gridDetailGDS').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDetailGDS').setStore(storeGridDatas);
@@ -1146,7 +1348,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         });
 //            global.clear();
 //        Ext.getCmp(prototype.id + '-gridDetailGDS').bindStore(storeGridDatas);
-        global.clear();
+//        global.clear();
 
         Ext.getCmp(prototype.id + '-gridDetailGDSAgte').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDetailGDSAgte').setStore(storeGridDatas);
@@ -1197,7 +1399,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         });
 //            global.clear();
 //        Ext.getCmp(prototype.id + '-gridDetailGDS').bindStore(storeGridDatas);
-        global.clear();
+//        global.clear();
 
         Ext.getCmp(prototype.id + '-gridDetailGDSTkt').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDetailGDSTkt').setStore(storeGridDatas);
@@ -1332,6 +1534,82 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         var zonaDesc = this.beanFareType.strDescriptionZone
         this.loadDetTypeFare(zona, zonaDesc);
     },
+    RETRO1: function () {
+
+        Ext.getCmp(prototype.id + '-previous_FORE1').show();
+        Ext.getCmp(prototype.id + '-next_FORE1').show();
+        console.log('MUESTRA PAGINA 1');
+        this.PAGESS = 'PAG1';
+        me.bean = {};
+        me.bean.IN_FECHA_FROM_FORE = Ext.getCmp(prototype.id + '-cmbDateFromYear_FORE').getValue() + "01";
+        var beanString = JSON.stringify(me.bean);
+        searchParams = {
+            beanString: beanString,
+            bean: me.bean
+        };
+        console.log(searchParams);
+
+        this.loadFORE();
+
+    },
+    RETRO2: function () {
+
+        Ext.getCmp(prototype.id + '-previous_FORE1').show();
+        Ext.getCmp(prototype.id + '-next_FORE1').show();
+        Ext.getCmp(prototype.id + '-previous_FORE2').hide();
+        Ext.getCmp(prototype.id + '-next_FORE2').hide();
+        console.log('MUESTRA PAGINA 2');
+        this.PAGESS = 'PAG2';
+        me.bean = {};
+        me.bean.IN_FECHA_FROM_FORE = Ext.getCmp(prototype.id + '-cmbDateFromYear_FORE').getValue() + "05";
+        var beanString = JSON.stringify(me.bean);
+        searchParams = {
+            beanString: beanString,
+            bean: me.bean
+        };
+        console.log(searchParams);
+
+        this.loadFORE();
+
+    },
+    POST1: function () {
+
+        Ext.getCmp(prototype.id + '-previous_FORE1').hide();
+        Ext.getCmp(prototype.id + '-next_FORE1').hide();
+        Ext.getCmp(prototype.id + '-previous_FORE2').show();
+        Ext.getCmp(prototype.id + '-next_FORE2').show();
+        console.log('MUESTRA PAGINA 2');
+        this.PAGESS = 'PAG2';
+        me.bean = {};
+        me.bean.IN_FECHA_FROM_FORE = Ext.getCmp(prototype.id + '-cmbDateFromYear_FORE').getValue() + "05";
+        var beanString = JSON.stringify(me.bean);
+        searchParams = {
+            beanString: beanString,
+            bean: me.bean
+        };
+        console.log(searchParams);
+
+        this.loadFORE();
+
+    },
+    POST2: function () {
+
+        Ext.getCmp(prototype.id + '-previous_FORE2').show();
+        Ext.getCmp(prototype.id + '-next_FORE2').show();
+        console.log('MUESTRA PAGINA 3');
+        this.PAGESS = 'PAG3';
+        me.bean = {};
+        me.bean.IN_FECHA_FROM_FORE = Ext.getCmp(prototype.id + '-cmbDateFromYear_FORE').getValue() + "09";
+        var beanString = JSON.stringify(me.bean);
+        searchParams = {
+            beanString: beanString,
+            bean: me.bean
+        };
+        console.log(searchParams);
+
+        this.loadFORE();
+
+    },
     loadDetTypeFare: function (zona, zonaDesc) {
 
         this.showGrid('-BoxDetFare');
@@ -1368,7 +1646,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 }
             }
         });
-        global.clear();
+//        global.clear();
         Ext.getCmp(prototype.id + '-gridDetFare').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDetFare').setStore(storeGridDatas);
     },
@@ -1410,7 +1688,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 }
             }
         });
-        global.clear();
+//        global.clear();
         Ext.getCmp(prototype.id + '-gridDetFare').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-gridDetFare').setStore(storeGridDatas);
     },
@@ -1472,7 +1750,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 }
             }
         });
-        global.clear();
+//        global.clear();
 
         Ext.getCmp(prototype.id + '-GridDetAlliances').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-GridDetAlliances').setStore(storeGridDatas);
@@ -1486,7 +1764,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         this.loadDetPaisAlliances(this.beanAllianceDetPais);
     },
     loadDetPaisAlliances: function (searchParams) {
-        win.lblUser_toolTip("Estructura: IMF082");
+        win.lblUser_toolTip("Estructura: IMF083");
 
 
         this.showGrid('-BoxDetPaisAlliances');
@@ -1509,7 +1787,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 }
             }
         });
-        global.clear();
+//        global.clear();
 
         Ext.getCmp(prototype.id + '-GridDetPaisAlliances').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-GridDetPaisAlliances').setStore(storeGridDatas);
@@ -1523,7 +1801,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
         this.loadDetAgenteAlliances(this.beanAllianceDetAgente);
     },
     loadDetAgenteAlliances: function (searchParams) {
-        win.lblUser_toolTip("Estructura: IMF082");
+        win.lblUser_toolTip("Estructura: IMF084");
 
         me.panelActual = '-BoxDetAgenteAlliances';
         this.showGrid('-BoxDetAgenteAlliances');
@@ -1552,7 +1830,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                 }
             }
         });
-        global.clear();
+//        global.clear();
 
         Ext.getCmp(prototype.id + '-GridDetAgenteAlliances').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-GridDetAgenteAlliances').setStore(storeGridDatas);
@@ -1751,6 +2029,1022 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
             }
         });
     },
+    loadSalesByTransaction: function () {
+        win.lblUser_toolTip("Estructura: IMF084");
+
+        me.panelActual = '-boxSalesByTransaction';
+        this.showGrid('-boxSalesByTransaction');
+        var storeGridDatas = Ext.create('Ext.Praxis.store.screens.GridData', {
+            proxy: {
+                url: prototype.url + '/loadSalesByTransaction'
+            }, listeners: {
+                beforeload: function (obj) {
+//                    Ext.getBody().mask('Loading...');
+                    obj.proxy.extraParams = {beanString: searchParams, dw_excel: false};
+                },
+                load: function (obj) {
+//                    Ext.getBody().unmask('Loading...');
+
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        var tickets = obj.data.items[0].data;
+                        var lstTickets = [];
+
+                        var objTicket1 = {};
+                        objTicket1.TKT = tickets.TOTAL_SALETKT;
+                        objTicket1.USD = tickets.TOTAL_SALEUSD;
+                        var descriptionsTKT1 = 'SALES: ' + Ext.util.Format.number(objTicket1.TKT, '0,000') + ' QTY';
+                        var descriptionsUSD1 = 'SALES: ' + Ext.util.Format.number(objTicket1.USD, '0,000') + ' USD';
+                        objTicket1.strDescription = 'SALES';
+                        objTicket1.strDescriptionTKT = descriptionsTKT1;
+                        objTicket1.strDescriptionUSD = descriptionsUSD1;
+                        lstTickets.push(objTicket1);
+
+                        var objTicket2 = {};
+                        objTicket2.TKT = tickets.TOTAL_EXCHTKT;
+                        objTicket2.USD = tickets.TOTAL_EXCHUSD;
+                        var descriptionsTKT2 = 'EXCH: ' + Ext.util.Format.number(objTicket2.TKT, '0,000') + ' QTY';
+                        var descriptionsUSD2 = 'EXCH: ' + Ext.util.Format.number(objTicket2.USD, '0,000') + ' USD';
+                        objTicket2.strDescription = 'EXCH';
+                        objTicket2.strDescriptionTKT = descriptionsTKT2;
+                        objTicket2.strDescriptionUSD = descriptionsUSD2;
+                        lstTickets.push(objTicket2);
+
+                        var objTicket3 = {};
+                        objTicket3.TKT = tickets.TOTAL_RFNDTKT;
+                        objTicket3.USD = tickets.TOTAL_RFNDUSD;
+                        var descriptionsTKT3 = 'RFND: ' + Ext.util.Format.number(objTicket3.TKT, '0,000') + ' QTY';
+                        var descriptionsUSD3 = 'RFND: ' + Ext.util.Format.number(objTicket3.USD, '0,000') + ' USD';
+                        objTicket3.strDescription = 'RFND';
+                        objTicket3.strDescriptionTKT = descriptionsTKT3;
+                        objTicket3.strDescriptionUSD = descriptionsUSD3;
+                        lstTickets.push(objTicket3);
+
+                        var storeGridTickets = Ext.create('Ext.data.Store', {
+                            data: lstTickets,
+                            autoLoad: true
+                        });
+
+                        Ext.getCmp(prototype.id + '-donaTransactionTickets').bindStore(storeGridTickets);
+                        Ext.getCmp(prototype.id + '-donaTransactionAmount').bindStore(storeGridTickets);
+                    }
+                }
+            }
+        });
+//        global.clear();
+        Ext.getCmp(prototype.id + '-GridSalesByTransaction').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-GridSalesByTransaction').setStore(storeGridDatas);
+
+//        this.showPagination_clickHandler();
+//        Ext.getCmp(prototype.id + '-pagginAlliance').bindStore(storeGridDatas);
+    },
+    loadTNURE: function () {
+        win.lblUser_toolTip("Estructura: A4483 ");
+
+        me.panelActual = '-boxTNURE';
+        this.showGrid('-boxTNURE');
+        var storeGridDatas = Ext.create('Ext.Praxis.store.screens.GridData', {
+            proxy: {
+                url: prototype.url + '/loadTNURE'
+            }, listeners: {
+                beforeload: function (obj) {
+//                    Ext.getBody().mask('Loading...');
+                    obj.proxy.extraParams = {beanString: searchParams, dw_excel: false};
+                },
+                load: function (obj) {
+//                    Ext.getBody().unmask('Loading...');
+                    console.log('hay data');
+                    console.log(obj.data.items[0]);
+
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+
+                    }
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-gridTNURE').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridTNURE').setStore(storeGridDatas);
+    },
+    loadFORE: function () {
+
+        win.lblUser_toolTip("Estructura: A4521");
+
+        me.panelActual = '-boxFORE';
+        this.showGrid('-boxFORE');
+        var storeGridDatas = Ext.create('Ext.Praxis.store.screens.GridData', {
+            proxy: {
+                url: prototype.url + '/loadFORE'
+            }, listeners: {
+                beforeload: function (obj) {
+//                    Ext.getBody().mask('Loading...');
+                    obj.proxy.extraParams = {beanString: searchParams, dw_excel: false};
+                },
+                load: function (obj) {
+//                    Ext.getBody().unmask('Loading...');
+                    console.log(obj.data.items[0]);
+
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        console.log('llena IDS');
+                        var Objtemp = obj.data.items[0].data;
+                        console.log(Objtemp);
+                        var espacios = '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
+                        var espacios2 = '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp';
+
+                        if (Objtemp.DSALES1 !== '' && Objtemp.DFLIGHT1 !== '') {
+
+                            console.log('Entra a 1');
+                            Ext.getCmp(prototype.id + '-gridFORE').setWidth(312);
+                            Ext.getCmp(prototype.id + '-gridFORE2').setWidth(312);
+                            Ext.getCmp(prototype.id + '-month1').show();
+                            Ext.getCmp(prototype.id + '-month1').setText(espacios + Objtemp.DSALES1 + espacios + espacios2 + 'USD');
+                            Ext.getCmp(prototype.id + '-cpn1').setText(Ext.util.Format.number(Objtemp.QTYS1, '0,000'));
+                            Ext.getCmp(prototype.id + '-amo1').setText(Ext.util.Format.number(Objtemp.AMOS1, '0,000'));
+                            //Agrupacion por GrilladDown
+                            Ext.getCmp(prototype.id + '-Used1').show();
+                            Ext.getCmp(prototype.id + '-Coupons1').show();
+                            Ext.getCmp(prototype.id + '-Por1').show();
+                            Ext.getCmp(prototype.id + '-Amount1').show();
+
+                            if (Objtemp.DSALES2 !== '' && Objtemp.DFLIGHT2 !== '') {
+
+                                console.log('Entra a 2');
+                                Ext.getCmp(prototype.id + '-gridFORE').setWidth(624);
+                                Ext.getCmp(prototype.id + '-gridFORE2').setWidth(624);
+                                Ext.getCmp(prototype.id + '-month2').show();
+                                Ext.getCmp(prototype.id + '-month2').setText(espacios + Objtemp.DSALES2 + espacios + espacios2 + 'USD');
+                                Ext.getCmp(prototype.id + '-cpn2').setText(Ext.util.Format.number(Objtemp.QTYS2, '0,000'));
+                                Ext.getCmp(prototype.id + '-amo2').setText(Ext.util.Format.number(Objtemp.AMOS2, '0,000'));
+                                //Agrupacion por GrilladDown
+                                Ext.getCmp(prototype.id + '-Used2').show();
+                                Ext.getCmp(prototype.id + '-Coupons2').show();
+                                Ext.getCmp(prototype.id + '-Por2').show();
+                                Ext.getCmp(prototype.id + '-Amount2').show();
+
+                                if (Objtemp.DSALES3 !== '' && Objtemp.DFLIGHT3 !== '') {
+
+                                    console.log('Entra a 3');
+                                    Ext.getCmp(prototype.id + '-gridFORE').setWidth(936);
+                                    Ext.getCmp(prototype.id + '-gridFORE2').setWidth(936);
+                                    Ext.getCmp(prototype.id + '-month3').show();
+                                    Ext.getCmp(prototype.id + '-month3').setText(espacios + Objtemp.DSALES3 + espacios + espacios2 + 'USD');
+                                    Ext.getCmp(prototype.id + '-cpn3').setText(Ext.util.Format.number(Objtemp.QTYS3, '0,000'));
+                                    Ext.getCmp(prototype.id + '-amo3').setText(Ext.util.Format.number(Objtemp.AMOS3, '0,000'));
+                                    //Agrupacion por GrilladDown
+                                    Ext.getCmp(prototype.id + '-Used3').show();
+                                    Ext.getCmp(prototype.id + '-Coupons3').show();
+                                    Ext.getCmp(prototype.id + '-Por3').show();
+                                    Ext.getCmp(prototype.id + '-Amount3').show();
+
+                                    if (Objtemp.DSALES4 !== '' && Objtemp.DFLIGHT4 !== '') {
+
+                                        console.log('Entra a 4');
+                                        Ext.getCmp(prototype.id + '-gridFORE').setWidth(1248);
+                                        Ext.getCmp(prototype.id + '-gridFORE2').setWidth(1248);
+                                        Ext.getCmp(prototype.id + '-month4').show();
+                                        Ext.getCmp(prototype.id + '-month4').setText(espacios + Objtemp.DSALES4 + espacios + espacios2 + 'USD');
+                                        Ext.getCmp(prototype.id + '-cpn4').setText(Ext.util.Format.number(Objtemp.QTYS4, '0,000'));
+                                        Ext.getCmp(prototype.id + '-amo4').setText(Ext.util.Format.number(Objtemp.AMOS4, '0,000'));
+                                        //Agrupacion por GrilladDown
+                                        Ext.getCmp(prototype.id + '-Used4').show();
+                                        Ext.getCmp(prototype.id + '-Coupons4').show();
+                                        Ext.getCmp(prototype.id + '-Por4').show();
+                                        Ext.getCmp(prototype.id + '-Amount4').show();
+//
+//                                        if (Objtemp.DSALES5 !== '' && Objtemp.DFLIGHT5 !== '') {
+//
+//                                            console.log('Entra a 5');
+//                                            Ext.getCmp(prototype.id + '-gridFORE').setWidth(1560);
+//                                            Ext.getCmp(prototype.id + '-gridFORE2').setWidth(1560);
+//                                            Ext.getCmp(prototype.id + '-month5').show();
+//                                            Ext.getCmp(prototype.id + '-month5').setText(espacios + Objtemp.DSALES5 + espacios + espacios2 + 'USD');
+//                                            Ext.getCmp(prototype.id + '-cpn5').setText(Ext.util.Format.number(Objtemp.QTYS5, '0,000'));
+//                                            Ext.getCmp(prototype.id + '-amo5').setText(Ext.util.Format.number(Objtemp.AMOS5, '0,000'));
+//                                            //Agrupacion por GrilladDown
+//                                            Ext.getCmp(prototype.id + '-Used5').show();
+//                                            Ext.getCmp(prototype.id + '-Coupons5').show();
+//                                            Ext.getCmp(prototype.id + '-Por5').show();
+//                                            Ext.getCmp(prototype.id + '-Amount5').show();
+//
+//                                            if (Objtemp.DSALES6 !== '' && Objtemp.DFLIGHT6 !== '') {
+//
+//                                                console.log('Entra a 6');
+//                                                Ext.getCmp(prototype.id + '-gridFORE').setWidth(1560);
+//                                                Ext.getCmp(prototype.id + '-gridFORE2').setWidth(1560);
+//                                                Ext.getCmp(prototype.id + '-month6').show();
+//                                                Ext.getCmp(prototype.id + '-month6').setText(espacios + Objtemp.DSALES6 + espacios + espacios2 + 'USD');
+//                                                Ext.getCmp(prototype.id + '-cpn6').setText(Ext.util.Format.number(Objtemp.QTYS6, '0,000'));
+//                                                Ext.getCmp(prototype.id + '-amo6').setText(Ext.util.Format.number(Objtemp.AMOS6, '0,000'));
+//                                                //Agrupacion por GrilladDown
+//                                                Ext.getCmp(prototype.id + '-Used6').show();
+//                                                Ext.getCmp(prototype.id + '-Coupons6').show();
+//                                                Ext.getCmp(prototype.id + '-Por6').show();
+//                                                Ext.getCmp(prototype.id + '-Amount6').show();
+//
+//                                                if (Objtemp.DSALES7 !== '' && Objtemp.DFLIGHT7 !== '') {
+//
+//                                                    console.log('Entra a 7');
+//                                                    Ext.getCmp(prototype.id + '-gridFORE').setWidth(1560);
+//                                                    Ext.getCmp(prototype.id + '-gridFORE2').setWidth(1560);
+//                                                    Ext.getCmp(prototype.id + '-month7').show();
+//                                                    Ext.getCmp(prototype.id + '-month7').setText(espacios + Objtemp.DSALES7 + espacios + espacios2 + 'USD');
+//                                                    Ext.getCmp(prototype.id + '-cpn7').setText(Ext.util.Format.number(Objtemp.QTYS7, '0,000'));
+//                                                    Ext.getCmp(prototype.id + '-amo7').setText(Ext.util.Format.number(Objtemp.AMOS7, '0,000'));
+//                                                    //Agrupacion por GrilladDown
+//                                                    Ext.getCmp(prototype.id + '-Used7').show();
+//                                                    Ext.getCmp(prototype.id + '-Coupons7').show();
+//                                                    Ext.getCmp(prototype.id + '-Por7').show();
+//                                                    Ext.getCmp(prototype.id + '-Amount7').show();
+//
+//                                                    if (Objtemp.DSALES8 !== '' && Objtemp.DFLIGHT8 !== '') {
+//
+//                                                        console.log('Entra a 8');
+//                                                        Ext.getCmp(prototype.id + '-gridFORE').setWidth(1560);
+//                                                        Ext.getCmp(prototype.id + '-gridFORE2').setWidth(1560);
+//                                                        Ext.getCmp(prototype.id + '-month8').show();
+//                                                        Ext.getCmp(prototype.id + '-month8').setText(espacios + Objtemp.DSALES8 + espacios + espacios2 + 'USD');
+//                                                        Ext.getCmp(prototype.id + '-cpn8').setText(Ext.util.Format.number(Objtemp.QTYS8, '0,000'));
+//                                                        Ext.getCmp(prototype.id + '-amo8').setText(Ext.util.Format.number(Objtemp.AMOS8, '0,000'));
+//                                                        //Agrupacion por GrilladDown
+//                                                        Ext.getCmp(prototype.id + '-Used8').show();
+//                                                        Ext.getCmp(prototype.id + '-Coupons8').show();
+//                                                        Ext.getCmp(prototype.id + '-Por8').show();
+//                                                        Ext.getCmp(prototype.id + '-Amount8').show();
+//
+//                                                        if (Objtemp.DSALES9 !== '' && Objtemp.DFLIGHT9 !== '') {
+//
+//                                                            console.log('Entra a 9');
+//                                                            Ext.getCmp(prototype.id + '-gridFORE').setWidth(1560);
+//                                                            Ext.getCmp(prototype.id + '-gridFORE2').setWidth(1560);
+//                                                            Ext.getCmp(prototype.id + '-month9').show();
+//                                                            Ext.getCmp(prototype.id + '-month9').setText(espacios + Objtemp.DSALES9 + espacios + espacios2 + 'USD');
+//                                                            Ext.getCmp(prototype.id + '-cpn9').setText(Ext.util.Format.number(Objtemp.QTYS9, '0,000'));
+//                                                            Ext.getCmp(prototype.id + '-amo9').setText(Ext.util.Format.number(Objtemp.AMOS9, '0,000'));
+//                                                            //Agrupacion por GrilladDown
+//                                                            Ext.getCmp(prototype.id + '-Used9').show();
+//                                                            Ext.getCmp(prototype.id + '-Coupons9').show();
+//                                                            Ext.getCmp(prototype.id + '-Por9').show();
+//                                                            Ext.getCmp(prototype.id + '-Amount9').show();
+//
+//                                                            if (Objtemp.DSALES10 !== '' && Objtemp.DFLIGHT10 !== '') {
+//
+//                                                                console.log('Entra a 10');
+//                                                                Ext.getCmp(prototype.id + '-gridFORE').setWidth(1560);
+//                                                                Ext.getCmp(prototype.id + '-gridFORE2').setWidth(1560);
+//                                                                Ext.getCmp(prototype.id + '-month10').show();
+//                                                                Ext.getCmp(prototype.id + '-month10').setText(espacios + Objtemp.DSALES10 + espacios + espacios2 + 'USD');
+//                                                                Ext.getCmp(prototype.id + '-cpn10').setText(Ext.util.Format.number(Objtemp.QTYS10, '0,000'));
+//                                                                Ext.getCmp(prototype.id + '-amo10').setText(Ext.util.Format.number(Objtemp.AMOS10, '0,000'));
+//                                                                //Agrupacion por GrilladDown
+//                                                                Ext.getCmp(prototype.id + '-Used10').show();
+//                                                                Ext.getCmp(prototype.id + '-Coupons10').show();
+//                                                                Ext.getCmp(prototype.id + '-Por10').show();
+//                                                                Ext.getCmp(prototype.id + '-Amount10').show();
+//
+//                                                                if (Objtemp.DSALES11 !== '' && Objtemp.DFLIGHT11 !== '') {
+//
+//                                                                    console.log('Entra a 11');
+//                                                                    Ext.getCmp(prototype.id + '-gridFORE').setWidth(1560);
+//                                                                    Ext.getCmp(prototype.id + '-gridFORE2').setWidth(1560);
+//                                                                    Ext.getCmp(prototype.id + '-month11').show();
+//                                                                    Ext.getCmp(prototype.id + '-month11').setText(espacios + Objtemp.DSALES11 + espacios + espacios2 + 'USD');
+//                                                                    Ext.getCmp(prototype.id + '-cpn11').setText(Ext.util.Format.number(Objtemp.QTYS11, '0,000'));
+//                                                                    Ext.getCmp(prototype.id + '-amo11').setText(Ext.util.Format.number(Objtemp.AMOS11, '0,000'));
+//                                                                    //Agrupacion por GrilladDown
+//                                                                    Ext.getCmp(prototype.id + '-Used11').show();
+//                                                                    Ext.getCmp(prototype.id + '-Coupons11').show();
+//                                                                    Ext.getCmp(prototype.id + '-Por11').show();
+//                                                                    Ext.getCmp(prototype.id + '-Amount11').show();
+//
+//                                                                    if (Objtemp.DSALES12 !== '' && Objtemp.DFLIGHT12 !== '') {
+//
+//                                                                        console.log('Entra a 12');
+//                                                                        Ext.getCmp(prototype.id + '-gridFORE').setWidth(1560);
+//                                                                        Ext.getCmp(prototype.id + '-gridFORE2').setWidth(1560);
+//                                                                        Ext.getCmp(prototype.id + '-month12').show();
+//                                                                        Ext.getCmp(prototype.id + '-month12').setText(espacios + Objtemp.DSALES12 + espacios + espacios2 + 'USD');
+//                                                                        Ext.getCmp(prototype.id + '-cpn12').setText(Ext.util.Format.number(Objtemp.QTYS12, '0,000'));
+//                                                                        Ext.getCmp(prototype.id + '-amo12').setText(Ext.util.Format.number(Objtemp.AMOS12, '0,000'));
+//                                                                        //Agrupacion por GrilladDown
+//                                                                        Ext.getCmp(prototype.id + '-Used12').show();
+//                                                                        Ext.getCmp(prototype.id + '-Coupons12').show();
+//                                                                        Ext.getCmp(prototype.id + '-Por12').show();
+//                                                                        Ext.getCmp(prototype.id + '-Amount12').show();
+//
+//                                                                    } else {
+//
+//                                                                        Ext.getCmp(prototype.id + '-month12').hide();
+//                                                                        //Agrupacion por GrilladDown
+//                                                                        Ext.getCmp(prototype.id + '-Used12').hide();
+//                                                                        Ext.getCmp(prototype.id + '-Coupons12').hide();
+//                                                                        Ext.getCmp(prototype.id + '-Por12').hide();
+//                                                                        Ext.getCmp(prototype.id + '-Amount12').hide();
+//                                                                    }
+//
+//                                                                } else {
+//
+//                                                                    Ext.getCmp(prototype.id + '-month11').hide();
+//                                                                    //Agrupacion por GrilladDown
+//                                                                    Ext.getCmp(prototype.id + '-Used11').hide();
+//                                                                    Ext.getCmp(prototype.id + '-Coupons11').hide();
+//                                                                    Ext.getCmp(prototype.id + '-Por11').hide();
+//                                                                    Ext.getCmp(prototype.id + '-Amount11').hide();
+//
+//                                                                    Ext.getCmp(prototype.id + '-month12').hide();
+//                                                                    //Agrupacion por GrilladDown
+//                                                                    Ext.getCmp(prototype.id + '-Used12').hide();
+//                                                                    Ext.getCmp(prototype.id + '-Coupons12').hide();
+//                                                                    Ext.getCmp(prototype.id + '-Por12').hide();
+//                                                                    Ext.getCmp(prototype.id + '-Amount12').hide();
+//                                                                }
+//
+//                                                            } else {
+//
+//                                                                Ext.getCmp(prototype.id + '-month10').hide();
+//                                                                //Agrupacion por GrilladDown
+//                                                                Ext.getCmp(prototype.id + '-Used10').hide();
+//                                                                Ext.getCmp(prototype.id + '-Coupons10').hide();
+//                                                                Ext.getCmp(prototype.id + '-Por10').hide();
+//                                                                Ext.getCmp(prototype.id + '-Amount10').hide();
+//
+//                                                                Ext.getCmp(prototype.id + '-month11').hide();
+//                                                                //Agrupacion por GrilladDown
+//                                                                Ext.getCmp(prototype.id + '-Used11').hide();
+//                                                                Ext.getCmp(prototype.id + '-Coupons11').hide();
+//                                                                Ext.getCmp(prototype.id + '-Por11').hide();
+//                                                                Ext.getCmp(prototype.id + '-Amount11').hide();
+//
+//                                                                Ext.getCmp(prototype.id + '-month12').hide();
+//                                                                //Agrupacion por GrilladDown
+//                                                                Ext.getCmp(prototype.id + '-Used12').hide();
+//                                                                Ext.getCmp(prototype.id + '-Coupons12').hide();
+//                                                                Ext.getCmp(prototype.id + '-Por12').hide();
+//                                                                Ext.getCmp(prototype.id + '-Amount12').hide();
+//                                                            }
+//
+//                                                        } else {
+//
+//                                                            Ext.getCmp(prototype.id + '-month9').hide();
+//                                                            //Agrupacion por GrilladDown
+//                                                            Ext.getCmp(prototype.id + '-Used9').hide();
+//                                                            Ext.getCmp(prototype.id + '-Coupons9').hide();
+//                                                            Ext.getCmp(prototype.id + '-Por9').hide();
+//                                                            Ext.getCmp(prototype.id + '-Amount9').hide();
+//
+//                                                            Ext.getCmp(prototype.id + '-month10').hide();
+//                                                            //Agrupacion por GrilladDown
+//                                                            Ext.getCmp(prototype.id + '-Used10').hide();
+//                                                            Ext.getCmp(prototype.id + '-Coupons10').hide();
+//                                                            Ext.getCmp(prototype.id + '-Por10').hide();
+//                                                            Ext.getCmp(prototype.id + '-Amount10').hide();
+//
+//                                                            Ext.getCmp(prototype.id + '-month11').hide();
+//                                                            //Agrupacion por GrilladDown
+//                                                            Ext.getCmp(prototype.id + '-Used11').hide();
+//                                                            Ext.getCmp(prototype.id + '-Coupons11').hide();
+//                                                            Ext.getCmp(prototype.id + '-Por11').hide();
+//                                                            Ext.getCmp(prototype.id + '-Amount11').hide();
+//
+//                                                            Ext.getCmp(prototype.id + '-month12').hide();
+//                                                            //Agrupacion por GrilladDown
+//                                                            Ext.getCmp(prototype.id + '-Used12').hide();
+//                                                            Ext.getCmp(prototype.id + '-Coupons12').hide();
+//                                                            Ext.getCmp(prototype.id + '-Por12').hide();
+//                                                            Ext.getCmp(prototype.id + '-Amount12').hide();
+//                                                        }
+//
+//                                                    } else {
+//
+//                                                        Ext.getCmp(prototype.id + '-month8').hide();
+//                                                        //Agrupacion por GrilladDown
+//                                                        Ext.getCmp(prototype.id + '-Used8').hide();
+//                                                        Ext.getCmp(prototype.id + '-Coupons8').hide();
+//                                                        Ext.getCmp(prototype.id + '-Por8').hide();
+//                                                        Ext.getCmp(prototype.id + '-Amount8').hide();
+//
+//                                                        Ext.getCmp(prototype.id + '-month9').hide();
+//                                                        //Agrupacion por GrilladDown
+//                                                        Ext.getCmp(prototype.id + '-Used9').hide();
+//                                                        Ext.getCmp(prototype.id + '-Coupons9').hide();
+//                                                        Ext.getCmp(prototype.id + '-Por9').hide();
+//                                                        Ext.getCmp(prototype.id + '-Amount9').hide();
+//
+//                                                        Ext.getCmp(prototype.id + '-month10').hide();
+//                                                        //Agrupacion por GrilladDown
+//                                                        Ext.getCmp(prototype.id + '-Used10').hide();
+//                                                        Ext.getCmp(prototype.id + '-Coupons10').hide();
+//                                                        Ext.getCmp(prototype.id + '-Por10').hide();
+//                                                        Ext.getCmp(prototype.id + '-Amount10').hide();
+//
+//                                                        Ext.getCmp(prototype.id + '-month11').hide();
+//                                                        //Agrupacion por GrilladDown
+//                                                        Ext.getCmp(prototype.id + '-Used11').hide();
+//                                                        Ext.getCmp(prototype.id + '-Coupons11').hide();
+//                                                        Ext.getCmp(prototype.id + '-Por11').hide();
+//                                                        Ext.getCmp(prototype.id + '-Amount11').hide();
+//
+//                                                        Ext.getCmp(prototype.id + '-month12').hide();
+//                                                        //Agrupacion por GrilladDown
+//                                                        Ext.getCmp(prototype.id + '-Used12').hide();
+//                                                        Ext.getCmp(prototype.id + '-Coupons12').hide();
+//                                                        Ext.getCmp(prototype.id + '-Por12').hide();
+//                                                        Ext.getCmp(prototype.id + '-Amount12').hide();
+//                                                    }
+//
+//                                                } else {
+//
+//                                                    Ext.getCmp(prototype.id + '-month7').hide();
+//                                                    //Agrupacion por GrilladDown
+//                                                    Ext.getCmp(prototype.id + '-Used7').hide();
+//                                                    Ext.getCmp(prototype.id + '-Coupons7').hide();
+//                                                    Ext.getCmp(prototype.id + '-Por7').hide();
+//                                                    Ext.getCmp(prototype.id + '-Amount7').hide();
+//
+//                                                    Ext.getCmp(prototype.id + '-month8').hide();
+//                                                    //Agrupacion por GrilladDown
+//                                                    Ext.getCmp(prototype.id + '-Used8').hide();
+//                                                    Ext.getCmp(prototype.id + '-Coupons8').hide();
+//                                                    Ext.getCmp(prototype.id + '-Por8').hide();
+//                                                    Ext.getCmp(prototype.id + '-Amount8').hide();
+//
+//                                                    Ext.getCmp(prototype.id + '-month9').hide();
+//                                                    //Agrupacion por GrilladDown
+//                                                    Ext.getCmp(prototype.id + '-Used9').hide();
+//                                                    Ext.getCmp(prototype.id + '-Coupons9').hide();
+//                                                    Ext.getCmp(prototype.id + '-Por9').hide();
+//                                                    Ext.getCmp(prototype.id + '-Amount9').hide();
+//
+//                                                    Ext.getCmp(prototype.id + '-month10').hide();
+//                                                    //Agrupacion por GrilladDown
+//                                                    Ext.getCmp(prototype.id + '-Used10').hide();
+//                                                    Ext.getCmp(prototype.id + '-Coupons10').hide();
+//                                                    Ext.getCmp(prototype.id + '-Por10').hide();
+//                                                    Ext.getCmp(prototype.id + '-Amount10').hide();
+//
+//                                                    Ext.getCmp(prototype.id + '-month11').hide();
+//                                                    //Agrupacion por GrilladDown
+//                                                    Ext.getCmp(prototype.id + '-Used11').hide();
+//                                                    Ext.getCmp(prototype.id + '-Coupons11').hide();
+//                                                    Ext.getCmp(prototype.id + '-Por11').hide();
+//                                                    Ext.getCmp(prototype.id + '-Amount11').hide();
+//
+//                                                    Ext.getCmp(prototype.id + '-month12').hide();
+//                                                    //Agrupacion por GrilladDown
+//                                                    Ext.getCmp(prototype.id + '-Used12').hide();
+//                                                    Ext.getCmp(prototype.id + '-Coupons12').hide();
+//                                                    Ext.getCmp(prototype.id + '-Por12').hide();
+//                                                    Ext.getCmp(prototype.id + '-Amount12').hide();
+//                                                }
+//
+//                                            } else {
+//
+//                                                Ext.getCmp(prototype.id + '-month6').hide();
+//                                                //Agrupacion por GrilladDown
+//                                                Ext.getCmp(prototype.id + '-Used6').hide();
+//                                                Ext.getCmp(prototype.id + '-Coupons6').hide();
+//                                                Ext.getCmp(prototype.id + '-Por6').hide();
+//                                                Ext.getCmp(prototype.id + '-Amount6').hide();
+//
+//                                                Ext.getCmp(prototype.id + '-month7').hide();
+//                                                //Agrupacion por GrilladDown
+//                                                Ext.getCmp(prototype.id + '-Used7').hide();
+//                                                Ext.getCmp(prototype.id + '-Coupons7').hide();
+//                                                Ext.getCmp(prototype.id + '-Por7').hide();
+//                                                Ext.getCmp(prototype.id + '-Amount7').hide();
+//
+//                                                Ext.getCmp(prototype.id + '-month8').hide();
+//                                                //Agrupacion por GrilladDown
+//                                                Ext.getCmp(prototype.id + '-Used8').hide();
+//                                                Ext.getCmp(prototype.id + '-Coupons8').hide();
+//                                                Ext.getCmp(prototype.id + '-Por8').hide();
+//                                                Ext.getCmp(prototype.id + '-Amount8').hide();
+//
+//                                                Ext.getCmp(prototype.id + '-month9').hide();
+//                                                //Agrupacion por GrilladDown
+//                                                Ext.getCmp(prototype.id + '-Used9').hide();
+//                                                Ext.getCmp(prototype.id + '-Coupons9').hide();
+//                                                Ext.getCmp(prototype.id + '-Por9').hide();
+//                                                Ext.getCmp(prototype.id + '-Amount9').hide();
+//
+//                                                Ext.getCmp(prototype.id + '-month10').hide();
+//                                                //Agrupacion por GrilladDown
+//                                                Ext.getCmp(prototype.id + '-Used10').hide();
+//                                                Ext.getCmp(prototype.id + '-Coupons10').hide();
+//                                                Ext.getCmp(prototype.id + '-Por10').hide();
+//                                                Ext.getCmp(prototype.id + '-Amount10').hide();
+//
+//                                                Ext.getCmp(prototype.id + '-month11').hide();
+//                                                //Agrupacion por GrilladDown
+//                                                Ext.getCmp(prototype.id + '-Used11').hide();
+//                                                Ext.getCmp(prototype.id + '-Coupons11').hide();
+//                                                Ext.getCmp(prototype.id + '-Por11').hide();
+//                                                Ext.getCmp(prototype.id + '-Amount11').hide();
+//
+//                                                Ext.getCmp(prototype.id + '-month12').hide();
+//                                                //Agrupacion por GrilladDown
+//                                                Ext.getCmp(prototype.id + '-Used12').hide();
+//                                                Ext.getCmp(prototype.id + '-Coupons12').hide();
+//                                                Ext.getCmp(prototype.id + '-Por12').hide();
+//                                                Ext.getCmp(prototype.id + '-Amount12').hide();
+//                                            }
+//
+//                                        } else {
+//
+//                                            Ext.getCmp(prototype.id + '-month5').hide();
+//                                            //Agrupacion por GrilladDown
+//                                            Ext.getCmp(prototype.id + '-Used5').hide();
+//                                            Ext.getCmp(prototype.id + '-Coupons5').hide();
+//                                            Ext.getCmp(prototype.id + '-Por5').hide();
+//                                            Ext.getCmp(prototype.id + '-Amount5').hide();
+//
+//                                            Ext.getCmp(prototype.id + '-month6').hide();
+//                                            //Agrupacion por GrilladDown
+//                                            Ext.getCmp(prototype.id + '-Used6').hide();
+//                                            Ext.getCmp(prototype.id + '-Coupons6').hide();
+//                                            Ext.getCmp(prototype.id + '-Por6').hide();
+//                                            Ext.getCmp(prototype.id + '-Amount6').hide();
+//
+//                                            Ext.getCmp(prototype.id + '-month7').hide();
+//                                            //Agrupacion por GrilladDown
+//                                            Ext.getCmp(prototype.id + '-Used7').hide();
+//                                            Ext.getCmp(prototype.id + '-Coupons7').hide();
+//                                            Ext.getCmp(prototype.id + '-Por7').hide();
+//                                            Ext.getCmp(prototype.id + '-Amount7').hide();
+//
+//                                            Ext.getCmp(prototype.id + '-month8').hide();
+//                                            //Agrupacion por GrilladDown
+//                                            Ext.getCmp(prototype.id + '-Used8').hide();
+//                                            Ext.getCmp(prototype.id + '-Coupons8').hide();
+//                                            Ext.getCmp(prototype.id + '-Por8').hide();
+//                                            Ext.getCmp(prototype.id + '-Amount8').hide();
+//
+//                                            Ext.getCmp(prototype.id + '-month9').hide();
+//                                            //Agrupacion por GrilladDown
+//                                            Ext.getCmp(prototype.id + '-Used9').hide();
+//                                            Ext.getCmp(prototype.id + '-Coupons9').hide();
+//                                            Ext.getCmp(prototype.id + '-Por9').hide();
+//                                            Ext.getCmp(prototype.id + '-Amount9').hide();
+//
+//                                            Ext.getCmp(prototype.id + '-month10').hide();
+//                                            //Agrupacion por GrilladDown
+//                                            Ext.getCmp(prototype.id + '-Used10').hide();
+//                                            Ext.getCmp(prototype.id + '-Coupons10').hide();
+//                                            Ext.getCmp(prototype.id + '-Por10').hide();
+//                                            Ext.getCmp(prototype.id + '-Amount10').hide();
+//
+//                                            Ext.getCmp(prototype.id + '-month11').hide();
+//                                            //Agrupacion por GrilladDown
+//                                            Ext.getCmp(prototype.id + '-Used11').hide();
+//                                            Ext.getCmp(prototype.id + '-Coupons11').hide();
+//                                            Ext.getCmp(prototype.id + '-Por11').hide();
+//                                            Ext.getCmp(prototype.id + '-Amount11').hide();
+//
+//                                            Ext.getCmp(prototype.id + '-month12').hide();
+//                                            //Agrupacion por GrilladDown
+//                                            Ext.getCmp(prototype.id + '-Used12').hide();
+//                                            Ext.getCmp(prototype.id + '-Coupons12').hide();
+//                                            Ext.getCmp(prototype.id + '-Por12').hide();
+//                                            Ext.getCmp(prototype.id + '-Amount12').hide();
+//                                        }
+
+                                    } else {
+
+                                        Ext.getCmp(prototype.id + '-month4').hide();
+                                        //Agrupacion por GrilladDown
+                                        Ext.getCmp(prototype.id + '-Used4').hide();
+                                        Ext.getCmp(prototype.id + '-Coupons4').hide();
+                                        Ext.getCmp(prototype.id + '-Por4').hide();
+                                        Ext.getCmp(prototype.id + '-Amount4').hide();
+
+//                                        Ext.getCmp(prototype.id + '-month5').hide();
+//                                        //Agrupacion por GrilladDown
+//                                        Ext.getCmp(prototype.id + '-Used5').hide();
+//                                        Ext.getCmp(prototype.id + '-Coupons5').hide();
+//                                        Ext.getCmp(prototype.id + '-Por5').hide();
+//                                        Ext.getCmp(prototype.id + '-Amount5').hide();
+//
+//                                        Ext.getCmp(prototype.id + '-month6').hide();
+//                                        //Agrupacion por GrilladDown
+//                                        Ext.getCmp(prototype.id + '-Used6').hide();
+//                                        Ext.getCmp(prototype.id + '-Coupons6').hide();
+//                                        Ext.getCmp(prototype.id + '-Por6').hide();
+//                                        Ext.getCmp(prototype.id + '-Amount6').hide();
+//
+//                                        Ext.getCmp(prototype.id + '-month7').hide();
+//                                        //Agrupacion por GrilladDown
+//                                        Ext.getCmp(prototype.id + '-Used7').hide();
+//                                        Ext.getCmp(prototype.id + '-Coupons7').hide();
+//                                        Ext.getCmp(prototype.id + '-Por7').hide();
+//                                        Ext.getCmp(prototype.id + '-Amount7').hide();
+//
+//                                        Ext.getCmp(prototype.id + '-month8').hide();
+//                                        //Agrupacion por GrilladDown
+//                                        Ext.getCmp(prototype.id + '-Used8').hide();
+//                                        Ext.getCmp(prototype.id + '-Coupons8').hide();
+//                                        Ext.getCmp(prototype.id + '-Por8').hide();
+//                                        Ext.getCmp(prototype.id + '-Amount8').hide();
+//
+//                                        Ext.getCmp(prototype.id + '-month9').hide();
+//                                        //Agrupacion por GrilladDown
+//                                        Ext.getCmp(prototype.id + '-Used9').hide();
+//                                        Ext.getCmp(prototype.id + '-Coupons9').hide();
+//                                        Ext.getCmp(prototype.id + '-Por9').hide();
+//                                        Ext.getCmp(prototype.id + '-Amount9').hide();
+//
+//                                        Ext.getCmp(prototype.id + '-month10').hide();
+//                                        //Agrupacion por GrilladDown
+//                                        Ext.getCmp(prototype.id + '-Used10').hide();
+//                                        Ext.getCmp(prototype.id + '-Coupons10').hide();
+//                                        Ext.getCmp(prototype.id + '-Por10').hide();
+//                                        Ext.getCmp(prototype.id + '-Amount10').hide();
+//
+//                                        Ext.getCmp(prototype.id + '-month11').hide();
+//                                        //Agrupacion por GrilladDown
+//                                        Ext.getCmp(prototype.id + '-Used11').hide();
+//                                        Ext.getCmp(prototype.id + '-Coupons11').hide();
+//                                        Ext.getCmp(prototype.id + '-Por11').hide();
+//                                        Ext.getCmp(prototype.id + '-Amount11').hide();
+//
+//                                        Ext.getCmp(prototype.id + '-month12').hide();
+//                                        //Agrupacion por GrilladDown
+//                                        Ext.getCmp(prototype.id + '-Used12').hide();
+//                                        Ext.getCmp(prototype.id + '-Coupons12').hide();
+//                                        Ext.getCmp(prototype.id + '-Por12').hide();
+//                                        Ext.getCmp(prototype.id + '-Amount12').hide();
+                                    }
+
+                                } else {
+
+                                    Ext.getCmp(prototype.id + '-month3').hide();
+                                    //Agrupacion por GrilladDown
+                                    Ext.getCmp(prototype.id + '-Used3').hide();
+                                    Ext.getCmp(prototype.id + '-Coupons3').hide();
+                                    Ext.getCmp(prototype.id + '-Por3').hide();
+                                    Ext.getCmp(prototype.id + '-Amount3').hide();
+
+                                    Ext.getCmp(prototype.id + '-month4').hide();
+                                    //Agrupacion por GrilladDown
+                                    Ext.getCmp(prototype.id + '-Used4').hide();
+                                    Ext.getCmp(prototype.id + '-Coupons4').hide();
+                                    Ext.getCmp(prototype.id + '-Por4').hide();
+                                    Ext.getCmp(prototype.id + '-Amount4').hide();
+
+//                                    Ext.getCmp(prototype.id + '-month5').hide();
+//                                    //Agrupacion por GrilladDown
+//                                    Ext.getCmp(prototype.id + '-Used5').hide();
+//                                    Ext.getCmp(prototype.id + '-Coupons5').hide();
+//                                    Ext.getCmp(prototype.id + '-Por5').hide();
+//                                    Ext.getCmp(prototype.id + '-Amount5').hide();
+//
+//                                    Ext.getCmp(prototype.id + '-month6').hide();
+//                                    //Agrupacion por GrilladDown
+//                                    Ext.getCmp(prototype.id + '-Used6').hide();
+//                                    Ext.getCmp(prototype.id + '-Coupons6').hide();
+//                                    Ext.getCmp(prototype.id + '-Por6').hide();
+//                                    Ext.getCmp(prototype.id + '-Amount6').hide();
+//
+//                                    Ext.getCmp(prototype.id + '-month7').hide();
+//                                    //Agrupacion por GrilladDown
+//                                    Ext.getCmp(prototype.id + '-Used7').hide();
+//                                    Ext.getCmp(prototype.id + '-Coupons7').hide();
+//                                    Ext.getCmp(prototype.id + '-Por7').hide();
+//                                    Ext.getCmp(prototype.id + '-Amount7').hide();
+//
+//                                    Ext.getCmp(prototype.id + '-month8').hide();
+//                                    //Agrupacion por GrilladDown
+//                                    Ext.getCmp(prototype.id + '-Used8').hide();
+//                                    Ext.getCmp(prototype.id + '-Coupons8').hide();
+//                                    Ext.getCmp(prototype.id + '-Por8').hide();
+//                                    Ext.getCmp(prototype.id + '-Amount8').hide();
+//
+//                                    Ext.getCmp(prototype.id + '-month9').hide();
+//                                    //Agrupacion por GrilladDown
+//                                    Ext.getCmp(prototype.id + '-Used9').hide();
+//                                    Ext.getCmp(prototype.id + '-Coupons9').hide();
+//                                    Ext.getCmp(prototype.id + '-Por9').hide();
+//                                    Ext.getCmp(prototype.id + '-Amount9').hide();
+//
+//                                    Ext.getCmp(prototype.id + '-month10').hide();
+//                                    //Agrupacion por GrilladDown
+//                                    Ext.getCmp(prototype.id + '-Used10').hide();
+//                                    Ext.getCmp(prototype.id + '-Coupons10').hide();
+//                                    Ext.getCmp(prototype.id + '-Por10').hide();
+//                                    Ext.getCmp(prototype.id + '-Amount10').hide();
+//
+//                                    Ext.getCmp(prototype.id + '-month11').hide();
+//                                    //Agrupacion por GrilladDown
+//                                    Ext.getCmp(prototype.id + '-Used11').hide();
+//                                    Ext.getCmp(prototype.id + '-Coupons11').hide();
+//                                    Ext.getCmp(prototype.id + '-Por11').hide();
+//                                    Ext.getCmp(prototype.id + '-Amount11').hide();
+//
+//                                    Ext.getCmp(prototype.id + '-month12').hide();
+//                                    //Agrupacion por GrilladDown
+//                                    Ext.getCmp(prototype.id + '-Used12').hide();
+//                                    Ext.getCmp(prototype.id + '-Coupons12').hide();
+//                                    Ext.getCmp(prototype.id + '-Por12').hide();
+//                                    Ext.getCmp(prototype.id + '-Amount12').hide();
+                                }
+
+                            } else {
+
+                                Ext.getCmp(prototype.id + '-month2').hide();
+                                //Agrupacion por GrilladDown
+                                Ext.getCmp(prototype.id + '-Used2').hide();
+                                Ext.getCmp(prototype.id + '-Coupons2').hide();
+                                Ext.getCmp(prototype.id + '-Por2').hide();
+                                Ext.getCmp(prototype.id + '-Amount2').hide();
+
+                                Ext.getCmp(prototype.id + '-month3').hide();
+                                //Agrupacion por GrilladDown
+                                Ext.getCmp(prototype.id + '-Used3').hide();
+                                Ext.getCmp(prototype.id + '-Coupons3').hide();
+                                Ext.getCmp(prototype.id + '-Por3').hide();
+                                Ext.getCmp(prototype.id + '-Amount3').hide();
+
+                                Ext.getCmp(prototype.id + '-month4').hide();
+                                //Agrupacion por GrilladDown
+                                Ext.getCmp(prototype.id + '-Used4').hide();
+                                Ext.getCmp(prototype.id + '-Coupons4').hide();
+                                Ext.getCmp(prototype.id + '-Por4').hide();
+                                Ext.getCmp(prototype.id + '-Amount4').hide();
+
+//                                Ext.getCmp(prototype.id + '-month5').hide();
+//                                //Agrupacion por GrilladDown
+//                                Ext.getCmp(prototype.id + '-Used5').hide();
+//                                Ext.getCmp(prototype.id + '-Coupons5').hide();
+//                                Ext.getCmp(prototype.id + '-Por5').hide();
+//                                Ext.getCmp(prototype.id + '-Amount5').hide();
+//
+//                                Ext.getCmp(prototype.id + '-month6').hide();
+//                                //Agrupacion por GrilladDown
+//                                Ext.getCmp(prototype.id + '-Used6').hide();
+//                                Ext.getCmp(prototype.id + '-Coupons6').hide();
+//                                Ext.getCmp(prototype.id + '-Por6').hide();
+//                                Ext.getCmp(prototype.id + '-Amount6').hide();
+//
+//                                Ext.getCmp(prototype.id + '-month7').hide();
+//                                //Agrupacion por GrilladDown
+//                                Ext.getCmp(prototype.id + '-Used7').hide();
+//                                Ext.getCmp(prototype.id + '-Coupons7').hide();
+//                                Ext.getCmp(prototype.id + '-Por7').hide();
+//                                Ext.getCmp(prototype.id + '-Amount7').hide();
+//
+//                                Ext.getCmp(prototype.id + '-month8').hide();
+//                                //Agrupacion por GrilladDown
+//                                Ext.getCmp(prototype.id + '-Used8').hide();
+//                                Ext.getCmp(prototype.id + '-Coupons8').hide();
+//                                Ext.getCmp(prototype.id + '-Por8').hide();
+//                                Ext.getCmp(prototype.id + '-Amount8').hide();
+//
+//                                Ext.getCmp(prototype.id + '-month9').hide();
+//                                //Agrupacion por GrilladDown
+//                                Ext.getCmp(prototype.id + '-Used9').hide();
+//                                Ext.getCmp(prototype.id + '-Coupons9').hide();
+//                                Ext.getCmp(prototype.id + '-Por9').hide();
+//                                Ext.getCmp(prototype.id + '-Amount9').hide();
+//
+//                                Ext.getCmp(prototype.id + '-month10').hide();
+//                                //Agrupacion por GrilladDown
+//                                Ext.getCmp(prototype.id + '-Used10').hide();
+//                                Ext.getCmp(prototype.id + '-Coupons10').hide();
+//                                Ext.getCmp(prototype.id + '-Por10').hide();
+//                                Ext.getCmp(prototype.id + '-Amount10').hide();
+//
+//                                Ext.getCmp(prototype.id + '-month11').hide();
+//                                //Agrupacion por GrilladDown
+//                                Ext.getCmp(prototype.id + '-Used11').hide();
+//                                Ext.getCmp(prototype.id + '-Coupons11').hide();
+//                                Ext.getCmp(prototype.id + '-Por11').hide();
+//                                Ext.getCmp(prototype.id + '-Amount11').hide();
+//
+//                                Ext.getCmp(prototype.id + '-month12').hide();
+//                                //Agrupacion por GrilladDown
+//                                Ext.getCmp(prototype.id + '-Used12').hide();
+//                                Ext.getCmp(prototype.id + '-Coupons12').hide();
+//                                Ext.getCmp(prototype.id + '-Por12').hide();
+//                                Ext.getCmp(prototype.id + '-Amount12').hide();
+
+                            }
+
+                        } else {
+
+                            Ext.getCmp(prototype.id + '-gridFORE').setWidth(0);
+                            Ext.getCmp(prototype.id + '-gridFORE2').setWidth(0);
+
+                            Ext.getCmp(prototype.id + '-month1').hide();
+                            //Agrupacion por GrilladDown
+                            Ext.getCmp(prototype.id + '-Used1').hide();
+                            Ext.getCmp(prototype.id + '-Coupons1').hide();
+                            Ext.getCmp(prototype.id + '-Por1').hide();
+                            Ext.getCmp(prototype.id + '-Amount1').hide();
+
+                            Ext.getCmp(prototype.id + '-month2').hide();
+                            //Agrupacion por GrilladDown
+                            Ext.getCmp(prototype.id + '-Used2').hide();
+                            Ext.getCmp(prototype.id + '-Coupons2').hide();
+                            Ext.getCmp(prototype.id + '-Por2').hide();
+                            Ext.getCmp(prototype.id + '-Amount2').hide();
+
+                            Ext.getCmp(prototype.id + '-month3').hide();
+                            //Agrupacion por GrilladDown
+                            Ext.getCmp(prototype.id + '-Used3').hide();
+                            Ext.getCmp(prototype.id + '-Coupons3').hide();
+                            Ext.getCmp(prototype.id + '-Por3').hide();
+                            Ext.getCmp(prototype.id + '-Amount3').hide();
+
+                            Ext.getCmp(prototype.id + '-month4').hide();
+                            //Agrupacion por GrilladDown
+                            Ext.getCmp(prototype.id + '-Used4').hide();
+                            Ext.getCmp(prototype.id + '-Coupons4').hide();
+                            Ext.getCmp(prototype.id + '-Por4').hide();
+                            Ext.getCmp(prototype.id + '-Amount4').hide();
+
+//                            Ext.getCmp(prototype.id + '-month5').hide();
+//                            //Agrupacion por GrilladDown
+//                            Ext.getCmp(prototype.id + '-Used5').hide();
+//                            Ext.getCmp(prototype.id + '-Coupons5').hide();
+//                            Ext.getCmp(prototype.id + '-Por5').hide();
+//                            Ext.getCmp(prototype.id + '-Amount5').hide();
+//
+//                            Ext.getCmp(prototype.id + '-month6').hide();
+//                            //Agrupacion por GrilladDown
+//                            Ext.getCmp(prototype.id + '-Used6').hide();
+//                            Ext.getCmp(prototype.id + '-Coupons6').hide();
+//                            Ext.getCmp(prototype.id + '-Por6').hide();
+//                            Ext.getCmp(prototype.id + '-Amount6').hide();
+//
+//                            Ext.getCmp(prototype.id + '-month7').hide();
+//                            //Agrupacion por GrilladDown
+//                            Ext.getCmp(prototype.id + '-Used7').hide();
+//                            Ext.getCmp(prototype.id + '-Coupons7').hide();
+//                            Ext.getCmp(prototype.id + '-Por7').hide();
+//                            Ext.getCmp(prototype.id + '-Amount7').hide();
+//
+//                            Ext.getCmp(prototype.id + '-month8').hide();
+//                            //Agrupacion por GrilladDown
+//                            Ext.getCmp(prototype.id + '-Used8').hide();
+//                            Ext.getCmp(prototype.id + '-Coupons8').hide();
+//                            Ext.getCmp(prototype.id + '-Por8').hide();
+//                            Ext.getCmp(prototype.id + '-Amount8').hide();
+//
+//                            Ext.getCmp(prototype.id + '-month9').hide();
+//                            //Agrupacion por GrilladDown
+//                            Ext.getCmp(prototype.id + '-Used9').hide();
+//                            Ext.getCmp(prototype.id + '-Coupons9').hide();
+//                            Ext.getCmp(prototype.id + '-Por9').hide();
+//                            Ext.getCmp(prototype.id + '-Amount9').hide();
+//
+//                            Ext.getCmp(prototype.id + '-month10').hide();
+//                            //Agrupacion por GrilladDown
+//                            Ext.getCmp(prototype.id + '-Used10').hide();
+//                            Ext.getCmp(prototype.id + '-Coupons10').hide();
+//                            Ext.getCmp(prototype.id + '-Por10').hide();
+//                            Ext.getCmp(prototype.id + '-Amount10').hide();
+//
+//                            Ext.getCmp(prototype.id + '-month11').hide();
+//                            //Agrupacion por GrilladDown
+//                            Ext.getCmp(prototype.id + '-Used11').hide();
+//                            Ext.getCmp(prototype.id + '-Coupons11').hide();
+//                            Ext.getCmp(prototype.id + '-Por11').hide();
+//                            Ext.getCmp(prototype.id + '-Amount11').hide();
+//
+//                            Ext.getCmp(prototype.id + '-month12').hide();
+//                            //Agrupacion por GrilladDown
+//                            Ext.getCmp(prototype.id + '-Used12').hide();
+//                            Ext.getCmp(prototype.id + '-Coupons12').hide();
+//                            Ext.getCmp(prototype.id + '-Por12').hide();
+//                            Ext.getCmp(prototype.id + '-Amount12').hide();
+                        }
+                    }
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-gridFORE').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridFORE').setStore(storeGridDatas);
+        this.loadFOREDown();
+    },
+    loadFOREDown: function () {
+
+        var storeGridDatas = Ext.create('Ext.Praxis.store.screens.GridData', {
+            proxy: {
+                url: prototype.url + '/loadFOREDown'
+            }, listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = {beanString: searchParams, dw_excel: false};
+                },
+                load: function (obj) {
+                    console.log(obj.data.items[0]);
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found.'
+                        });
+                    } else {
+                        console.log('llena IDS');
+                        var Objtemp = obj.data.items[0].data;
+                    }
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-gridFORE2').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-gridFORE2').setStore(storeGridDatas);
+//        this.funcionScroll();
+    },
+//    funcionScroll: function () {
+//        var grilla1 = document.getElementById('gridFORE');
+//        var grilla2 = document.getElementById('gridFORE2');
+//
+//        // Ajustar el valor de desplazamiento de ambas grillas al mismo tiempo
+//        grilla1.addEventListener('scroll', function () {
+//            grilla2.scrollLeft = grilla1.scrollLeft;
+//        });
+//
+//        grilla2.addEventListener('scroll', function () {
+//            grilla1.scrollLeft = grilla2.scrollLeft;
+//        });
+//    },
+//    funcionScroll: function () {
+//    var me = this;
+//
+//    // Espera al evento afterrender del componente
+//    me.on('afterrender', function () {
+//        console.log('funcaaa');
+//
+//        Ext.defer(function () {
+//            var grilla1 = Ext.getCmp(me.id + '-gridFORE');
+//            var grilla2 = Ext.getCmp(me.id + '-gridFORE2');
+//
+//            function sincronizarDesplazamiento(grillaOrigen, grillaDestino) {
+//                console.log('funcaaa1');
+//                var scrollLeft = grillaOrigen.getScrollable().getScrollX();
+//                grillaDestino.getScrollable().scrollTo('left', scrollLeft);
+//            }
+//
+//            // Verificamos que las grillas estén completamente renderizadas
+//            if (grilla1 && grilla2 && grilla1.getScrollable() && grilla2.getScrollable()) {
+//                // Sincroniza las grillas al renderizarlas
+//                sincronizarDesplazamiento(grilla1, grilla2);
+//
+//                // Agrega un listener para sincronizar el desplazamiento al desplazar la primera grilla
+//                grilla1.getScrollable().on('scroll', function () {
+//                    console.log('funcaaa2');
+//                    sincronizarDesplazamiento(grilla1, grilla2);
+//                });
+//
+//                // Agrega un listener para sincronizar el desplazamiento al desplazar la segunda grilla
+//                grilla2.getScrollable().on('scroll', function () {
+//                    console.log('funcaaa3');
+//                    sincronizarDesplazamiento(grilla2, grilla1);
+//                });
+//            } else {
+//                console.error('Alguna de las grillas no fue encontrada o no está completamente renderizada en el documento.');
+//            }
+//        }, 1);
+//    });
+//},
+
+
+//    loadTNUVS: function () {
+//        win.lblUser_toolTip("Estructura: ");
+//         
+//        me.panelActual = '-boxTNUVS';
+//        this.showGrid('-boxTNUVS');
+//        var storeGridDatas = Ext.create('Ext.Praxis.store.screens.GridData', {
+//            proxy: {
+//                url: prototype.url + '/loadTNUVS'
+//            }, listeners: {
+//                beforeload: function (obj) {
+////                    Ext.getBody().mask('Loading...');
+//                    obj.proxy.extraParams = {beanString: searchParams, dw_excel: false};
+//                },
+//                load: function (obj) {
+////                    Ext.getBody().unmask('Loading...');
+//                    console.log('hay data');
+//                    console.log(obj.data.items[0]);
+//                    
+//                    if (obj.data.length === 0) {
+//                        global.Msg({
+//                            msg: 'Data not found.'
+//                        });
+//                    } else {
+//                        
+//                    }
+//                }
+//            }
+//        });
+//        Ext.getCmp(prototype.id + '-gridTNUVS').bindStore(storeGridDatas);
+//        Ext.getCmp(prototype.id + '-gridTNUVS').setStore(storeGridDatas);
+//    },
     clickDetSales_colHandler: function (param, column, e, row, column, x, rowData) {
 //        console.log(param);
 
@@ -1811,7 +3105,7 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
                     } else {
                         global.Msg({msg: 'Data not found'});
                     }
-                    global.clear();
+//                    global.clear();
                 }
             }
         });
@@ -1867,23 +3161,96 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
 //        console.log('imgBack_clickHandler == ' + me.drillDown);
 
     },
-    imgExcel_clickHandler: function () {
+    imgExcel_clickHandler: function (obj, e) {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: 'Download Excel ?',
+            buttons: Ext.MessageBox.OKCANCEL,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function (btn) {
+                if (btn === 'ok') {
+                    this.exportExcel();
+                }
+            }
+        });
+    },
+//    exportExcel: function () {
+//
+//        console.log('excell');
+//        this.setFormatParameter();
+//        console.log(this.searchParams);
+//        console.log(meSales.boxActual);
+//        me.dw_excel = true;
+//        if (me.boxActual === '-boxMainData') {
+//            console.log(Ext.getCmp(prototype.id + '-gridData').config.columns.items);
+//            me.goURLpost('searchTest', this.searchParams, Ext.getCmp(prototype.id + '-gridData').config.columns.items);
+//        } else if (me.boxActual === '-BoxDDTMCountryofSale') {
+//            console.log(Ext.getCmp(prototype.id + '-gridCountryofSale').config.columns);
+//            me.goURLpost('loadDDTpMCountryofSale', this.paramsCountryCity.beanString, Ext.getCmp(prototype.id + '-gridCountryofSale').config.columns);
+//        } else if (me.boxActual === '-BoxGDS') {
+//            console.log(Ext.getCmp(prototype.id + '-gridGDS').config.columns);
+//            me.goURLpost('loadGDS', this.searchParams.beanString, Ext.getCmp(prototype.id + '-gridGDS').config.columns.items);
+//        } else if (meSales.boxActual === '-boxSalesByTransaction') {
+//            console.log(Ext.getCmp(prototype.id + '-GridSalesByTransaction').config.columns);
+//            meSales2.goURLpost('loadSalesByTransaction',searchParams.beanString, Ext.getCmp(prototype.id + '-GridSalesByTransaction').config.columns.items);
+//        } else {
+//            me.dw_excel = false;
+//        }
+//    },
+    exportExcel: function () {
+        this.setFormatParameter();
+        if (Ext.getCmp(prototype.id + '-boxSalesByTransaction').isVisible()) {
+            global.getFile(prototype.url + '/getXLSXSalesByTransaction?beanString=' + meFChart.searchParams);
+        }
+        if (Ext.getCmp(prototype.id + '-boxFORE').isVisible()) {
 
-        console.log('excell');
-        console.log(this.searchParams);
-//        console.log(this.paramsCountryCity.beanString);
-        me.dw_excel = true;
-        if (me.boxActual === '-boxMainData') {
-            console.log(Ext.getCmp(prototype.id + '-gridData').config.columns.items);
-            me.goURLpost('searchTest', this.searchParams, Ext.getCmp(prototype.id + '-gridData').config.columns.items);
-        } else if (me.boxActual === '-BoxDDTMCountryofSale') {
-            console.log(Ext.getCmp(prototype.id + '-gridCountryofSale').config.columns);
-            me.goURLpost('loadDDTpMCountryofSale', this.paramsCountryCity.beanString, Ext.getCmp(prototype.id + '-gridCountryofSale').config.columns);
-        } else if (me.boxActual === '-BoxGDS') {
-            console.log(Ext.getCmp(prototype.id + '-gridGDS').config.columns);
-            me.goURLpost('loadGDS', this.searchParams.beanString, Ext.getCmp(prototype.id + '-gridGDS').config.columns.items);
-        } else {
-            me.dw_excel = false;
+            if (this.PAGESS === 'PAG1') {
+
+                console.log('pagina1');
+                me.bean = {};
+                me.bean.IN_FECHA_FROM_FORE = Ext.getCmp(prototype.id + '-cmbDateFromYear_FORE').getValue() + "01";
+                var beanString = JSON.stringify(me.bean);
+                searchParams = {
+                    beanString: beanString,
+                    bean: me.bean
+                };
+                console.log(searchParams);
+
+            } else if (this.PAGESS === 'PAG2') {
+                console.log('pagina2');
+                me.bean = {};
+                me.bean.IN_FECHA_FROM_FORE = Ext.getCmp(prototype.id + '-cmbDateFromYear_FORE').getValue() + "05";
+                var beanString = JSON.stringify(me.bean);
+                searchParams = {
+                    beanString: beanString,
+                    bean: me.bean
+                };
+                console.log(searchParams);
+
+            } else if (this.PAGESS === 'PAG3') {
+                console.log('pagina3');
+                me.bean = {};
+                me.bean.IN_FECHA_FROM_FORE = Ext.getCmp(prototype.id + '-cmbDateFromYear_FORE').getValue() + "09";
+                var beanString = JSON.stringify(me.bean);
+                searchParams = {
+                    beanString: beanString,
+                    bean: me.bean
+                };
+                console.log(searchParams);
+
+            }
+
+            global.getFile(prototype.url + '/getXLSXFORE?beanString=' + searchParams.beanString);
+        }
+//         else if (Ext.getCmp(prototype.id + '-boxFORE').isVisible()) {
+//            global.getFile(prototype.url + '/getXLSXForecast?beanString=' + meFChart.searchParams);
+//        } 
+        else {
+            global.Msg(
+                    {msg: 'Under Construction'
+                    });
         }
     },
     goURLpost: function (method, parms, columns) {
@@ -1914,10 +3281,12 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.SalesAnalysisControll
     },
     showPagination_clickHandler: function () {
         Ext.getCmp(prototype.id + '-boxPaginacion').show();
+        Ext.getCmp(prototype.id + '-espaciado').hide();
         Ext.getCmp(prototype.id + '-lblPagination').show();
     },
     hidePagination_clickHandler: function () {
         Ext.getCmp(prototype.id + '-boxPaginacion').hide();
+        Ext.getCmp(prototype.id + '-espaciado').show();
         Ext.getCmp(prototype.id + '-lblPagination').hide();
     },
     obtainCities: function () {

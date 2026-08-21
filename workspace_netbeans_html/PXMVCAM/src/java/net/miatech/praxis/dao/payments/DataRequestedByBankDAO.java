@@ -15,11 +15,11 @@ import java.util.HashMap;
 import java.util.List;
 import net.miatech.beans.A1691Filter;
 import net.miatech.beans.spring.implement.IServerSession;
-import net.miatech.praxis.payment.ExcelChargeBack;
-import net.miatech.praxis.payment.filter.A2280Filter;
-import net.miatech.praxis.payment.filter.A2290Filter;
-import net.miatech.praxis.payment.filter.A2331Filter;
-import net.miatech.praxis.payment.filter.A2345Filter;
+import net.miatech.praxis.payment.old.ExcelChargeBack;
+import net.miatech.praxis.payment.old.A2280Filter;
+import net.miatech.praxis.payment.old.A2290Filter;
+import net.miatech.praxis.payment.old.A2331Filter;
+import net.miatech.praxis.payment.old.A2345Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
@@ -51,7 +51,7 @@ public class DataRequestedByBankDAO {
     public void setSession(IServerSession ss) {
         session = ss;
     }
-    
+
     public List<A2331Filter> loadPX404SQP01885(A2331Filter filter) throws SQLException, Exception {
 
         List<A2331Filter> list = new ArrayList<A2331Filter>();
@@ -156,7 +156,7 @@ public class DataRequestedByBankDAO {
                         objRtn.MERCHNAM = rs01.getString("NAMEBANK").trim();
                     }
                     objRtn.CODEBANK = rs01.getString("CODEBANK").trim();
-                    objRtn.TCARD=rs01.getString("TCARD");
+                    objRtn.TCARD = rs01.getString("TCARD");
                     objRtn.strDescBank = rs01.getString("NAMEBANK").trim();
                     objRtn.STVAL = rs01.getString("STVAL").trim();
                     objRtn.DATES = rs01.getString("DATES").trim();
@@ -181,14 +181,12 @@ public class DataRequestedByBankDAO {
 
                     if (objRtn.STVAL.equals("4") || objRtn.STVAL.equals("5")) {
                         objRtn.strSemaforo = "VERDE";
+                    } else if (objRtn.days < 8) {
+                        objRtn.strSemaforo = "VERDE";
+                    } else if (objRtn.days <= 10) {
+                        objRtn.strSemaforo = "AMBAR";
                     } else {
-                        if (objRtn.days < 8) {
-                            objRtn.strSemaforo = "VERDE";
-                        } else if (objRtn.days <= 10) {
-                            objRtn.strSemaforo = "AMBAR";
-                        } else {
-                            objRtn.strSemaforo = "ROJO";
-                        }
+                        objRtn.strSemaforo = "ROJO";
                     }
 
                     objRtn.lngTotDocs = QTKT;
@@ -644,7 +642,7 @@ public class DataRequestedByBankDAO {
 
         return list;
     }
-    
+
     public List<A2331Filter> loadPX404SQP01947(A2331Filter filter) throws SQLException, Exception {
 
         List<A2331Filter> list = new ArrayList<A2331Filter>();
@@ -1560,7 +1558,7 @@ public class DataRequestedByBankDAO {
 
         return list;
     }
-    
+
     public List<A2331Filter> loadPX404SQP01949(A2331Filter filter) throws SQLException, Exception {
 
         List<A2331Filter> list = new ArrayList<A2331Filter>();
@@ -1703,6 +1701,7 @@ public class DataRequestedByBankDAO {
 
         List<A2331Filter> list = new ArrayList<A2331Filter>();
         A2331Filter objRtn;
+        A2331Filter objRtnDesglosado;
         String strTkts = "", strKey = "", strUso = "";
         HashMap hmTkts = new HashMap();
         HashMap hmUse = new HashMap();
@@ -1748,7 +1747,7 @@ public class DataRequestedByBankDAO {
                 strUso = "";
                 strKey = rs01.getString("SENTDATE").trim() + rs01.getString("MERCHN").trim()
                         + rs01.getString("SALEDATE").trim() + rs01.getString("CARDNBR").trim()
-                        + rs01.getString("AUTHNBR").trim();
+                        + rs01.getString("AUTHNBR").trim() + rs01.getString("FOLIO").trim();
                 if (hmTkts.containsKey(strKey)) {
                     cantTkt++;
                     strTkts = hmTkts.get(strKey).toString() + ", " + rs01.getString("CCIA").trim() + " " + rs01.getString("FORMA").trim() + rs01.getString("SERIE").trim();
@@ -1822,7 +1821,7 @@ public class DataRequestedByBankDAO {
 
                     strKey = rs01.getString("SENTDATE").trim() + rs01.getString("MERCHN").trim()
                             + rs01.getString("SALEDATE").trim() + rs01.getString("CARDNBR").trim()
-                            + rs01.getString("AUTHNBR").trim();
+                            + rs01.getString("AUTHNBR").trim() + rs01.getString("FOLIO").trim();
 
                     if (hmTktsCant.containsKey(strKey)) {
                         cantTkt = Integer.parseInt(hmTktsCant.get(strKey).toString());
@@ -1834,14 +1833,31 @@ public class DataRequestedByBankDAO {
                             strUso = "";
                             for (int a = 0; a < partsTkt.length; a++) {
                                 if (diez == 10) {
+                                    objRtnDesglosado = new A2331Filter();
+                                    objRtnDesglosado.pos = objRtn.pos;
+                                    objRtnDesglosado.SENTDATE = objRtn.SENTDATE;
+                                    objRtnDesglosado.MERCHN = objRtn.MERCHN;
+                                    objRtnDesglosado.MERCHNAM = objRtn.MERCHNAM;
+                                    objRtnDesglosado.SALEDATE = objRtn.SALEDATE;
+                                    objRtnDesglosado.CARDNBR = objRtn.CARDNBR;
+                                    objRtnDesglosado.SCARCOD = objRtn.SCARCOD;
+                                    objRtnDesglosado.strDescripcion = objRtn.strDescripcion;
+                                    objRtnDesglosado.CODMOTI = objRtn.CODMOTI;
+                                    objRtnDesglosado.CLINAME = objRtn.CLINAME;
+                                    objRtnDesglosado.AUTAMOUNT = objRtn.AUTAMOUNT;
+                                    objRtnDesglosado.AUTHNBR = objRtn.AUTHNBR;
+                                    objRtnDesglosado.FOLIO = objRtn.FOLIO;
+                                    objRtnDesglosado.strFormatDate = objRtn.strFormatDate;
+                                    objRtnDesglosado.AGENTE = objRtn.AGENTE;
                                     try {
-                                        objRtn.strTicket = strTkts;
-                                        objRtn.STUSO = strUso;
+                                        objRtnDesglosado.strTicket = strTkts;
+                                        objRtnDesglosado.STUSO = strUso;
                                     } catch (Exception e) {
-                                        objRtn.strTicket = "";
-                                        objRtn.STUSO = "";
+                                        objRtnDesglosado.strTicket = "";
+                                        objRtnDesglosado.STUSO = "";
                                     }
-                                    list.add(objRtn);
+                                    list.add(objRtnDesglosado);
+
                                     strTkts = partsTkt[a] + ",";
                                     strUso = partsUso[a] + ",";
                                     diez = 1;
@@ -1853,34 +1869,83 @@ public class DataRequestedByBankDAO {
                                 }
                             }
                             if (!strTkts.trim().isEmpty()) {
+                                objRtnDesglosado = new A2331Filter();
+                                objRtnDesglosado.pos = objRtn.pos;
+                                objRtnDesglosado.SENTDATE = objRtn.SENTDATE;
+                                objRtnDesglosado.MERCHN = objRtn.MERCHN;
+                                objRtnDesglosado.MERCHNAM = objRtn.MERCHNAM;
+                                objRtnDesglosado.SALEDATE = objRtn.SALEDATE;
+                                objRtnDesglosado.CARDNBR = objRtn.CARDNBR;
+                                objRtnDesglosado.SCARCOD = objRtn.SCARCOD;
+                                objRtnDesglosado.strDescripcion = objRtn.strDescripcion;
+                                objRtnDesglosado.CODMOTI = objRtn.CODMOTI;
+                                objRtnDesglosado.CLINAME = objRtn.CLINAME;
+                                objRtnDesglosado.AUTAMOUNT = objRtn.AUTAMOUNT;
+                                objRtnDesglosado.AUTHNBR = objRtn.AUTHNBR;
+                                objRtnDesglosado.FOLIO = objRtn.FOLIO;
+                                objRtnDesglosado.strFormatDate = objRtn.strFormatDate;
+                                objRtnDesglosado.AGENTE = objRtn.AGENTE;
                                 try {
-                                    objRtn.strTicket = strTkts;
-                                    objRtn.STUSO = strUso;
+                                    objRtnDesglosado.strTicket = strTkts;
+                                    objRtnDesglosado.STUSO = strUso;
                                 } catch (Exception e) {
-                                    objRtn.strTicket = "";
-                                    objRtn.STUSO = "";
+                                    objRtnDesglosado.strTicket = "";
+                                    objRtnDesglosado.STUSO = "";
                                 }
-                                list.add(objRtn);
+
+                                list.add(objRtnDesglosado);
                             }
                         } else {
+                            objRtnDesglosado = new A2331Filter();
+                            objRtnDesglosado.pos = objRtn.pos;
+                            objRtnDesglosado.SENTDATE = objRtn.SENTDATE;
+                            objRtnDesglosado.MERCHN = objRtn.MERCHN;
+                            objRtnDesglosado.MERCHNAM = objRtn.MERCHNAM;
+                            objRtnDesglosado.SALEDATE = objRtn.SALEDATE;
+                            objRtnDesglosado.CARDNBR = objRtn.CARDNBR;
+                            objRtnDesglosado.SCARCOD = objRtn.SCARCOD;
+                            objRtnDesglosado.strDescripcion = objRtn.strDescripcion;
+                            objRtnDesglosado.CODMOTI = objRtn.CODMOTI;
+                            objRtnDesglosado.CLINAME = objRtn.CLINAME;
+                            objRtnDesglosado.AUTAMOUNT = objRtn.AUTAMOUNT;
+                            objRtnDesglosado.AUTHNBR = objRtn.AUTHNBR;
+                            objRtnDesglosado.FOLIO = objRtn.FOLIO;
+                            objRtnDesglosado.strFormatDate = objRtn.strFormatDate;
+                            objRtnDesglosado.AGENTE = objRtn.AGENTE;
                             try {
-                                objRtn.strTicket = hmTkts.get(strKey).toString();
-                                objRtn.STUSO = hmUse.get(strKey).toString();
+                                objRtnDesglosado.strTicket = hmTkts.get(strKey).toString();
+                                objRtnDesglosado.STUSO = hmUse.get(strKey).toString();
                             } catch (Exception e) {
-                                objRtn.strTicket = "";
-                                objRtn.STUSO = "";
+                                objRtnDesglosado.strTicket = "";
+                                objRtnDesglosado.STUSO = "";
                             }
-                            list.add(objRtn);
+                            list.add(objRtnDesglosado);
                         }
                     } else {
+                        objRtnDesglosado = new A2331Filter();
+                        objRtnDesglosado.pos = objRtn.pos;
+                        objRtnDesglosado.SENTDATE = objRtn.SENTDATE;
+                        objRtnDesglosado.MERCHN = objRtn.MERCHN;
+                        objRtnDesglosado.MERCHNAM = objRtn.MERCHNAM;
+                        objRtnDesglosado.SALEDATE = objRtn.SALEDATE;
+                        objRtnDesglosado.CARDNBR = objRtn.CARDNBR;
+                        objRtnDesglosado.SCARCOD = objRtn.SCARCOD;
+                        objRtnDesglosado.strDescripcion = objRtn.strDescripcion;
+                        objRtnDesglosado.CODMOTI = objRtn.CODMOTI;
+                        objRtnDesglosado.CLINAME = objRtn.CLINAME;
+                        objRtnDesglosado.AUTAMOUNT = objRtn.AUTAMOUNT;
+                        objRtnDesglosado.AUTHNBR = objRtn.AUTHNBR;
+                        objRtnDesglosado.FOLIO = objRtn.FOLIO;
+                        objRtnDesglosado.strFormatDate = objRtn.strFormatDate;
+                        objRtnDesglosado.AGENTE = objRtn.AGENTE;
                         try {
-                            objRtn.strTicket = hmTkts.get(strKey).toString();
-                            objRtn.STUSO = hmUse.get(strKey).toString();
+                            objRtnDesglosado.strTicket = hmTkts.get(strKey).toString();
+                            objRtnDesglosado.STUSO = hmUse.get(strKey).toString();
                         } catch (Exception e) {
-                            objRtn.strTicket = "";
-                            objRtn.STUSO = "";
+                            objRtnDesglosado.strTicket = "";
+                            objRtnDesglosado.STUSO = "";
                         }
-                        list.add(objRtn);
+                        list.add(objRtnDesglosado);
                     }
                     /*System.out.println("SENTDATE : " + objRtn.SENTDATE + " *** MERCHN : " + objRtn.MERCHN + " *** SALEDATE : " + objRtn.SALEDATE 
                      + " *** strDescripcion : " + objRtn.strDescripcion + " *** AUTAMOUNT : " + objRtn.AUTAMOUNT 
@@ -1946,11 +2011,10 @@ public class DataRequestedByBankDAO {
             cstmt.setString(10, filter.IN_CODEBANK.trim());
             cstmt.execute();
 
-
             rs01 = cstmt.getResultSet();
 
             while (rs01.next()) {
- /*cell0.setCellValue(bean.MERCHNAM);
+                /*cell0.setCellValue(bean.MERCHNAM);
                 cell1.setCellValue(bean.MERCHN);
 
                 cell2.setCellValue(bean.AUTAMOUNT);
@@ -1988,7 +2052,7 @@ public class DataRequestedByBankDAO {
                 objRtn.strDescCard = rs01.getString("NAMECAR").trim();
                 objRtn.strCANAL = rs01.getString("CANAL").trim();
                 objRtn.strTitulo = rs01.getString("desCANAL").trim();
-    //                    objRtn.CODEBANK = rs01.getString("CODEBANK").trim();
+                //                    objRtn.CODEBANK = rs01.getString("CODEBANK").trim();
                 objRtn.strDescBank = rs01.getString("NAMEBANK").trim();
                 objRtn.AUTAMOUNT = rs01.getDouble("AUTAMOUNT");
                 objRtn.APLIDATE = rs01.getString("APLIDATE").trim();
@@ -2006,12 +2070,12 @@ public class DataRequestedByBankDAO {
                 } else {
                     objRtn.strDescripcion = objRtn.CARDNBR;
                 }
-    //                    objRtn.SENTDATE = rs01.getString("REMEDATE").trim();
-    //                    try {
-    //                        objRtn.strFormatDate = Functions.getFechaenTexto(Functions.sumXDaystoDate(objRtn.SENTDATE, 10));
-    //                    } catch (Exception e) {
-    //                    }
-    //                    objRtn.AUTHNBR = rs01.getString("AUTHNBR").trim();
+                //                    objRtn.SENTDATE = rs01.getString("REMEDATE").trim();
+                //                    try {
+                //                        objRtn.strFormatDate = Functions.getFechaenTexto(Functions.sumXDaystoDate(objRtn.SENTDATE, 10));
+                //                    } catch (Exception e) {
+                //                    }
+                //                    objRtn.AUTHNBR = rs01.getString("AUTHNBR").trim();
                 objRtn.FECR = Functions.getFechaActual();
 
 //                strKey = rs01.getString("SCARCOD").trim() + rs01.getString("CANAL").trim() + rs01.getString("CODEBANK").trim()
@@ -2060,7 +2124,7 @@ public class DataRequestedByBankDAO {
 
         return list;
     }
-    
+
     public HashMap loadPX404SQP01917(A2331Filter filter) throws SQLException, Exception {
 
         List<A2331Filter> list = new ArrayList<A2331Filter>();
@@ -2538,13 +2602,13 @@ public class DataRequestedByBankDAO {
 
         return beanAcla;
     }
-    
+
     public A2331Filter loadPX405SQP01958(A2331Filter filter) throws SQLException, Exception {
 
         A2331Filter objRtn = new A2331Filter();
-        String tkt="";
+        String tkt = "";
         String strTkt = "", strPNR = "", strDesc = "", msj = "", strAuthor = "", strPAX = "", strSENTDATE = "";//, strSEQNUM = ""
-        String strSCARCOD = "", strSCARDN = "", strMERCHN = "", strMERCHNAM = "", strSALEDATE = "", strFOLIO = "", strAGENTE="", STUSO ="";
+        String strSCARCOD = "", strSCARDN = "", strMERCHN = "", strMERCHNAM = "", strSALEDATE = "", strFOLIO = "", strAGENTE = "", STUSO = "";
         //String strCANAL = "", strFLAG = "", strRuta = "", strImageLink = "";
         double dblAUTAMOUNT = 0;
         int i = 0;
@@ -2598,9 +2662,9 @@ public class DataRequestedByBankDAO {
                 }
                 strFOLIO = rs01.getString("FOLIO").trim();
                 //==============================================================
-                
+
                 tkt = rs01.getString("CCIA").trim() + rs01.getString("FORMA").trim() + rs01.getString("SERIE").trim();
-                STUSO =rs01.getString("STUSO");
+                STUSO = rs01.getString("STUSO");
                 if (!rs01.getString("RUTA0").trim().isEmpty() && !rs01.getString("PAX").trim().equals("")) {
                     hayVenta = true;
                     /*objRtn.CARDNBR = rs01.getString("CARDNBR").trim();
@@ -2656,25 +2720,25 @@ public class DataRequestedByBankDAO {
                     objRtn.RUTA3 = rs01.getString("RUTA3").trim();
                     objRtn.RUTA4 = rs01.getString("RUTA4").trim();
                     strDesc = Functions.FormatFecha(objRtn.FVLO1, "yyyyMMdd", "ddMMMyy") + " " + objRtn.RUTA0 + objRtn.RUTA1;
-                    if(STUSO.substring(0, 1).equals("F")){
-                        strDesc = strDesc + "(" + getSeats(tkt,"1",objRtn.FVLO1) + ")";
+                    if (STUSO.substring(0, 1).equals("F")) {
+                        strDesc = strDesc + "(" + getSeats(tkt, "1", objRtn.FVLO1) + ")";
                     }
                     if (!objRtn.FVLO2.isEmpty()) {
                         strDesc += " / " + Functions.FormatFecha(objRtn.FVLO2, "yyyyMMdd", "ddMMMyy") + " " + objRtn.RUTA1 + objRtn.RUTA2;
-                        if(STUSO.substring(1, 2).equals("F")){
-                            strDesc = strDesc + "(" + getSeats(tkt,"2",objRtn.FVLO2) + ")";
+                        if (STUSO.substring(1, 2).equals("F")) {
+                            strDesc = strDesc + "(" + getSeats(tkt, "2", objRtn.FVLO2) + ")";
                         }
                     }
                     if (!objRtn.FVLO3.isEmpty()) {
                         strDesc += " / " + Functions.FormatFecha(objRtn.FVLO3, "yyyyMMdd", "ddMMMyy") + " " + objRtn.RUTA2 + objRtn.RUTA3;
-                        if(STUSO.substring(2, 3).equals("F")){
-                            strDesc = strDesc + "(" + getSeats(tkt,"3",objRtn.FVLO3) + ")";
+                        if (STUSO.substring(2, 3).equals("F")) {
+                            strDesc = strDesc + "(" + getSeats(tkt, "3", objRtn.FVLO3) + ")";
                         }
                     }
                     if (!objRtn.FVLO4.isEmpty()) {
                         strDesc += " / " + Functions.FormatFecha(objRtn.FVLO4, "yyyyMMdd", "ddMMMyy") + " " + objRtn.RUTA3 + objRtn.RUTA4;
-                        if(STUSO.substring(3, 4).equals("F")){
-                            strDesc = strDesc + "(" + getSeats(tkt,"4",objRtn.FVLO4) + ")";
+                        if (STUSO.substring(3, 4).equals("F")) {
+                            strDesc = strDesc + "(" + getSeats(tkt, "4", objRtn.FVLO4) + ")";
                         }
                     }
                 }
@@ -2743,35 +2807,35 @@ public class DataRequestedByBankDAO {
                 objRtn.MERCHN = strMERCHN;
                 objRtn.AUTAMOUNT = dblAUTAMOUNT;
                 //==============================================================
-                if(objRtn.strDireccion.trim().isEmpty()){
+                if (objRtn.strDireccion.trim().isEmpty()) {
                     objRtn.strDireccion = "REVISAR COMENTARIOS.";
                 }
-                if(objRtn.FVLO1.trim().isEmpty()){
+                if (objRtn.FVLO1.trim().isEmpty()) {
                     objRtn.FVLO1 = "REVISAR COMENTARIOS.";
                 }
-                if(strTkt.trim().isEmpty()){
+                if (strTkt.trim().isEmpty()) {
                     objRtn.strTicket = "TICKETS NO ENCONTRADOS";
-                }else{
+                } else {
                     objRtn.strTicket = strTkt;
                 }
-                if(strAuthor.trim().isEmpty()){
+                if (strAuthor.trim().isEmpty()) {
                     objRtn.AUTHNBR = "REVISAR COMENTARIOS.";
-                }else{
+                } else {
                     objRtn.AUTHNBR = strAuthor;
                 }
-                if(strPNR.trim().isEmpty()){
+                if (strPNR.trim().isEmpty()) {
                     objRtn.PNR = "REVISAR COMENTARIOS.";
-                }else{
+                } else {
                     objRtn.PNR = strPNR;
                 }
-                if(strPAX.trim().isEmpty()){
+                if (strPAX.trim().isEmpty()) {
                     objRtn.PAX = "REVISAR COMENTARIOS.";
-                }else{
+                } else {
                     objRtn.PAX = strPAX;
                 }
-                if(strDesc.trim().isEmpty()){
+                if (strDesc.trim().isEmpty()) {
                     objRtn.strDescStatus = strPNR + "  " + "REVISAR COMENTARIOS.";
-                }else{
+                } else {
                     objRtn.strDescStatus = strPNR + "  " + strDesc;
                 }
                 objRtn.FOLIO = strFOLIO;
@@ -2817,8 +2881,8 @@ public class DataRequestedByBankDAO {
         return objRtn;
     }
 
-    public String getSeats(String tkt, String cupon, String fechaVLO) throws Exception{
-        String seat ="";
+    public String getSeats(String tkt, String cupon, String fechaVLO) throws Exception {
+        String seat = "";
         CallableStatement cstmt = null;
         ResultSet rs01 = null;
         Connection cnx = null;
@@ -2876,7 +2940,7 @@ public class DataRequestedByBankDAO {
 
         return seat;
     }
-    
+
     public List<A2331Filter> loadPX404SQP02000(A2331Filter filter) throws SQLException, Exception {
 
         List<A2331Filter> list = new ArrayList<A2331Filter>();
@@ -2922,22 +2986,18 @@ public class DataRequestedByBankDAO {
                         strTkts = hmTkts.get(strKey).toString() + ", " + rs01.getString("CCIA").trim() + " " + rs01.getString("FORMA").trim() + rs01.getString("SERIE").trim();
                         hmTkts.put(strKey, strTkts);
                     }
-                } else {
-                    if (!rs01.getString("CCIA").trim().isEmpty()) {
-                        strTkts = rs01.getString("CCIA").trim() + " " + rs01.getString("FORMA").trim() + rs01.getString("SERIE").trim();
-                        hmTkts.put(strKey, strTkts);
-                    }
+                } else if (!rs01.getString("CCIA").trim().isEmpty()) {
+                    strTkts = rs01.getString("CCIA").trim() + " " + rs01.getString("FORMA").trim() + rs01.getString("SERIE").trim();
+                    hmTkts.put(strKey, strTkts);
                 }
                 if (hmUse.containsKey(strKey)) {
                     if (!rs01.getString("STUSOS").trim().isEmpty()) {
                         strUso = hmUse.get(strKey).toString() + ", " + rs01.getString("STUSOS").trim();
                         hmUse.put(strKey, strUso);
                     }
-                } else {
-                    if (!rs01.getString("STUSOS").trim().isEmpty()) {
-                        strUso = rs01.getString("STUSOS").trim();
-                        hmUse.put(strKey, strUso);
-                    }
+                } else if (!rs01.getString("STUSOS").trim().isEmpty()) {
+                    strUso = rs01.getString("STUSOS").trim();
+                    hmUse.put(strKey, strUso);
                 }
                 hmSaleDate.put(strKey, rs01.getString("SALEDATE").trim());
             }
@@ -3081,22 +3141,18 @@ public class DataRequestedByBankDAO {
                         strTkts = hmTkts.get(strKey).toString() + ", " + rs01.getString("CCIA").trim() + " " + rs01.getString("FORMA").trim() + rs01.getString("SERIE").trim();
                         hmTkts.put(strKey, strTkts);
                     }
-                } else {
-                    if (!rs01.getString("CCIA").trim().isEmpty()) {
-                        strTkts = rs01.getString("CCIA").trim() + " " + rs01.getString("FORMA").trim() + rs01.getString("SERIE").trim();
-                        hmTkts.put(strKey, strTkts);
-                    }
+                } else if (!rs01.getString("CCIA").trim().isEmpty()) {
+                    strTkts = rs01.getString("CCIA").trim() + " " + rs01.getString("FORMA").trim() + rs01.getString("SERIE").trim();
+                    hmTkts.put(strKey, strTkts);
                 }
                 if (hmUse.containsKey(strKey)) {
                     if (!rs01.getString("STUSOS").trim().isEmpty()) {
                         strUso = hmUse.get(strKey).toString() + ", " + rs01.getString("STUSOS").trim();
                         hmUse.put(strKey, strUso);
                     }
-                } else {
-                    if (!rs01.getString("STUSOS").trim().isEmpty()) {
-                        strUso = rs01.getString("STUSOS").trim();
-                        hmUse.put(strKey, strUso);
-                    }
+                } else if (!rs01.getString("STUSOS").trim().isEmpty()) {
+                    strUso = rs01.getString("STUSOS").trim();
+                    hmUse.put(strKey, strUso);
                 }
                 hmSaleDate.put(strKey, rs01.getString("SALEDATE").trim());
             }
@@ -3195,7 +3251,7 @@ public class DataRequestedByBankDAO {
 
         return list;
     }
-    
+
     public String loadPX404SQP01946(A2331Filter filter) throws SQLException, Exception {
 
         //REALIZA EL INSERT, UPDATE O DELETE DE UN REGISTRO EN LA TABLA A1691.
@@ -3325,7 +3381,7 @@ public class DataRequestedByBankDAO {
         return strMsj;
     }
 
-    public List<ExcelChargeBack> loadPX404SQP03580(A2331Filter filter,String TRFND) throws SQLException, Exception {
+    public List<ExcelChargeBack> loadPX404SQP03580(A2331Filter filter, String TRFND) throws SQLException, Exception {
 
         List<ExcelChargeBack> list = new ArrayList<ExcelChargeBack>();
         ExcelChargeBack objRtn;
@@ -3437,7 +3493,7 @@ public class DataRequestedByBankDAO {
                 list.add(objRtn);
             }
 
-        } catch (Exception e) { 
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             if (rs01 != null) {
@@ -3673,6 +3729,5 @@ public class DataRequestedByBankDAO {
 
         return list;
     }
-    
-    
+
 }

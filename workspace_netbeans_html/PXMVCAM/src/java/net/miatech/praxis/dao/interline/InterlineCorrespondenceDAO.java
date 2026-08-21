@@ -27,7 +27,7 @@ public class InterlineCorrespondenceDAO {
     public void setSession(IServerSession ss) {
         session = ss;
     }
-    
+
     public List<A020Filter> loadPX183S01A020(A020Filter filter) throws SQLException, Exception {
         List<A020Filter> lstRtn = new ArrayList<A020Filter>(0);
         A020Filter objRtn;
@@ -90,14 +90,26 @@ public class InterlineCorrespondenceDAO {
                 objRtn.A020IMPINT = rs01.getDouble("A020IMPINT");
                 objRtn.A020TOTHAB = rs01.getDouble("A020TOTHAB");
                 objRtn.A020NETO = rs01.getDouble("A020NETO");
-                
-                if (rs01.getInt("QTYTUSO") > 0) {
+                objRtn.A020CODOB1 = rs01.getString("A020CODOB1");
+
+//                if (rs01.getInt("QTYTUSO") > 0) {
+//                    objRtn.strDescripcion2 = "Billed";
+//                } else if(rs01.getString("A020CODOB1").equals("SIS") || rs01.getString("A020CODOB2").equals("SIS") || rs01.getString("A020CODOB3").equals("SIS")
+//                        || rs01.getString("A020CODOB4").equals("SIS") || rs01.getString("A020CODOB5").equals("SIS")) {
+//                    objRtn.strDescripcion2 = "Closed";
+//                }else {
+//                    objRtn.strDescripcion2 = "Pending";
+//                }
+                String codob1_sub = rs01.getString("QTYTUSO") != null ? rs01.getString("QTYTUSO").trim() : "";
+
+                if (codob1_sub.equals("0942") || codob1_sub.equals("0901")) {
                     objRtn.strDescripcion2 = "Billed";
-                } else if(rs01.getString("A020CODOB1").equals("SIS") || rs01.getString("A020CODOB2").equals("SIS") || rs01.getString("A020CODOB3").equals("SIS")
-                        || rs01.getString("A020CODOB4").equals("SIS") || rs01.getString("A020CODOB5").equals("SIS")) {
+                } else if (codob1_sub.equals("0902")) {
                     objRtn.strDescripcion2 = "Closed";
-                }else {
-                    objRtn.strDescripcion2 = "Pending";
+                }  else if (objRtn.A020CODOB1.equals("0902")) {
+                    objRtn.strDescripcion2 = "Closed";
+                } else {
+                    objRtn.strDescripcion2 = "Open";
                 }
 
                 //Paginación ===================================================
@@ -131,7 +143,7 @@ public class InterlineCorrespondenceDAO {
 
         return lstRtn;
     }
-    
+
     public A020Filter loadPX183S02A020(A020Filter filter) throws SQLException, Exception {
         A020Filter objRtn = null;
 
@@ -190,7 +202,7 @@ public class InterlineCorrespondenceDAO {
 
         return objRtn;
     }
-    
+
     public String loadPX183S03A020(A020Filter filter, String option) throws SQLException, Exception {
         //REALIZA EL INSERT, UPDATE O DELETE DE UN REGISTRO EN LA TABLA A020.
         String strMsj = "Operation was successful.";
@@ -236,7 +248,7 @@ public class InterlineCorrespondenceDAO {
 
         return strMsj;
     }
-    
+
     public static void pasarGarbageCollector() {
         System.gc();
         System.runFinalization();

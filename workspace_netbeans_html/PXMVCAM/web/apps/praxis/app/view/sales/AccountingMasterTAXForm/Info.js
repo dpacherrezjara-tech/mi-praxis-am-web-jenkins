@@ -11,7 +11,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Info', {
     items: [
         {
             region: 'center',
-            id:prototype.id+'-boxMainData',
+            id: prototype.id + '-boxMainData',
             hidden: false,
             layout: {
                 type: 'vbox',
@@ -39,104 +39,121 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Info', {
                             align: 'center'
                         },
                         items: [
-                            {text: 'Type', width: 70, dataIndex: 'A1741TIPO', hidden: true,
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                            {
+                                text: 'Type', width: 70, dataIndex: 'A1741TIPO', hidden: true,
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Type', width: 70, dataIndex: 'A1741TIPO_00',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                            {
+                                text: 'Type', width: 70, dataIndex: 'A1741TIPO_00',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Country', width: 70, dataIndex: 'A1741PAIS',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                            {
+                                text: 'Country', width: 70, dataIndex: 'A1741PAIS',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Tax', width: 70, dataIndex: 'A1741CODE',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                            {
+                                text: 'Tax', width: 70, dataIndex: 'A1741CODE',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Tax Type', width: 70, dataIndex: 'A1741TPTAX',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                            {
+                                text: 'Tax Type', width: 70, dataIndex: 'A1741TPTAX',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Controlled', width: 80, dataIndex: 'A1741CTRL',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                            {
+                                text: 'Controlled', width: 80, dataIndex: 'A1741CTRL',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Currency', width: 70, dataIndex: 'A1741MONED',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                            {
+                                text: 'Currency', width: 70, dataIndex: 'A1741MONED',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Company', width: 70, dataIndex: 'A1741CIA',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                            {
+                                text: 'Company', width: 70, dataIndex: 'A1741CIA',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Unit', width: 50, dataIndex: 'A1741UNIDA',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                            {
+                                text: 'Unit', width: 50, dataIndex: 'A1741UNIDA',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'C.Cost', width: 70, dataIndex: 'A1741CECOS',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                            {
+                                text: 'C.Cost', width: 70, dataIndex: 'A1741CECOS',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Location', width: 70, dataIndex: 'A1741UBICA',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                            {
+                                text: 'Location', width: 70, dataIndex: 'A1741UBICA',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Account', width: 70, dataIndex: 'A1741CTA',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                            {
+                                text: 'Account', width: 70, dataIndex: 'A1741CTA',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Sub account', width: 90, dataIndex: 'A1741SCTA',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                            {
+                                text: 'Sub account', width: 90, dataIndex: 'A1741SCTA',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Equipment', width: 80, dataIndex: 'A1741EQUI',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                            {
+                                text: 'Equipment', width: 80, dataIndex: 'A1741EQUI',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Inter company', width: 100, dataIndex: 'A1741ICIA',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                            {
+                                text: 'Inter company', width: 100, dataIndex: 'A1741ICIA',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Country Location', width: 120, dataIndex: 'A1741INTNU',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                            {
+                                text: 'Country Location', width: 120, dataIndex: 'A1741INTNU',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
                             },
-                            {text: 'Description', width: 200, dataIndex: 'A1741CONCE',
-                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                            {
+                                text: 'Description', width: 200, dataIndex: 'A1741CONCE',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";
                                     return value;
                                 }
@@ -149,8 +166,8 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Info', {
                                     align: 'center'
                                 },
                                 columns: [
-                                    {text: 'Start Date', dataIndex: 'A1741FINI', width: 80},
-                                    {text: 'End date', dataIndex: 'A1741FFIN', width: 80}
+                                    { text: 'Start Date', dataIndex: 'A1741FINI', width: 80 },
+                                    { text: 'End date', dataIndex: 'A1741FFIN', width: 80 }
                                 ]
                             },
                             {
@@ -173,6 +190,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Info', {
                 {
                     xtype: 'panel',
                     id: prototype.id + '-pie',
+                    region: 'south',
                     layout: {
                         type: 'hbox',
                         pack: 'center'
@@ -216,7 +234,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.Info', {
                                     text: '0',
                                     width: 50
                                 },
-                                {xtype: 'tbspacer', width: 100},
+                                { xtype: 'tbspacer', width: 100 },
                                 {
                                     text: 'Total found',
                                     width: 80

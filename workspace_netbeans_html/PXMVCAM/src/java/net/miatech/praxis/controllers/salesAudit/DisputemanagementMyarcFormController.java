@@ -533,7 +533,7 @@ public class DisputemanagementMyarcFormController extends BaseController {
             sheet.autoSizeColumn(12, true);
             sheet.autoSizeColumn(13, true);
             sheet.autoSizeColumn(14, true);
-            sheet.autoSizeColumn(15, true);
+//            sheet.autoSizeColumn(15, true);
 
             String fileNameDownload = String.format("Dispute Management MYARC - " + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
             response.setContentType("application/vnd.openxml");

@@ -114,6 +114,8 @@ public class DashboardFilter {
     public Double CUPONS_ON_PERCENT = 0d;
     public long CUPONS_MEX = 0;
     public long CUPONS_OTHER = 0;
+    public long CPN_ASR_MEX = 0;
+    public long CPN_ASR_OTHER = 0;
     public long CUPONS_ASR = 0;
     public long CUPONS_ARC = 0;
     public long CUPONS_BSP = 0;
@@ -240,7 +242,16 @@ public class DashboardFilter {
     public long TOTAL_QTKTS0 = 0;
     public long TOTAL_QCPNS0 = 0;
     public double TOTAL_AMOUNT0 = 0;
-
+    
+    public double totQTYCPN = 0;
+    public double totQTYON = 0;
+    public double totQTYOFF = 0;
+    public double totQTYFL = 0;
+    public double totAMOCPN = 0;
+    public double totAMOON = 0;
+    public double totAMOOFF = 0;
+    public double totAMOFL = 0;
+    
     public long QTKTS5 = 0;
     public long QCPNS5 = 0;
     public double AMOUNT5 = 0;
@@ -287,6 +298,30 @@ public class DashboardFilter {
     public int QKMS = 0;
     public int QCOMP = 0;
 
+    //By Transaction
+    public long SALETKT = 0;
+    public double SALEUSD = 0;
+    public long EXCHTKT = 0;
+    public double EXCHUSD = 0;
+    public long RFNDTKT = 0;
+    public double RFNDUSD = 0;
+    public long AADMTKT = 0;
+    public double AADMUSD = 0;
+    public long AACMTKT = 0;
+    public double AACMUSD = 0;
+    public double AMOUNT_SALES_PERCENT = 0;
+    
+    public long TOTAL_SALETKT = 0;
+    public double TOTAL_SALEUSD = 0;
+    public long TOTAL_EXCHTKT = 0;
+    public double TOTAL_EXCHUSD = 0;
+    public long TOTAL_RFNDTKT = 0;
+    public double TOTAL_RFNDUSD = 0;
+    public long TOTAL_AADMTKT = 0;
+    public double TOTAL_AADMUSD = 0;
+    public long TOTAL_AACMTKT = 0;
+    public double TOTAL_AACMUSD = 0;
+    
     //totales
     public long totQFBASE = 0;
     public long totCPN_D = 0;

@@ -257,6 +257,7 @@ Ext.define('Ext.Praxis.view.flown.ChangeOfStatusForm.ChangeOfStatusForm', {
                                         {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txthora1',
+                                            hidden: true,
                                             maskRe: /^-?[0-9]*(\.[0-9]{1,2})?$/,
                                             fieldLabel: 'Start hour',
                                             labelAlign: 'right',
@@ -268,6 +269,7 @@ Ext.define('Ext.Praxis.view.flown.ChangeOfStatusForm.ChangeOfStatusForm', {
                                         },
                                         {
                                             xtype: 'textfield',
+                                            hidden: true,
                                             id: prototype.id + '-txthora2',
                                             maskRe: /^-?[0-9]*(\.[0-9]{1,2})?$/,
                                             fieldLabel: 'End hour',
@@ -284,6 +286,7 @@ Ext.define('Ext.Praxis.view.flown.ChangeOfStatusForm.ChangeOfStatusForm', {
                                         {
                                             xtype: 'combo',
                                             id: prototype.id + '-CmbStatus',
+                                            hidden: true,
                                             fieldLabel: 'Status',
                                             queryMode: 'local',
                                             displayField: 'name',
@@ -306,7 +309,7 @@ Ext.define('Ext.Praxis.view.flown.ChangeOfStatusForm.ChangeOfStatusForm', {
                                             xtype: 'textfield',
                                             id: prototype.id + '-txtCurrency',
                                             fieldLabel: 'Currency',
-                                            maskRe: /[A-Z,a-z,Ñ,ñ]/,
+                                            maskRe: /[A-Z,a-z,Ñ,ñ]/, hidden: true,
                                             maxLength: 3,
                                             enforceMaxLength: 3,
                                             labelWidth: 50,
@@ -314,6 +317,15 @@ Ext.define('Ext.Praxis.view.flown.ChangeOfStatusForm.ChangeOfStatusForm', {
                                             listeners: {
                                                 specialkey: 'onSearchkey',
                                                 //change: 'onchange'
+                                            }
+                                        },
+                                        {
+                                            xtype: 'checkbox',
+                                            id: prototype.id + '-tktpraxis',
+                                            boxLabel: 'Tickets in Praxis ?',
+                                            checked:false,
+                                            listeners: {
+                                                change: 'onTktPraxisChkChange'
                                             }
                                         }
                                     ]
@@ -383,7 +395,7 @@ Ext.define('Ext.Praxis.view.flown.ChangeOfStatusForm.ChangeOfStatusForm', {
                                         {
                                             xtype: 'combo',
                                             id: prototype.id + '-CmbOrigen',
-                                            fieldLabel: 'Origen',//readOnly: true,
+                                            fieldLabel: 'Origen', //readOnly: true,
                                             queryMode: 'local',
                                             displayField: 'name',
                                             valueField: 'code',
@@ -408,8 +420,8 @@ Ext.define('Ext.Praxis.view.flown.ChangeOfStatusForm.ChangeOfStatusForm', {
                                             labelWidth: 50,
                                             width: 300,
                                             listeners: {
-                                                specialkey: 'onSearchkey',
-                                                //change: 'onchange'
+                                                specialkey: 'onSearchkey'
+                                                        //change: 'onchange'
                                             }
                                         },
                                         {
@@ -468,44 +480,49 @@ Ext.define('Ext.Praxis.view.flown.ChangeOfStatusForm.ChangeOfStatusForm', {
                                         dataIndex: 'A3676FREGI',
                                         width: 80
                                     },
-                                    {
-                                        text: 'Processing </br> date',
-                                        dataIndex: 'A3676FRECE',
-                                        width: 80
-                                    },
-                                    {text: 'Cur.',dataIndex: 'A3676CUR',width: 40},
-                                            {text: 'Net.',dataIndex: 'A3676MONTO',width: 70,align: 'right',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    return win.formatDblNumber(value);
-                                                }
-                                            },
+                                    /*{
+                                     text: 'Processing </br> date',
+                                     dataIndex: 'A3676FRECE',
+                                     width: 80
+                                     },*/
+                                    /*{text: 'Cur.',dataIndex: 'A3676CUR',width: 40},
+                                     {text: 'Net.',dataIndex: 'A3676MONTO',width: 70,align: 'right',
+                                     renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                     metaData.style = "text-align:right;";
+                                     return win.formatDblNumber(value);
+                                     }
+                                     },*/
                                     {text: 'Praxis',
                                         columns: [
-                                            {text: 'Ticket', dataIndex: 'A3676TIKET',width: 100},
-                                            { text: 'CPN',dataIndex: 'A3676CUPON',width: 40},
-                                            { text: 'USE',dataIndex: 'A3676USE',width: 40}/*,
-                                            {text: 'Cur.',dataIndex: 'A3676CUR',width: 40},
-                                            {text: 'Net.',dataIndex: 'A3676MONTO',width: 70,align: 'right',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    return win.formatDblNumber(value);
-                                                }
-                                            }*/
+                                            {text: 'Ticket', dataIndex: 'A3676TIKET', width: 100},
+                                            {text: 'CPN', dataIndex: 'A3676CUPON', width: 40, renderer: function (value, metaData, record) {
+                                                    if (record.get('A3676TIKET') !== '') {
+                                                        return value; // muestra el cupón
+                                                    }
+                                                    return ''; // vacío si no cumple
+                                                }},
+                                            {text: 'USE', dataIndex: 'A3676USE', width: 40}/*,
+                                             {text: 'Cur.',dataIndex: 'A3676CUR',width: 40},
+                                             {text: 'Net.',dataIndex: 'A3676MONTO',width: 70,align: 'right',
+                                             renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                             metaData.style = "text-align:right;";
+                                             return win.formatDblNumber(value);
+                                             }
+                                             }*/
                                         ]
                                     },
                                     {text: 'Robot',
                                         columns: [
-                                             {text: 'Ticket', dataIndex: 'A3676TKT',width: 100},
-                                             { text: 'CPN',dataIndex: 'A3676CPNRB',width: 40},
-                                             { text: 'USE',dataIndex: 'A3676USEB',width: 50}
-                                             /*{text: 'Cur.',dataIndex: 'A3676CURRB',width: 40},
+                                            {text: 'Ticket', dataIndex: 'A3676TKT', width: 100},
+                                            {text: 'CPN', dataIndex: 'A3676CPNRB', width: 40},
+                                            {text: 'USE', dataIndex: 'A3676USEB', width: 50}
+                                            /*{text: 'Cur.',dataIndex: 'A3676CURRB',width: 40},
                                              {text: 'Net.',dataIndex: 'A3676MONRB',width: 70,align: 'right',
-                                                renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                                    metaData.style = "text-align:right;";
-                                                    return win.formatDblNumber(value);
-                                                }
-                                            }*/
+                                             renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                             metaData.style = "text-align:right;";
+                                             return win.formatDblNumber(value);
+                                             }
+                                             }*/
                                         ]
                                     },
                                     {
@@ -529,18 +546,18 @@ Ext.define('Ext.Praxis.view.flown.ChangeOfStatusForm.ChangeOfStatusForm', {
                                         align: 'left',
                                         renderer: 'onRendererToltip'
                                     },
-                                     {
-                                        text: 'Description',
-                                        dataIndex: 'A3676DESCR',
-                                        width: 150,
-                                        align: 'left',
-                                        renderer: 'onRendererToltip'
-                                    },
+                                    /*{
+                                     text: 'Description',
+                                     dataIndex: 'A3676DESCR',
+                                     width: 150,
+                                     align: 'left',
+                                     renderer: 'onRendererToltip'
+                                     },*/
                                     {
                                         text: 'Status',
                                         dataIndex: 'A3676STROB',
                                         width: 150,
-                                         renderer: 'onRendererColumnStatus'
+                                        renderer: 'onRendererColumnStatus'
                                     },
                                     {
                                         text: 'Lote',
@@ -566,8 +583,8 @@ Ext.define('Ext.Praxis.view.flown.ChangeOfStatusForm.ChangeOfStatusForm', {
                                         dataIndex: 'A3676TIDOC',
                                         width: 50
                                     }
-                                    
-                                   
+
+
                                 ],
                                 defaults: {
                                     sortable: true,

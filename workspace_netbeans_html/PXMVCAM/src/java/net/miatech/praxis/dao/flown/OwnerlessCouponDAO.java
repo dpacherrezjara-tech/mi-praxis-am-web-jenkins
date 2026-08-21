@@ -105,6 +105,8 @@ public class OwnerlessCouponDAO {
                 beanTkt.A1413CIA = rst.getString("A1413CIA");
                 beanTkt.A1413FORSE = rst.getString("A1413FORSE");
                 beanTkt.A1413CUPON = rst.getString("A1413CUPON");
+                beanTkt.A1413NENV = rst.getString("A1413NENV");
+                beanTkt.A1413SEC = rst.getString("A1413SEC");
                 beanTkt.strTicket = rst.getString("A1413CIA") + " " + rst.getString("A1413FORSE") + " " + rst.getString("A1413CUPON");
                 beanTkt.A1413FVLOB = rst.getString("A1413FVLOB");
                 beanTkt.strFormatDate = Functions.getMonthConvert(beanTkt.A1413FVLOB);
@@ -485,6 +487,8 @@ public class OwnerlessCouponDAO {
 
                 beanTkt.A1413FORSE = rst.getString("A1413FORSE");
                 beanTkt.A1413CUPON = rst.getString("A1413CUPON");
+                beanTkt.A1413NENV = rst.getString("A1413NENV");
+                beanTkt.A1413SEC = rst.getString("A1413SEC");
                 beanTkt.strTicket = rst.getString("A1413CIA") + " " + rst.getString("A1413FORSE") + " " + rst.getString("A1413CUPON");
                 beanTkt.A1413FVLOB = rst.getString("A1413FVLOB");
                 beanTkt.strFormatDate = Functions.getMonthConvert(beanTkt.A1413FVLOB);
@@ -539,7 +543,7 @@ public class OwnerlessCouponDAO {
         CallableStatement cstmt = null;
 
         try {
-            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00257(?,?,?,?,?)}";
+            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00257(?,?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
 
@@ -548,6 +552,9 @@ public class OwnerlessCouponDAO {
             cstmt.setString(3, filter.A1413CIA.trim());
             cstmt.setString(4, filter.A1413FORSE.trim());
             cstmt.setString(5, filter.A1413CUPON.trim());
+            cstmt.setString(6, filter.A1413NENV.trim());
+            cstmt.setString(7, filter.A1413SEC.trim());
+            
 
             cstmt.execute();
 
@@ -569,6 +576,7 @@ public class OwnerlessCouponDAO {
                 beanCons.A1413CUPON = rst.getString("A1413CUPON").trim();
                 beanCons.strTicket = beanCons.A1413CIA + " " + beanCons.A1413FORSE + " " + beanCons.A1413CUPON;
                 beanCons.A1413SEC = rst.getString("A1413SEC").trim();
+                beanCons.A1413NENV = rst.getString("A1413NENV").trim();
                 beanCons.A1413DATA = rst.getString("A1413DATA").trim();
                 beanCons.A1413STATU = rst.getString("A1413STATU").trim();
                 beanCons.A1413STCRU = rst.getString("A1413STCRU").trim();
@@ -680,14 +688,17 @@ public class OwnerlessCouponDAO {
     public String loadPX235SQP00257ENTRY(A1413Filter filter, String strOption) throws SQLException, Exception {
 
         //REALIZA EL INSERT, UPDATE O DELETE DE UN REGISTRO EN LA TABLA A1691.
-        String strMsj = "Operation was successful.";
+        String strMsj = "Error.";
 
         CallableStatement cstmt = null;
 
         try {
-            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00257ENTRY(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00257ENTRY(?,?,?,?,?,?,?,?,?,?,"
+                                                                                 + "?,?,?,?,?,?,?,?,?,?,"
+                                                                                 + "?,?,?,?,?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
+            cstmt.registerOutParameter(30, Types.VARCHAR);
 
             cstmt.setString(1, strOption.trim());
             cstmt.setString(2, session.getUserView().getCustomerInfo().CCUST);
@@ -714,13 +725,16 @@ public class OwnerlessCouponDAO {
             cstmt.setString(23, filter.A1413NVLOB.trim());
             cstmt.setString(24, filter.A1413CITYB.trim());
             cstmt.setString(25, filter.A1413FCONT.trim());
+            cstmt.setString(26, filter.A1413NENV.trim());
 
-            cstmt.setString(26, session.getUserView().getUserInfo().USR);
-            cstmt.setString(27, Functions.getFechaActual());
-            cstmt.setString(28, Functions.getHoraActual());
+            cstmt.setString(27, session.getUserView().getUserInfo().USR);
+            cstmt.setString(28, Functions.getFechaActual());
+            cstmt.setString(29, Functions.getHoraActual());
+            cstmt.setString(30, "");
 
             cstmt.execute();
 
+            strMsj = cstmt.getString(30);
         } catch (Exception e) {
             strMsj = e.getMessage();
         } finally {

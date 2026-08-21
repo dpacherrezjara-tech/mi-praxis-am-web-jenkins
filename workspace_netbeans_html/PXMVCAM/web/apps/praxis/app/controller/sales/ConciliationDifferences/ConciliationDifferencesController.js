@@ -90,7 +90,7 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.ConciliationDiff
 
     },
     tnvMain_changeHandler: function (tab, x) {
-        
+
         var me = this;
         var tabPanel = Ext.getCmp(prototype.id + '-tnvMain');
         var activeTab = tabPanel.getActiveTab();
@@ -106,7 +106,7 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.ConciliationDiff
                 break;
         }
         me.btnSearch_click();
-        
+
     },
     changeCmbSearchBy: function (obj, value) {
         this.clearFields();
@@ -132,13 +132,13 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.ConciliationDiff
         Ext.getCmp(prototype.id + '-txtIATA').hide();
 
         if (value === 'BSP' || value === 'ARC') {
-            Ext.getCmp(prototype.id + '-cbxSearchBy').setValue('1');            
+            Ext.getCmp(prototype.id + '-cbxSearchBy').setValue('1');
             Ext.getCmp(prototype.id + '-gridDataByAmount01').show(); // BSP/ARC
-            if (value === 'ARC'){
-               Ext.getCmp(prototype.id + '-cmbBank').show();
+            if (value === 'ARC') {
+                Ext.getCmp(prototype.id + '-cmbBank').show();
             }
         } else if (value === 'ASR') {
-            Ext.getCmp(prototype.id + '-cbxSearchBy').setValue('2');            
+            Ext.getCmp(prototype.id + '-cbxSearchBy').setValue('2');
             Ext.getCmp(prototype.id + '-gridDataByAmount02').show(); // BSP/ARC            
             Ext.getCmp(prototype.id + '-txtIATA').show();
         }
@@ -149,7 +149,7 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.ConciliationDiff
         Ext.getCmp(prototype.id + '-gridDataByAmount02').getStore().removeAll();
         Ext.getCmp(prototype.id + '-gridDataByTrx01').getStore().removeAll();
         Ext.getCmp(prototype.id01 + '-gridData').getStore().removeAll();
-        
+
         var IN_FUENTE = Ext.getCmp(prototype.id + '-cmbSource').getValue().trim();
         var me = this;
         if (me.tipo === 'A') {
@@ -200,15 +200,20 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.ConciliationDiff
     getIATA: function () {
         //carga detalle
         var store;
-        var agent = new Array();
+        var agent = [];
         var IN_FUENTE = Ext.getCmp(prototype.id + '-cmbSource').getValue().trim();
         if (IN_FUENTE === 'BSP' || IN_FUENTE === 'ARC')
             store = Ext.getCmp(prototype.id + '-gridDataByAmount01').getStore();
         if (IN_FUENTE === 'ASR')
             store = Ext.getCmp(prototype.id + '-gridDataByAmount02').getStore();
-        for (var i = 0; i < store.data.items.length; i++) {
-            agent.push({
-                A1530AGENT: store.data.items[i].data.A1530AGENT
+        if (store) {
+            let storeItems = store.data.items;
+            storeItems.forEach(item => {
+                if (item.data.A1530AGENT) {
+                    agent.push({
+                        A1530AGENT: item.data.A1530AGENT
+                    });
+                }
             });
         }
         return JSON.stringify(agent);
@@ -243,12 +248,12 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.ConciliationDiff
         var IN_FUENTE = Ext.getCmp(prototype.id + '-cmbSource').getValue().trim();
         var IN_PAIS = Ext.getCmp(prototype.id + '-txtPais').getValue().trim();
         var IN_IATA = '';
-        if (IN_FUENTE === 'ASR') 
+        if (IN_FUENTE === 'ASR')
             IN_IATA = Ext.getCmp(prototype.id + '-txtIATA').getValue();
         var IN_MDA = '';
         var IN_IDFIL = '';
         var IN_STATUS = ''; // Ext.getCmp(prototype.id + '-cmbStatus').getValue().trim(); NO_USADO
-        
+
         me.searchParams = {
             IN_TFILTER: IN_TFILTER,
             IN_FPRDA1: IN_FPRDA1,
@@ -500,7 +505,7 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.ConciliationDiff
             IN_STATUS: IN_STATUS,
             IN_TIPO: me.tipo
         };
-        
+
         var msj = this.validateFields();
         if (msj !== '') {
             global.Msg({
@@ -525,19 +530,44 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.ConciliationDiff
     exportExcel: function () {
         var me = this;
         //this.setFormatParameter();
-        
-        global.getFile(prototype.url + '/getXLSX?beanString='+encodeURI(JSON.stringify(me.searchParams)));
-//        global.getFile(prototype.url + '/getXLSX?IN_TFILTER=' + me.searchParams.IN_TFILTER
-//                + '&IN_FPRDA1=' + me.searchParams.IN_FPRDA1
-//                + '&IN_FPRDA2=' + me.searchParams.IN_FPRDA2
-//                + '&IN_BANK=' + me.searchParams.IN_BANK
-//                + '&IN_FUENTE=' + me.searchParams.IN_FUENTE
-//                + '&IN_PAIS=' + me.searchParams.IN_PAIS
-//                + '&IN_IATA=' + encodeURI(JSON.stringify(me.searchParams.IN_IATA)) 
-//                + '&IN_MDA=' + me.searchParams.IN_MDA
-//                + '&IN_IDFIL=' + me.searchParams.IN_IDFIL
-//                + '&IN_STATUS=' + me.searchParams.IN_STATUS
-//                );
+
+        /*
+         * 
+         * DVT 20230613
+         * Se cambio forma de descarga por tipo POST,
+         * Java no permite URI tan largo para peticion GET.
+         */
+        var panel = Ext.getCmp(prototype.id + '-xpanel');
+        panel.mask('Downloading...');
+        let parameters = JSON.stringify({beanString: me.searchParams});
+        fetch(`${CONTEXTPATH}/ConciliationDifferences/getXLSX`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: parameters
+        }).then(async res => {
+            if (res.ok) {
+                let contentDisposition = res.headers.get('Content-Disposition');
+                let fileName = contentDisposition.split('filename=')[1].replace(/"/g, '');
+                console.log(fileName);
+                return await res.blob().then(blob => {
+                    var url = window.URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = url;
+                    a.download = fileName;
+                    a.click();
+                    a.remove();
+                    panel.unmask();
+                });
+            } else {
+                global.Msg({msg: 'Error en la descarga.'});
+                panel.unmask();
+            }
+        }).catch(err => {
+            console.error(err);
+            panel.unmask();
+        });
     },
     btnFilter_click: function (obj) {
         var option = Ext.getCmp(prototype.id + '-contentFilter');
@@ -547,23 +577,23 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.ConciliationDiff
             option.setVisible(true);
         }
     },
-    
+
     onEditClick: function (grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex);
         var all = grid.getStore();
         this.winDataEntry('U', rec, all, rowIndex);
 
     },
-    
+
     winDataEntry: function (action, rec, all, rowIndex) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
         all = all === null || all === undefined ? {} : all;
         rowIndex = rowIndex === null || rowIndex === undefined ? {} : rowIndex;
-        
+
         console.log(rec.data.A1698SOURC);
-        if (rec.data.A1698SOURC === 'BSP'){
-           Ext.create('Ext.Praxis.view.sales.ConciliationDifferencesForm.DataEntry', {
+        if (rec.data.A1698SOURC === 'BSP') {
+            Ext.create('Ext.Praxis.view.sales.ConciliationDifferencesForm.DataEntry', {
                 id: prototype.id + '-dataEntry',
                 params: {
                     action: action,
@@ -571,10 +601,10 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.ConciliationDiff
                     all: all,
                     rowIndex: rowIndex
                 }
-            }).show(); 
+            }).show();
         }
-        if (rec.data.A1698SOURC === 'ARC'){
-           Ext.create('Ext.Praxis.view.sales.ConciliationDifferencesForm.DataEntryARC', {
+        if (rec.data.A1698SOURC === 'ARC') {
+            Ext.create('Ext.Praxis.view.sales.ConciliationDifferencesForm.DataEntryARC', {
                 id: prototype.id + '-dataEntry',
                 params: {
                     action: action,
@@ -582,13 +612,13 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.ConciliationDiff
                     all: all,
                     rowIndex: rowIndex
                 }
-            }).show(); 
+            }).show();
         }
-        
+
 
     },
     //detalle de diferencias ASR
-    onActionClick: function(grid, rowIndex, colIndex) {
+    onActionClick: function (grid, rowIndex, colIndex) {
         //alert('DataEntryTransaction');
         var store = grid.getStore();
         var data = store.getAt(rowIndex).data;

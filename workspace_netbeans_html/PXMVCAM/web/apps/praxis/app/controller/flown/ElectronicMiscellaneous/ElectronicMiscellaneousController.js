@@ -111,7 +111,6 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.ElectronicMiscel
                 Ext.getCmp(prototype.id + '-panelPagination').hide();
                 Ext.getCmp(prototype.id + '-pie').hide();
                 Ext.getCmp(prototype.id + '-labelTitle').hide();
-
                 break;
             case '-gridDataDetail':
                 Ext.getCmp(prototype.id + '-panelPagination').show();
@@ -243,7 +242,10 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.ElectronicMiscel
                         });
                     }
                 } else {
-                    this.setGridDataDetailCoupon(obj, e);
+//                    this.setGridDataDetailCoupon(obj, e);
+                    this.setFormatParameter();
+                    me.gridActual = '-gridData';
+                    this.showGridActual();
                 }
                 break;
         }
@@ -355,7 +357,6 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.ElectronicMiscel
                     Ext.getCmp(prototype.id + '-lbl-pageCount').setText(Ext.util.Format.number(pagData.pageCount, '0,000'));
                     Ext.getCmp(prototype.id + '-lbl-total').setText(Ext.util.Format.number(pagData.total, '0,000'));
                     Ext.getCmp(prototype.id + '-labelTitle').setHtml('<b>Flight Date ' + label + '</b>');
-
                     if (obj.data.length === 0) {
                         global.Msg({
                             msg: 'Data not found.'
@@ -364,7 +365,6 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.ElectronicMiscel
                 }
             }
         });
-
         global.clear();
         Ext.getCmp(prototype.id + '-gridDataDetail').bindStore(storeGridDatas);
         Ext.getCmp(prototype.id + '-paggin').bindStore(storeGridDatas);
@@ -435,7 +435,8 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.ElectronicMiscel
             IN_FECHA_FROM: data.IN_FECHA_FROM,
             IN_FECHA_TO: data.IN_FECHA_TO
         };
-        this.setGridDataDetail(true); //El parametro es para identificar si se llama a la funcion desde la grilla usando el drillDown, o mediante el boton search
+        console.log(me.paramsDetail);
+        this.setGridDataDetail(false); //El parametro es para identificar si se llama a la funcion desde la grilla usando el drillDown, o mediante el boton search
     },
     onSetGridDataDetailCoupon: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         me.drillDown.push(me.gridActual);
@@ -470,7 +471,6 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.ElectronicMiscel
             back: '',
             TicketPadre: ''
         };
-
         if (rec.CCIA === '139') {
             facsimilParams.strVTR = 'VTR';
             facsimilParams.typeModal = 'PRORATE';
@@ -478,7 +478,6 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.ElectronicMiscel
             facsimilParams.back = 'SALE_TKT0';
             facsimilParams.TicketPadre = facsimilParams.TDNR;
             this.searchProrrateo(facsimilParams);
-
         } else {
 
             Ext.Ajax.request({
@@ -563,17 +562,12 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.ElectronicMiscel
                     });
                     prorrateo.setId(prototype.id + "-prorrateo");
                     prorrateo.show();
-
                 }
 
             }
         });
-
-
-
         console.log("URL 1 : " + urls.url1);
         console.log("URL 2 : " + urls.url2);
-
     },
     obtenerUrls: function (facsimilParams) {
 
@@ -583,12 +577,10 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.ElectronicMiscel
         var back = facsimilParams.back;
         var backSub = back.substr(0, 8);
         var backSub2 = back.substr(8);
-
         console.log("fuente : " + fuente);
         console.log("back : " + back);
         console.log("backSub : " + backSub);
         console.log("backSub2 : " + backSub2);
-
         if (fuente.trim() === 'A' || fuente.trim() === 'ARC') {
             if (backSub === 'SALE_RFN') {
                 if (backSub2 === '0') {
@@ -739,14 +731,29 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.ElectronicMiscel
                         + '&IN_TKT=' + me.paramsDetail.IN_TKT);
                 break;
             case '-gridDataDetailCoupon':
+                    var txtTicket = Ext.getCmp(prototype.id + '-txtTicket').getValue();
+                if (txtTicket.trim().length === 13) {
 
-                global.getFile(prototype.url + '/getDetailCouponXLSX?DFLIGHT=' + me.paramsDetailCoupon.DFLIGHT
-                        + '&NFLIGHT=' + me.paramsDetailCoupon.NFLIGHT
-                        + '&strFormatDate=' + me.paramsDetailCoupon.strFormatDate
-                        + '&ZONA=' + me.paramsDetailCoupon.ZONA
-                        + '&ZONA=' + me.paramsDetailCoupon.ZONA
-                        + '&CARRIVA=' + me.paramsDetailCoupon.CARRIVA);
-                break;
+                    me.bean = {};
+                    me.bean.IN_TKT = Ext.getCmp(prototype.id + '-txtTicket').getValue();
+                    me.bean.IN_SEQRO = Ext.getCmp(prototype.id + '-txtROLL').getValue();
+
+                    console.log(me.bean);
+                    var beanString = JSON.stringify(me.bean);
+                    searchParams = {
+                        beanString: beanString,
+                        bean: me.bean
+                    };
+
+                    global.getFile(prototype.url + '/getDetailCoupon2XLSX?beanString=' + searchParams.beanString);
+                } else {
+                    global.getFile(prototype.url + '/getDetailCouponXLSX?DFLIGHT=' + me.paramsDetailCoupon.DFLIGHT
+                            + '&NFLIGHT=' + me.paramsDetailCoupon.NFLIGHT
+                            + '&strFormatDate=' + me.paramsDetailCoupon.strFormatDate
+                            + '&ZONA=' + me.paramsDetailCoupon.ZONA
+                            + '&ZONA=' + me.paramsDetailCoupon.ZONA
+                            + '&CARRIVA=' + me.paramsDetailCoupon.CARRIVA);
+                }
                 break;
         }
     }
@@ -760,11 +767,10 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.ElectronicMiscel
         }
     },
     BuscarTKT_keyDownHandler: function (obj, e, eOpts) {
-        
+
         me.beanTKT = {};
         var txtTicket = Ext.getCmp(prototype.id + '-txtTicket').getValue();
         var txtROLL = Ext.getCmp(prototype.id + '-txtROLL').getValue();
-                
         switch (e.getKey()) {
             case 13:
                 if (txtTicket.trim().length === 13) {
@@ -796,23 +802,23 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.ElectronicMiscel
             this.habilitarFiltros();
         }
     },
-    searchTKT_2: function(bean) {
-        
+    searchTKT_2: function (bean) {
+
         var storeGridDatas = Ext.create('Ext.Praxis.store.flown.GridData', {
             proxy: {
                 url: prototype.url + '/searchTKT_2'
             },
             listeners: {
-                beforeload: function(obj) {
+                beforeload: function (obj) {
 //                    Ext.getCmp(boxActual).mask('Loading...');
                     obj.proxy.extraParams = {beanString: JSON.stringify(bean)};
                 },
-                load: function(obj, obj2, success, obj4, obj5) {
+                load: function (obj, obj2, success, obj4, obj5) {
 //                    Ext.getCmp(boxActual).unmask();
                     console.log(obj);
                     if (obj.data.length === 0) {
                         global.Msg({msg: 'Data not found'});
-                    }else{
+                    } else {
                         var data = obj.data.items[0].data;
                         console.log(data);
                     }
@@ -869,7 +875,6 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.ElectronicMiscel
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
         all = all === null || all === undefined ? {} : all;
-
         var dataEntry = Ext.create('Ext.Praxis.view.flown.ElectronicMiscellaneousForm.DataEntry', {
             id: prototype.id + '-dataEntry',
             params: {
@@ -886,7 +891,6 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.ElectronicMiscel
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;
         all = all === null || all === undefined ? {} : all;
-
         var dataEntryT = Ext.create('Ext.Praxis.view.flown.ElectronicMiscellaneousForm.DataEntryTicket', {
             id: prototype.id + '-dataEntryTicket',
             params: {

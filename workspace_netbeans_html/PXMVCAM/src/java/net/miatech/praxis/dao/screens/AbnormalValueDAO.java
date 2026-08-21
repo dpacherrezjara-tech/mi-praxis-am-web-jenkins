@@ -23,8 +23,8 @@ import net.miatech.beans.IMF121Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.libmiatec.A1007;
 import net.miatech.praxis.interline.filter.WRF016Filterwk;
-import net.miatech.praxis.payment.filter.A2789Filter;
-import net.miatech.praxis.payment.filter.A2790Filter;
+import net.miatech.praxis.payment.old.A2789Filter;
+import net.miatech.praxis.payment.old.A2790Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 

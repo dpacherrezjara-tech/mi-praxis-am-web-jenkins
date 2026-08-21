@@ -139,6 +139,44 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntrySalesAu
     onCancelClick: function (btn) {
         this.view.close();
     },
+    onSaveASR0425: async function () {
+        var me = this;
+        const params = {
+            IN_CCUST: '139',
+            IN_JSON_DET: JSON.stringify(me.view.params.lstNewList0425)
+        };
+        const notifier = new AWN();
+        me.view.setLoading(true);
+
+        try {
+            const res = await global.callStorePost('PXSAUDIT', 'SQP06093', params);
+            const result = res && res.data && res.data.lstRs && res.data.lstRs[0] && res.data.lstRs[0][0];
+
+            if (!result) {
+                throw new Error('Invalid response format');
+            }
+
+            const success = Number(result.VL_SQLCODE) === 0;
+            global.Msg({
+                msg: result.VL_MESSAGE,
+                icon: success ? 1 : 0,
+                fn: function () {
+                    if (success) {
+                        notifier.warning('Update Successfully');
+                        Ext.getCmp(prototype.id + '-Contenedor').getController().imgSearch_clickHandler();
+                        Ext.getCmp(prototype.id9 + '-win').close();
+                    } else {
+                        notifier.alert('Error on Update');
+                    }
+                }
+            });
+        } catch (e) {
+            console.error(e);
+            notifier.alert('Error on Update');
+        } finally {
+            me.view.setLoading(false);
+        }
+    },
     onClickSave: function (btn) {
         var me = this;
         var vl_status = '';
@@ -173,69 +211,218 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesAuditAccepted.DataEntrySalesAu
         } else {
             me.BeanGuardar.A1672TICKET = '';
         }
-
         var form = Ext.getCmp(prototype.id9 + '-form').getForm();
-        global.Msg({
-            msg: 'Review ADM?',
-            icon: 3,
-            buttons: 3,
-            fn: function (btn) {
-                if (btn === 'yes') {
+        if (me.view.params.fuente === 'ASR') {
+            if (me.view.params.lstNewList0425.length > 0 && me.view.params.lstSelectedTkts.length > 0) {
+                global.Msg({
+                    msg: 'Review ADM?',
+                    icon: 3,
+                    buttons: 3,
+                    fn: function (btn) {
+                        if (btn === 'yes') {
+                            var mask = new Ext.LoadMask(Ext.getCmp(prototype.id9 + '-form'), {
+                                msg: 'Please Wait....'
+                            });
+                            mask.show();
+                            form.submit({
+                                url: me.urlWin01 + '/marcarRev/',
+                                waitMsg: 'Uploading your sure to upload the file...',
+                                params: {beanString: JSON.stringify(me.BeanGuardar),
+                                    beanSelectedTkts: JSON.stringify(me.view.params.lstSelectedTkts)
+                                },
+                                success: function (fp, o) {
+                                    var res = Ext.decode(o.response.responseText);
+                                    if (me.view.params.fuente === 'ASR') {
+
+                                        if (me.view.params.lstNewList0425.length > 0) {
+                                            me.onSaveASR0425();
+                                            mask.hide();
+                                        } else {
+                                            mask.hide();
+                                            Ext.Msg.alert('Success', 'Your sure to upload the file "' + res.result + '" has been uploaded.');
+                                            var vp_icon = 0;
+                                            if (res.result === 'The record was saved successfully.') {
+                                                vp_icon = 1;
+                                            }
+                                            global.Msg({msg: res.result, icon: vp_icon, fn: function () {
+                                                    if (vp_icon === 1) {
+                                                        // lstNewList0425: lstNewList0425,
+                                                        Ext.getCmp(prototype.id + '-Contenedor').getController().imgSearch_clickHandler();
+                                                        Ext.getCmp(prototype.id9 + '-win').close();
+
+                                                    }
+
+
+                                                }});
+                                        }
+                                    } else {
+                                        mask.hide();
+                                        Ext.Msg.alert('Success', 'Your sure to upload the file "' + res.result + '" has been uploaded.');
+                                        var vp_icon = 0;
+                                        if (res.result === 'The record was saved successfully.') {
+                                            vp_icon = 1;
+                                        }
+                                        global.Msg({msg: res.result, icon: vp_icon, fn: function () {
+                                                if (vp_icon === 1) {
+                                                    // lstNewList0425: lstNewList0425,
+                                                    Ext.getCmp(prototype.id + '-Contenedor').getController().imgSearch_clickHandler();
+                                                    Ext.getCmp(prototype.id9 + '-win').close();
+
+                                                }
+
+
+                                            }});
+                                    }
+
+                                }
+                            });
+                        }
+
+                    }
+                });
+            } else {
+                if (me.view.params.lstSelectedTkts.length > 0) {
+                    global.Msg({
+                        msg: 'Review ADM?',
+                        icon: 3,
+                        buttons: 3,
+                        fn: function (btn) {
+                            if (btn === 'yes') {
+                                var mask = new Ext.LoadMask(Ext.getCmp(prototype.id9 + '-form'), {
+                                    msg: 'Please Wait....'
+                                });
+                                mask.show();
+                                form.submit({
+                                    url: me.urlWin01 + '/marcarRev/',
+                                    waitMsg: 'Uploading your sure to upload the file...',
+                                    params: {beanString: JSON.stringify(me.BeanGuardar),
+                                        beanSelectedTkts: JSON.stringify(me.view.params.lstSelectedTkts)
+                                    },
+                                    success: function (fp, o) {
+                                        var res = Ext.decode(o.response.responseText);
+                                        if (me.view.params.fuente === 'ASR') {
+                                            if (me.view.params.lstNewList0425.length > 0) {
+                                                alert('novo');
+                                            } else {
+                                                mask.hide();
+                                                Ext.Msg.alert('Success', 'Your sure to upload the file "' + res.result + '" has been uploaded.');
+                                                var vp_icon = 0;
+                                                if (res.result === 'The record was saved successfully.') {
+                                                    vp_icon = 1;
+                                                }
+                                                global.Msg({msg: res.result, icon: vp_icon, fn: function () {
+                                                        if (vp_icon === 1) {
+                                                            // lstNewList0425: lstNewList0425,
+                                                            Ext.getCmp(prototype.id + '-Contenedor').getController().imgSearch_clickHandler();
+                                                            Ext.getCmp(prototype.id9 + '-win').close();
+
+                                                        }
+
+
+                                                    }});
+                                            }
+                                        } else {
+                                            mask.hide();
+                                            Ext.Msg.alert('Success', 'Your sure to upload the file "' + res.result + '" has been uploaded.');
+                                            var vp_icon = 0;
+                                            if (res.result === 'The record was saved successfully.') {
+                                                vp_icon = 1;
+                                            }
+                                            global.Msg({msg: res.result, icon: vp_icon, fn: function () {
+                                                    if (vp_icon === 1) {
+                                                        // lstNewList0425: lstNewList0425,
+                                                        Ext.getCmp(prototype.id + '-Contenedor').getController().imgSearch_clickHandler();
+                                                        Ext.getCmp(prototype.id9 + '-win').close();
+
+                                                    }
+
+
+                                                }});
+                                        }
+
+                                    }
+                                });
+                            }
+
+                        }
+                    });
+                } else {
                     var mask = new Ext.LoadMask(Ext.getCmp(prototype.id9 + '-form'), {
                         msg: 'Please Wait....'
                     });
                     mask.show();
-                    form.submit({
-                        url: me.urlWin01 + '/marcarRev/',
-                        waitMsg: 'Uploading your sure to upload the file...',
-                        params: {beanString: JSON.stringify(me.BeanGuardar),
-                            beanSelectedTkts: JSON.stringify(me.view.params.lstSelectedTkts)
-                        },
-                        success: function (fp, o) {
-                            var res = Ext.decode(o.response.responseText);
-                            mask.hide();
-                            Ext.Msg.alert('Success', 'Your sure to upload the file "' + res.result + '" has been uploaded.');
-                            var vp_icon = 0;
-                            if (res.result === 'The record was saved successfully.') {
-                                vp_icon = 1;
-                            }
-                            global.Msg({msg: res.result, icon: vp_icon, fn: function () {
-                                    if (vp_icon === 1) {
-                                        Ext.getCmp(prototype.id + '-Contenedor').getController().imgSearch_clickHandler();
-                                        Ext.getCmp(prototype.id9 + '-win').close();
-
-                                    }
-
-
-                                }});
-                        }
-                    });
-                    /*Ext.Ajax.request({
-                     url: me.urlWin01 + '/insertTracing/',
-                     params: {beanString: JSON.stringify(me.BeanSave)},
-                     success: function (response, options) {
-                     mask.hide();
-                     var res = Ext.decode(response.responseText);
-                     var vp_icon = 0;
-                     if (res.result === 'RECORD INSERTED') {
-                     vp_icon = 1;
-                     }
-                     global.Msg({msg: res.result, icon: vp_icon, fn: function () {
-                     if (vp_icon === 1) {
-                     Ext.getCmp(prototype.id4 + '-win').getController().SerechDatos();
-                     Ext.getCmp(prototype.id + '-Contenedor').getController().imgSearch_clickHandler();
-                     Ext.getCmp(prototype.id5 + '-win').close();
-                     
-                     }
-                     
-                     
-                     }});
-                     }
-                     });*/
+                    me.onSaveASR0425();
+                    mask.hide();
                 }
 
             }
-        });
+
+        } else {
+            global.Msg({
+                msg: 'Review ADM?',
+                icon: 3,
+                buttons: 3,
+                fn: function (btn) {
+                    if (btn === 'yes') {
+                        var mask = new Ext.LoadMask(Ext.getCmp(prototype.id9 + '-form'), {
+                            msg: 'Please Wait....'
+                        });
+                        mask.show();
+                        form.submit({
+                            url: me.urlWin01 + '/marcarRev/',
+                            waitMsg: 'Uploading your sure to upload the file...',
+                            params: {beanString: JSON.stringify(me.BeanGuardar),
+                                beanSelectedTkts: JSON.stringify(me.view.params.lstSelectedTkts)
+                            },
+                            success: function (fp, o) {
+                                var res = Ext.decode(o.response.responseText);
+                                if (me.view.params.fuente === 'ASR') {
+                                    if (me.view.params.lstNewList0425.length > 0) {
+                                        alert('novo');
+                                    } else {
+                                        mask.hide();
+                                        Ext.Msg.alert('Success', 'Your sure to upload the file "' + res.result + '" has been uploaded.');
+                                        var vp_icon = 0;
+                                        if (res.result === 'The record was saved successfully.') {
+                                            vp_icon = 1;
+                                        }
+                                        global.Msg({msg: res.result, icon: vp_icon, fn: function () {
+                                                if (vp_icon === 1) {
+                                                    // lstNewList0425: lstNewList0425,
+                                                    Ext.getCmp(prototype.id + '-Contenedor').getController().imgSearch_clickHandler();
+                                                    Ext.getCmp(prototype.id9 + '-win').close();
+
+                                                }
+
+
+                                            }});
+                                    }
+                                } else {
+                                    mask.hide();
+                                    Ext.Msg.alert('Success', 'Your sure to upload the file "' + res.result + '" has been uploaded.');
+                                    var vp_icon = 0;
+                                    if (res.result === 'The record was saved successfully.') {
+                                        vp_icon = 1;
+                                    }
+                                    global.Msg({msg: res.result, icon: vp_icon, fn: function () {
+                                            if (vp_icon === 1) {
+                                                // lstNewList0425: lstNewList0425,
+                                                Ext.getCmp(prototype.id + '-Contenedor').getController().imgSearch_clickHandler();
+                                                Ext.getCmp(prototype.id9 + '-win').close();
+
+                                            }
+
+
+                                        }});
+                                }
+
+                            }
+                        });
+                    }
+
+                }
+            });
+        }
 
     }
 

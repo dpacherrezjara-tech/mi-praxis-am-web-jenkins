@@ -38,6 +38,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterFgForm.DataEntryAccounti
                 break;
         }
         // global.AccessControlMaganer();
+        global.AccessControlManagerByModeById(p, prototype.id2);
 
     },
     getDataInputs: function () {

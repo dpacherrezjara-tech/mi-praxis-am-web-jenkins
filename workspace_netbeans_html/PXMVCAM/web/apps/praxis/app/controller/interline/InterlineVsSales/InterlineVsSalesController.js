@@ -7,6 +7,7 @@ Ext.define('Ext.Praxis.controller.interline.InterlineVsSales.InterlineVsSalesCon
     panelActual: '',
     bean: {},
     beanTkt: {},
+    beanTkt2: {},
     searchParamsTktType: {},
     paramsCIA: {},
     _path: '',
@@ -190,8 +191,13 @@ Ext.define('Ext.Praxis.controller.interline.InterlineVsSales.InterlineVsSalesCon
          'IN_STATUS=' + this.bean.IN_STATUS + '&' +
          'IN_AIRLINE=' + this.bean.IN_AIRLINE + '&' +
          'IN_INDICATOR=' + this.bean.IN_INDICATOR;*/
-
-        this.search(this.bean);
+        if(  me.panelActual.includes('boxDetTKTType')){
+            
+            this.searchViewDetByTktType()
+        }else{
+            this.search(this.bean);
+        }
+        
     },
     imgFilter_clickHandler: function () {
         var option = Ext.getCmp(prototype.id + '-contentFilter');
@@ -227,6 +233,7 @@ Ext.define('Ext.Praxis.controller.interline.InterlineVsSales.InterlineVsSalesCon
        if (me.drillDown.length > 0) {
             me.panelActual = me.drillDown.pop();
             global.selectedChild(me.childs, prototype.id + me.panelActual);
+            this.showByPeriod();
 //            me.setWidthPie();
 //            this.getPaggin();
 //            if (me.pagginActual !== '') {
@@ -336,6 +343,7 @@ Ext.define('Ext.Praxis.controller.interline.InterlineVsSales.InterlineVsSalesCon
         me.drillDown.push(me.panelActual);
         me.panelActual = '-boxDetCIA';
         global.selectedChild(me.childs, prototype.id + me.panelActual);
+        this.showByPeriod();
 //        me.paramsDetail.beanString = JSON.stringify(rowData.data);
         this.paramsTDOC = rowData.data;
         this.SetOnViewDetByCia(rowData.data);
@@ -434,14 +442,47 @@ Ext.define('Ext.Praxis.controller.interline.InterlineVsSales.InterlineVsSalesCon
     },
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="OnViewDetByTktType">
+    showByPeriod: function (){
+        console.log(me.panelActual, 'boxDetTKTType')
+        if( me.panelActual.includes('boxDetTKTType') ){
+            Ext.getCmp(prototype.id + '-lblPERNUM').show()
+            Ext.getCmp(prototype.id + '-cmbPERNUM').show()
+        }else{
+            Ext.getCmp(prototype.id + '-lblPERNUM').hide()
+            Ext.getCmp(prototype.id + '-cmbPERNUM').hide()
+        }
+    },
+    searchViewDetByTktType: function (obj, metaData, rowNum, columnNum, obj2, rowData){
+//        me.drillDown.push(me.panelActual);
+        me.panelActual = '-boxDetTKTType';
+        global.selectedChild(me.childs, prototype.id + me.panelActual);
+        this.showByPeriod();
+
+        me.beanTkt2.BDATE = Ext.getCmp(prototype.id + '-lblBDATE').getValue()
+        me.beanTkt2.BDAIR = Ext.getCmp(prototype.id + '-lblBDAIR').getValue()
+        me.beanTkt2.IN_TRNCU = Ext.getCmp(prototype.id + '-lblIN_TRNCU').getValue()
+        me.beanTkt2.IN_FVALUE = Ext.getCmp(prototype.id + '-lblIN_FVALUE').getValue()
+        me.beanTkt2.TYPE = Ext.getCmp(prototype.id + '-lblTYPE').getValue()
+        me.beanTkt2.IN_ORDER = Ext.getCmp(prototype.id + '-lblIN_ORDER').getValue()
+        me.beanTkt2.PERNUM = this.getValue("cmbPERNUM");
+        console.log(me.beanTkt2, 'me.beanTkt2')
+//        me.beanTkt.strTitulo = rec.strTitulo;
+        var beanString = JSON.stringify(me.beanTkt2);
+        searchParamsTktType = {
+            beanString: beanString,
+            bean: me.beanTkt2
+        };
+        this.SetOnViewDetByTktType();
+    },
     OnViewDetByTktType: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
 //        console.log("OnViewDetByTktType");
         var rec = rowData.data;
         
         me.drillDown.push(me.panelActual);
         me.panelActual = '-boxDetTKTType';
+        
         global.selectedChild(me.childs, prototype.id + me.panelActual);
-
+        this.showByPeriod();
         me.beanTkt.BDATE = rec.BDATE;
         me.beanTkt.BDAIR = rec.BDAIR;
         if(columnNum === 5){
@@ -454,7 +495,13 @@ Ext.define('Ext.Praxis.controller.interline.InterlineVsSales.InterlineVsSalesCon
         me.beanTkt.TYPE = "DIFER";
         me.beanTkt.IN_ORDER = "DESC";
         me.beanTkt.strTitulo = rec.strTitulo;
-        
+        console.log(me.beanTkt, 'me.beanTkt1')
+        Ext.getCmp(prototype.id + '-lblBDATE').setValue(me.beanTkt.BDATE);
+        Ext.getCmp(prototype.id + '-lblBDAIR').setValue(me.beanTkt.BDAIR);
+        Ext.getCmp(prototype.id + '-lblIN_TRNCU').setValue(me.beanTkt.IN_TRNCU);
+        Ext.getCmp(prototype.id + '-lblIN_FVALUE').setValue(me.beanTkt.IN_FVALUE);
+        Ext.getCmp(prototype.id + '-lblTYPE').setValue(me.beanTkt.TYPE);
+        Ext.getCmp(prototype.id + '-lblIN_ORDER').setValue(me.beanTkt.IN_ORDER);
         var beanString = JSON.stringify(me.beanTkt);
         searchParamsTktType = {
             beanString: beanString,

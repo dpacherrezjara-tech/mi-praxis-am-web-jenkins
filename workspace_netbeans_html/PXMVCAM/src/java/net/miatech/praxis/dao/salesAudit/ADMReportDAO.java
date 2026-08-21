@@ -162,6 +162,7 @@ public class ADMReportDAO {
                     objRtn.A2548NETO = rs01.getDouble("A2548NETO");
                 } else {
                     objRtn.A2548CCUST = rs01.getString("A2548CCUST");
+                    objRtn.A2548STBSP = rs01.getString("A2548STBSP");
                     objRtn.A2548PREME = rs01.getString("A2548PREME");
                     objRtn.A2548FFILE = rs01.getString("A2548FFILE");
                     objRtn.A2548NFACT = rs01.getString("A2548NFACT");
@@ -239,7 +240,7 @@ public class ADMReportDAO {
                     objRtn.A2548FREGI = rs01.getString("A2548FREGI");
                     objRtn.A2548CNREL = rs01.getString("A2548CNREL");
                     objRtn.A2548PRECR = rs01.getString("A2548PRECR");
-                    
+
                     objRtn.A2548TIKET = rs01.getString("A2548CIA") + "" + rs01.getString("A2548FORMA") + "" + rs01.getString("A2548SERIE");
                     objRtn.A2548TTAXA = rs01.getDouble("A2548TTAXA");
                     objRtn.AGENCY = rs01.getString("AGENCY");
@@ -279,6 +280,7 @@ public class ADMReportDAO {
                     objRtn.A2548NRCOR = rs01.getString("A2548NRCOR");
                     objRtn.A2548PNR = rs01.getString("A2548PNR");
                     objRtn.A2548EPR = rs01.getString("A2548EPR");
+                    objRtn.A2548CORR = rs01.getString("A2548CORR");
 
                     objRtn.A2548FCONT = rs01.getString("A2548FCONT");
                     objRtn.A2548CPN = rs01.getString("A2548CPN");
@@ -290,7 +292,7 @@ public class ADMReportDAO {
                         objRtn.A2548CODR2 = rs01.getString("A2548CODR2") + "-" + rs01.getString("A2548DESC2");
                     }
                     objRtn.A2548DESC3 = rs01.getString("A2548DESC3");
-                    
+
                     objRtn.A2548CATNDOCUM = rs01.getInt("VL_CANTDOC");
                     objRtn.A2548CATNMEMO = rs01.getInt("A2548CATNMEMO");
 
@@ -1073,6 +1075,16 @@ public class ADMReportDAO {
                 objlst_dataIni.A2548SERVD = rs01.getDouble("A2548SERVD");
                 objlst_dataIni.A2548NETO = rs01.getDouble("A2548NETO");
 
+                objlst_dataIni.A2548CIAF = rs01.getString("A2548CIAF");
+                objlst_dataIni.A2548UNID = rs01.getString("A2548UNID");
+                objlst_dataIni.A2548CECO = rs01.getString("A2548CECO");
+                objlst_dataIni.A2548UBICA = rs01.getString("A2548UBICA");
+                objlst_dataIni.A2548CUENT = rs01.getString("A2548CUENT");
+                objlst_dataIni.A2548SUBCU = rs01.getString("A2548SUBCU");
+                objlst_dataIni.A2548EQUI = rs01.getString("A2548EQUI");
+                objlst_dataIni.A2548ICIA = rs01.getString("A2548ICIA");
+                objlst_dataIni.A2548CLIE = rs01.getString("A2548CLIE");
+
                 lst_dataIni.add(objlst_dataIni);
             }
             ////LIST DOCUMENTS
@@ -1107,11 +1119,11 @@ public class ADMReportDAO {
 
                     objlst_CalcuImpuestos.A1673CDTAX = rs03.getString("A1673CDTAX");
                     objlst_CalcuImpuestos.A1673CDATO = rs03.getString("A2739CDATO");
-                    
+
                     objlst_CalcuImpuestos.A1673TXORI = rs03.getDouble("A1673TXORI");
                     objlst_CalcuImpuestos.A1673TXMIA = rs03.getDouble("A1673TXMIA");
                     objlst_CalcuImpuestos.A1673TXDIF = rs03.getDouble("A1673TXDIF");
-                    
+
                     lst_CalcuImpuestos.add(objlst_CalcuImpuestos);
                 }
             }

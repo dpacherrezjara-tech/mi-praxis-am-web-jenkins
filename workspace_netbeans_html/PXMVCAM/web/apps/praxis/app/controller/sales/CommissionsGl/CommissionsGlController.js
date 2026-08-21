@@ -400,9 +400,9 @@ Ext.define('Ext.Praxis.controller.sales.CommissionsGl.CommissionsGlController', 
 
         switch (me.gridActual) {
             case  '-gridData':
-                global.getFile(prototype.url + '/getXLSX?IN_A1879CCUST=' + searchParams.IN_A1879CCUST
-                        + '&IN_A1879FECHA=' + searchParams.IN_A1879FECHA
-                        + '&IN_A1879PERIO=' + searchParams.IN_A1879PERIO);
+                global.getFile(prototype.url + '/getXLSX?IN_A1879CCUST=' + me.searchParams.IN_A1879CCUST
+                        + '&IN_A1879FECHA=' + me.searchParams.IN_A1879FECHA
+                        + '&IN_A1879PERIO=' + me.searchParams.IN_A1879PERIO);
                 break;
 
             case '-gridDataDetail':

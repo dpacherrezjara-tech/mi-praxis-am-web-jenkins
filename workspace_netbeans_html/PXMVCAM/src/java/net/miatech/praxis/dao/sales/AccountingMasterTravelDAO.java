@@ -60,34 +60,35 @@ public class AccountingMasterTravelDAO {
             if (filter.page.PAGNUM > 0) {
                 PAGINIT = (filter.page.PAGNUM - 1) * totRowsPag + 1;
             }
-            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX172S01A1838(?,?,?,?,?,?,?,?,?)}";
+            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX172S01A1838(?,?,?,?,?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
-            cstmt01.registerOutParameter(6, Types.INTEGER);
             cstmt01.registerOutParameter(7, Types.INTEGER);
             cstmt01.registerOutParameter(8, Types.INTEGER);
             cstmt01.registerOutParameter(9, Types.INTEGER);
+            cstmt01.registerOutParameter(10, Types.INTEGER);
 
             cstmt01.setString(1, filter.IN_A1838CCUST.trim());
             cstmt01.setString(2, filter.IN_A1838TIPO.trim());
             cstmt01.setString(3, filter.IN_A1838AGENT.trim());
             cstmt01.setString(4, filter.A1838CUENT.trim());
             cstmt01.setString(5, filter.A1838SUBCT.trim());
+            cstmt01.setString(6, filter.OLD_REGISTERS.trim());
 
-            cstmt01.setInt(6, PAGINIT);
-            cstmt01.setInt(7, totRowsPag);
-            cstmt01.setInt(8, totRows);
-            cstmt01.setInt(9, filter.page.TOTROW);
+            cstmt01.setInt(7, PAGINIT);
+            cstmt01.setInt(8, totRowsPag);
+            cstmt01.setInt(9, totRows);
+            cstmt01.setInt(10, filter.page.TOTROW);
 
             cstmt01.execute();
 
-            filter.page.PAGNUM = cstmt01.getInt(6);
-            filter.page.PAGROW = cstmt01.getInt(7);
-            filter.page.TOTPAG = cstmt01.getInt(8);
-            filter.page.TOTROW = cstmt01.getInt(9);
+            filter.page.PAGNUM = cstmt01.getInt(7);
+            filter.page.PAGROW = cstmt01.getInt(8);
+            filter.page.TOTPAG = cstmt01.getInt(9);
+            filter.page.TOTROW = cstmt01.getInt(10);
 
-            if (filter.page.TOTROW > 0 && filter.page.TOTROW == cstmt01.getInt(8)) {
+            if (filter.page.TOTROW > 0 && filter.page.TOTROW == cstmt01.getInt(9)) {
                 totRows = filter.page.TOTROW;
                 totPAGS = filter.page.TOTPAG;
             } else {
@@ -175,7 +176,7 @@ public class AccountingMasterTravelDAO {
 
         Connection cnx = null;
         try {
-            strSQL = "{CALL " + session.getMainLibrary() + ".PX172S02A1838(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+            strSQL = "{CALL " + session.getMainLibrary() + ".PX172S02A1838(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cs = cnx.prepareCall(strSQL);
 
@@ -199,6 +200,8 @@ public class AccountingMasterTravelDAO {
             cs.setString(18, Functions.getHoraActual());
             cs.setString(19, filter.IN_A1838TIPO_OLD);
             cs.setString(20, filter.IN_A1838AGENT_OLD);
+            cs.setString(21, filter.IN_A1838FINI_OLD);
+            cs.setString(22, filter.IN_A1838FFIN_OLD);
             cs.execute();
 
             rst = cs.getResultSet();

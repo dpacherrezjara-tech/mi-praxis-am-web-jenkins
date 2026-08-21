@@ -25,6 +25,8 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
                 console.log('Entró a -->> SELECT_BY_TKT_2');
                 console.log(this.ticketNumber);
                 win.setValue('1-cbxSearchBy', "1");
+                win.setValue('1-txtFromDate', '');
+                win.setValue('1-txtToDate', '');
                 this.cbxSearchBy_changeHandler();
                 if (this.ticketNumber.length === 13) {
                     win.setValue('1-txtTicketCia', this.ticketNumber.substr(0, 3));
@@ -38,6 +40,9 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
                 break;
             case me.SELECT_BY_PNR:
                 win.setValue('1-cbxSearchBy', "3");
+                win.setValue('1-txtFromDate', '');
+                win.setValue('1-txtToDate', '');
+
                 this.cbxSearchBy_changeHandler();
                 break;
             case me.SELECT_BY_CC:
@@ -65,6 +70,9 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
                 Ext.getCmp(prototype.id+'-1-Box_Option03').hide();
                 Ext.getCmp(prototype.id+'-1-Box_Option04').hide();
                 Ext.getCmp(prototype.id+'-1-Box_OptionDates').hide();
+                win.setValue('1-txtFromDate', '');
+                win.setValue('1-txtToDate', '');
+
                 win.focus('1-txtTicketForSer');
                 break;
             case '2':
@@ -82,6 +90,9 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
                 Ext.getCmp(prototype.id+'-1-Box_Option03').show();
                 Ext.getCmp(prototype.id+'-1-Box_Option04').hide();
                 Ext.getCmp(prototype.id+'-1-Box_OptionDates').hide();
+                win.setValue('1-txtFromDate', '');
+                win.setValue('1-txtToDate', '');
+                
                 win.focus('1-txtPNR');
                 break;
             case '4':
@@ -109,7 +120,20 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
                 Ext.getCmp(prototype.id+'-1-Box_Option04').hide();
                 Ext.getCmp(prototype.id+'-1-Box_OptionDates').hide();
                 win.focus('1-txtTicketForSer');
-                break;
+                win.setValue('1-txtFromDate', '');
+                win.setValue('1-txtToDate', '');
+               break;
+               /*
+            case '7':
+                Ext.getCmp(prototype.id+'-1-Box_Option01').hide();
+                Ext.getCmp(prototype.id+'-1-Box_Option02').hide();
+                Ext.getCmp(prototype.id+'-1-Box_Option03').hide();
+                Ext.getCmp(prototype.id+'-1-Box_Option04').show();
+                Ext.getCmp(prototype.id+'-1-Box_OptionDates').show();
+                Ext.getCmp(prototype.id+'-1-Box_OptionDates').setStyle('left','433px');
+                win.focus('1-txtNREF_P1');
+                break;*/
+                
             default:
                 Ext.getCmp(prototype.id+'-1-Box_Option01').hide();
                 Ext.getCmp(prototype.id+'-1-Box_Option02').hide();
@@ -215,6 +239,11 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
                 case 6:
                     this.bean.IN_TEXT = win.getValue('1-txtTicketCia')+win.getValue('1-txtTicketForSer').trim();
                     break;
+                    
+                /*
+                case 7:
+                    this.bean.IN_TEXT = win.getValue('1-txtNREF_P1')+win.getValue('1-txtNREF_P2');
+                    break;*/
             }
             
             
@@ -300,6 +329,10 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
                 case 6:
                     this.bean.IN_TEXT = win.getValue('1-txtTicketCia')+win.getValue('1-txtTicketForSer').trim();
                     break;
+                /*
+                case 7:
+                    this.bean.IN_TEXT = win.getValue('1-txtNREF_P1')+win.getValue('1-txtNREF_P2');
+                    break;*/
             }
             
             
@@ -349,7 +382,11 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryProMasterTick
     //<editor-fold defaultstate="collapsed" desc="XLS">
     getXLSX: function (bean) {
         console.log('_getXLSX_');
-        global.getFile(prototype.url + '/getXLSX?IN_TFILTER=' + bean.IN_TFILTER + '&IN_TEXT='+bean.IN_TEXT+'&IN_IATA='+bean.IN_IATA+'&IN_DATE_FROM='+bean.IN_DATE_FROM+'&IN_DATE_TO='+bean.IN_DATE_TO+'&IN_CAPL='+bean.IN_CAPL);
+
+        var IN_TEXT_TMP = bean.IN_TEXT;
+        IN_TEXT_TMP  = IN_TEXT_TMP.replaceAll("%","_");
+
+        global.getFile(prototype.url + '/getXLSX?IN_TFILTER=' + bean.IN_TFILTER + '&IN_TEXT='+IN_TEXT_TMP+'&IN_IATA='+bean.IN_IATA+'&IN_DATE_FROM='+bean.IN_DATE_FROM+'&IN_DATE_TO='+bean.IN_DATE_TO+'&IN_CAPL='+bean.IN_CAPL);
         
     },
     //</editor-fold>

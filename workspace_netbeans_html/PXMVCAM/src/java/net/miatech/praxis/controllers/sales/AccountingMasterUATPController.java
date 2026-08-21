@@ -44,6 +44,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -99,6 +100,7 @@ public class AccountingMasterUATPController extends BaseController {
             filter.A1820CTA = request.getParameter("A1820CTA");
             filter.A1820SCTA = request.getParameter("A1820SCTA");
             filter.A1820MODO = request.getParameter("A1820MODO");
+            filter.OLD_REGISTERS = request.getParameter("OLD_REGISTERS").equals("true") ? "0" : "1";
            
 
             System.out.println("----------------- Parametros --------------------- ");
@@ -363,7 +365,9 @@ public class AccountingMasterUATPController extends BaseController {
             filter.A1820MODO = request.getParameter("A1820MODO");
             filter.A1820FINI = request.getParameter("A1820FINI");
             filter.A1820FFIN = request.getParameter("A1820FFIN");
-            filter.IN_A1820TCUAT_OLD = request.getParameter("IN_A1820TCUAT_OLD");             
+            filter.IN_A1820TCUAT_OLD = request.getParameter("IN_A1820TCUAT_OLD");
+            filter.IN_A1820FINI_OLD = request.getParameter("IN_A1820FINI_OLD");
+            filter.IN_A1820FFIN_OLD = request.getParameter("IN_A1820FFIN_OLD");     
         
              msj = logic.salesAccountMaintanceClient(filter, strOption);      
             

@@ -8,13 +8,19 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATP.ControlUATPUUIDController', 
     extend: 'Ext.app.ViewController',
     alias: 'controller.' + prototype.id03 + '-controlUATPUUIDController',
     url: CONTEXTPATH + '/ControlUATP', 
+    requires: [        
+        'Ext.Praxis.view.eecta.ControlUATPForm.Info02'
+    ],
     bean: {},
+    recGrid01: {},
     init: function (view) {
         var me = this;
     },    
-    afterRender: function () {    
-        Ext.getCmp(prototype.id03 + '-FECHA1').setValue(Ext.getCmp(prototype.id + '-FCONT').getValue());
-        Ext.getCmp(prototype.id03 + '-FECHA2').setValue(Ext.getCmp(prototype.id + '-FCONT').getValue());
+    afterRender: function () { 
+        if(Ext.getCmp(prototype.id + '-FCONT').getValue() != ''){
+            Ext.getCmp(prototype.id03 + '-FECHA1').setValue(Ext.getCmp(prototype.id + '-FCONT').getValue());        
+            Ext.getCmp(prototype.id03 + '-FECHA2').setValue(Ext.getCmp(prototype.id + '-FCONT').getValue());
+        }
         this.Onsearch();
     },
     handlerEvent_setDisabled: function () {
@@ -36,12 +42,26 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATP.ControlUATPUUIDController', 
             VP_FDATE1:VL_FECHA1,
             VP_FDATE2:VL_FECHA2
         };
-    },  
-    Onsearch: function () {
-        this.search();
     },
-    search: function ()
-    {
+    getDataParamFE: function (strOption) {        
+        //var VL_ACTION = strOption;  
+        var VL_FECHA1 = Ext.util.Format.date(Ext.getCmp(prototype.id03 + '-FECHA1').getValue(), 'Ymd');
+        var VL_FECHA2 = Ext.util.Format.date(Ext.getCmp(prototype.id03 + '-FECHA2').getValue(), 'Ymd');                     
+        return {
+            //VP_ACTION:VL_ACTION,
+            vp_fdesde:VL_FECHA1,
+            vp_fhasta:VL_FECHA2,
+            vp_cdcli:''
+        };
+    },
+    Onsearch: function () {
+        this.search00();
+    },
+    //CAB
+    search00:function ()
+    {        
+        Ext.getCmp(prototype.id03 + '-form01').show();
+        Ext.getCmp(prototype.id03 + '-form02').hide();
         me = this;
         var bean = {};
         var VL_OPCION = '';  
@@ -52,15 +72,83 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATP.ControlUATPUUIDController', 
         bean.VP_OPCION = VL_OPCION; 
         bean.VP_FDATE1 = VL_FDATE1;
         bean.VP_FDATE2 = VL_FDATE2;
+        bean.VP_LOTE   = "";
         bean.VP_STAT   = VL_STAT;
         bean.VP_TICKET = VL_TICKET;
+        bean.VP_CDCLI  = "";
         bean.limit = "-1";
         bean.page = "-1";
+        
         if(VL_FDATE1==='' || VL_FDATE2 ==='' ){
-            console.log('return fecha null');
+//            console.log('return fecha null');
             return;
         };
         
+        var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.GridData', {
+            proxy: {
+                url: prototype.url + '/search_fac_cab'
+            },
+            listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = bean;
+                },
+                load: function (obj, records, successful, operation, eOpts) {
+                    //console.log(records);
+                    if (obj.data.length === 0) {
+                        global.Msg({
+                            msg: 'Data not found'
+                        });
+                    }
+                    global.clear();
+                }
+            }
+        });
+//        Ext.getCmp(prototype.id05 + '-gridData').setStore(storeGridDatas);
+//        Ext.getCmp(prototype.id05 + '-paggin').setStore(storeGridDatas);
+        var panel = Ext.getCmp(prototype.id03 + '-panel-contenedor-grid');
+        panel.removeAll();
+        var gridPanel = Ext.create({
+            region: 'center',
+            xtype: prototype.id05 + '-info04',
+            id: prototype.id05 + '-contentInfo4'
+        });
+        panel.add(gridPanel);
+        Ext.getCmp(prototype.id05 + '-gridData').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id05 + '-paggin').bindStore(storeGridDatas);        
+    },
+    //DETALLE
+    onDetailClick04: function ( grid, rowIndex, colIndex )
+    {
+        me = this;
+        var bean = {};
+        Ext.getCmp(prototype.id03 + '-form01').hide();
+        Ext.getCmp(prototype.id03 + '-form02').show();
+        //console.log('grid: '||grid ||' rowIndex:' || rowIndex );
+        
+        if (Ext.getCmp(prototype.id05 + '-gridData')) {
+            var grid = Ext.getCmp(prototype.id05 + '-gridData');
+            var store = grid.getStore();
+            var rec = store.getAt(rowIndex);            
+            this.recGrid01 = rec;
+        }
+        var VL_OPCION = ''; 
+        var VL_FDATE1 = this.recGrid01.get('A4101FPROC');
+        var VL_FDATE2 = this.recGrid01.get('A4101FPROC');
+        var VL_STAT = "";
+        var VL_TICKET = "";
+        var VL_CDCLI = this.recGrid01.get('A4101CDCLI');
+        var VL_NLOTE = this.recGrid01.get('A4101NLOTE');
+        
+        bean.VP_OPCION = VL_OPCION; 
+        bean.VP_FDATE1 = VL_FDATE1;
+        bean.VP_FDATE2 = VL_FDATE2;
+        bean.VP_STAT   = VL_STAT;
+        bean.VP_TICKET = VL_TICKET;
+        bean.VP_CDCLI  = VL_CDCLI;
+        bean.VP_NLOTE  = VL_NLOTE;
+        bean.limit = "-1";
+        bean.page = "-1";
+
         var storeGridDatas = Ext.create('Ext.Praxis.store.eecta.GridData', {
             proxy: {
                 url: prototype.url + '/search_UUID'
@@ -80,8 +168,16 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATP.ControlUATPUUIDController', 
                 }
             }
         });
+        var panel = Ext.getCmp(prototype.id03 + '-panel-contenedor-grid');
+        panel.removeAll();
+        var gridPanel = Ext.create({
+            region: 'center',
+            xtype: prototype.id03 + '-info02',
+            id: prototype.id03 + '-contentInfo2'
+        });
+        panel.add(gridPanel);
         Ext.getCmp(prototype.id03 + '-gridData').setStore(storeGridDatas);
-        Ext.getCmp(prototype.id03 + '-paggin').setStore(storeGridDatas);
+        Ext.getCmp(prototype.id03 + '-paggin').bindStore(storeGridDatas);
         
     },
     onSaveClick: function (btn) {
@@ -89,7 +185,7 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATP.ControlUATPUUIDController', 
         var strOption = p.action;
         var params = this.getDataEntryValues(strOption);
         var strMsg = this.validateForm(params);
-        var StrMsgConfirm = '¿Procesar Carga de UUID?'; 
+        var StrMsgConfirm = '¿Descargar datos facturación?'; 
                 
         if (strMsg.trim() !== '') {
             global.Msg({
@@ -187,6 +283,51 @@ Ext.define('Ext.Praxis.controller.eecta.ControlUATP.ControlUATPUUIDController', 
                 }
             }
         });
+    },
+    onSaveFacturacionClick: function (btn) {
+        Ext.Msg.show({
+            title: '.:PRAXIS:.',
+            msg: '¿Seguro de procesar la facturacion?',
+            buttons: Ext.MessageBox.YESNO,
+            scope: this,
+            icon: Ext.MessageBox.QUESTION,
+            modal: true,
+            fn: function (btn) {
+                if (btn === 'yes') {
+                    this.view.params.action = "I";
+                    this.set_procesarFE();
+                }
+            }
+        });
+    },
+    set_procesarFE: function () {
+        var p = this.view.params;
+        var strOption = p.action;
+        var me = this;
+        var params = this.getDataParamFE(strOption);        
+        Ext.Ajax.request({
+            url: this.url + '/set_procesarFE',
+            method: 'POST',
+            timeout: 60000000,
+            params: {
+                beanString: JSON.stringify(params)                
+            },
+            beforerequest: Ext.getCmp(prototype.id03 + '-ControlUATPUUIDForm').mask('Loading...', ''),
+            success: function (response, options) {
+                var res = Ext.JSON.decode(response.responseText);
+                var objRtn = res.objRtn;
+                Ext.getCmp(prototype.id03 + '-ControlUATPUUIDForm').unmask('Loading...', '');
+                global.Msg({
+                    msg: objRtn.dbException.MESSAGE,
+                    icon: objRtn.dbException.SQLCODE,
+                    fn: function () {
+                        //culmino PROCESO                                               
+                        me.search();                           
+                    }
+                });
+            }
+        });
+        
     },
     onCancelClick: function (btn) {
         Ext.getCmp(prototype.id03 + '-ControlUATPUUIDForm').close();

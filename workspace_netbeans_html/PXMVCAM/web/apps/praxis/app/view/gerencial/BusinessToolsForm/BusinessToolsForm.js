@@ -58,7 +58,7 @@ Ext.define('Ext.Praxis.view.gerencial.BusinessToolsForm.BusinessToolsForm', {
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1250,
+                                        width: 1500,
                                         align: 'center'
                                     },
                                     items: [

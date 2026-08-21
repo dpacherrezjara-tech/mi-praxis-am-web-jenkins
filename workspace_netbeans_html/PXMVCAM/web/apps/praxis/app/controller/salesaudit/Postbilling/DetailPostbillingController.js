@@ -78,10 +78,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.Postbilling.DetailPostbillingContro
         var grid01 = Ext.getCmp(prototype.id1 + '-gridTKT');
         var grid02 = Ext.getCmp(prototype.id1 + '-gridRazon');
         var grid03 = Ext.getCmp(prototype.id1 + '-gridDispuRazon');
-        
+
         var store01 = Ext.create('Ext.data.Store', {
             storeId: prototype.id1 + '-store-grid01'
-        });        
+        });
         var store02 = Ext.create('Ext.data.Store', {
             storeId: prototype.id1 + '-store-grid02'
         });
@@ -96,21 +96,21 @@ Ext.define('Ext.Praxis.controller.salesaudit.Postbilling.DetailPostbillingContro
     },
     cargaDatos: function (rec) {
         var me = this;
-        me.beanINI.IN_OPTION='1';
-        me.beanINI.IN_SEQ='';
-        me.beanINI.IN_CNXPA = rec.get('A3537CNXPA');  
-        if(Ext.String.trim(rec.get('A3537TRNCU')).substring(0,3)==='RFND'){
-            me.beanINI.IN_OPTION='3';
-            me.beanINI.IN_CNXPA =rec.get('A3537NMEMO');
+        me.beanINI.IN_OPTION = '1';
+        me.beanINI.IN_SEQ = '';
+        me.beanINI.IN_CNXPA = rec.get('A3537CNXPA');
+        if (Ext.String.trim(rec.get('A3537TRNCU')).substring(0, 3) === 'RFND') {
+            me.beanINI.IN_OPTION = '3';
+            me.beanINI.IN_CNXPA = rec.get('A3537NMEMO');
         }
-        if(Ext.String.trim(rec.get('A3537TRNCU')).substring(0,3)==='TKT' || Ext.String.trim(rec.get('A3537TRNCU')).substring(0,3)==='EXCH' || Ext.String.trim(rec.get('A3537TRNCU')).substring(0,3)==='EMD'){
-            me.beanINI.IN_OPTION='2';
-            me.beanINI.IN_SEQ='00';
-            me.beanINI.IN_CNXPA =rec.get('A3537NMEMO');
+        if (Ext.String.trim(rec.get('A3537TRNCU')).substring(0, 3) === 'TKT' || Ext.String.trim(rec.get('A3537TRNCU')).substring(0, 3) === 'EXCH' || Ext.String.trim(rec.get('A3537TRNCU')).substring(0, 3) === 'EMD') {
+            me.beanINI.IN_OPTION = '2';
+            me.beanINI.IN_SEQ = '00';
+            me.beanINI.IN_CNXPA = rec.get('A3537NMEMO');
         }
         me.beanINI.IN_CIA = rec.get('A3537CCUST');
         me.beanINI.IN_PREME = rec.get('A3537PREME');
-            
+
         Ext.getCmp(prototype.id1 + '-win').mask('Please Wait....');
 
 
@@ -125,10 +125,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.Postbilling.DetailPostbillingContro
                 var res = Ext.decode(response.responseText);
                 Ext.getCmp(prototype.id1 + '-gridRazon').getStore().removeAll();
                 Ext.getCmp(prototype.id1 + '-gridRazon').getStore().loadData(res.lst_DispuHisto);
-                
+
                 Ext.getCmp(prototype.id1 + '-gridTKT').getStore().removeAll();
                 Ext.getCmp(prototype.id1 + '-gridTKT').getStore().loadData(res.lst_Tkts);
-                
+
                 Ext.getCmp(prototype.id1 + '-gridDispuRazon').getStore().removeAll();
                 Ext.getCmp(prototype.id1 + '-gridDispuRazon').getStore().loadData(res.lst_DispuPostbi);
             }
@@ -151,7 +151,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.Postbilling.DetailPostbillingContro
                 {"code": "DAG", "name": "DISAGREE WITH AGENT"},
                 //{"code": "DAA", "name": "DISAGREE WITH AIRLINE"},
                 {"code": "AAG", "name": "AGREE WITH AGENT"},
-                {"code": "PRS", "name": "PBD REASON SENT"}
+                {"code": "PRS", "name": "AIRLINE COMMENTED"}
                 //{"code": "PRA", "name": "ASK TO THE AGENCY"}
                 // {"code": "AAA", "name": "AGREE WITH AIRLINE"}
             ]
@@ -227,31 +227,66 @@ Ext.define('Ext.Praxis.controller.salesaudit.Postbilling.DetailPostbillingContro
         me.beanTMP.IN_DESCRI = Ext.String.trim(Ext.getCmp(prototype.id1 + '-Argument').getValue());
         me.beanTMP.IN_COUNTRY = Ext.String.trim(rec.get('A3537PAIS'));
         me.beanTMP.IN_STATUS = Ext.getCmp(prototype.id1 + '-ComboStatus').getValue();
+        me.beanTMP.A3537ARCHV = Ext.getCmp(prototype.id1 + '-File').getValue();
+        me.beanTMP.A2553ARCHV2 = Ext.getCmp(prototype.id1 + '-File2').getValue();
+        me.beanTMP.A2553ARCHV3 = Ext.getCmp(prototype.id1 + '-File3').getValue();
         me.beanTMP.IN_TRNCU = "ADM";
         console.log(me.beanTMP);
         var form = Ext.getCmp(prototype.id1 + '-form').getForm();
         form.submit({
-            url: this.urlWin01 + '/insertTracingFile/',
-            waitMsg: 'Uploading your sure to upload the file...',
+            url: prototype.url + '/insertTracingFile/',
+            waitMsg: 'Uploading your file...',
             params: {beanString: JSON.stringify(me.beanTMP)},
             success: function (fp, o) {
                 var res = Ext.decode(o.response.responseText);
-                Ext.Msg.alert('Success', 'Your sure to upload the file "' + res.result + '" has been uploaded.');
-                var vp_icon = 0;
-                if (res.result === 'The record was saved successfully.' || res.result === 'Process Successful') {
-                    vp_icon = 1;
-                }
-                global.Msg({msg: res.result, icon: vp_icon, fn: function () {
+                console.log("SUCCESS:", res);
+
+                var vp_icon = res.success ? 1 : 0;
+                global.Msg({
+                    msg: res.result,
+                    icon: vp_icon,
+                    fn: function () {
                         if (vp_icon === 1) {
                             Ext.getCmp(prototype.id + '-Contenedor').getController().onSearchClick(false);
                             Ext.getCmp(prototype.id1 + '-win').close();
-
                         }
-
-
-                    }});
+                    }
+                });
+            },
+            failure: function (fp, o) {
+                try {
+                    var res = Ext.decode(o.response.responseText);
+                    console.log("FAILURE:", res);
+                    global.Msg({msg: res.result, icon: 0});
+                } catch (e) {
+                    console.log("FAILURE RAW:", o);
+                    global.Msg({msg: "Server error", icon: 0});
+                }
             }
         });
+        /*form.submit({
+         url: this.urlWin01 + '/insertTracingFile/',
+         waitMsg: 'Uploading your sure to upload the file...',
+         params: {beanString: JSON.stringify(me.beanTMP)},
+         success: function (fp, o) {
+         var res = Ext.decode(o.response.responseText);
+         console.log(res);
+         //Ext.Msg.alert('Success', 'Your sure to upload the file "' + res.result + '" has been uploaded.');
+         var vp_icon = 1;
+         if (!res.success) {
+         var vp_icon = 0;
+         }
+         global.Msg({msg: res.result, icon: vp_icon, fn: function () {
+         if (vp_icon === 1) {
+         Ext.getCmp(prototype.id + '-Contenedor').getController().onSearchClick(false);
+         Ext.getCmp(prototype.id1 + '-win').close();
+         
+         }
+         
+         
+         }});
+         }
+         });*/
 
 
     },

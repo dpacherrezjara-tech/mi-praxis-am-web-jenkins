@@ -20,6 +20,7 @@ public class A1806 {
 //    public String A1806GRUPO = "";
 //    public String A1806SUCUR = "";
     public String A1806CIA = "";
+    public String A1806MONED = "";
     public String A1806UNIDA = "";
     
     public String A1806CENCO = "";

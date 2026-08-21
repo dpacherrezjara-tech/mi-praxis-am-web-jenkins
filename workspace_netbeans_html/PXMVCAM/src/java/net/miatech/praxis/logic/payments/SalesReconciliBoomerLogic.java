@@ -12,8 +12,8 @@ import net.miatech.beans.PX040S01A1716Filter;
 import net.miatech.beans.SQP00697Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.SalesReconciliBoomerDAO;
-import net.miatech.praxis.payment.filter.A2324Filter;
-import net.miatech.praxis.payment.filter.A2318Filter;
+import net.miatech.praxis.payment.old.A2324Filter;
+import net.miatech.praxis.payment.old.A2318Filter;
 
 public class SalesReconciliBoomerLogic {
 
@@ -64,12 +64,24 @@ public class SalesReconciliBoomerLogic {
         return SalesReconciliBoomerDAO.loadPX559SQP04120(filter);
     }
     
+    public List<A2324Filter> loadPX559SQP04639(A2324Filter filter) throws SQLException, Exception {
+        return SalesReconciliBoomerDAO.loadPX559SQP04639(filter);
+    }
+    
     public A2324Filter loadPX559SQP04121(A2324Filter filter) throws SQLException, Exception {
         return SalesReconciliBoomerDAO.loadPX559SQP04121(filter);
     }
     
     public String loadPX559SQP04122(A2324Filter filter) throws SQLException, Exception {
         return SalesReconciliBoomerDAO.loadPX559SQP04122(filter);
+    }
+    
+    public String loadPX559SQP04638(A2324Filter filter) throws SQLException, Exception {
+        return SalesReconciliBoomerDAO.loadPX559SQP04638(filter);
+    }
+    
+    public A2324Filter loadPX305SQP00935(A2324Filter filter) throws Exception {
+        return SalesReconciliBoomerDAO.loadPX559SQP04637(filter);
     }
 
     /*

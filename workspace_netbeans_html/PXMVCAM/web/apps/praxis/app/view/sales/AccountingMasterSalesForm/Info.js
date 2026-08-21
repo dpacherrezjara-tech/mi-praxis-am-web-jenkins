@@ -117,6 +117,21 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.Info', {
                                     return value;
                                 }
                             },
+                            {
+                                text: 'Initial Date', width: 100, dataIndex: 'A1740FINI',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:left;";
+                                    return value;
+                                }
+                            },
+                            {
+                                text: 'End Date', width: 100, dataIndex: 'A1740FFIN',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:left;";
+                                    return value;
+                                }
+                            },
+                            
                             {text: 'Country Location', width: 120, dataIndex: 'A1740INTNU',
                                 renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                     metaData.style = "text-align:center;";

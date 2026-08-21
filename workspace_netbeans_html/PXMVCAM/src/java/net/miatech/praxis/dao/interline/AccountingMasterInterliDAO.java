@@ -156,7 +156,7 @@ public class AccountingMasterInterliDAO {
         
         session.getCNXIBMDB2().open();
         try {    
-            strSQL = "{CALL PRAXIS.SQP04489(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}"; // PX210S02A1740
+            strSQL = "{CALL PRAXIS.SQP04489(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}"; // PX210S02A1740
             cs = session.getCNXIBMDB2().getConnection().prepareCall(strSQL);
             cs.setString(1, strOption);
             cs.setString(2, filter.A1740CCUST);
@@ -183,6 +183,8 @@ public class AccountingMasterInterliDAO {
             cs.setString(23, filter.IN_A1740SUBTI_OLD);
             cs.setString(24, filter.IN_A1740CATEG_OLD);
             cs.setString(25, filter.A1740INTNU);
+            cs.setString(26, filter.IN_A1740FINI_OLD);
+            cs.setString(27, filter.IN_A1740FFIN_OLD);
             cs.execute();
             
             rst = cs.getResultSet();

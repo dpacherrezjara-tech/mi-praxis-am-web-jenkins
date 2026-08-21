@@ -6,93 +6,96 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.ByIATAController', {
     columns2: {},
     bean: {},
     beanDet: {},
-    meSales: '',
+    meIATA: '',
     dw_excel: false,
     boxActual: '-boxMainData',
     drillDown: [],
     _path: '',
     // </editor-fold>
-    init: function(view) {
-        meSales = this;
-//        prototype.id = 'DataRequestedByBankForm';
-//        prototype.url = CONTEXTPATH + '/DataRequestedByBank';
+//    init: function(view) {
+//        meIATA = this;
+////        prototype.id = 'DataRequestedByBankForm';
+////        prototype.url = CONTEXTPATH + '/DataRequestedByBank';
 //        console.log(' ByIATAController - init');
 //        this.btnSearch_click();
-        meSales.drillDown.push(meSales.boxActual);
-//        console.log(meSales.drillDown);
+//        meIATA.drillDown.push(meIATA.boxActual);
+//        console.log(meIATA.drillDown);
+//    },
+    init: function (view) {
+        meIATA = this;
+
+        meIATA.panelActual = '-boxMainDataByIATA';
+        meIATA.drillDown.push(meIATA.boxActual);
+
+        prototypeProgram.view = 'screens-dashboard-01-form';
+        prototypeProgram.nprog = 'PX0000010X';
+        prototypeProgram.title = 'Dashboard 1';
+        prototypeProgram.modulo = '';
+
     },
     afterRender: function () {
         
         console.log('1-----------------------ByIATAController - afterweeeeeeeeeeee');
     },
+    inicio: function () {
+
+        console.log(' ----- Inicio IATA -------');
+
+        meIATA.drillDown = [];
+        Ext.getCmp(prototype.id + '-filterMain').hide();
+        Ext.getCmp(prototype.id + '-panelRadio').hide();
+        Ext.getCmp(prototype.id + '-boxFlownAnalysis').hide();
+        this.btnSearch_click();        
+    },
     btnSearch_click: function(bean) {
         
-        console.log('1--------------- ByIATAController - btnSearch_clickwaaaaaaaaaaaaaaaaaa');
-//        this.bean = bean;
-//        console.log(this.bean);
-//        this.setFormatParameter();
-//        this.search();
+        console.log('1--------------- ByIATAController - btnSearch_click');
+        this.bean = bean;
+        console.log(this.bean);
+        this.setFormatParameter();
+        this.search();
     },
     setFormatParameter: function () {
-//        meSales.bean = {};
-        var beanString = JSON.stringify(meSales.bean);
+        
+        
+        meIATA.bean = {};
+
+        meIATA.bean.IN_ANIO_FROM = Ext.getCmp(prototype.id + '-cmbDateFromYear_IATA').getValue();
+        meIATA.bean.IN_ANIO_TO = Ext.getCmp(prototype.id + '-cmbDateFromYear_IATA').getValue();
+//        meIATA.bean.IN_TIPO = Ext.getCmp(prototype.id + '-cmbCountry').getValue();
+        
+//        meIATA.bean = {};
+        var beanString = JSON.stringify(meIATA.bean);
         this.searchParams = beanString;
-        console.log(meSales.bean);
+        console.log('PARAMETROS IATA');
+        console.log(meIATA.bean);
     },
     search: function() {
         console.log(' ByIATAController - search');
-        console.log(prototype.url + '/searchTest');
-        Ext.Ajax.request({
-            url: prototype.url + '/searchTest',
-            method: 'POST',
-            timeout: 60000000,
-            beforerequest: Ext.getBody().mask('Loading...'),
-            params: {beanString:this.searchParams,dw_excel:false},
-            success: function(response, options) {
-                Ext.getBody().unmask('Loading...');
-                console.log(response);
+        console.log(prototype.url + '/searchIATA');
+        
+        var storeGridDatas = Ext.create('Ext.Praxis.store.screens.GridData', {
+            proxy: {url: prototype.url + '/searchIATA'
+            },
+            listeners: {
+                beforeload: function(obj) {
+                    Ext.getBody().mask('Loading...'),
+                    obj.proxy.extraParams = {beanString: meIATA.searchParams,dw_excel:false};
+                },
+                load: function(obj, obj2, success, obj4, obj5) {
+                    Ext.getBody().unmask('Loading...');
+                    win.lblUser_toolTip("Estructura: A3264");
 
-                var res = Ext.JSON.decode(response.responseText);
-//                console.log(res.lstData[0]);
-//                console.log(res.lstData[1]);
-//                console.log(res.lstData[2]);
-//                console.log(res.lstData[3]);
-//                console.log(res.lstData[4]);
-                var totals = res.lstData[0][0]; //P_SALES_PER_MONTH_TOTALS
-                var lstData = res.lstData[1]; //P_SALES_PER_MONTH_DATA
-                Ext.getCmp(prototype.id + '-lblTotalCpns').setText(Ext.util.Format.number(totals.TOTAL_CUPONS, '0,000'));
-                console.log(lstData);
-                var storeData = Ext.create('Ext.data.Store', {
-                    data: lstData,
-                    autoLoad: true
-                });
-                Ext.getCmp(prototype.id + '-gridData').bindStore(storeData);
-                
-                Ext.getCmp(prototype.id + '-lblTotalCpns').setText(Ext.util.Format.number(totals.TOTAL_CUPONS, '0,000'));
-                Ext.getCmp(prototype.id + '-lblTotalAmount').setText(Ext.util.Format.number(totals.TOTAL_AMOUNT, '0,000'));
-                Ext.getCmp(prototype.id + '-totAVG').setText(Ext.util.Format.number(totals.totAVG, '0,000.00'));
-                
-                Ext.getCmp(prototype.id + '-lblTotalCpnON').setText(Ext.util.Format.number(totals.TOTAL_CUPONS_ON, '0,000'));
-                Ext.getCmp(prototype.id + '-lblTotalCpnONPerc').setText(Ext.util.Format.number(totals.CUPONS_ON_PERCENT, '0,000.00'));
-                Ext.getCmp(prototype.id + '-lblTotalAmountON').setText(Ext.util.Format.number(totals.TOTAL_AMOUNT_ON, '0,000'));
-                Ext.getCmp(prototype.id + '-lblTotalAmountONPerc').setText(Ext.util.Format.number(totals.AMOUNT_ON_PERCENT, '0,000.00'));
-                Ext.getCmp(prototype.id + '-lblTotalAvgON').setText(Ext.util.Format.number(totals.TOTAL_AMOUNT_ON_AVG_RATE, '0,000.00'));
-                
-                Ext.getCmp(prototype.id + '-lblTotalCpnOFF').setText(Ext.util.Format.number(totals.TOTAL_CUPONS_OFF, '0,000'));
-                Ext.getCmp(prototype.id + '-lblTotalCpnOFFPerc').setText(Ext.util.Format.number(totals.CUPONS_OFF_PERCENT, '0,000.00'));
-                Ext.getCmp(prototype.id + '-lblTotalAmountOFF').setText(Ext.util.Format.number(totals.TOTAL_AMOUNT_OFF, '0,000'));
-                Ext.getCmp(prototype.id + '-lblTotalAmountOFFPerc').setText(Ext.util.Format.number(totals.AMOUNT_OFF_PERCENT, '0,000.00'));
-                Ext.getCmp(prototype.id + '-lblTotalAvgOFF').setText(Ext.util.Format.number(totals.TOTAL_AMOUNT_OFF_AVG_RATE, '0,000.00'));
-                
-                Ext.getCmp(prototype.id + '-lblTotalQCPNSNR').setText(Ext.util.Format.number(totals.TOTAL_QCPNS0, '0,000'));
-                Ext.getCmp(prototype.id + '-lblTotalAMOUNTNR').setText(Ext.util.Format.number(totals.TOTAL_AMOUNT0, '0,000'));
-                
-                
+                    if (obj.data.length > 0) {
+                        var Objtemp = obj.data.items[0].data;
+
+                    } else {
+                        global.Msg({msg: 'Data not found'});
+                    }
+                }
             }
         });
-        
-//        meSales.dw_excel = false;
-        
+        Ext.getCmp(prototype.id + '-gridDataByIATA').bindStore(storeGridDatas);
     },
     clickDetSales_colHandler: function(param,column, e, row, column, x, rowData) {
 //        console.log(param);
@@ -128,11 +131,11 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.ByIATAController', {
             },
             listeners: {
                 beforeload: function(obj) {
-                    Ext.getCmp(prototype.id +  meSales.boxActual).mask('Loading...');
-                    obj.proxy.extraParams = {beanString: JSON.stringify(meSales.beanDet),dw_excel:false};
+                    Ext.getCmp(prototype.id +  meIATA.boxActual).mask('Loading...');
+                    obj.proxy.extraParams = {beanString: JSON.stringify(meIATA.beanDet),dw_excel:false};
                 },
                 load: function(obj, obj2, success, obj4, obj5) {
-                    Ext.getCmp(prototype.id + meSales.boxActual).unmask();
+                    Ext.getCmp(prototype.id + meIATA.boxActual).unmask();
                     win.lblUser_toolTip("Estructura: IMF110");
 
                     if (obj.data.length > 0) {
@@ -150,14 +153,14 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.ByIATAController', {
 
                         var v_storeCities = Ext.getCmp(prototype.id + '-cmbcCitiesFrom').getStore().data.length;
                         if(v_storeCities === 0){
-                            meSales.obtainCities();
+                            meIATA.obtainCities();
                         }
 
 
                     } else {
                         global.Msg({msg: 'Data not found'});
                     }
-                    global.clear();
+//                    global.clear();
                 }
             }
         });
@@ -169,48 +172,48 @@ Ext.define('Ext.Praxis.controller.screens.Dashboard01.tabs.ByIATAController', {
     },
     showGrid: function (nameGrid) {
         
-        Ext.getCmp(prototype.id + meSales.boxActual).hide();
+        Ext.getCmp(prototype.id + meIATA.boxActual).hide();
         
-        meSales.boxActual = nameGrid;
-        meSales.drillDown.push(meSales.boxActual);  
+        meIATA.boxActual = nameGrid;
+        meIATA.drillDown.push(meIATA.boxActual);  
         
-        Ext.getCmp(prototype.id + meSales.boxActual).show();
+        Ext.getCmp(prototype.id + meIATA.boxActual).show();
 
-//        console.log('showGrid == ' + meSales.drillDown);
+//        console.log('showGrid == ' + meIATA.drillDown);
 
         
     },
     imgBack_clickHandler: function () {
         
-        if (meSales.drillDown.length > 0) {
-                Ext.getCmp(prototype.id + meSales.boxActual).hide();
-                meSales.drillDown.pop();
-                meSales.boxActual = meSales.drillDown[meSales.drillDown.length-1];
-                Ext.getCmp(prototype.id +  meSales.boxActual).show();
+        if (meIATA.drillDown.length > 0) {
+                Ext.getCmp(prototype.id + meIATA.boxActual).hide();
+                meIATA.drillDown.pop();
+                meIATA.boxActual = meIATA.drillDown[meIATA.drillDown.length-1];
+                Ext.getCmp(prototype.id +  meIATA.boxActual).show();
                 
-//                this.showGrid(meSales.drillDown[meSales.drillDown.length-1]);
+//                this.showGrid(meIATA.drillDown[meIATA.drillDown.length-1]);
                 
-                if(meSales.boxActual === '-boxMainData'){
+                if(meIATA.boxActual === '-boxMainData'){
                     this.hidePagination_clickHandler();
                 }
                 
         }
-//        console.log('imgBack_clickHandler == ' + meSales.drillDown);
+//        console.log('imgBack_clickHandler == ' + meIATA.drillDown);
         
     },
     imgExcel_clickHandler: function () {
         
         console.log('excell');
-        meSales.dw_excel = true;
-        if(meSales.boxActual === '-boxMainData'){
+        meIATA.dw_excel = true;
+        if(meIATA.boxActual === '-boxMainData'){
             console.log(Ext.getCmp(prototype.id + '-gridSalesL').config.columns.items);
-            meSales.goURLpost('searchSales',this.searchParams,Ext.getCmp(prototype.id + '-gridSalesL').config.columns.items);
-        }else if(meSales.boxActual === '-boxDetDataS'){
+            meIATA.goURLpost('searchSales',this.searchParams,Ext.getCmp(prototype.id + '-gridSalesL').config.columns.items);
+        }else if(meIATA.boxActual === '-boxDetDataS'){
             console.log(Ext.getCmp(prototype.id + '-gridDetSalesS').config.columns);
 //            console.log(JSON.stringify(Ext.getCmp(prototype.id + '-gridDetSalesS').config.columns));
-            meSales.goURLpost('searchDetSales',JSON.stringify(meSales.beanDet),Ext.getCmp(prototype.id + '-gridDetSalesS').config.columns);
+            meIATA.goURLpost('searchDetSales',JSON.stringify(meIATA.beanDet),Ext.getCmp(prototype.id + '-gridDetSalesS').config.columns);
         }else{
-            meSales.dw_excel = false;
+            meIATA.dw_excel = false;
         }
     },
     goURLpost: function (method,parms,columns) {

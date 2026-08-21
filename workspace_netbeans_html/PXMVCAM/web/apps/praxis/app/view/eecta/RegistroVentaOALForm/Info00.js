@@ -65,10 +65,10 @@ Ext.define('Ext.Praxis.view.eecta.RegistroVentaOALForm.Info00', {
                                     },
                                     {text: 'Cia', dataIndex: 'A4069CIA', width: 40, align: 'center', locked: true},
                                     {
-                                        text: 'Boleto', dataIndex: 'A4069TKTOR', width: 110, align: 'center', locked: true
-//                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {                                             
-//                                            return record.get("A4069FORMA")+record.get("A4069SERIE");
-//                                        }
+                                        text: 'Boleto', dataIndex: '', width: 110, align: 'center', locked: true,
+                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {                                             
+                                            return record.get("A4069FORMA")+record.get("A4069SERIE");
+                                        }
                                     },
                                     { text: 'Trx.', dataIndex: 'A4069TRNCU', align: 'center', width: 50, locked: true},
                                     { text: 'Grupo', dataIndex: 'A4069GRUPO', align: 'center', width: 70, locked: true},

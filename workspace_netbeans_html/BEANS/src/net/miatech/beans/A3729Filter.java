@@ -21,11 +21,14 @@ public class A3729Filter extends A3729 {
     public String dayTo = "";
  
     public String strTicket = "";
+    public String TKT_A1691 = "";
+    public String CUPON_A1691 = "";
     public String desSTVAL = "";
     public String strFormatDate = "";
     public String strDescripcion = "";
     public String desSTVCR = "";
     public String desPAX = "";
+    public String desPAXV = "";
     public String descFSABRE = "";
     public String descSTASABR = "";
     public String descFSALES = "";
@@ -36,6 +39,7 @@ public class A3729Filter extends A3729 {
     public String FA720 = "";
     public String TICKET_2 = "";
     public String CUPON_2 = "";
+    public String SEQ_2 = "";
     //public String IN_TABLE = "";
 
     public int qty_update = 0;

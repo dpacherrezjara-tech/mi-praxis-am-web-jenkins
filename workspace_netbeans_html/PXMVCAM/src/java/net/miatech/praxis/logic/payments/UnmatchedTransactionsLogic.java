@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.payments.UnmatchedTransactionsDAO;
-import net.miatech.praxis.payment.filter.A2290Filter;
+import net.miatech.praxis.payment.old.A2290Filter;
 
 /**
  *

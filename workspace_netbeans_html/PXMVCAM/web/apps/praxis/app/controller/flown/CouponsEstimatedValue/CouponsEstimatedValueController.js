@@ -48,6 +48,15 @@ Ext.define('Ext.Praxis.controller.flown.CouponsEstimatedValue.CouponsEstimatedVa
             '#CouponsEstimatedValueForm-btnExcel': {
                 click: this.btnExcel_click
             },
+            '#CouponsEstimatedValueForm-cmbDateFromYear': {
+                select: this.selectComboFromYear
+            },
+            '#CouponsEstimatedValueForm-cmbDateFromMonth': {
+                select: this.selectComboFromMonth
+            },
+            '#CouponsEstimatedValueForm-cmbDateToMonth': {
+                select: this.selectComboToMonth
+            },
             '#CouponsEstimatedValueForm-btn-pag-first': {
                 click: this.pagFirst
             },
@@ -88,7 +97,12 @@ Ext.define('Ext.Praxis.controller.flown.CouponsEstimatedValue.CouponsEstimatedVa
         obj.setValue(this.fecha.getFullYear());
     },
     afterRenderMonth: function(obj) {
-        obj.setValue('0' + (this.fecha.getMonth() + 1));
+        var month = this.fecha.getMonth() + 1;
+        if (month < 9) {
+            obj.setValue('0' + month);
+        } else {
+            obj.setValue((month));
+        }
     },
     selectComboFromDay: function(obj) {
         var comboToDay = Ext.getCmp(prototype.id + '-cmbDateToDay');
@@ -166,7 +180,8 @@ Ext.define('Ext.Praxis.controller.flown.CouponsEstimatedValue.CouponsEstimatedVa
             fields: ['code', 'name'],
             data: [
                 ["F", "FLOWN"],
-                ["E", "EMD"]
+                ["E", "EMD"],
+                ["S", "EMDS"],
 
             ]}));
         cmbTypeAC.setValue("F");
@@ -239,7 +254,34 @@ Ext.define('Ext.Praxis.controller.flown.CouponsEstimatedValue.CouponsEstimatedVa
                         } 
                         else {
                             var data = obj.data.items[0].data;
-//                            console.log(data);
+                            if(data.IN_TYPE === 'S'){
+                                Ext.getCmp(prototype.id+'-RFIC').show();
+                                Ext.getCmp(prototype.id+'-Reason').show();
+                                Ext.getCmp(prototype.id+'-Free').show();
+                                Ext.getCmp(prototype.id+'-VCR').hide();
+                                Ext.getCmp(prototype.id+'-Leg').hide();
+                                Ext.getCmp(prototype.id+'-Zone').hide();
+                                Ext.getCmp(prototype.id+'-Number').hide();
+                                Ext.getCmp(prototype.id+'-City').hide();
+                                Ext.getCmp(prototype.id+'-Fare').hide();
+                                Ext.getCmp(prototype.id+'-Class').hide();
+                                Ext.getCmp(prototype.id+'-Flag').hide();
+                                Ext.getCmp(prototype.id + '-gridData').setWidth(1090);
+                            }else{
+                                 Ext.getCmp(prototype.id+'-RFIC').hide();
+                                Ext.getCmp(prototype.id+'-Reason').hide();
+                                Ext.getCmp(prototype.id+'-Free').hide();
+                                Ext.getCmp(prototype.id+'-VCR').show();
+                                Ext.getCmp(prototype.id+'-Leg').show();
+                                Ext.getCmp(prototype.id+'-Zone').show();
+                                Ext.getCmp(prototype.id+'-Number').show();
+                                Ext.getCmp(prototype.id+'-City').show();
+                                Ext.getCmp(prototype.id+'-Fare').show();
+                                Ext.getCmp(prototype.id+'-Class').show();
+                                Ext.getCmp(prototype.id+'-Flag').show();
+                                Ext.getCmp(prototype.id + '-gridData').setWidth(1331);
+                            }
+                            console.log(data.IN_TYPE);
                         }
                 }
             }
@@ -284,7 +326,7 @@ Ext.define('Ext.Praxis.controller.flown.CouponsEstimatedValue.CouponsEstimatedVa
     btnExcel_click: function(obj, e) {
         Ext.Msg.show({
             title: '.:PRAXIS:.',
-            msg: 'Download Excel ?',
+            msg: 'Download data?',
             buttons: Ext.MessageBox.OKCANCEL,
             scope: this,
             icon: Ext.MessageBox.QUESTION,
@@ -355,6 +397,30 @@ Ext.define('Ext.Praxis.controller.flown.CouponsEstimatedValue.CouponsEstimatedVa
                 me.pagginActual = '-paggin';
                 break;
         }
+    },
+    selectComboFromYear: function (obj) {
+        var comboToYear = Ext.getCmp(prototype.id + '-cmbDateToYear');
+        var storeComboDataYear = win.getStoreYear2(false, obj.getValue());
+        comboToYear.bindStore(storeComboDataYear);
+        comboToYear.setValue(obj.getValue());
+    },
+    selectComboFromMonth: function (obj) {
+        var comboToMonth = Ext.getCmp(prototype.id + '-cmbDateToMonth');
+        comboToMonth.setValue(obj.getValue());
+    },
+    selectComboToMonth: function (obj) {
+        var comboFromYear = Ext.getCmp(prototype.id + '-cmbDateFromYear');
+        var comboToYear = Ext.getCmp(prototype.id + '-cmbDateToYear');
+        var comboFromMonth = Ext.getCmp(prototype.id + '-cmbDateFromMonth');
+        if (comboFromYear.getValue() === comboToYear.getValue()) {
+            if (obj.getValue() < comboFromMonth.getValue()) {
+                comboFromMonth.setValue(obj.getValue());
+            }
+        }
+    },
+    selectComboFromDay: function (obj) {
+        var comboToDay = Ext.getCmp(prototype.id + '-cmbDateToDay');
+        comboToDay.setValue(obj.getValue());
     },
     pagFirst: function(obj, e) {
         this.getPaggin();

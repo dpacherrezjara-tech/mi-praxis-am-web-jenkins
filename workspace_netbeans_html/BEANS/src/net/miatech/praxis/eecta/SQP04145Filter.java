@@ -18,5 +18,7 @@ public class SQP04145Filter extends A4054 {
     public String VP_FECHA2 = "";
     public String VP_STAT = "";
     public String VP_TICKET = "";
+    public String VP_CDCLI = "";
+    public String VP_NLOTE = "";    
     public Pagination page = new Pagination();
 }

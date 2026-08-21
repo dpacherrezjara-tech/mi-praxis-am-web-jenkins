@@ -403,7 +403,7 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.AgentsMasterFileControl
                 if(int_result>100000)
                 {
                      global.Msg({
-                            msg: 'Report cannot be exported, please contact system administrator.'
+                            msg: 'You have exceeded the maximum number of records that can be exported through this option. Please select the TXT option instead.'
                         });
                 }
                 else
@@ -417,7 +417,7 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.AgentsMasterFileControl
     exportExcel: function () {
         this.setParams();
         var VP_A003TYPE = 'xlsx';
-        global.getFile(prototype.url + '/getFileTxt?VP_ACTION=' + searchParams.VP_ACTION + '&A003KEY1=' + searchParams.A003KEY1 + '&A003KEY2=' + searchParams.A003KEY2 + '&A003KEY3=' + searchParams.A003KEY3 + '&A003TYPE=' + VP_A003TYPE);
+        global.getFile(prototype.url + '/getXLSX?VP_ACTION=' + searchParams.VP_ACTION + '&A003KEY1=' + searchParams.A003KEY1 + '&A003KEY2=' + searchParams.A003KEY2 + '&A003KEY3=' + searchParams.A003KEY3 + '&A003TYPE=' + VP_A003TYPE);
     },
     btnTxt_click: function (obj, e) {
         Ext.Msg.show({
@@ -458,11 +458,11 @@ Ext.define('Ext.Praxis.controller.sales.AgentsMasterFile.AgentsMasterFileControl
             },
             success: function (response, options) {
                 var res = Ext.JSON.decode(response.responseText);
-                var int_result = res.int_result;
-                if(int_result>100000)
+                //var int_result = res.int_result;
+                if(Ext.getCmp(prototype.id + '-cmbSearchBy').getValue()==='')
                 {
                      global.Msg({
-                            msg: 'Report cannot be exported, please contact system administrator.'
+                            msg: 'You must select a search option.'
                         });
                 }
                 else

@@ -1,39 +1,39 @@
-Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
+Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry', {
     extend: 'Ext.window.Window',
     alias: 'widget.DataEntryAccountingMasterTAXForm',
 
     controller: 'DataEntryAccountingMasterTAXController',
 
-    requires:[
+    requires: [
         'Ext.Praxis.controller.sales.AccountingMasterTAX.DataEntryAccountingMasterTAXController'
     ],
 
-    title:'Catalogue Account - Data Entry Form',
-    header:true,
-    height:320,
-    width:780,
-    border:false,
-    resizable:false,
-    layout:'fit',
-    modal:true,
+    title: 'Catalogue Account - Data Entry Form',
+    header: true,
+    height: 320,
+    width: 780,
+    border: false,
+    resizable: false,
+    layout: 'fit',
+    modal: true,
 
-    defaults:{
+    defaults: {
         border: false
     },
 
-    items:[
+    items: [
         {
             xtype: 'form',
             id: prototype.id + '-formDataEntry',
-            defaults:{
+            defaults: {
                 style: 'margin: 3px;',
                 border: false
             },
-            items:[
+            items: [
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
+                    items: [
                         { xtype: 'tbspacer', width: 7 },
                         {
                             xtype: 'label',
@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                         },
                         { xtype: 'tbspacer', width: 10 },
                         {
-                            xtype:'combo',
+                            xtype: 'combo',
                             id: prototype.id + '-cmbA1741TIPO',
                             store: new Ext.data.SimpleStore({
                                 fields: ['code', 'name'],
@@ -89,7 +89,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                         },
                         { xtype: 'tbspacer', width: 10 },
                         {
-                            xtype:'combo',
+                            xtype: 'combo',
                             id: prototype.id + '-cmbCountry2',
                             queryMode: 'local',
                             triggerAction: 'all',
@@ -105,7 +105,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                             width: 140,
                             hidden: false,
                             hiddenLabel: false,
-                            listConfig: {height: 111}
+                            listConfig: { height: 111 }
                         },
                         { xtype: 'tbspacer', width: 15 },
                         {
@@ -126,7 +126,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                         },
                         { xtype: 'tbspacer', width: 10 },
                         {
-                            xtype:'combo',
+                            xtype: 'combo',
                             id: prototype.id + '-cmbA1741TPTAX',
                             store: new Ext.data.SimpleStore({
                                 fields: ['code', 'name'],
@@ -157,7 +157,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
+                    items: [
                         { xtype: 'tbspacer', width: 7 },
                         {
                             xtype: 'label',
@@ -178,12 +178,12 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                         { xtype: 'tbspacer', width: 10 },
                         {
                             xtype: 'textfield',
-                            id:prototype.id+'-txtTax',
+                            id: prototype.id + '-txtTax',
                             fieldStyle: 'text-align:left',
                             enforceMaxLength: true,
                             maxLength: 3,
                             width: 45,
-                            listeners:{
+                            listeners: {
                                 change: 'onUpperValue'
                             }
                         },
@@ -206,7 +206,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                         },
                         { xtype: 'tbspacer', width: 10 },
                         {
-                            xtype:'combo',
+                            xtype: 'combo',
                             id: prototype.id + '-cmbCurrency2',
                             queryMode: 'local',
                             triggerAction: 'all',
@@ -222,7 +222,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                             width: 120,
                             hidden: false,
                             hiddenLabel: false,
-                            listConfig: {height: 111}
+                            listConfig: { height: 111 }
                         },
                         { xtype: 'tbspacer', width: 35 },
                         {
@@ -243,7 +243,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                         },
                         { xtype: 'tbspacer', width: 10 },
                         {
-                            xtype:'combo',
+                            xtype: 'combo',
                             id: prototype.id + '-cmbA1741CTRL',
                             store: new Ext.data.SimpleStore({
                                 fields: ['code', 'name'],
@@ -272,7 +272,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
+                    items: [
                         { xtype: 'tbspacer', width: 7 },
                         {
                             xtype: 'label',
@@ -297,7 +297,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                             enforceMaxLength: true,
                             maxLength: 2,
                             width: 30,
-                            listeners:{
+                            listeners: {
                                 change: 'onUpperValue'
                             }
                         },
@@ -307,17 +307,18 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                             enforceMaxLength: true,
                             maxLength: 2,
                             width: 30,
-                            listeners:{
+                            listeners: {
                                 change: 'onUpperValue'
-                            }
+                            },
+                            readOnly: true
                         },
                         {
                             xtype: 'textfield',
                             id: prototype.id + '-txtA1741CECOS',
                             enforceMaxLength: true,
-                            maxLength: 6,
-                            width: 50,
-                            listeners:{
+                            maxLength: 7,
+                            width: 60,
+                            listeners: {
                                 change: 'onUpperValue'
                             }
                         },
@@ -327,7 +328,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                             enforceMaxLength: true,
                             maxLength: 4,
                             width: 40,
-                            listeners:{
+                            listeners: {
                                 change: 'onUpperValue'
                             }
                         },
@@ -335,9 +336,9 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                             xtype: 'textfield',
                             id: prototype.id + '-txtA1741CTA',
                             enforceMaxLength: true,
-                            maxLength: 4,
-                            width: 40,
-                            listeners:{
+                            maxLength: 6,
+                            width: 50,
+                            listeners: {
                                 change: 'onUpperValue'
                             }
                         },
@@ -345,9 +346,9 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                             xtype: 'textfield',
                             id: prototype.id + '-txtA1741SCTA',
                             enforceMaxLength: true,
-                            maxLength: 5,
+                            maxLength: 4,
                             width: 50,
-                            listeners:{
+                            listeners: {
                                 change: 'onUpperValue'
                             }
                         },
@@ -357,7 +358,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                             enforceMaxLength: true,
                             maxLength: 4,
                             width: 40,
-                            listeners:{
+                            listeners: {
                                 change: 'onUpperValue'
                             }
                         },
@@ -367,11 +368,11 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                             enforceMaxLength: true,
                             maxLength: 2,
                             width: 30,
-                            listeners:{
+                            listeners: {
                                 change: 'onUpperValue'
                             }
                         },
-                        { xtype: 'tbspacer', width: 40 },
+                        { xtype: 'tbspacer', width: 20 },
                         {
                             xtype: 'label',
                             text: 'Country Location',
@@ -381,7 +382,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                         {
                             xtype: 'label',
                             text: '(*)',
-                            id: prototype.id+'-label_required04',
+                            id: prototype.id + '-label_required04',
                             style: 'font-weight:bold;color:red;',
                             width: 20,
                             autoEl: {
@@ -391,7 +392,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                         },
                         { xtype: 'tbspacer', width: 10 },
                         {
-                            xtype:'combo',
+                            xtype: 'combo',
                             id: prototype.id + '-cmbINTNU',
                             store: new Ext.data.SimpleStore({
                                 fields: ['code', 'name'],
@@ -411,14 +412,14 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                             valueField: 'code',
                             displayField: 'name',
                             width: 70,
-                            listConfig: {height: 111}
+                            listConfig: { height: 111 }
                         }
                     ]
                 },
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
+                    items: [
                         { xtype: 'tbspacer', width: 7 },
                         {
                             xtype: 'label',
@@ -429,12 +430,12 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                         { xtype: 'tbspacer', width: 10 },
                         {
                             xtype: 'textfield',
-                            id:prototype.id+'-txtA1741CONCE',
+                            id: prototype.id + '-txtA1741CONCE',
                             fieldStyle: 'text-align:left',
                             enforceMaxLength: true,
                             maxLength: 50,
                             width: 310,
-                            listeners:{
+                            listeners: {
                                 change: 'onUpperValue'
                             }
                         }
@@ -443,7 +444,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                 {
                     xtype: 'panel',
                     layout: 'hbox',
-                    items:[
+                    items: [
                         { xtype: 'tbspacer', width: 7 },
                         {
                             xtype: 'label',
@@ -454,7 +455,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                         { xtype: 'tbspacer', width: 10 },
                         {
                             xtype: 'datefield',
-                            id:prototype.id+'-txtA1741FINI',
+                            id: prototype.id + '-txtA1741FINI',
                             format: 'Y/m/d',
                             maskRe: /[0-9/]/,
                             fieldStyle: 'text-align:center;',
@@ -470,7 +471,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                         { xtype: 'tbspacer', width: 30 },
                         {
                             xtype: 'datefield',
-                            id:prototype.id+'-txtA1741FFIN',
+                            id: prototype.id + '-txtA1741FFIN',
                             format: 'Y/m/d',
                             maskRe: /[0-9/]/,
                             fieldStyle: 'text-align:center;',
@@ -487,12 +488,12 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                 },
                 {
                     xtype: 'fieldset',
-                    id: prototype.id+'-ControlData',
+                    id: prototype.id + '-ControlData',
                     title: 'Control Data',
-//                    margin: '15 0 8 0',
-//                    width: 660,
+                    //                    margin: '15 0 8 0',
+                    //                    width: 660,
                     border: true,
-                    defaults:{
+                    defaults: {
                         style: 'margin: 3px;',
                         border: false
                     },
@@ -504,7 +505,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                             defaults: {
                                 labelAlign: 'left'
                             },
-                            items:[
+                            items: [
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
@@ -514,11 +515,11 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-USCR',
+                                    id: prototype.id + '-USCR',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 },
@@ -531,11 +532,11 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-FECR',
+                                    id: prototype.id + '-FECR',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 },
@@ -548,11 +549,11 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-HOCR',
+                                    id: prototype.id + '-HOCR',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 }
@@ -565,7 +566,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                             defaults: {
                                 labelAlign: 'left'
                             },
-                            items:[
+                            items: [
                                 { xtype: 'tbspacer', width: 7 },
                                 {
                                     xtype: 'label',
@@ -575,11 +576,11 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-USUP',
+                                    id: prototype.id + '-USUP',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 },
@@ -592,11 +593,11 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-FEUP',
+                                    id: prototype.id + '-FEUP',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 },
@@ -609,11 +610,11 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                                 },
                                 {
                                     xtype: 'textfield',
-                                    id:prototype.id+'-HOUP',
+                                    id: prototype.id + '-HOUP',
                                     readOnly: true,
                                     enforceMaxLength: true,
                                     width: 80,
-                                    listeners:{
+                                    listeners: {
                                         change: 'onUpperValue'
                                     }
                                 }
@@ -624,49 +625,49 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
             ]
         }
     ],
-    dockedItems:[
+    dockedItems: [
         {
             xtype: 'toolbar',
             dock: 'bottom',
             ui: 'footer',
             margin: '10 0 10 0',
-            layout:{
+            layout: {
                 pack: 'center'
             },
             fieldStyle: 'text-align:center',
-            defaults:{
+            defaults: {
                 scale: 'medium'
             },
-            items:[
+            items: [
                 {
                     text: 'Save',
-                    id:prototype.id+'-btn-save',
+                    id: prototype.id + '-btn-save',
                     iconCls: 'prx-icon-save',
-                    listeners:{
+                    listeners: {
                         click: 'onSaveClick'
                     }
                 },
                 {
                     text: 'Update',
-                    id:prototype.id+'-btn-update',
+                    id: prototype.id + '-btn-update',
                     iconCls: 'prx-icon-update',
-                    listeners:{
+                    listeners: {
                         click: 'onUpdateClick'
                     }
                 },
                 {
                     text: 'Delete',
-                    id:prototype.id+'-btn-delete',
+                    id: prototype.id + '-btn-delete',
                     iconCls: 'prx-icon-delete',
-                    listeners:{
+                    listeners: {
                         click: 'onDeleteClick'
                     }
                 },
                 {
                     text: 'Cancel',
-                    id:prototype.id+'-btn-cancel',
+                    id: prototype.id + '-btn-cancel',
                     iconCls: 'prx-icon-cancel',
-                    listeners:{
+                    listeners: {
                         click: 'onCancelClick'
                     }
                 },
@@ -677,28 +678,28 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTAXForm.DataEntry',{
                     style: 'font-weight:bold;color:red;',
                     width: 120
                 }
-//                ,
-//                { xtype: 'tbspacer', width: 30 },
-//                {
-//                    xtype: 'button',
-//                    id:prototype.id+'-btn-prev',
-//                    icon: 'resources/img/botones/prev.png',
-//                    tooltip: 'View Previous Flight Manifest',
-//                    border: false,
-//                    listeners:{
-//                        click: 'onPrevClick'
-//                    }
-//                },
-//                {
-//                    xtype: 'button',
-//                    id:prototype.id+'-btn-next',
-//                    icon: 'resources/img/botones/next2.png',
-//                    tooltip: 'View Next Flight Manifest',
-//                    border: false,
-//                    listeners:{
-//                        click: 'onNextClick'
-//                    }
-//                }
+                //                ,
+                //                { xtype: 'tbspacer', width: 30 },
+                //                {
+                //                    xtype: 'button',
+                //                    id:prototype.id+'-btn-prev',
+                //                    icon: 'resources/img/botones/prev.png',
+                //                    tooltip: 'View Previous Flight Manifest',
+                //                    border: false,
+                //                    listeners:{
+                //                        click: 'onPrevClick'
+                //                    }
+                //                },
+                //                {
+                //                    xtype: 'button',
+                //                    id:prototype.id+'-btn-next',
+                //                    icon: 'resources/img/botones/next2.png',
+                //                    tooltip: 'View Next Flight Manifest',
+                //                    border: false,
+                //                    listeners:{
+                //                        click: 'onNextClick'
+                //                    }
+                //                }
             ]
         }
     ]

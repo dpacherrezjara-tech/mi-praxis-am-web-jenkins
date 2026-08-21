@@ -110,6 +110,7 @@ public class SalesAuditAcceptedDAO {
                 beanADM.A1672CANAL = rst.getString("A1672CANAL").trim();
                 beanADM.A1672NAMEF = rst.getString("AGENCY").trim();
                 msjeError = rst.getString("A1580DESC2").trim();
+                beanADM.A1672BASE = rst.getString("A1672PROCESO").trim();
                 msjeError2 = msjeError.split(";");
 
                 for (int i = 0; i < msjeError2.length; i++) {
@@ -141,6 +142,7 @@ public class SalesAuditAcceptedDAO {
                 beanADM.A2657NREF = rst.getString("A1672RULNO").trim();
                 beanADM.A1672FCMI = rst.getString("A1672FCMI").trim();
                 beanADM.A1672PNR = rst.getString("A1672PNR").trim();
+                beanADM.A1672IDFIL = rst.getString("A1672IDFIL").trim();
                 beanADM.A1672CORREO = rst.getInt("A1672CORREO");
 
                 //Paginación ===================================================
@@ -1109,6 +1111,7 @@ public class SalesAuditAcceptedDAO {
                 recADM.A1672SEQ = rst.getString("A1672SEQ").trim();
                 recADM.A1672TRNCU = rst.getString("A1672TRNCU").trim();
                 recADM.A1672CURRENCY = rst.getString("A1672CURRENCY");
+                recADM.A1672DINAM = rst.getString("A4777DINAM").trim();
 
                 recADM.A1672UASIG = rst.getString("A1672UASIG").trim();
                 recADM.A1672FASIG = rst.getString("A1672FASIG").trim();
@@ -1803,7 +1806,7 @@ public class SalesAuditAcceptedDAO {
         System.runFinalization();
         System.gc();
     }
-    
+
     public String Group() throws SQLException, Exception {
         CallableStatement cs = null;
         ResultSet rst = null;
@@ -1834,6 +1837,55 @@ public class SalesAuditAcceptedDAO {
 
         return STR_RESULT;
     }
-    
-    
+
+    public String searchIDFILE(A1672Filter filter) throws SQLException, Exception {
+
+        String STR_RESULT = "";
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        String SQLCLL01 = "{CALL PXSAUDIT.SQP04759(?,?,?,?)}";
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, "1");
+            cstmt01.setString(3, filter.VP_FRMSRIE);
+            cstmt01.setString(4, filter.VP_SEQ);
+
+            cstmt01.execute();
+
+            rs01 = cstmt01.getResultSet();
+
+            while (rs01.next()) {
+                STR_RESULT = rs01.getString("A1530IDFIL");
+            }
+
+        } catch (Exception e) {
+            e.getMessage();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return STR_RESULT;
+
+    }
+
 }

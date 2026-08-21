@@ -80,7 +80,8 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.DataEntry', {
                                                         fields: ['code', 'name'],
                                                         data: [
                                                             ["", "Select"], ["1", "Ticket"], ["2", "Pax Name"],
-                                                            ["3", "PNR"], ["4", "C.Card"], ["5", "IATA"], ["6","ADM/ACM"]
+                                                            ["3", "PNR"], ["4", "C.Card"], //["7", "C.Card Void"],
+                                                            ["5", "IATA"], ["6","ADM/ACM"]                                                            
                                                         ]
                                                     }),
                                                     queryMode: 'local',
@@ -569,6 +570,32 @@ Ext.define('Ext.Praxis.view.program.ProMasterTicketForm.DataEntry', {
                                                     },
                                                     {
                                                         text: 'PNR', dataIndex: 'A720PNR', width: 80,editor:{ xtype:'textfield', editable: false }
+                                                    },
+                                                    {
+                                                        text: 'Status MP', dataIndex: 'STATUSMP', width: 80,
+                                                        renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            metaData.style = "text-align:center;";
+                                                            console.log('file:');
+                                                            console.log(record.data);// Validamos que exista un valor para no meter un tooltip vacío
+                                                            if (value) {
+                                                                metaData.tdAttr = 'data-qtip="' + Ext.String.htmlEncode(value) + '"';
+                                                            }
+                                                            return value;
+                                                            //console.log(record.data.SCARDN.trim());
+//                                                            var result = '';
+//                                                            //if(record.data.SCARDN!==null)
+//                                                            if(record.data.hasOwnProperty('SCARDN'))
+//                                                            {
+//                                                                if(record.data.SAUTHOC !=='' && record.data.SCARDN !=='')
+//                                                                    result = 'Conciliate';
+//                                                                else
+//                                                                    result = 'Pending';
+//                                                            }
+//                                                            return result;
+                                                        }
+                                                    },
+                                                    {
+                                                        text: 'Void', dataIndex: 'A720TKVOID', width: 40
                                                     },
                                                     {
                                                         xtype: 'actioncolumn',

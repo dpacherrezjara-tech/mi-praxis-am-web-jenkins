@@ -13,7 +13,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import net.miatech.beans.spring.implement.IServerSession;
-import net.miatech.praxis.payment.filter.A2338Filter;
+import net.miatech.praxis.payment.old.A2338Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 

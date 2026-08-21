@@ -7,6 +7,7 @@ package net.miatech.praxis.logic.gerencial;
 
 import java.util.List;
 import net.miatech.beans.SQP00768;
+import net.miatech.beans.SaleAudit.A1672Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.libmiatec.A1248;
 import net.miatech.praxis.dao.gerencial.BusinessToolsDAO;
@@ -43,6 +44,14 @@ public class BusinessToolsLogic {
         return businessToolsDAO.loadPXPRUEBA2(filter);
     }
 
+    public List<SQP00768> loadSQP0076VSales(SQP00768 filter) throws Exception {
+        return businessToolsDAO.loadSQP0076VSales(filter);
+    }
+
+    public List<SQP00768> loadSQP0076VSalesSkchg(SQP00768 filter) throws Exception {
+        return businessToolsDAO.loadSQP0076VSalesSkchg(filter);
+    }
+
     public String loadPX282SQP00777(SQP00768 filter) throws Exception {
         return businessToolsDAO.loadPX282SQP00777(filter);
     }
@@ -57,6 +66,10 @@ public class BusinessToolsLogic {
     
     public SQP00768 executeValuation(SQP00768 filter) throws Exception {
         return businessToolsDAO.executeValuation(filter);
+    }
+
+    public List<A1672Filter> updateCMBPOTicketsInvol(List<A1672Filter> lista) throws Exception {
+        return businessToolsDAO.updateCMBPOTicketsInvol(lista);
     }
 
 }

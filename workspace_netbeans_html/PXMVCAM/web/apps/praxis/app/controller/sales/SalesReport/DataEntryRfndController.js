@@ -111,6 +111,7 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRfndController', {
                 beforerequest: Ext.getCmp(prototype.idRfnd + '-dataEntryRfnd').mask('Loading...', ''),
                 success: function (response, options) {
                     var res = Ext.JSON.decode(response.responseText);
+                    //console.log('lstrfnd',res);
                     var lstRFND = res.lstRFND;
                     //var lstRFNDGrilla = res.lstRFNDGrilla;
                     var lstRFNDGrilla = res.lstRFND;
@@ -495,6 +496,9 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRfndController', {
                 Ext.getCmp(prototype.idRfnd + '-btnADD').hide();
                 Ext.getCmp(prototype.idRfnd + '-btnADDEmd').hide();
             }
+            if(file.A713TDOC==='VOID'){
+                Ext.getCmp(prototype.idRfnd + '-det-btnFopVOID').show();
+            }
             meDET.llenarGrillaRFND(lstRFNDGrilla);
 
             var IN_TIPOCAP = meDET.modo==='R'?'A':Ext.getCmp(prototype.idGr + '-de-lblCapture').getValue().substr(0, 1);
@@ -520,7 +524,8 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRfndController', {
                 IN_CUPON2: Ext.getCmp(prototype.idRfnd + '-det-lblCpn2_1').getValue(),
                 IN_CUPON3: Ext.getCmp(prototype.idRfnd + '-det-lblCpn3_1').getValue(),
                 IN_CUPON4: Ext.getCmp(prototype.idRfnd + '-det-lblCpn4_1').getValue(),
-                IN_FORCE: ''
+                IN_FORCE: '',
+                IN_IDFIL: file.A713IDFIL
             };
 
             meDET.cargarTotales();
@@ -1303,6 +1308,8 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRfndController', {
         var bean = {};
         bean.TDNR = Ext.getCmp(prototype.idRfnd + '-det-lblCia').getValue().trim() + Ext.getCmp(prototype.idRfnd + '-det-lblDocumento').getValue().trim();
         bean.FUENTE = Ext.getCmp(prototype.idRfnd + '-det-lblSource').getValue().trim().substr(0, 3);
+        bean.SEQTKT = this.view.params.rec.data.A713SEQ;
+        bean.IDFILE = Ext.getCmp(prototype.idRfnd + '-det-lblFileId').getValue().trim();
         if (bean.TDNR !== '' && bean.FUENTE !== '') {
             bean.A720TKVOID = '';//this.gloA720TKVOID;
             this.searchDelivery(bean);
@@ -2319,6 +2326,46 @@ Ext.define('Ext.Praxis.controller.sales.SalesReport.DataEntryRfndController', {
                     }});
                 }
             });
+        }
+    },
+    onFopVoid:function(obj){
+        let me = this;
+        let record = me.view.params.rec.data;
+        let lblDocumento = Ext.getCmp(prototype.idRfnd + '-det-lblDocumento').getValue().trim();
+        const {A713CIA,DOCUMENTO,A713SEQ,A713GRUPO,A713TDOC} = record;
+        let stVoid =A713TDOC;
+        let objReq = {
+            AIRLINE:'139',
+            CIA:A713CIA,
+            FORMA:DOCUMENTO.substring(0,4),
+            SERIE:DOCUMENTO.substring(4,10),
+            SEQ:A713SEQ,
+            GRUPO:A713GRUPO,
+            TIPO:'RFND'
+        };
+        if (Ext.getCmp(prototype.idRfnd + '-det-lblCia').getValue().length !== 3) {
+            Ext.Msg.alert('.: PRAXIS :.', 'Invalid Cia', function (btn, text) {
+                if (btn === 'ok') {
+                    this.onFocus('-det-lblCia');
+                }
+            });
+            return;
+        }
+        if (Ext.getCmp(prototype.idRfnd + '-det-lblDocumento').getValue().length !== 10) {
+            Ext.Msg.alert('.: PRAXIS :.', 'Invalid Document', function (btn, text) {
+                if (btn === 'ok') {
+                    this.onFocus('-det-lblDocumento');
+                }
+            });
+            return;
+        }
+        if(stVoid === 'VOID'&& lblDocumento !== ''){
+            let win = new Ext.Praxis.view.sales.SalesReportForm.DataEntryFOPVoid({
+                params: {
+                    objReq: objReq
+                }
+            });
+            win.show();
         }
     }
 });

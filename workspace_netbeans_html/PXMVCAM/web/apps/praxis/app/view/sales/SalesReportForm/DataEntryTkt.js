@@ -11,6 +11,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryTkt', {
     requires: [
         'Ext.Praxis.controller.sales.SalesReport.DataEntryTktController',
         'Ext.Praxis.view.screens.CtrlDeliveryOrigForm',
+        'Ext.Praxis.view.sales.SalesReportForm.DataEntryFOPVoid',
         //'Ext.Praxis.view.program.ProFacsimilForm.Facsimil',
         'Ext.Praxis.view.widgets.facsimil',
         'Ext.Praxis.view.widgets.prorrate'
@@ -2384,7 +2385,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryTkt', {
                                                     listeners: {
                                                         click: 'onBalance'
                                                     }
-                                                }/*,
+                                                }, /*,
                                                  {
                                                  text: '<strong style="color:white;">Taxes-TUAS<strong>',
                                                  id: prototype.idSale + '-det-btnTUAS',
@@ -2394,6 +2395,16 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryTkt', {
                                                  click: 'onTaxes'
                                                  }
                                                  }*/
+                                                {
+                                                    text: '<strong style="color:white;">FOP VOID<strong>',
+                                                    id: prototype.idSale + '-det-btnFOPVoid',
+                                                    cls: 'x-btn-sent',
+                                                    overCls: 'x-btn-sent-over',
+                                                    hidden: true,
+                                                    listeners: {
+                                                        click: 'onFopVoid'
+                                                    }
+                                                }
                                             ]
                                         }
                                     ]

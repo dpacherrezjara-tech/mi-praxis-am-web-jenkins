@@ -17,6 +17,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMManualForm.DataEntryADMManual', {
     requires: [
         'Ext.Praxis.controller.salesaudit.ADMManualForm.DataEntryADMManualController',
         'Ext.Praxis.view.salesaudit.ADMManualForm.RFNDAddTax',
+        'Ext.Praxis.view.salesaudit.ADMManualForm.AccountingCTA',
         'Ext.Praxis.view.salesaudit.ADMManualForm.FormRazonesADManual',
         'Ext.Praxis.view.salesaudit.ADMManualForm.FormListTKTADManual'
     ],
@@ -25,7 +26,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMManualForm.DataEntryADMManual', {
     title: 'AGENCY DEBIT MEMO / CHARGES DEBIT NOTE',
     header: true,
     height: 800,
-    width: 900,
+    width: 945,
     border: false,
     resizable: false,
     layout: 'fit',
@@ -228,7 +229,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMManualForm.DataEntryADMManual', {
                                 afterrender: 'onCmbStatusAfterRender'
 
                             }
-                        },
+                        }
                         /*{
                          xtype: 'textfield',
                          id: prototype.id01 + '-txtCountry',
@@ -244,27 +245,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMManualForm.DataEntryADMManual', {
                          
                          }
                          },*/
-                        {
-                            xtype: 'combo',
-                            id: prototype.id01 + '-ComboCurrency',
-                            fieldLabel: 'Currency',
-                            queryMode: 'local',
-                            displayField: 'A006MONEDA',
-                            valueField: 'A006MONEDA',
-                            width: 120,
-                            maskRe: /[A-Z,a-z,Ñ,ñ]/,
-                            labelWidth: 50,
-                            labelAlign: 'right',
-                            emptyText: '',
-                            listConfig: {
-                                minWidth: 200
-                            },
-                            listeners: {
-                                specialkey: 'onSearchkey',
-                                afterrender: 'onCmbCurrenAfterRender'
-
-                            }
-                        }
+                        
                         /*{
                          xtype: 'textfield',
                          id: prototype.id01 + '-ComboCurrency',
@@ -359,8 +340,29 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMManualForm.DataEntryADMManual', {
                             width: 200,
                             readOnly: true,
                             labelAlign: 'right'
+                        },
+                        {
+                            xtype: 'combo',
+                            id: prototype.id01 + '-ComboCurrency',
+                            fieldLabel: 'Currency',
+                            queryMode: 'local',
+                            displayField: 'A006MONEDA',
+                            valueField: 'A006MONEDA',
+                            width: 120,
+                            maskRe: /[A-Z,a-z,Ñ,ñ]/,
+                            labelWidth: 50,
+                            labelAlign: 'right',
+                            emptyText: '',
+                            listConfig: {
+                                minWidth: 200
+                            },
+                            listeners: {
+                                specialkey: 'onSearchkey',
+                                afterrender: 'onCmbCurrenAfterRender'
+
+                            }
                         }
-                        
+
                     ]
                 },
                 {
@@ -386,55 +388,36 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMManualForm.DataEntryADMManual', {
                         {
                             xtype: 'textfield',
                             id: prototype.id01 + '-txtAgencia',
-                            fieldLabel: 'IATA NAME',
-                            labelWidth: 70,
-                             width: 400,
+                            fieldLabel: 'NAME',
+                            labelWidth: 35,
+                            width: 350,
                             readOnly: true
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id01 + '-txtEPR',
+                            fieldLabel: 'EPR',
+                            maxLength: 6,
+                            enforceMaxLength: 6,
+                            labelWidth: 20,
+                            width: 100
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id01 + '-txtPNR', 
+                            fieldLabel: 'PNR',
+                            maxLength: 6,
+                            enforceMaxLength: 6,
+                            labelWidth: 20,
+                            width: 100
                         },
                         {
                             xtype: 'textfield',
                             id: prototype.id01 + '-txtAdrres',
-                            fieldLabel: 'Addres',
-                            labelWidth: 60,
+                            fieldLabel: 'Addres',hidden:true,
+                            labelWidth: 45,
                             width: 300,
                             readOnly: true
-                        }
-                    ]
-                },
-                {
-                    xtype: 'panel',
-                    layout: 'hbox',
-                    defaults: {
-                        style: 'margin: 1px',
-                        fieldStyle: 'font-weight: bold; color: blue;'
-                    },
-                    items: [
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id01 + '-txtCTA',
-                            fieldLabel: 'CTA',
-                            maxLength: 29,
-                            enforceMaxLength: 29,
-                            labelWidth: 40,
-                            width: 250
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id01 + '-txtLocation',
-                            fieldLabel: 'Location',
-                            maxLength: 4,
-                            enforceMaxLength: 4,
-                            labelWidth: 50,
-                            readOnly: true,
-                            width: 150
-                        },
-                        {
-                            xtype: 'textfield',
-                            id: prototype.id01 + '-txtPASSENGER',
-                            fieldLabel: 'Passenger name',
-                            labelWidth: 110,
-                            readOnly: true,
-                            width: 300
                         },
                         {
                             xtype: 'combo',
@@ -465,12 +448,150 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMManualForm.DataEntryADMManual', {
                         fieldStyle: 'font-weight: bold; color: blue;'
                     },
                     items: [
+//                        {
+//                            xtype: 'textfield',
+//                            id: prototype.id01 + '-txtCTA',
+//                            fieldLabel: 'CTA',
+//                            maxLength: 29,
+//                            enforceMaxLength: 29,
+//                            labelWidth: 40,
+//                            width: 250
+//                        },
+//                      //CTA
+//                      { xtype: 'tbspacer', width: 7 },
+                        {
+                            xtype: 'label',
+                            text: 'CTA:',
+                            align: 'center',
+                            id: prototype.id01 + '-txtCTA',
+                            fieldStyle: 'text-align: center;',
+                            padding: '3px 1px',
+                            width: 30
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id01 + '-txtA1740CIA',
+                            enforceMaxLength: true,
+                            maxLength: 2,
+                            readOnly: true,
+                            width: 30
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id01 + '-txtA1740UNIDA',
+                            enforceMaxLength: true,
+                            maxLength: 2,
+                            width: 30
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id01 + '-txtA1740CECOS',
+                            enforceMaxLength: true,
+                            maxLength: 6,
+                            readOnly: true,
+                            width: 50
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id01 + '-txtA1740UBICA',
+                            enforceMaxLength: true,
+                            maxLength: 4,
+                            readOnly: true,
+                            width: 40
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id01 + '-txtA1740CTA',
+                            enforceMaxLength: true,
+                            maxLength: 4,
+                            readOnly: true,
+                            width: 40
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id01 + '-txtA1740SCTA',
+                            enforceMaxLength: true,
+                            maxLength: 5,
+                            readOnly: true,
+                            width: 50
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id01 + '-txtA1740EQUI',
+                            enforceMaxLength: true,
+                            maxLength: 4,
+                            readOnly: true,
+                            width: 40
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id01 + '-txtA1740ICIA',
+                            enforceMaxLength: true,
+                            readOnly: true,
+                            maxLength: 2,
+                            width: 30
+                        },
+                        //Boton AddCTA
+                        {
+                           // text: 'Add Cta',
+                            xtype: 'button',
+                            id: prototype.id01 + '-btn-AddCta',
+                            iconCls: 'prx-icon-add',
+                            tooltip: 'Add Cta',
+                            //text: 'Add Cta',
+                            listeners: {
+                                click: 'OnAddCta'
+                            }
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id01 + '-txtLocation',
+                            fieldLabel: 'Location',
+                            maxLength: 4,
+                            enforceMaxLength: 4,
+                            labelWidth: 50,
+                            readOnly: true,
+                            width: 150
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id01 + '-txtPASSENGER',
+                            fieldLabel: 'Passenger name',
+                            labelWidth: 95,
+                            readOnly: true,
+                            width: 300
+                        }
+                        
+                        
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    layout: 'hbox',
+                    defaults: {
+                        style: 'margin: 1px',
+                        fieldStyle: 'font-weight: bold; color: blue;'
+                    },
+                    items: [
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id01 + '-txtClient',
+                            fieldLabel: 'Client',
+//                            maxLength: 4,
+//                            enforceMaxLength: 4,
+                            labelWidth: 35,
+                            readOnly: true,
+                            width: 358,
+                            iconCls: 'prx-icon-check',
+                            handler: 'OnChkRFNDHandlerPAGA',
+                            isDisabled: 'OnChkRFNDIsDisabled'
+                        },
                         {
                             xtype: 'textfield',
                             id: prototype.id01 + '-txtCargo',
                             fieldLabel: 'Management Charge %',
-                            value:'0',
-                            labelWidth: 140,
+                            value: '0',
+                            labelWidth: 130,
                             width: 220,
                             listeners: {
                                 specialkey: 'onSearchkeyCargos',
@@ -481,9 +602,9 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMManualForm.DataEntryADMManual', {
                             xtype: 'textfield',
                             id: prototype.id01 + '-txtIvaCargo',
                             fieldLabel: 'Iva Charge %',
-                            value:'0',
-                            labelWidth: 85,
-                            width: 140,
+                            value: '0',
+                            labelWidth: 80,
+                            width: 130,
                             listeners: {
                                 specialkey: 'onSearchkeyCargos',
                                 blur: 'onChkCargoApli'
@@ -501,11 +622,20 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMManualForm.DataEntryADMManual', {
                         {
                             xtype: 'textfield',
                             id: prototype.id01 + '-txtExchange',
-                             value:'0',
+                            value: '0',
                             fieldLabel: 'Exchange Rate',
-                            labelWidth: 90,
-                            width: 170
-                        },
+                            labelWidth: 85,
+                            width: 150
+                        }
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    layout: 'hbox',
+                    defaults: {
+                        style: 'margin: 1px'
+                    },
+                    items: [
                         {
                             xtype: 'combo',
                             id: prototype.id01 + '-ComboArea',
@@ -524,8 +654,11 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMManualForm.DataEntryADMManual', {
                             }
                         },
                         {
-                            xtype: 'displayfield',
-                            fieldLabel: 'TKT Duplicates'
+//                            xtype: 'displayfield',
+                            xtype: 'label',
+                            html: 'TKT Duplicates',
+                            padding: '3px 2px 0px 5px'
+//                            fieldLabel: 'TKT Duplicates',
                         },
                         {
                             xtype: 'button',
@@ -537,20 +670,11 @@ Ext.define('Ext.Praxis.view.salesaudit.ADMManualForm.DataEntryADMManual', {
                                 click: 'imgSearch_clickHandler_Duplicates'
                             }
                         },
-                    ]
-                },
-                {
-                    xtype: 'panel',
-                    layout: 'hbox',
-                    defaults: {
-                        style: 'margin: 1px'
-                    },
-                    items: [
                         {
                             xtype: 'textarea',
                             id: prototype.id01 + '-txtObservation',
                             fieldLabel: 'Observation',
-                            labelWidth: 120,
+                            labelWidth: 70,
                             grow: true,
                             flex: 1,
                             height: 35

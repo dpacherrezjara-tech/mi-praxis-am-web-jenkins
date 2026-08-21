@@ -14,7 +14,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.Filters', {
             layout: 'column',
             defaults: {
                 labelStyle: 'font-weight:bold;',
-//                fieldStyle: 'text-align: center;',
+                //                fieldStyle: 'text-align: center;',
                 padding: '5px 1px 5px 1px',
                 anchor: '100%',
                 hiddenLabel: false,
@@ -37,7 +37,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.Filters', {
                 { xtype: 'tbspacer', width: 8 },
                 {
                     xtype: 'label',
-                    id: prototype.id+'-lblDocumentType',
+                    id: prototype.id + '-lblDocumentType',
                     html: 'Document Type',
                     align: 'center',
                     fieldStyle: 'text-align: center;',
@@ -51,14 +51,14 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.Filters', {
                     enforceMaxLength: true,
                     maxLength: 4,
                     width: 50,
-                    listeners:{
-                            change: 'onUpperValue'
+                    listeners: {
+                        change: 'onUpperValue'
                     }
                 },
                 { xtype: 'tbspacer', width: 8 },
                 {
                     xtype: 'label',
-                    id: prototype.id+'-lblCtaType',
+                    id: prototype.id + '-lblCtaType',
                     html: 'Account Type',
                     align: 'center',
                     fieldStyle: 'text-align: center;',
@@ -66,7 +66,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.Filters', {
                 },
                 { xtype: 'tbspacer', width: 4 },
                 {
-                    xtype:'combo',
+                    xtype: 'combo',
                     id: prototype.id + '-cmbCtaType',
                     store: new Ext.data.SimpleStore({
                         fields: ['code', 'name'],
@@ -92,12 +92,12 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.Filters', {
                     displayField: 'name',
                     width: 120,
                     hiddenLabel: false,
-                    listConfig: {height: 111}
+                    listConfig: { height: 111 }
                 },
                 { xtype: 'tbspacer', width: 8 },
                 {
                     xtype: 'label',
-                    id: prototype.id+'-lblSubType',
+                    id: prototype.id + '-lblSubType',
                     html: 'Sub Type',
                     align: 'center',
                     fieldStyle: 'text-align: center;',
@@ -111,14 +111,14 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.Filters', {
                     enforceMaxLength: true,
                     maxLength: 4,
                     width: 40,
-                    listeners:{
-                            change: 'onUpperValue'
+                    listeners: {
+                        change: 'onUpperValue'
                     }
                 },
                 { xtype: 'tbspacer', width: 8 },
                 {
                     xtype: 'label',
-                    id: prototype.id+'-lblCategory',
+                    id: prototype.id + '-lblCategory',
                     html: 'Category',
                     align: 'center',
                     fieldStyle: 'text-align: center;',
@@ -132,14 +132,14 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.Filters', {
                     enforceMaxLength: true,
                     maxLength: 4,
                     width: 60,
-                    listeners:{
-                            change: 'onUpperValue'
+                    listeners: {
+                        change: 'onUpperValue'
                     }
                 },
                 { xtype: 'tbspacer', width: 8 },
                 {
                     xtype: 'label',
-                    id: prototype.id+'-lblCta',
+                    id: prototype.id + '-lblCta',
                     html: 'Account',
                     align: 'center',
                     fieldStyle: 'text-align: center;',
@@ -151,13 +151,13 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.Filters', {
                     id: prototype.id + '-txtCta',
                     fieldStyle: 'text-align:center',
                     enforceMaxLength: true,
-                    maxLength: 4,
+                    maxLength: 6,
                     width: 60
                 },
                 { xtype: 'tbspacer', width: 8 },
                 {
                     xtype: 'label',
-                    id: prototype.id+'-lblSubCta',
+                    id: prototype.id + '-lblSubCta',
                     html: 'Sub Account',
                     align: 'center',
                     fieldStyle: 'text-align: center;',
@@ -175,7 +175,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.Filters', {
                 { xtype: 'tbspacer', width: 8 },
                 {
                     xtype: 'label',
-                    id: prototype.id+'-lblDate',
+                    id: prototype.id + '-lblDate',
                     html: 'Effective',
                     align: 'center',
                     hidden: true,
@@ -184,7 +184,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.Filters', {
                 },
                 {
                     xtype: 'datefield',
-                    id:prototype.id+'-txtA1740FINI',
+                    id: prototype.id + '-txtA1740FINI',
                     format: 'Y/m/d',
                     fieldStyle: 'text-align:center;',
                     editable: false,
@@ -196,7 +196,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.Filters', {
                 },
                 {
                     xtype: 'datefield',
-                    id:prototype.id+'-txtA1740FFIN',
+                    id: prototype.id + '-txtA1740FFIN',
                     format: 'Y/m/d',
                     fieldStyle: 'text-align:center;',
                     editable: false,
@@ -205,6 +205,17 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterSalesForm.Filters', {
                     enforceMaxLength: true,
                     maxLength: 10,
                     width: 90
+                },
+                { xtype: 'tbspacer', width: 30 },
+                {
+                    xtype: 'label',
+                    html: 'Old Registers',
+                    fieldStyle: 'text-align: center;',
+                    padding: '8px 7px 8px 0px'
+                },
+                {
+                    xtype: 'checkboxfield',
+                    id: prototype.id + '-txtoldregisters'
                 }
             ]
         }

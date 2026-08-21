@@ -14,7 +14,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.Filters', {
             layout: 'column',
             defaults: {
                 labelStyle: 'font-weight:bold;',
-//                fieldStyle: 'text-align: center;',
+                //                fieldStyle: 'text-align: center;',
                 padding: '5px 1px 5px 1px',
                 anchor: '100%',
                 hiddenLabel: false,
@@ -44,7 +44,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.Filters', {
                 },
                 { xtype: 'tbspacer', width: 4 },
                 {
-                    xtype:'combo',
+                    xtype: 'combo',
                     id: prototype.id + '-cbxSource',
                     store: new Ext.data.SimpleStore({
                         fields: ['code', 'name'],
@@ -70,7 +70,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.Filters', {
                 },
                 { xtype: 'tbspacer', width: 8 },
                 {
-                    xtype:'combo',
+                    xtype: 'combo',
                     id: prototype.id + '-cboFOPCode',
                     store: new Ext.data.SimpleStore({
                         fields: ['code', 'name'],
@@ -115,7 +115,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterPagaTodoForm.Filters', {
                     id: prototype.id + '-txtCta',
                     fieldStyle: 'text-align:center',
                     enforceMaxLength: true,
-                    maxLength: 4,
+                    maxLength: 6,
                     width: 60
                 },
                 { xtype: 'tbspacer', width: 8 },

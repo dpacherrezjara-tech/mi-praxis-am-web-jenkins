@@ -22,7 +22,7 @@ Ext.define('Ext.Praxis.controller.flown.Item.DataEntryItemController', {
             case 'U':
                 this.getDataInputs(this.p.rec);
                 Ext.getCmp(prototype.id + '-btn-save').hide();
-                Ext.getCmp(prototype.id + '-btn-update').hide();
+                Ext.getCmp(prototype.id + '-btn-update').show();
                 Ext.getCmp(prototype.id + '-btn-delete').show();
                 Ext.getCmp(prototype.id + '-btn-cancel').show();
                 break;
@@ -34,7 +34,8 @@ Ext.define('Ext.Praxis.controller.flown.Item.DataEntryItemController', {
                 //Ext.getCmp(prototype.id + '-txtA1007CTATO').focus();
                 break;
         }
-        global.AccessControlMaganer();
+        //global.AccessControlMaganer();
+        global.AccessControlMaganerByMode(this.p);
 
     },
     getDataInputs: function (rec) {

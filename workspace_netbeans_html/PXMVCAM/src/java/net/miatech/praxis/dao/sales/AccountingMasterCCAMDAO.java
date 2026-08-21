@@ -61,14 +61,14 @@ public class AccountingMasterCCAMDAO {
             if (filter.page.PAGNUM > 0) {
                 PAGINIT = (filter.page.PAGNUM - 1) * totRowsPag + 1;
             }
-            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX160S01A1819(?,?,?,?,?,?,?,?,?,?,?,?)}";
+            String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".PX160S01A1819(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt01 = cnx.prepareCall(SQLCLL01);
 
-            cstmt01.registerOutParameter(9, Types.INTEGER);
             cstmt01.registerOutParameter(10, Types.INTEGER);
             cstmt01.registerOutParameter(11, Types.INTEGER);
             cstmt01.registerOutParameter(12, Types.INTEGER);
+            cstmt01.registerOutParameter(13, Types.INTEGER);
 
             cstmt01.setString(1, filter.IN_A1819CCUST.trim());
             cstmt01.setString(2, filter.IN_A1819TIPO.trim());
@@ -78,20 +78,21 @@ public class AccountingMasterCCAMDAO {
             cstmt01.setString(6, filter.A1819NATU.trim());
             cstmt01.setString(7, filter.A1819CTA.trim());
             cstmt01.setString(8, filter.A1819SCTA.trim());
+            cstmt01.setString(9, filter.OLD_REGISTERS.trim());
 
-            cstmt01.setInt(9, PAGINIT);
-            cstmt01.setInt(10, totRowsPag);
-            cstmt01.setInt(11, totRows);
-            cstmt01.setInt(12, filter.page.TOTROW);
+            cstmt01.setInt(10, PAGINIT);
+            cstmt01.setInt(11, totRowsPag);
+            cstmt01.setInt(12, totRows);
+            cstmt01.setInt(13, filter.page.TOTROW);
 
             cstmt01.execute();
 
-            filter.page.PAGNUM = cstmt01.getInt(9);
-            filter.page.PAGROW = cstmt01.getInt(10);
-            filter.page.TOTPAG = cstmt01.getInt(11);
-            filter.page.TOTROW = cstmt01.getInt(12);
+            filter.page.PAGNUM = cstmt01.getInt(10);
+            filter.page.PAGROW = cstmt01.getInt(11);
+            filter.page.TOTPAG = cstmt01.getInt(12);
+            filter.page.TOTROW = cstmt01.getInt(13);
 
-            if (filter.page.TOTROW > 0 && filter.page.TOTROW == cstmt01.getInt(11)) {
+            if (filter.page.TOTROW > 0 && filter.page.TOTROW == cstmt01.getInt(12)) {
                 totRows = filter.page.TOTROW;
                 totPAGS = filter.page.TOTPAG;
             } else {
@@ -152,6 +153,8 @@ public class AccountingMasterCCAMDAO {
                 lstRtn.add(objRtn);
             }
 
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             if (rs01 != null) {
                 try {
@@ -183,7 +186,7 @@ public class AccountingMasterCCAMDAO {
         Connection cnx = null;
         
         try {    
-            strSQL = "{CALL " + session.getMainLibrary() + ".PX160S02A1819(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}"; 
+            strSQL = "{CALL " + session.getMainLibrary() + ".PX160S02A1819(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}"; 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();  cs = cnx.prepareCall(strSQL);
             cs.setString(1, strOption);
             cs.setString(2, filter.A1819CCUST);
@@ -208,6 +211,8 @@ public class AccountingMasterCCAMDAO {
             cs.setString(21, Functions.getFechaActual());
             cs.setString(22, Functions.getHoraActual());
             cs.setString(23, filter.IN_A1819TACC_OLD);
+            cs.setString(24, filter.IN_A1819FINI_OLD);
+            cs.setString(25, filter.IN_A1819FFIN_OLD);
             cs.execute();
             
             rst = cs.getResultSet();

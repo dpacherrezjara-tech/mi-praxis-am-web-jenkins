@@ -155,19 +155,19 @@ Ext.define('Ext.Praxis.controller.eecta.RegistroVentaOAL.RegistroVentaOALControl
         Ext.getCmp(prototype.id01 + '-paggin').setStore(storeGridDatas);
     },
     exportPdf: function (_path) {
-        Ext.Msg.show({
-            title: '.:PRAXIS:.',
-            msg: 'Download report Pdf ?',
-            buttons: Ext.MessageBox.OKCANCEL,
-            scope: this,
-            icon: Ext.MessageBox.QUESTION,
-            modal: true,
-            fn: function (btn) {
-                if (btn === 'ok') {
-                    global.getFile(_path);
-                }
-            }
-        });
+//        Ext.Msg.show({
+//            title: '.:PRAXIS:.',
+//            msg: 'Download report Pdf ?',
+//            buttons: Ext.MessageBox.OKCANCEL,
+//            scope: this,
+//            icon: Ext.MessageBox.QUESTION,
+//            modal: true,
+//            fn: function (btn) {
+//                if (btn === 'ok') {
+//                    global.getFile(_path);
+//                }
+//            }
+//        });
     },
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Data entry">
@@ -178,6 +178,7 @@ Ext.define('Ext.Praxis.controller.eecta.RegistroVentaOAL.RegistroVentaOALControl
         var rec = grid.getStore().getAt(rowIndex);
         this.winDataEntry('U', rec);
     },
+     
     winDataEntry: function (action, rec) {
         action = action === null || action === undefined ? 'U' : action;
         rec = rec === null || rec === undefined ? {} : rec;        
@@ -188,7 +189,22 @@ Ext.define('Ext.Praxis.controller.eecta.RegistroVentaOAL.RegistroVentaOALControl
                 rec: rec
             }
         }).show();
-    },  
+    }, 
+    onLoadClick: function(grid, rowIndex, colIndex) {
+        var rec = []; //grid.getStore().getAt(rowIndex);
+        this.winDataEntry01('U', rec);
+    },
+     winDataEntry01: function (action, rec) {
+        action = action === null || action === undefined ? 'U' : action;
+        rec = rec === null || rec === undefined ? {} : rec;        
+        Ext.create('Ext.Praxis.view.eecta.RegistroVentaOALForm.RegistroVentaOALLoad', {
+            id: prototype.id02 + '-RegistroVentaOALLoad',
+            params: {
+                action: action,
+                rec: rec
+            }
+        }).show();
+    },
     // </editor-fold>
     // <editor-fold defaultstate="collapsed" desc="Funciones para la paginación">
     pagFirst: function (obj, e) {

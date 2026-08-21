@@ -119,6 +119,7 @@ Ext.define('Ext.Praxis.controller.sales.ViewTicketAccounting.ViewTicketAccountin
                 ["SALE", "SALE"],
                 ["EXCH", "EXCH"],
                 ["RFND", "RFND"],
+                ["RFTX", "RFTX"],
                 ["MEMO", "ADM/ACM"]
             ]
         }));
@@ -145,7 +146,7 @@ Ext.define('Ext.Praxis.controller.sales.ViewTicketAccounting.ViewTicketAccountin
     onChangeTransaction: function(obj, value) {
         var opt = Ext.getCmp(prototype.id + '-cmbDate').getValue();
         if (opt === '1') {
-            if (value === 'RFND') {
+            if (value === 'RFND' || value === 'RFTX') {
                 Ext.getCmp(prototype.id + '-txtCupon1').show();
                 Ext.getCmp(prototype.id + '-txtCupon2').show();
                 Ext.getCmp(prototype.id + '-txtCupon3').show();
@@ -594,7 +595,6 @@ Ext.define('Ext.Praxis.controller.sales.ViewTicketAccounting.ViewTicketAccountin
         });
     },
     exportExcel: function() {
-
         switch (me.gridActual) {
             case  '-gridData':
                 global.getFile(prototype.url + '/getXLSX?IN_A1879CCUST=' + searchParams.IN_A1879CCUST

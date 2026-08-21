@@ -189,6 +189,7 @@ public class ADMManualFormDAO {
                 objRtn.A2548FREGI = rs01.getString("A2548FREGI");
                 objRtn.A2548TIKET = rs01.getString("A2548CIA") + "" + rs01.getString("A2548FORMA") + "" + rs01.getString("A2548SERIE");
                 objRtn.A2548TTAXA = rs01.getDouble("A2548TTAXA");
+                
                 objRtn.AGENCY = rs01.getString("AGENCY");
                 objRtn.DIRAGENCY = rs01.getString("DIRAGENCY");
 
@@ -463,6 +464,7 @@ public class ADMManualFormDAO {
                 objRtn = new A1673Filter();
 
                 objRtn.A1673CDTAX = rs01.getString("A1673CDTAX");
+                objRtn.A1673CDATO ="";
                 objRtn.A1673TXORI = rs01.getDouble("A1673TXORI");
                 objRtn.A1673TXMIA = rs01.getDouble("A1673TXORI");
                 objRtn.A1673TXDIF = 0.00;
@@ -672,7 +674,7 @@ public class ADMManualFormDAO {
 
         session.getCNXIBMDB2().open();
         try {
-            String SQLCLL01 = "{CALL PXSAUDIT.SQP03403(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";//SQP02515
+            String SQLCLL01 = "{CALL PXSAUDIT.SQP03403(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";//SQP02515
             cs = session.getCNXIBMDB2().getConnection().prepareCall(SQLCLL01);
 
             cs.setString("IN_CCUST", session.getUserView().getCustomerInfo().CCUST);
@@ -717,7 +719,19 @@ public class ADMManualFormDAO {
             cs.setDouble("IN_A2548TCARD", filter.A2548TCARD);
             cs.setDouble("IN_A2548TTAMD", filter.A2548TTAMD);
             cs.setDouble("IN_A2548NETO", filter.A2548NETO);
-
+            //CUENTA CONTABLE 
+            cs.setString("IN_A2548CIA", filter.A2548CIA);
+            cs.setString("IN_A2548UNID", filter.A2548UNID);
+            cs.setString("IN_A2548CECO", filter.A2548CECO);
+            cs.setString("IN_A2548UBICA", filter.A2548UBICA);
+            cs.setString("IN_A2548CUENT", filter.A2548CUENT);
+            cs.setString("IN_A2548SUBCU", filter.A2548SUBCU);
+            cs.setString("IN_A2548EQUI", filter.A2548EQUI);
+            cs.setString("IN_A2548ICIA", filter.A2548ICIA);
+            cs.setString("IN_A2548CLIE", filter.A2548CLIE);
+            cs.setString("IN_A2548PNR", filter.A2548PNR);
+            cs.setString("IN_A2548EPR", filter.A2548EPR);
+            
             cs.setString("IN_LSTATaxes", lstaTaxes);
             cs.setString("IN_LSTARazones", lstaRazones);
             cs.setString("IN_REGIS", session.getUserView().getUserInfo().USR);

@@ -1355,7 +1355,7 @@ public class InputsControlController extends BaseController {
             workbook = new XSSFWorkbook();
 
             Sheet sheet = workbook.createSheet("InputControl");
-
+//            sheet.setColumnWidth(4, 50000);
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
             CellStyle bodyStyle = workbook.createCellStyle();
             Font headerFont = workbook.createFont();
@@ -1394,10 +1394,10 @@ public class InputsControlController extends BaseController {
 
             Cell CH1_00 = row.createCell(0);
             Cell CH1_01 = row.createCell(1);
-            Cell CH1_02 = row.createCell(1);
-            Cell CH1_03 = row.createCell(1);
-            Cell CH1_04 = row.createCell(1);
-
+            Cell CH1_02 = row.createCell(2);
+            Cell CH1_03 = row.createCell(3);
+            Cell CH1_04 = row.createCell(4);
+            
             CH1_00.setCellValue("Nbr");
             CH1_01.setCellValue("Flight Date");
             CH1_02.setCellValue("Transaction Number");
@@ -1421,10 +1421,11 @@ public class InputsControlController extends BaseController {
                 Cell rcell3 = row.createCell(3);
                 Cell rcell4 = row.createCell(4);
 
-                rcell0.setCellValue(listaData.get(vi).Nbr);
+                rcell0.setCellValue(listaData.get(vi).RN);
                 rcell1.setCellValue(listaData.get(vi).strFormatDate);
                 rcell2.setCellValue(listaData.get(vi).TRNN);
                 rcell3.setCellValue(listaData.get(vi).CCIA);
+                listaData.get(vi).EMDDATA = listaData.get(vi).EMDDATA.replaceAll("  ","");
                 rcell4.setCellValue(listaData.get(vi).EMDDATA);
 
                 rcell0.setCellStyle(bodyStyle);

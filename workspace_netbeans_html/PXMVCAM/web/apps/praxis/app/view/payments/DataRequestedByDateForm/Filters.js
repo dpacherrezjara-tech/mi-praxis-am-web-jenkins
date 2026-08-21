@@ -149,13 +149,31 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Filters', {
                     anchor: '100%'
                 },
                 {
+                    xtype: 'textfield',
+                    fieldLabel: 'Ticket:',
+                    id: prototype.id+'-txtTICKET',
+                    margin: '0 0 0 9',
+                    allowBlank: true,
+                    maskRe: /[0-9]/,
+                    enforceMaxLength: true,
+                    maxLength:13,
+                    labelWidth: 70,
+                    width: 190,
+                    enableKeyEvents: true,
+                    listeners: {
+                        keypress: 'BuscarTKT_keyDownHandler'
+                    }
+                },
+                {
                     xtype: 'radiogroup',
                     margin: '0 0 0 40',
                     id: prototype.id + '-radiogroupType',
                     items: [
                         {boxLabel: '<strong style="color:#148D28" >Chargeback</strong>', name: 'rbgType', inputValue: 'cb', width: 100, checked: true},
                         {xtype: 'tbspacer', width: 30},
-                        {boxLabel: '<strong style="color:#148D28" >Status Interact Sabre</strong>', name: 'rbgType', inputValue: 'ss', width: 150}
+                        {boxLabel: '<strong style="color:#148D28" >Status Interact Sabre</strong>', name: 'rbgType', inputValue: 'ss', width: 150},
+                        {xtype: 'tbspacer', width: 30},
+                        {boxLabel: '<strong style="color:#148D28" >Status Diference</strong>', name: 'rbgType', inputValue: 'sd', width: 130}
                     ],
                     listeners: {
                         change: 'cmbTranType_changeHandler'
@@ -204,7 +222,7 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Filters', {
                 }*/
             ]
         },
-       /* {
+        {
             xtype: 'form',
             border: false,
             bodyStyle: 'background: transparent',
@@ -222,93 +240,92 @@ Ext.define('Ext.Praxis.view.payments.DataRequestedByDateForm.Filters', {
                 selectOnFocus: true
             },
             items: [
-                {
-                    xtype: 'textfield',
-                    fieldLabel: 'Merchant Nbr:',
-                    id: prototype.id + '-txtMERCHN',
-                    allowBlank: true,
-                    enforceMaxLength: true,
-                    maxLength: 20,
-                    labelWidth: 165,
-                    width: 350,
-                    enableKeyEvents: true,
-                    listeners: {
-                        keypress: 'txtFilterValue_keyDownHandler'
-                    }
-                },
-                {
-                    xtype: 'textfield',
-                    fieldLabel: 'IATA Nbr:',
-                    id: prototype.id + '-txtSAGENT',
-                    labelAlign: 'center',
-                    allowBlank: true,
-                    enforceMaxLength: true,
-                    maxLength: 8,
-                    labelWidth: 60,
-                    width: 200,
-                    margin: '0 0 0 92',
-                    enableKeyEvents: true,
-                    listeners: {
-                        keypress: 'txtFilterValue_keyDownHandler'
-                    }
-                },
-                {
-                    xtype: 'textfield',
-                    fieldLabel: 'Card Number:',
-                    id: prototype.id + '-txtCard1',
-                    allowBlank: true,
-                    maskRe: /[0-9]/,
-                    enforceMaxLength: true,
-                    maxLength: 6,
-                    labelWidth: 150,
-                    width: 250,
-                    margin: '0 0 0 50',
-                    enableKeyEvents: true,
-                    listeners: {
-                        keypress: 'tarjeta_keyDownHandler'
-                    }
-                },
-                {
-                    xtype: 'textfield',
-                    fieldLabel: '*****(*)',
-                    id: prototype.id + '-txtCard2',
-                    labelSeparator: '',
-                    allowBlank: true,
-                    maskRe: /[0-9]/,
-                    enforceMaxLength: true,
-                    maxLength: 4,
-                    labelWidth: 55,
-                    width: 150,
-                    autoEl: {
-                        tag: 'label',
-                        'data-qtip': '5 encrypted characters for AMEX and 6 characters for the rest.'
-                    },
-                    enableKeyEvents: true,
-                    listeners: {
-                        keypress: 'buscarCard_keyDownHandler'
-                    }
-                },
-                {
-                    xtype: 'combo',
-                    fieldLabel: 'Country',
-                    id: prototype.id + '-cmbCountry',
-                    fieldStyle: 'text-align: left;',
-                    labelAlign: 'right',
-                    queryMode: 'local',
-                    editable: true,
-                    triggerAction: 'all',
-                    enableKeyEvents: true,
-                    hidden: false,
-                    valueField: 'A006PAIS',
-                    displayField: 'A006NOMBRE',
-                    emptyText: 'All',
-                    labelWidth: 45,
-                    width: 270,
-                    anchor: '100%',
-                    margin: '0 0 0 53'
-                }
+                {xtype: 'tbspacer', width: 550},
+                        {
+                            xtype: 'label',
+                            text: 'PNR:',
+                            padding: '8px 1px 2px 1px',
+                            width: 40,
+//                            autoEl: {
+//                                tag: 'label',
+//                                'data-qtip': 'Authorization Number'
+//                            }
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtPNR',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            maskRe: /[a-zA-Z]/,
+                            maxLength: 6,
+                            width: 80,
+                            enableKeyEvents: true,
+                            listeners: {
+                                keypress: 'BuscarFiltro'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 5},
+                        {
+                            xtype: 'label',
+                            text: 'Credit Card:',
+                            padding: '8px 1px 2px 1px',
+                            width: 70
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtCC1',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/,
+                            maxLength: 6,
+                            width: 80,
+                            enableKeyEvents: true,
+                            listeners: {
+                                keypress: 'BuscarFiltro'
+                            }
+                        },
+                        {
+                            xtype: 'label',
+                            text: '******',
+                            padding: '8px 1px 2px 1px',
+                            width: 40
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtCC2',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/,
+                            maxLength: 4,
+                            width: 60,
+                            enableKeyEvents: true,
+                            listeners: {
+                                keypress: 'BuscarFiltro'
+                            }
+                        },
+                        {xtype: 'tbspacer', width: 5},
+                        {
+                            xtype: 'label',
+                            text: 'Auth:',
+                            padding: '8px 1px 2px 1px',
+                            width: 40,
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtAuth',
+                            fieldStyle: 'text-align:center',
+                            enforceMaxLength: true,
+                            maskRe: /[0-9]/,
+                            maxLength: 6,
+                            width: 60,
+                            enableKeyEvents: true,
+                            listeners: {
+                                keypress: 'BuscarFiltro'
+                            }
+                        },
             ]
         },
+        /*
         {
             xtype: 'form',
             border: false,

@@ -171,7 +171,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.AplPaymentBoletoEntry', {
                             xtype: 'textfield',
                             id: prototype.id + '-A3959REFPG',
                             fieldLabel: 'Ref. Pago', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 125,
-                            width: 475,
+                            width: 380,
                             readOnly: false,
                             enableKeyEvents: true,
                             enforceMaxLength: true,
@@ -184,18 +184,10 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.AplPaymentBoletoEntry', {
                                     }
                                 }
                             }
-                        }
-                    ]
-                },
-                {
-                    xtype: 'panel',
-                    layout: 'hbox',
-                    margin: '1 0 1 0',
-                    border: false,
-                    items: [
+                        },
                         {
                             xtype: 'textfield',
-                            fieldLabel: 'Banco', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 125,
+                            fieldLabel: 'Banco', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 80,
                             id: prototype.id + '-A3959BANCO',
                             width: 225,
                             enableKeyEvents: true,
@@ -213,7 +205,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.AplPaymentBoletoEntry', {
                         },
                         {
                             xtype: 'textfield',
-                            fieldLabel: 'Cta. Bancaria ', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 125,
+                            fieldLabel: 'Cta. Bancaria', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 125,
                             id: prototype.id + '-A3959CTABC',
                             width: 250,
                             enableKeyEvents: true,
@@ -230,7 +222,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.AplPaymentBoletoEntry', {
                             }
                         }
                     ]
-                },
+                },                
                 {
                     xtype: 'panel',
                     layout: 'column',
@@ -305,32 +297,7 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.AplPaymentBoletoEntry', {
                                 }
                             ]
                         },
-                        {
-                            xtype: 'panel',
-                            layout: 'column',
-                            //margin: '1 0 1 0',
-                            border: false,
-                            items: [
-                                {
-                                    xtype: 'textfield',
-                                    id: prototype.id + '-TICKET_NC',
-                                    fieldLabel: 'Boleto NC', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 90,
-                                    width: 215, fieldStyle: 'font-weight: bold;font-size:13px;text-align:center',
-                                    maskRe: /[0-9/]/,
-                                    //editable: false,
-                                    enableKeyEvents: true,
-                                    enforceMaxLength: true,
-                                    maxLength: 13,
-                                    listeners: {
-                                        keypress: function (obj, e) {
-                                            if (e.getKey() === e.ENTER) {
-                                                Ext.getCmp(prototype.id + '-btn-save').focus();
-                                            }
-                                        }
-                                    }
-                                }
-                            ]
-                        },
+                        
                         {xtype: 'tbspacer', width: 80},
                         {
                             xtype: 'toolbar',
@@ -353,6 +320,65 @@ Ext.define('Ext.Praxis.view.eecta.AplPaymentForm.AplPaymentBoletoEntry', {
                                     hidden: true,
                                     listeners: {
                                         click: ''
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    xtype: 'panel',
+                    layout: 'column',
+                    margin: '1 0 1 0',
+                    border: false,
+                    items: [
+                        {
+                            xtype: 'panel',
+                            layout: 'column',
+                            //margin: '1 0 1 0',
+                            border: false,
+                            items: [
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-TICKET_NC',
+                                    fieldLabel: 'Boleto NC', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 125,
+                                    width: 270, fieldStyle: 'font-weight: bold;font-size:13px;text-align:center',
+                                    maskRe: /[0-9/]/,
+                                    //editable: false,
+                                    enableKeyEvents: true,
+                                    enforceMaxLength: true,
+                                    maxLength: 13,
+                                    listeners: {
+                                        keypress: function (obj, e) {
+                                            if (e.getKey() === e.ENTER) {
+                                                Ext.getCmp(prototype.id + '-btn-save').focus();
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            xtype: 'panel',
+                            layout: 'column',                            
+                            border: false,
+                            items: [
+                                {
+                                    xtype: 'textfield',
+                                    id: prototype.id + '-NUM-RECIBO',
+                                    fieldLabel: 'Recibo', labelAlign: 'right', labelStyle: 'font-weight: bold;', labelWidth: 90,
+                                    width: 260, fieldStyle: 'font-weight: bold;font-size:13px;text-align:center',
+                                    maskRe: /[0-9/]/,
+                                    //editable: false,
+                                    enableKeyEvents: true,
+                                    enforceMaxLength: true,
+                                    maxLength: 30,
+                                    listeners: {
+                                        keypress: function (obj, e) {
+                                            if (e.getKey() === e.ENTER) {
+                                                Ext.getCmp(prototype.id + '-btn-save').focus();
+                                            }
+                                        }
                                     }
                                 }
                             ]

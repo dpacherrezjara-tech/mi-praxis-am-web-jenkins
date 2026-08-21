@@ -53,7 +53,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryReverse
         this.beanParam = {
             IN_FECHA_PROCESO : Ext.getCmp(prototype.id+'-txtProcessDate2').getValue(),
             IN_ENVIO: Ext.getCmp(prototype.id+'-chkRegularizacion').getValue(),
-            A1955MODUL: 'PFLOWN',
+            A1955MODUL: 'PFLOWNPRE',
             strOption: 'D'
         };        
     },
@@ -63,7 +63,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryReverse
             method: 'POST',
             timeout: 60000000,
             params: this.beanParam,
-            beforerequest: Ext.getCmp(prototype.id + '-dataEntryReverse').mask('Loading...'),
+            //beforerequest: Ext.getCmp(prototype.id + '-dataEntryReverse').mask('Loading...'),
             success: function(response, options) {
                 var res = Ext.JSON.decode(response.responseText);
                 if (res.success) {
@@ -88,11 +88,11 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.DataEntryReverse
                         msg: res.sesion
                     });
                 }
-                Ext.getCmp(prototype.id + '-dataEntryReverse').unmask();
+                //Ext.getCmp(prototype.id + '-dataEntryReverse').unmask();
             },
             failure: function(response, opts) {
                 console.log('server-side failure with status code ' + response.status);
-                Ext.getCmp(prototype.id + '-dataEntryReverse').unmask();
+                //Ext.getCmp(prototype.id + '-dataEntryReverse').unmask();
             }
         });
     }

@@ -33,4 +33,13 @@ public class A4054 {
     public String A4054REVIS = "";
     public String A4054FREVI = "";
     public String A4054HREVI = "";
+    //news
+    public String A4054NLOTE= "";
+    public String A4054CDCLI= "";
+    public String A4054PNR= "";
+    public String A4054STDE= "";
+    public String A4054RMSG= "";
+    public String A4054PXML= "";
+    public String A4054PPDF= "";
+            
 }

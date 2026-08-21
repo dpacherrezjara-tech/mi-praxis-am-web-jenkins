@@ -214,7 +214,7 @@ public class PassengerInvoicesController extends BaseController {
             String cia = serverSession.getServerSession().getUserView().getCustomerInfo().CCUST;
             //OBTENIENDO NOMBRE DE ZIP REJECTION y BILLING MEMO,
             // listaArray=null;
-            String pathImgs = "\\\\" + serverSession.propertySession.get("RUTA_REPOSITORY") + "\\AM\\EMD-DELTA-SKYLINK";
+            String pathImgs = "\\\\" + serverSession.propertySession.get("RUTA_REPOSITORY") + "\\AM\\EMD-DELTA-SKYLINK\\EMD _ DL _ 20" + filter.BDATE.substring(0,2);
             File archivo = new File(pathImgs);
             lista = archivo.list(fnfZIP);//
             if (lista != null && lista.length > 0) {
@@ -393,7 +393,7 @@ public class PassengerInvoicesController extends BaseController {
 
             LoadInterlineLogic logic = new LoadInterlineLogic();
             logic.setSession(this.serverSession.getServerSession());
-            if (filter.SOURCOD.equals("01") || filter.SOURCOD.equals("02") || filter.SOURCOD.equals("03")
+            if (filter.SOURCOD.equals("31") || filter.SOURCOD.equals("01") || filter.SOURCOD.equals("02") || filter.SOURCOD.equals("03")
                     || filter.SOURCOD.equals("08") || filter.SOURCOD.equals("14") || filter.SOURCOD.equals("21")
                     || filter.SOURCOD.equals("23") || filter.SOURCOD.equals("25") || filter.SOURCOD.equals("26") || filter.SOURCOD.equals("90")) {
 
@@ -5715,7 +5715,7 @@ public class PassengerInvoicesController extends BaseController {
         try {
             
 //            String rutaFile = "\\\\px\\AM\\EMD-DELTA-SKYLINK";
-            String rutaFile = "\\\\" + serverSession.propertySession.get("RUTA_REPOSITORY") + "\\AM\\EMD-DELTA-SKYLINK";
+            String rutaFile = "\\\\" + serverSession.propertySession.get("RUTA_REPOSITORY") + "\\AM\\EMD-DELTA-SKYLINK\\\\EMD _ DL _ 20" + filter.BDATE.substring(0,2);
             String fileName = "Detalle del EMD_" + "20" + filter.BDATE.substring(0, 4) + "-" + filter.PERNUM + ".xlsx";
 
 //            response.setContentType("application/zip");

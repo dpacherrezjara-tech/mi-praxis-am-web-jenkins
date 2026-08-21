@@ -2,7 +2,7 @@
 
 prototype.id = 'AccountingMasterTravelForm';
 prototype.url = CONTEXTPATH + '/AccountingMasterTravel';
-          
+
 Ext.define('Ext.Praxis.view.sales.AccountingMasterTravelForm.AccountingMasterTravelForm', {
     extend: 'Ext.form.Panel',
     alias: 'widget.AccountingMasterTravelForm',
@@ -41,7 +41,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTravelForm.AccountingMasterTra
                         {
                             xtype: 'panel',
                             region: 'center',
-//                          width: 900,
+                            //                          width: 900,
                             layout: 'border',
                             items: [
                                 {
@@ -54,7 +54,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTravelForm.AccountingMasterTra
                                     border: true,
                                     autoScroll: true,
                                     defaults: {
-                                        width: 1200,
+                                        width: 1160,
                                         align: 'center'
                                     },
                                     items: [

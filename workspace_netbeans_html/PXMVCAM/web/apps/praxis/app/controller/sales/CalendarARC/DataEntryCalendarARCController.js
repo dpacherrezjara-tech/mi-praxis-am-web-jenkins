@@ -23,6 +23,7 @@ Ext.define('Ext.Praxis.controller.sales.CalendarARC.DataEntryCalendarARCControll
                 break;
         }
         // global.AccessControlMaganer();
+        global.AccessControlMaganerByMode(this.p);
     },
     getDataInputs: function(rec) {
 

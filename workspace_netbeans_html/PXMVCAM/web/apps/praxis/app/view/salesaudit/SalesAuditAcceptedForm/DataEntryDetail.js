@@ -92,6 +92,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.DataEntryDetail', 
                                                             labelWidth: 40,
                                                             labelAlign: 'right'
                                                         }
+
                                                     ]
                                                 },
                                                 {
@@ -581,6 +582,12 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.DataEntryDetail', 
                                                     id: prototype.id1 + '-txtAuditedDate',
                                                     labelWidth: 40,
                                                     width: 120
+                                                },
+                                                {
+                                                    fieldLabel: 'Dynamic',
+                                                    id: prototype.id1 + '-txtDynamic',
+                                                    labelWidth: 60,
+                                                    width: 200
                                                 }
                                             ]
                                         }
@@ -1302,7 +1309,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.DataEntryDetail', 
                                     flex: 1,
                                     height: 150,
                                     columnLines: true,
-                            autoScroll: true,
+                                    autoScroll: true,
                                     columns: {
                                         items: [
                                             {text: '<span style="font-size: 10px;">Corrl.</span>', dataIndex: 'A1580CORRL', flex: 1},
@@ -1386,7 +1393,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.DataEntryDetail', 
                                     border: true,
                                     flex: 1,
                                     columnLines: true,
-                            autoScroll: true,
+                                    autoScroll: true,
                                     height: 85,
                                     columns: {
                                         items: [
@@ -1461,7 +1468,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.DataEntryDetail', 
                                     flex: 1,
                                     height: 120,
                                     columnLines: true,
-                            autoScroll: true,
+                                    autoScroll: true,
                                     columns: {
                                         items: [
                                             {text: '<span style="font-size: 10px;">Corrl.</span>', dataIndex: 'A1580CORRL', flex: 1},
@@ -1545,7 +1552,7 @@ Ext.define('Ext.Praxis.view.salesaudit.SalesAuditAcceptedForm.DataEntryDetail', 
                                     flex: 1,
                                     height: 150,
                                     columnLines: true,
-                            autoScroll: true,
+                                    autoScroll: true,
                                     columns: {
                                         items: [
                                             {text: '<span style="font-size: 10px;">Corrl<br/>Tkt</span>', dataIndex: 'A1580CORRL', flex: 1},

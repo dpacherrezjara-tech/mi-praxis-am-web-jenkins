@@ -5,7 +5,9 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
     lblA1740TIPO: '',
     lblA1740SUBTI: '',
     lblA1740CATEG: '',
-    init: function(view){
+    lblFINIOld: '',
+    lblFFINOld: '',
+    init: function (view) {
     },
     afterRender: function(){ 
         this.p = this.view.params;
@@ -41,23 +43,26 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
         Ext.getCmp(prototype.id + '-txtA1740TITRA').setValue(rec.get('A1740TITRA'));
         Ext.getCmp(prototype.id + '-txtA1740SUBTI').setValue(rec.get('A1740SUBTI'));
         Ext.getCmp(prototype.id + '-txtA1740CATEG').setValue(rec.get('A1740CATEG'));
-        Ext.getCmp(prototype.id + '-txtA1740CIA').setValue(rec.get('A1740CIA'));
-        Ext.getCmp(prototype.id + '-txtA1740UNIDA').setValue(rec.get('A1740UNIDA'));
-        Ext.getCmp(prototype.id + '-txtA1740CECOS').setValue(rec.get('A1740CECOS'));
-        Ext.getCmp(prototype.id + '-txtA1740UBICA').setValue(rec.get('A1740UBICA'));
-        Ext.getCmp(prototype.id + '-txtA1740CTA').setValue(rec.get('A1740CTA'));
-        
-        Ext.getCmp(prototype.id + '-txtA1740SCTA').setValue(rec.get('A1740SCTA'));
-        Ext.getCmp(prototype.id + '-txtA1740EQUI').setValue(rec.get('A1740EQUI'));
-        Ext.getCmp(prototype.id + '-txtA1740ICIA').setValue(rec.get('A1740ICIA'));
-        Ext.getCmp(prototype.id + '-txtA1740CLIE').setValue(rec.get('A1740CLIE'));
+        Ext.getCmp(prototype.id + '-txtA1740CIA').setValue(rec.get('A1740CIA').trim());
+        Ext.getCmp(prototype.id + '-txtA1740UNIDA').setValue(rec.get('A1740UNIDA').trim());
+        Ext.getCmp(prototype.id + '-txtA1740CECOS').setValue(rec.get('A1740CECOS').trim());
+        Ext.getCmp(prototype.id + '-txtA1740UBICA').setValue(rec.get('A1740UBICA').trim());
+        Ext.getCmp(prototype.id + '-txtA1740CTA').setValue(rec.get('A1740CTA').trim());
+
+        Ext.getCmp(prototype.id + '-txtA1740SCTA').setValue(rec.get('A1740SCTA').trim());
+        Ext.getCmp(prototype.id + '-txtA1740EQUI').setValue(rec.get('A1740EQUI').trim());
+        Ext.getCmp(prototype.id + '-txtA1740ICIA').setValue(rec.get('A1740ICIA').trim());
+        Ext.getCmp(prototype.id + '-txtA1740CLIE').setValue(rec.get('A1740CLIE').trim());
         Ext.getCmp(prototype.id + '-txtA1740FINI2').setValue(rec.get('A1740FINI'));
-        Ext.getCmp(prototype.id + '-txtA1740FFIN2').setValue(rec.get('A1740FFIN')==='9999/99/99' ? '' : rec.get('A1740FFIN'));
-        
+        Ext.getCmp(prototype.id + '-txtA1740FFIN2').setValue(rec.get('A1740FFIN') === '9999/99/99' ? '' : Ext.Date.parse(rec.get('A1740FFIN'), 'Y/m/d'));
+
         this.lblA1740TITRA = rec.get('A1740TITRA');
         this.lblA1740TIPO = rec.get('A1740TIPO');
         this.lblA1740SUBTI = rec.get('A1740SUBTI');
         this.lblA1740CATEG = rec.get('A1740CATEG');
+        this.lblFINIOld = Ext.util.Format.date(rec.get('A1740FINI'), 'Ymd');
+        var fecha = Ext.Date.parse(rec.get('A1740FFIN'), 'Y/m/d');
+        this.lblFFINOld = rec.get('A1740FFIN') === '9999/99/99' ? '99999999' : Ext.util.Format.date(fecha, 'Ymd');
         
         Ext.getCmp(prototype.id + '-USCR').setValue(rec.get('A1740REGIS'));
         Ext.getCmp(prototype.id + '-FECR').setValue(rec.get('A1740FREGI'));
@@ -331,6 +336,8 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterSales.DataEntryAccountin
             A1740SUBTI: A1740SUBTI,
             A1740CATEG: A1740CATEG,
             A1740CIA: A1740CIA,
+            IN_A1740FINI_OLD: this.lblFINIOld,
+            IN_A1740FFIN_OLD: this.lblFFINOld,
             A1740UNIDA: A1740UNIDA,
             A1740CECOS: A1740CECOS,
             A1740UBICA: A1740UBICA,

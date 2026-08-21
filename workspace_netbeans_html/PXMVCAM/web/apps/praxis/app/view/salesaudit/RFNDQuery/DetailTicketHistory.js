@@ -14,7 +14,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicketHistory', {
     requires: [
         'Ext.Praxis.controller.salesaudit.RFNDQuery.DetailTicketHistoryController'
     ],
-    id: prototype.id4 + '-win',
+    id: prototype.idDetailTicketHistory + '-win',
     title: 'TICKET HISTORY',
     header: true,
     width: 800,
@@ -30,7 +30,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RFNDQuery.DetailTicketHistory', {
     items: [
         {
             xtype: 'box',
-            id: prototype.id4 + '-contenido_historica_html',
+            id: prototype.idDetailTicketHistory + '-contenido_historica_html',
             layout: 'fit',
             autoScroll: true,
             style: 'background-color: black; color: white; padding: 4px; fontSize:18; fontFamily:Courier New; '

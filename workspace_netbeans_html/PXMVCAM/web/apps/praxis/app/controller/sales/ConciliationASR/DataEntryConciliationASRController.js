@@ -12,9 +12,11 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationASR.DataEntryConciliationASR
         this.action = this.p.action;
     },
     afterRender: function(){ 
+        this.p = this.view.params;
         this.get_ClearField();
         this.get_data();
         // global.AccessControlMaganer();
+        global.AccessControlMaganerByMode(this.p);
     },
     get_ClearField: function() {
         win.setValue('DataEntry-txtWKSTAT', '');

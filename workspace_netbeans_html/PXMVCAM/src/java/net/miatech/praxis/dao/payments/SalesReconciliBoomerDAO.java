@@ -17,8 +17,8 @@ import net.miatech.beans.PX040S01A1716Filter;
 import net.miatech.beans.SQP00697Filter;
 
 import net.miatech.beans.spring.implement.IServerSession;
-import net.miatech.praxis.payment.filter.A2318Filter;
-import net.miatech.praxis.payment.filter.A2324Filter;
+import net.miatech.praxis.payment.old.A2318Filter;
+import net.miatech.praxis.payment.old.A2324Filter;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 
@@ -601,8 +601,8 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.IVA = rst.getLong("IVA");
                     beanTkt.SVFOPOL = rst.getLong("SVFOPOL");
                     beanTkt.TOT_DESC = beanTkt.TOTCOMISI + beanTkt.IVA;
-                    //beanTkt.NET = beanTkt.SVFOP - beanTkt.TOT_DESC;
-                    beanTkt.NET = rst.getLong("SVFOPN");
+                    beanTkt.NET = beanTkt.SVFOP - beanTkt.TOT_DESC;
+                    //beanTkt.NET = rst.getLong("SVFOPN"); SOLICITADO POR ING ELMER NEVES Y SARA VILCHEZ
 
                     beanTkt.totSVFOP = totSVFOP;
                     beanTkt.totSVFOPS = totSVFOPS;
@@ -753,8 +753,8 @@ public class SalesReconciliBoomerDAO {
                 beanTkt.TOTCOMISI = rst.getLong("TOTCOMISI");
                 beanTkt.IVA = rst.getLong("IVA");
                 beanTkt.TOT_DESC = beanTkt.TOTCOMISI + beanTkt.IVA;
-                //beanTkt.NET = beanTkt.SVFOP - beanTkt.TOT_DESC;
-                beanTkt.NET = rst.getLong("SVFOPN");
+                beanTkt.NET = beanTkt.SVFOP - beanTkt.TOT_DESC;
+                //beanTkt.NET = rst.getLong("SVFOPN"); SOLICITADO POR ING ELMER NEVES Y SARA VILCHEZ
 
                 beanTkt.totSVFOP = totSVFOP;
                 beanTkt.totSVFOPS = totSVFOPS;
@@ -1173,6 +1173,8 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.SVFOP_ACUMULADO = SVFOP_ACUMULADO;
 
                     beanTkt.SPNR = rst.getString("SPNR");
+                    beanTkt.VOUCHER = rst.getString("VOUCHER").trim();
+                    beanTkt.VAMOUNT = rst.getDouble("VAMOUNT");
 
                     beanTkt.totSVFOP = totSVFOP;
 
@@ -1212,6 +1214,139 @@ public class SalesReconciliBoomerDAO {
                         finalizar = false;
                         complemento = true;
                     }
+
+                }
+                rst.close();
+            }
+
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        } finally {
+            if (rst != null) {
+                try {
+                    rst.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return lstTkts;
+    }
+    
+    public List<A2324Filter> loadPX559SQP04639(A2324Filter filter) throws SQLException, Exception {
+
+        List<A2324Filter> lstTkts = new ArrayList<A2324Filter>(0);
+        A2324Filter beanTkt;
+        A2324Filter beanTktComplement;
+        long totSVFOP = 0;
+        long SVFOP = 0;
+        long SVFOP_ACUMULADO = 0;
+        long SVFOP_ACUMULADO_ANTERIOR = 0;
+        Boolean acumulado = false;
+        Boolean finalizar = false;
+        Boolean recorrido = true;
+        Boolean complemento = false;
+
+        CallableStatement cstmt = null;
+        ResultSet rst = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04639(?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt.setString(2, filter.IN_DATSET.trim());
+            cstmt.setString(3, filter.IN_WEEKMO.trim());
+            cstmt.execute();
+
+            rst = cstmt.getResultSet();
+
+            while (rst.next()) {
+                totSVFOP = rst.getLong("SVFOP");
+                //totSVFOP = filter.AMTSET;
+            }
+            rst.close();
+
+            if (cstmt.getMoreResults()) {
+                rst = cstmt.getResultSet();
+
+                while (rst.next()) {
+                    beanTkt = new A2324Filter();
+                    beanTkt.IN_DATSET = filter.IN_DATSET.trim();
+                    beanTkt.IN_WEEKMO = filter.IN_WEEKMO.trim();
+                    beanTkt.AMTSET = filter.AMTSET;
+                    beanTkt.totSVFOP_COMPLEMENTO = totSVFOP - filter.AMTSET;
+                    beanTkt.strFormatDate = Functions.getMonthConvert(rst.getString("DATSET").trim());
+
+                    beanTkt.SCURRENCY = rst.getString("SCURRENCY");
+                    beanTkt.SVFOP = rst.getLong("SVFOP");
+                    SVFOP_ACUMULADO = SVFOP_ACUMULADO + beanTkt.SVFOP;
+
+                    if (filter.AMTSET == SVFOP_ACUMULADO || acumulado) {
+                        if (acumulado) {
+                            beanTkt.FACUMULADO = 1;
+                        }
+                        acumulado = true;
+                    }
+
+                    beanTkt.SVFOP_ACUMULADO = SVFOP_ACUMULADO;
+
+                    beanTkt.SPNR = rst.getString("SPNR");
+                    beanTkt.VOUCHER = rst.getString("VOUCHER").trim();
+                    beanTkt.VAMOUNT = rst.getDouble("VAMOUNT");
+
+                    beanTkt.totSVFOP = totSVFOP;
+
+                    if (SVFOP_ACUMULADO > filter.AMTSET && recorrido) {
+                        SVFOP = beanTkt.SVFOP;
+                        beanTkt.SVFOP = filter.AMTSET - SVFOP_ACUMULADO_ANTERIOR;
+                        beanTkt.SVFOP_ACUMULADO = filter.AMTSET;
+                        finalizar = true;
+                        recorrido = false;
+                    }
+
+                    if (complemento) {
+                        beanTkt.FCOMPLEMENTO = "1";
+                    }
+
+                    lstTkts.add(beanTkt);
+//                    SVFOP_ACUMULADO_ANTERIOR = SVFOP_ACUMULADO;
+//
+//                    if (finalizar) {
+//                        beanTktComplement = new A2324Filter();
+//
+//                        beanTktComplement.IN_DATSET = filter.IN_DATSET.trim();
+//                        beanTktComplement.IN_WEEKMO = filter.IN_WEEKMO.trim();
+//                        beanTktComplement.AMTSET = filter.AMTSET;
+//                        beanTktComplement.strFormatDate = Functions.getMonthConvert(rst.getString("DATSET").trim());
+//                        beanTktComplement.SCURRENCY = rst.getString("SCURRENCY");
+//                        beanTktComplement.SPNR = rst.getString("SPNR");
+//                        beanTktComplement.totSVFOP = totSVFOP;
+//                        beanTktComplement.totSVFOP_COMPLEMENTO = totSVFOP - filter.AMTSET;
+//
+//                        beanTktComplement.SVFOP = Math.abs(SVFOP - beanTkt.SVFOP);
+//                        //SVFOP_ACUMULADO = SVFOP_ACUMULADO + beanTktComplement.SVFOP;
+//                        beanTktComplement.SVFOP_ACUMULADO = SVFOP_ACUMULADO;
+//
+//                        beanTktComplement.FCOMPLEMENTO = "1";
+//                        lstTkts.add(beanTktComplement);
+//                        finalizar = false;
+//                        complemento = true;
+//                    }
 
                 }
                 rst.close();
@@ -1331,7 +1466,7 @@ public class SalesReconciliBoomerDAO {
         } else if (filter.option.trim().equals("D")) {
             strMsj = "SUCCESSFUL. Information Deleted.";
         }
-
+        
         //strMsj = "SUCCESSFUL. Information Created.";
         CallableStatement cstmt = null;
         Connection cnx = null;
@@ -1362,6 +1497,7 @@ public class SalesReconciliBoomerDAO {
             cstmt.setString(16, filter.NEW_STVAL);
             cstmt.setString(17, filter.NEW_SCURRENCY);
             cstmt.setDouble(18, filter.NEW_SVFOP);
+            //cstmt.setString(19, filter.NEW_COMMENT);
             //Campos para el where
             cstmt.setString(19, filter.CCIAB.trim());
             cstmt.setString(20, filter.FORMAB.trim());
@@ -1498,12 +1634,6 @@ public class SalesReconciliBoomerDAO {
                     beanTkt.CODEBANK = rst.getString("CODEBANK").trim();
                     beanTkt.strFormatDate = Functions.getMonthConvert(rst.getString("SDATE").trim());
 
-                    beanTkt.TOTCOMISI = rst.getLong("TOTCOMISI");
-                    beanTkt.IVA = rst.getLong("IVA");
-                    beanTkt.TOT_DESC = beanTkt.TOTCOMISI + beanTkt.IVA;
-                    //beanTkt.NET = beanTkt.SVFOP - beanTkt.TOT_DESC;
-                    beanTkt.NET = rst.getLong("SVFOPN");
-
                     beanTkt.totSVFOP = totSVFOP;
                     beanTkt.totSVFOPS = totSVFOPS;
                     //beanTkt.totdifSVFOP = totSVFOP - totSVFOPS;
@@ -1525,6 +1655,12 @@ public class SalesReconciliBoomerDAO {
                     } else if (beanTkt.difIMPORT > 0) {
                         beanTkt.REVCON = "ND";
                     }
+
+                    beanTkt.TOTCOMISI = rst.getLong("TOTCOMISI");
+                    beanTkt.IVA = rst.getLong("IVA");
+                    beanTkt.TOT_DESC = beanTkt.TOTCOMISI + beanTkt.IVA;
+                    beanTkt.NET = beanTkt.SVFOP - beanTkt.TOT_DESC;
+                    //beanTkt.NET = rst.getLong("SVFOPN");
 
                     beanTkt.totTOTCOMISI = totTOTCOMISI;
                     beanTkt.totIVA = totIVA;
@@ -1564,5 +1700,100 @@ public class SalesReconciliBoomerDAO {
 
         return lstTkts;
     }
+    
+    public A2324Filter loadPX559SQP04637(A2324Filter filter) throws SQLException, Exception {
 
+        A2324Filter objRtn = new A2324Filter();
+        CallableStatement cstmt01 = null;
+        ResultSet rs01 = null;
+
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04637(?,?,?)}";
+
+        Connection cnx = null;
+        try {
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt01 = cnx.prepareCall(SQLCLL01);
+
+            cstmt01.setString(1, session.getUserView().getCustomerInfo().CCUST);
+            cstmt01.setString(2, filter.DATSET.trim());
+            cstmt01.setString(3, filter.WEEKMO.trim());
+
+            cstmt01.execute();
+
+            rs01 = cstmt01.getResultSet();
+            while (rs01.next()) {
+                objRtn.DATSET = filter.DATSET.trim();
+                objRtn.WEEKMO = filter.WEEKMO.trim();
+                objRtn.CCUST = rs01.getString("CCUST").trim();
+                objRtn.VOUCHER = rs01.getString("VOUCHER").trim();
+                objRtn.VAMOUNT = rs01.getDouble("VAMOUNT");               
+                //lstRtn.add(objRtn);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (rs01 != null) {
+                try {
+                    rs01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            if (cstmt01 != null) {
+                try {
+                    cstmt01.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return objRtn;
+    }
+  
+    public String loadPX559SQP04638(A2324Filter filter) throws SQLException, Exception {
+        String strMsj = "SUCCESSFUL. Information Updated.";
+        
+        //strMsj = "SUCCESSFUL. Information Created.";
+        CallableStatement cstmt = null;
+        Connection cnx = null;
+        //SQP02077
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP04638(?,?,?,?,?,?,?,?)}";
+
+        try {
+
+            cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+            cstmt = cnx.prepareCall(SQLCLL01);
+
+            cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);          
+            cstmt.setString(2, filter.DATSET.trim());
+            cstmt.setString(3, filter.WEEKMO.trim());
+            cstmt.setString(4, filter.IN_VOUCHER.trim());
+            cstmt.setDouble(5, filter.IN_VAMOUNT);
+            //Campos para auditoria
+            cstmt.setString(6, session.getUserView().getUserInfo().USR);
+            cstmt.setString(7, Functions.getFechaActual());
+            cstmt.setString(8, Functions.getHoraActual());
+
+            cstmt.execute();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            strMsj = e.getMessage();
+        } finally {
+            if (cstmt != null) {
+                try {
+                    cstmt.close();
+                } catch (SQLException e) {
+                    logError.error("SQLException -> User:" + session.getUserView().getUserInfo().USR + " Message: " + e.getMessage(), e);
+                }
+            }
+            session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+            pasarGarbageCollector();
+        }
+
+        return strMsj;
+    }
 }

@@ -734,17 +734,17 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByBank.DataRequestedByBa
             };
             console.log(searchParams);
 
-            var option = Ext.getCmp(prototype.id + '-rbgType').getValue();
-            switch (option.rb) {
-                case 'ACLARACIONES':
-                    console.log('Clarifications');
-                    this.search();
-                    break;
-                case 'AVISOS':
-                    console.log('Bank Notice');
-                    this.searchAvisos();
-                    break;
-            }
+//            var option = Ext.getCmp(prototype.id + '-rbgType').getValue();
+//            switch (option.rb) {
+//                case 'ACLARACIONES':
+//                    console.log('Clarifications');
+//                    this.search();
+//                    break;
+//                case 'AVISOS':
+//                    console.log('Bank Notice');
+//                    this.searchAvisos();
+//                    break;
+//            }
         }
     },
     searchDetCardTKT: function (bean) {
@@ -1100,7 +1100,7 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByBank.DataRequestedByBa
         this.beanDetCard.IN_TCARD = rowData.data.IN_TCARD;
         this.beanDetCard.IN_MERCHN = rowData.data.IN_MERCHN;
         this.beanDetCard.IN_CODEBANK = rowData.data.IN_CODEBANK;
-//        console.log(this.beanDetCard);
+        console.log(this.beanDetCard);
 
         me.paramsDetail.beanString = JSON.stringify(this.beanDetCard);
         this.setGridDataDetCard_2();
@@ -1592,6 +1592,10 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByBank.DataRequestedByBa
                                         AUTAMOUNT: value01.AUTAMOUNT,
                                         CONCEPT: value01.CONCEPT,
                                         strDescStatus: value01.strDescStatus,
+                                        SENTDATE: value01.SENTDATE,
+                                        MERCHN: value01.MERCHN,
+                                        CARDNBR: value01.CARDNBR,
+                                        SQCRFILE: value01.SQCRFILE,
                                         strTicket: value01.strTicket,
                                         strUsoCpn1: value01.strUsoCpn1,
                                         strUsoCpn2: value01.strUsoCpn2,
@@ -1648,6 +1652,7 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByBank.DataRequestedByBa
                             });
                         } else {
                             var data = obj.data.items[0].data;
+                            console.log('data');
                             console.log(data);
                         }
                         me.setWidthPie();
@@ -1772,6 +1777,10 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByBank.DataRequestedByBa
                                         AGENTE: value01.AGENTE,
                                         AUTAMOUNT: value01.AUTAMOUNT,
                                         CONCEPT: value01.CONCEPT,
+                                        SENTDATE: value01.SENTDATE,
+                                        MERCHN: value01.MERCHN,
+                                        CARDNBR: value01.CARDNBR,
+                                        SQCRFILE: value01.SQCRFILE,
                                         strDescStatus: value01.strDescStatus,
                                         strTicket: value01.strTicket,
                                         strUsoCpn1: value01.strUsoCpn1,
@@ -2484,6 +2493,8 @@ Ext.define('Ext.Praxis.controller.payments.DataRequestedByBank.DataRequestedByBa
     },
     onEditClick2: function (grid, rowIndex, colIndex) {
         var rec = grid.getStore().getAt(rowIndex);
+        console.log('rec');
+        console.log(rec);
         if (rec.data.children === null || rec.data.children === undefined) {
             this.winDataEntry2('U', rec);
         } else {

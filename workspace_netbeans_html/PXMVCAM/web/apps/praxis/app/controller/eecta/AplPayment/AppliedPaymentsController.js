@@ -162,8 +162,8 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AppliedPaymentsController', {
         var rec = [];
         Ext.getCmp(prototype.id + '-infoGridAppliedPaymentDet').setTitle( '' );
         var VL_IDPG = '';
-        console.log('rowIndex: '  + rowIndex);
-        if(rowIndex>0){
+        //console.log('rowIndex: '  + rowIndex);
+        if(rowIndex>=0){
             rec = grid.getStore().getAt(rowIndex); 
             VL_IDPG = rec.data.A3959IDPG;              
             Ext.getCmp(prototype.id + '-infoGridAppliedPaymentDet').setTitle( 'Detalle Id pago nº: ' + rec.data.A3959IDPG ); 

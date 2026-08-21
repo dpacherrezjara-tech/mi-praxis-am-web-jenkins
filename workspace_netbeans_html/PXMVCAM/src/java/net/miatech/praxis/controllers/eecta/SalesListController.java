@@ -87,9 +87,9 @@ public class SalesListController extends BaseController {
             String beanString = request.getParameter("beanString");
             filter = new Gson().fromJson(beanString, filter.getClass());
             listaData = logic.getSQP03874Filter(filter);
-
+            String Rutatmp = this.serverSession.getPropertySession().get("RUTA_DOWNLOAD")+"\\";
             ReportVentaUATP reportVentaUATP = new ReportVentaUATP();
-            File archivo = reportVentaUATP.createReport(listaData);
+            File archivo = reportVentaUATP.createReport(listaData, Rutatmp );
             response.setHeader("Expires", "0");
             response.setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0");
             response.setHeader("Pragma", "public");

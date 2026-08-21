@@ -50,6 +50,14 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntrySalesRe
         meDE.beanResult.DATSET = meDE.bean.data.IN_DATSET;
         meDE.beanResult.WEEKMO = meDE.bean.data.IN_WEEKMO;
         meDE.beanResult.SPNR = meDE.bean.data.A720PNR;   
+        meDE.beanResult.TICKET = meDE.bean.data.TKT;   
+        meDE.beanResult.SVFOPB = meDE.bean.data.SVFOPB;   
+        meDE.beanResult.SCARDN = meDE.bean.data.A1531NREF;   
+        meDE.beanResult.SCURRENCY = 'MXN';   
+        meDE.beanResult.SCOUNTRY = 'MX';   
+        meDE.beanResult.SCARCOD = 'SB';   
+        meDE.beanResult.TDOC = 'S';   
+        meDE.beanResult.STVAL = '5';   
         meDE.mostrarData();
     },
     mostrarData: function() {
@@ -71,6 +79,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntrySalesRe
         this.setValue('de-txtSAUTHOC', this.beanResult.SAUTHOC);
         this.setValue('de-txtWEEKMO', this.beanResult.WEEKMO);
         this.setValue('de-txtDATSET', this.beanResult.DATSET);
+        //this.setValue('de-txtCOMMENT', this.beanResult.COMMENT);
 
         this.setValue('txtUSCR', this.beanResult.USCR);
         this.setValue('txtFECR', this.beanResult.FECR);
@@ -186,6 +195,7 @@ Ext.define('Ext.Praxis.controller.payments.SalesReconciliBoomer.DataEntrySalesRe
         beanTemp.NEW_STVAL = this.getValue("de-cmbSTVAL");
         beanTemp.NEW_SCURRENCY = this.getValue("de-txtSCURRENCY");
         beanTemp.NEW_SVFOP = this.getValue("de-txtSVFOP");
+        //beanTemp.NEW_COMMENT = this.getValue("de-txtCOMMENT");
                 
         //Guardando valores originales =========================
         console.log(this.beanResult);

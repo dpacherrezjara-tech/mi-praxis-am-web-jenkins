@@ -132,6 +132,7 @@ public class SalesMasterReportFormController extends BaseController {
             filter.VP_STREVISION = request.getParameter("VP_STREVISION").trim();
             filter.VP_TDOC = request.getParameter("VP_TDOC").trim();
             filter.VP_PAIS = request.getParameter("VP_PAIS").trim();
+            filter.VP_PRESTACIO = request.getParameter("VP_PRESTACIO").trim();
             // filter.ROUTE = request.getParameter("ROUTE").toString().trim();
 
             if (!bExcel) {

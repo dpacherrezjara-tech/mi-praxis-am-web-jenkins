@@ -56,7 +56,8 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBoletoEntryControll
         var VL_A3959BANCO = Ext.getCmp(prototype.id + '-A3959BANCO').getValue();
         var VL_A3959CTABC = Ext.getCmp(prototype.id + '-A3959CTABC').getValue(); 
         var VL_TICKET_NC = Ext.getCmp(prototype.id + '-TICKET_NC').getValue(); 
-        
+        var VL_NUM_RECIBO = Ext.getCmp(prototype.id + '-NUM-RECIBO').getValue();
+                
         return {
             VP_ACTION:VP_ACTION,
             A3959REFPG:VL_A3959REFPG,
@@ -68,7 +69,8 @@ Ext.define('Ext.Praxis.controller.eecta.AplPayment.AplPaymentBoletoEntryControll
             A3959CDCLI:VL_A3959CDCLI,
             A3959BANCO:VL_A3959BANCO,
             A3959CTABC:VL_A3959CTABC,
-            VP_TICKET_NC: VL_TICKET_NC
+            VP_TICKET_NC: VL_TICKET_NC,
+            VP_NUM_RECIBO:VL_NUM_RECIBO
         };
     },
     get_SelectedRecords:function(){

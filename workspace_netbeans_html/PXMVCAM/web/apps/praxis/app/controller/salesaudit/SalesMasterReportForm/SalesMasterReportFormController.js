@@ -57,25 +57,25 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesMasterReportForm.SalesMasterRe
         grid01.setStore(store01);
         Ext.getCmp(prototype.id + '-pagginator-01').setStore(store01);
         /*var grid00 = Ext.getCmp(prototype.id + '-gridData');
-
-        var store00 = Ext.create('Ext.data.Store', {
-            storeId: prototype.id + '-store-gridData',
-            pageSize: 20,
-            proxy: {
-                type: 'ajax',
-                url: prototype.url2 + '/search',
-                timeout: 60000000,
-                reader: {
-                    type: 'json',
-                    rootProperty: 'data',
-                    totalProperty: 'total'
-                }
-            }
-        });
-
-        grid00.setStore(store00);
-
-        Ext.getCmp(prototype.id + '-pagginator-01').setStore(store00);*/
+         
+         var store00 = Ext.create('Ext.data.Store', {
+         storeId: prototype.id + '-store-gridData',
+         pageSize: 20,
+         proxy: {
+         type: 'ajax',
+         url: prototype.url2 + '/search',
+         timeout: 60000000,
+         reader: {
+         type: 'json',
+         rootProperty: 'data',
+         totalProperty: 'total'
+         }
+         }
+         });
+         
+         grid00.setStore(store00);
+         
+         Ext.getCmp(prototype.id + '-pagginator-01').setStore(store00);*/
     },
     setCountry: function () {
         var me = this;
@@ -130,6 +130,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesMasterReportForm.SalesMasterRe
         var txtIT = Ext.getCmp(prototype.id + '-txtIT').getValue();
         var cmbOpcionAudit = Ext.getCmp(prototype.id + '-cmbOpcionAudit').getValue();
         var cmbTypeMemo = Ext.getCmp(prototype.id + '-cmbTypeMemo').getValue();
+        var CombBene = Ext.getCmp(prototype.id + '-ComboBene').getValue();
 
         if (cmbSearch === '') {
             global.Msg({msg: 'Select Of By'});
@@ -226,6 +227,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesMasterReportForm.SalesMasterRe
         me.bean.VP_AUDIT = cmbOpcionAudit;
         me.bean.VP_STATUS = ComboTransfer;
         me.bean.VP_TDOC = ComboTypeDocume;
+        me.bean.VP_PRESTACIO = CombBene;
         //AGREGAR
         me.bean.Agent = txtAgent;
         me.bean.BOOKTO = ComboStatusADM;
@@ -254,7 +256,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesMasterReportForm.SalesMasterRe
         if (bExcel) {
             me.exportExcel(prototype.url2 + '/getXLSX?beanString=' + encodeURI(JSON.stringify(bean)));
         } else {
-             Ext.getCmp(prototype.id + '-gridData').getStore().removeAll();
+            Ext.getCmp(prototype.id + '-gridData').getStore().removeAll();
             Ext.getCmp(prototype.id + '-gridData').getStore().loadPage(1, {
                 params: bean,
                 callback: function (records, operation, success) {
@@ -263,7 +265,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesMasterReportForm.SalesMasterRe
                         var Objtemp = records[0].data;
                         console.log(Objtemp);
                         //Ext.getCmp(prototype.id + '-lblRowsTotalADM').setText(Objtemp.A2548CATNMEMO);
-                        
+
                     } else {
                         global.Msg({msg: "Data not found.", icon: 2, fn: function () {
                             }});
@@ -275,24 +277,24 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesMasterReportForm.SalesMasterRe
             // var campo_cantidad = Ext.getCmp(prototype.id + '-campo_cantidad');
             //campo_cantidad.hide();
             /*var grid = Ext.getCmp(prototype.id + '-gridData');
-            var store = grid.getStore();
-            store.removeAll();
-            store.loadPage(1, {
-                params: bean,
-                //params:{beanString: JSON.stringify(bean)},
-                // params: bean,
-                callback: function (records, operation, success) {
-                    if (records.length !== 0) {
-                        Ext.getCmp(prototype.id + '-pagination').enable();
-                    } else {
-                        //Ext.getCmp(prototype.id + '-lblRowsTotalADM').setText('0');
-                        global.Msg({msg: "Data not found.", icon: 2, fn: function () {
-                            }});
-
-                    }
-
-                }
-            });*/
+             var store = grid.getStore();
+             store.removeAll();
+             store.loadPage(1, {
+             params: bean,
+             //params:{beanString: JSON.stringify(bean)},
+             // params: bean,
+             callback: function (records, operation, success) {
+             if (records.length !== 0) {
+             Ext.getCmp(prototype.id + '-pagination').enable();
+             } else {
+             //Ext.getCmp(prototype.id + '-lblRowsTotalADM').setText('0');
+             global.Msg({msg: "Data not found.", icon: 2, fn: function () {
+             }});
+             
+             }
+             
+             }
+             });*/
 
         }
     },
@@ -326,6 +328,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesMasterReportForm.SalesMasterRe
         var ComboRFND = Ext.getCmp(prototype.id + '-ComboRFND');
         var ComboTRNCO = Ext.getCmp(prototype.id + '-ComboTRNCO');
         var cmbOpcionAudit = Ext.getCmp(prototype.id + '-cmbOpcionAudit');
+        var CombBene = Ext.getCmp(prototype.id + '-ComboBene');
 
         cmbSearch.bindStore(Ext.create('Ext.data.Store', {
             data: [
@@ -469,6 +472,13 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesMasterReportForm.SalesMasterRe
             ]
         }));
 
+        CombBene.bindStore(Ext.create('Ext.data.Store', {
+            data: [
+                {"code": "", "name": "ALL"},
+                {"code": "P", "name": "Benefits Audit"} //A1672TIBOL = P
+            ]
+        }));
+
 
 
     },
@@ -534,10 +544,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesMasterReportForm.SalesMasterRe
         var txtCodReason = Ext.getCmp(prototype.id + '-txtCodReason');
         var ComboTypeDocume = Ext.getCmp(prototype.id + '-ComboTypeDocume');
         var txtIT = Ext.getCmp(prototype.id + '-txtIT');
-
-
-
-
+        var CombBene = Ext.getCmp(prototype.id + '-ComboBene');
 
         switch (String(obj.getValue())) {
             case '1':
@@ -582,6 +589,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesMasterReportForm.SalesMasterRe
                 txtCodReason.setValue('ALL');
                 ComboTypeDocume.setValue('');
                 txtIT.setValue('');
+                CombBene.setValue('');
                 break;
             case '2':
             case '3':
@@ -610,6 +618,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesMasterReportForm.SalesMasterRe
                 txtSeq.setValue('');
                 ComboRFND.setValue('');
                 ComboTRNCO.setValue('');
+                CombBene.setValue('');
                 break;
             case '4':
                 txtCia.show();
@@ -646,6 +655,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesMasterReportForm.SalesMasterRe
                 ComboStatusADM.setValue('');
                 ComboTrncu.setValue('');
                 cmbTypeMemo.setValue('');
+                CombBene.setValue('');
                 //ComboLikeFBasis.setValue('1');
                 txtFBasis.setValue('');
                 ComboLikeReason.setValue('1');
@@ -680,6 +690,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesMasterReportForm.SalesMasterRe
                 ComboSource.setValue('');
                 ComboChannel.setValue('');
                 txtIATA.setValue('');
+                CombBene.setValue('');
                 //tatusAgency.setValue('');
                 cmbOpcionAudit.setValue('');
                 txtAgent.setValue('');
@@ -846,10 +857,10 @@ Ext.define('Ext.Praxis.controller.salesaudit.SalesMasterReportForm.SalesMasterRe
         });
         win.show();
     },
-     onWinSendMail: function () {
+    onWinSendMail: function () {
         var win = new Ext.Praxis.view.salesaudit.SalesMasterReportForm.SalesMasterDataEntryEmail({
             params: {
-                
+
             }
         });
         win.show();

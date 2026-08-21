@@ -390,7 +390,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ComparativeReportForm.ComparativeReportFo
                             id: prototype.idcompara + '-gridData',
                             columnLines: true,
                             autoScroll: true,
-                            width: 600,
+                            width: 900,
                             height: 600,
                             features: [{
                                     //id: 'group',
@@ -409,9 +409,9 @@ Ext.define('Ext.Praxis.view.salesaudit.ComparativeReportForm.ComparativeReportFo
                                     align: 'center'
                                 },
                                 items: [
-                                    {text: 'System <br> date', dataIndex: 'A3950FREGI', width: 100, sortable: true, align: 'center'},
-                                    {text: 'Country', dataIndex: 'A3950PAIS', width: 80, align: 'center', renderer: 'onRendererColumnOnPais'},
-                                    {text: 'Total', dataIndex: 'A3950CANTI', width: 120, align: 'right',
+                                    {text: 'System <br> date', dataIndex: 'A3950FREGI', width: 150, sortable: true, align: 'center'},
+                                    {text: 'Country', dataIndex: 'A3950PAIS', width: 150, align: 'center', renderer: 'onRendererColumnOnPais'},
+                                    {text: 'Total', dataIndex: 'A3950CANTI', width: 150, align: 'right',
                                         cls: 'column_header_double',
                                         summaryType: 'sum',
                                         summaryRenderer: function (value, summaryData, dataIndex) {
@@ -420,7 +420,7 @@ Ext.define('Ext.Praxis.view.salesaudit.ComparativeReportForm.ComparativeReportFo
                                             xtype: 'numberfield'
                                         }
                                     },
-                                    {text: 'Status', dataIndex: 'A3950FLAG', width: 200, sortable: false, align: 'right'},
+                                    {text: 'Status', dataIndex: 'A3950FLAG', width: 300, sortable: false, align: 'right'},
                                     {
                                         text: '',
                                         dataIndex: '',

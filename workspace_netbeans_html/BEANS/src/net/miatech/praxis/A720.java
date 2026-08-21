@@ -643,6 +643,11 @@ public class A720 {
     public String A1672_PREME = "";
     public String A2548_NMEMO = "";
 
+    
+    public int A4373_TOT = 0;
+    public String A1530FECCO = "";
+    
+    
     public DBException dbException = new DBException();
     public double A720LYQ = 0;
     public double A720LIV = 0;
@@ -664,4 +669,8 @@ public class A720 {
     public String A720DESTC4 = "";
     public String A720TTARJ = "";
     public String A720NREF = "";
+    
+    
+    public String EMDCONCEP ="";
+    public String COMPTKT ="";
 }

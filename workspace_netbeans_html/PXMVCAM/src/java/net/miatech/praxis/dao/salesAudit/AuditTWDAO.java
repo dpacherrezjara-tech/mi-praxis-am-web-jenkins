@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package net.miatech.praxis.dao.salesAudit;
 
 import java.io.BufferedReader;
@@ -48,18 +47,17 @@ public class AuditTWDAO {
     public void setSession(IServerSession ss) {
         session = ss;
     }
-    
 
     public String loadPX449SQP02560(SQP00768 filter) throws SQLException, Exception {
         //REALIZA EL INSERT, UPDATE O DELETE DE UN REGISTRO EN LA TABLA A1702.
         String strMsj = "An Unexpected Error Ocurred.";
 
         CallableStatement cstmt = null;
-        String SQLCLL01="";
-        if(!filter.strSQLUpdateReplace.trim().equals("")){
+        String SQLCLL01 = "";
+        if (!filter.strSQLUpdateReplace.trim().equals("")) {
             //Toda la trama de FareBase 
             SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP02572(?,?,?,?,?,?,?,?,?,?,?)}";
-        }else{
+        } else {
             //Para un solo FareBase de la Trama
             SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP02560(?,?,?,?,?,?,?,?,?,?,?)}";
         }
@@ -101,8 +99,6 @@ public class AuditTWDAO {
 
         return strMsj;
     }
-    
-    
 
     public List<SQP00768> loadPX282SQP02561(SQP00768 filter) throws SQLException, Exception {
 
@@ -122,7 +118,15 @@ public class AuditTWDAO {
         double TOT51 = 0, TOT52 = 0, TOT53 = 0, TOT54 = 0, TOT55 = 0, TOT56 = 0, TOT57 = 0, TOT58 = 0, TOT59 = 0, TOT60 = 0;;
         double TOT61 = 0, TOT62 = 0, TOT63 = 0;
         SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP02561(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        if ("UK".equals(filter.cmbSELECTED)) {
+            String strSql_REAL = "";
 
+            strSql_REAL = "IFNULL((SELECT RTRIM(A1721FRCA) FROM PRAXIS.A1721 B WHERE B.A1721CCUST  = A1672.A1672CCUST AND B.A1721CIA = A1672.A1672CIA AND B.A1721FORMA = A1672.A1672FORMA AND B.A1721SERIE = A1672.A1672SERIE AND A1721SEQ = A1672SEQ AND A1721TIPO = 'ER' FETCH FIRST ROWS ONLY), '') AS A1721FRCA,"
+                    + "IFNULL((SELECT RTRIM(A720CPUI) FROM PRAXIS.A720 C WHERE C.A720AIRLIN  = A1672.A1672CCUST AND C.A720CIA = A1672.A1672CIA AND C.A720FORMA = A1672.A1672FORMA AND C.A720SERIE = A1672.A1672SERIE FETCH FIRST ROWS ONLY), '''') AS A720CPUI,"
+                    + "PRAXIS.F01_PX449_USO(A1672.A1672CCUST, A1672.A1672CIA, A1672.A1672FORMA , A1672.A1672SERIE,A1672.A1672SEQ) AS USED";
+
+            filter.strSelectA = filter.strSelectA.trim() + "," + strSql_REAL;
+        }
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -256,6 +260,13 @@ public class AuditTWDAO {
                     obj.column5 = rst.getString("column5");
                     obj.column6 = rst.getString("column6");
                     obj.column7 = rst.getString("column7");
+                    //SE AGREGO LOS CAMPOS EN DURO A PETICION DE --- EN 20231004
+
+                    if ("UK".equals(filter.cmbSELECTED)) {
+                        obj.column64 = rst.getString("A1721FRCA");
+                        obj.column65 = rst.getString("A720CPUI");
+                        obj.column66 = rst.getString("USED");
+                    }
 
                     if (filter.RN > 7) {
                         obj.column8 = rst.getString("column8");
@@ -427,15 +438,14 @@ public class AuditTWDAO {
 
         return lista;
     }
-    
 
     public String loadPX449SQP02586(SQP00768 filter) throws SQLException, Exception {
         //REALIZA EL INSERT, UPDATE O DELETE DE UN REGISTRO EN LA TABLA A1702.
         String strMsj = "An Unexpected Error Ocurred.";
 
         CallableStatement cstmt = null;
-        String SQLCLL01="";
-        
+        String SQLCLL01 = "";
+
         SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP02586(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
@@ -477,16 +487,14 @@ public class AuditTWDAO {
 
         return strMsj;
     }
-    
-    
 
     public String loadPX449SQP02637(SQP00768 filter) throws SQLException, Exception {
         //REALIZA EL INSERT, UPDATE O DELETE DE UN REGISTRO EN LA TABLA A1702.
         String strMsj = "An Unexpected Error Ocurred.";
 
         CallableStatement cstmt = null;
-        String SQLCLL01="";
-        
+        String SQLCLL01 = "";
+
         SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP02637(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
@@ -529,16 +537,14 @@ public class AuditTWDAO {
 
         return strMsj;
     }
- 
-    
 
     public String loadPX449SQP03587(SQP00768 filter) throws SQLException, Exception {
         //REALIZA EL INSERT, UPDATE O DELETE DE UN REGISTRO EN LA TABLA A1702.
         String strMsj = "An Unexpected Error Ocurred.";
 
         CallableStatement cstmt = null;
-        String SQLCLL01="";
-        
+        String SQLCLL01 = "";
+
         SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03587(?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
@@ -581,9 +587,8 @@ public class AuditTWDAO {
 
         return strMsj;
     }
-    
 
-    public List<SQP00768> loadPX449SQP02655(String tabla, String codigo,String flag) throws SQLException, Exception {
+    public List<SQP00768> loadPX449SQP02655(String tabla, String codigo, String flag) throws SQLException, Exception {
 
         List<SQP00768> lista = new ArrayList<SQP00768>();
         SQP00768 record;
@@ -672,7 +677,6 @@ public class AuditTWDAO {
 
         return lista;
     }
-    
 
     public List<SQP00768> loadPX449SQP02688() throws SQLException, Exception {
         List<SQP00768> lista = new ArrayList<SQP00768>();
@@ -693,7 +697,7 @@ public class AuditTWDAO {
             rs01 = cstmt01.getResultSet();
 
             while (rs01.next()) {
-                
+
                 record = new SQP00768();
                 record.strCodigo = rs01.getString("A2560CODRZ");
                 record.strDescrip = rs01.getString("A2560COMRE");
@@ -728,15 +732,14 @@ public class AuditTWDAO {
 
         return lista;
     }
-    
 
     public String loadPX449SQP02689(SQP00768 filter) throws SQLException, Exception {
         //REALIZA EL INSERT, UPDATE O DELETE DE UN REGISTRO EN LA TABLA A1702.
         String strMsj = "An Unexpected Error Ocurred.";
 
         CallableStatement cstmt = null;
-        String SQLCLL01="";
-        
+        String SQLCLL01 = "";
+
         SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP02689(?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
@@ -775,15 +778,14 @@ public class AuditTWDAO {
 
         return strMsj;
     }
-    
 
     public String loadPX449SQP02690(SQP00768 filter) throws SQLException, Exception {
         //REALIZA EL INSERT, UPDATE O DELETE DE UN REGISTRO EN LA TABLA A1702.
         String strMsj = "An Unexpected Error Ocurred.";
 
         CallableStatement cstmt = null;
-        String SQLCLL01="";
-        
+        String SQLCLL01 = "";
+
         SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP02690(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
@@ -825,15 +827,14 @@ public class AuditTWDAO {
 
         return strMsj;
     }
-    
 
     public String loadPX449SQP02744(SQP00768 filter) throws SQLException, Exception {
         //REALIZA EL INSERT, UPDATE O DELETE DE UN REGISTRO EN LA TABLA A1702.
         String strMsj = "An Unexpected Error Ocurred.";
 
         CallableStatement cstmt = null;
-        String SQLCLL01="";
-        
+        String SQLCLL01 = "";
+
         SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP03287(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
@@ -861,7 +862,6 @@ public class AuditTWDAO {
             cstmt.setString(17, "");
             cstmt.execute();
 
-            
             strMsj = cstmt.getString(17);
 
         } catch (Exception e) {
@@ -880,15 +880,14 @@ public class AuditTWDAO {
 
         return strMsj;
     }
-    
 
     public String loadPX449SQP02936(SQP00768 filter) throws SQLException, Exception {
         //FORCE MATCH.
         String strMsj = "An Unexpected Error Ocurred.";
 
         CallableStatement cstmt = null;
-        String SQLCLL01="";
-        
+        String SQLCLL01 = "";
+
         SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP02936(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
@@ -930,29 +929,26 @@ public class AuditTWDAO {
 
         return strMsj;
     }
-    
-    
-    
 
     public String loadPX449SQP002XXZZ(List<SQP00768> lstExcel) throws SQLException, Exception {
         //REALIZA EL INSERT, UPDATE O DELETE DE UN REGISTRO EN LA TABLA A1702.
         String strMsj = "0 ";
-        int  cont = 0 ;
+        int cont = 0;
 
         CallableStatement cstmt = null;
-        String SQLCLL01="",strTKT="";
-        String TRNCU="",SEQ="",CUPON="",CIA="",FORMA="",SERIE="",COMMENT="";
-        SQP00768 obj =null;
-        
+        String SQLCLL01 = "", strTKT = "";
+        String TRNCU = "", SEQ = "", CUPON = "", CIA = "", FORMA = "", SERIE = "", COMMENT = "";
+        SQP00768 obj = null;
+
         SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP02937(?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
-            
+
             for (int i = 0; i < lstExcel.size(); i++) {
-       
+
                 strTKT = lstExcel.get(i).column1;
                 TRNCU = lstExcel.get(i).column1;
                 SEQ = lstExcel.get(i).column2;
@@ -962,7 +958,7 @@ public class AuditTWDAO {
                 SERIE = lstExcel.get(i).column6;
                 COMMENT = lstExcel.get(i).column7;
                 //strTKT = lstExcel.get(i).toString();
-                
+
                 cstmt.registerOutParameter(10, Types.INTEGER);
 
                 cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
@@ -979,10 +975,9 @@ public class AuditTWDAO {
                 cstmt.execute();
 
                 cont += cstmt.getInt(10);
-                
+
             }
-            
-            
+
             strMsj = cont + " actualizados.";
         } catch (Exception e) {
             strMsj = e.getMessage();
@@ -1000,40 +995,37 @@ public class AuditTWDAO {
 
         return strMsj;
     }
-    
-    
 
     public String loadPX449SQP02937(String ruta) throws SQLException, Exception {
         //REALIZA EL INSERT, UPDATE O DELETE DE UN REGISTRO EN LA TABLA A1702.
         String strMsj = "0 ";
-        int  cont = 0 ;
+        int cont = 0;
 
         BufferedReader br = null;
         CallableStatement cstmt = null;
-        String SQLCLL01="",strTKT="";
-        String TRNCU="",SEQ="",CUPON="",CIA="",FORMA="",SERIE="",COMMENT="";
-        SQP00768 obj =null;
-        
+        String SQLCLL01 = "", strTKT = "";
+        String TRNCU = "", SEQ = "", CUPON = "", CIA = "", FORMA = "", SERIE = "", COMMENT = "";
+        SQP00768 obj = null;
+
         SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP02937(?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
-            
+
             cstmt.registerOutParameter(10, Types.INTEGER);
-                
+
             cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(2, session.getUserView().getUserInfo().USR);
-            
 
             br = new BufferedReader(new FileReader(ruta));
             String line = br.readLine();
 
             while (null != line) {
-                
+
                 String[] fields = line.split(",");
-       
+
                 strTKT = fields[0];
                 TRNCU = fields[0];
                 SEQ = fields[1];
@@ -1043,7 +1035,6 @@ public class AuditTWDAO {
                 SERIE = fields[5];
                 COMMENT = fields[6];
                 //strTKT = lstExcel.get(i).toString();
-                
 
                 cstmt.setString(3, CIA.trim());
                 cstmt.setString(4, FORMA.trim());
@@ -1057,11 +1048,10 @@ public class AuditTWDAO {
                 cstmt.execute();
 
                 cont += cstmt.getInt(10);
-                
+
                 line = br.readLine();
             }
-            
-            
+
             strMsj = cont + " actualizados.";
         } catch (Exception e) {
             strMsj = e.getMessage();
@@ -1085,7 +1075,7 @@ public class AuditTWDAO {
         BufferedReader br = null;
         CallableStatement cs = null;
         String strSQL = "", SEPARATOR = ",", QUOTE = "\"";
-        String IN_TKT = "",WS_SEQ="",WS_CUPON="",WS_TRNCU="",IN_MONEDA="";
+        String IN_TKT = "", WS_SEQ = "", WS_CUPON = "", WS_TRNCU = "", IN_MONEDA = "";
         double IN_TAXVAL = 0;
         String msj = " ", strTrama = "";
         int IO_QTY = 0;
@@ -1130,7 +1120,7 @@ public class AuditTWDAO {
 
                 IO_QTY += cs.getInt(9);
                 IO_QTY_ERROR += cs.getInt(10);
-                
+
                 line = br.readLine();
             }
 
@@ -1156,5 +1146,5 @@ public class AuditTWDAO {
 
         return msj;
     }
-    
+
 }

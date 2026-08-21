@@ -19,6 +19,8 @@ public class A1838Filter extends A1838{
     public String IN_A1838CCUST_OLD = "";
     public String IN_A1838TIPO_OLD = "";
     public String IN_A1838AGENT_OLD = "";
-    
+    public String OLD_REGISTERS = "";
+    public String IN_A1838FINI_OLD = "";
+    public String   IN_A1838FFIN_OLD = "";
     public Pagination page = new Pagination();
 }

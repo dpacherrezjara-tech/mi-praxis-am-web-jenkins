@@ -28,6 +28,7 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationASR.DataEntryTransactionConc
                 win.focus('txtSEQ');
                 break;
         }
+        global.AccessControlMaganerByMode(this.p);
     },
     
     mostrarData: function(data) {

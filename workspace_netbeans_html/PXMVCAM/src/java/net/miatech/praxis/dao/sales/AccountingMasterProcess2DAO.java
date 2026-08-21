@@ -40,7 +40,7 @@ public class AccountingMasterProcess2DAO {
         A1955Filter objRtn;
         int PAGINIT = 1, totPAGS = 0, totRowsPag = filter.page.PAGROW, totRows = -1;
 
-        strSQL = "{CALL PRAXIS.SQP00892(?,?,?,?,?,?,?,?,?)}";
+        strSQL = "{CALL LIBSAP55.SQP00892(?,?,?,?,?,?,?,?,?)}";
         try {
             
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
@@ -165,7 +165,7 @@ public class AccountingMasterProcess2DAO {
     public String accountMaintance(A1955Filter filter, String strOption) throws SQLException, Exception {
         String STR_RESULT = "";
         try {    
-            strSQL = "{CALL " + session.getMainLibrary() + ".SQP00902(?,?,?,?,?,?,?,?,?)}"; 
+            strSQL = "{CALL LIBSAP55.SQP05071(?,?,?,?,?,?,?,?,?)}"; 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();  
             cs = cnx.prepareCall(strSQL);
             cs.setString(1, strOption);
@@ -224,13 +224,12 @@ public class AccountingMasterProcess2DAO {
         String STR_RESULT = "";
         
         try {    
-            strSQL = "{CALL " + session.getMainLibrary() + ".SQP00690(?,?,?,?)}"; 
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP04562(?,?,?)}"; 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();  
             cs = cnx.prepareCall(strSQL);
             cs.setString(1, filter.IN_FECHA_PROCESO);            
             cs.setString(2, fuente);
             cs.setString(3, tipo);
-            cs.setString(4, filter.IN_FECHA_CONTABLE);
             cs.execute();
             
             rst = cs.getResultSet();            
@@ -330,7 +329,7 @@ public class AccountingMasterProcess2DAO {
         
         Connection cnx = null;
         try {    
-            strSQL = "{CALL " + session.getMainLibrary() + ".QRY_REVERTIR_FLOWN(?,?)}"; 
+            strSQL = "{CALL " + session.getMainLibrary() + ".SQP05186(?,?)}"; 
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();  
             cs = cnx.prepareCall(strSQL);
             cs.setString(1, filter.IN_FECHA_PROCESO);            

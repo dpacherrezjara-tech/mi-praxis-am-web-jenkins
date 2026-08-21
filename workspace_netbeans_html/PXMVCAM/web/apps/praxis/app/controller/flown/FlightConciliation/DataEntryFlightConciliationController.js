@@ -142,6 +142,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
         Ext.getCmp(prototype.id+'-txtFSENDFI').setValue('');
         Ext.getCmp(prototype.id+'-txtQCPNFI').setValue('0');
         Ext.getCmp(prototype.id+'-txtQCPNFRE').setValue('0');
+        Ext.getCmp(prototype.id+'-txtQCPHARB').setValue('0');
         Ext.getCmp(prototype.id+'-txtQCPTRA').setValue('0');
         Ext.getCmp(prototype.id+'-txtQCPAD').setValue('0');
         Ext.getCmp(prototype.id+'-txtQCPCHD').setValue('0');
@@ -213,8 +214,12 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
         } else if (bean.FSTAOD === '1') {
             Ext.getCmp(prototype.id+"-cmbFSTAOD").disable(true);
         }
-        Ext.getCmp(prototype.id+"-txtDESCRIP").setValue(bean.strDescripcion.substring(0,50).trim());
-        Ext.getCmp(prototype.id+"-txtDESCRIP2").setValue(bean.strDescripcion.substring(50,100).trim());
+        Ext.getCmp(prototype.id+"-txtDESCRIP").setValue(bean.strDescripcion);
+        Ext.getCmp(prototype.id+"-txtDESCRIP2").setValue(bean.strDescripcion2);
+        Ext.getCmp(prototype.id+"-txtDESCRIP-userCreate").setValue(bean.USCRDESCRIP);
+        Ext.getCmp(prototype.id+"-txtDescrip-DateCreate").setValue(bean.FECRDESCRIP);
+        Ext.getCmp(prototype.id+"-txtDescrip-userActualization").setValue(bean.USACDESCRIP);
+        Ext.getCmp(prototype.id+"-txtDescrip-DateActualization").setValue(bean.FEACDESCRIP);
         Ext.getCmp(prototype.id+"-txtFSENDVC").setValue(bean.FSENDVC);
         Ext.getCmp(prototype.id+"-txtQCPNVC").setValue(bean.QCPNVC);
         Ext.getCmp(prototype.id+"-txtQCPNMA").setValue(bean.QCPNMA);
@@ -242,6 +247,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
         Ext.getCmp(prototype.id+"-txtFSENDFI").setValue(bean.FSENDFI);
         Ext.getCmp(prototype.id+"-txtQCPNFI").setValue(bean.QCPNFI);
         Ext.getCmp(prototype.id+"-txtQCPNFRE").setValue(bean.QCPNFRE);
+        Ext.getCmp(prototype.id+"-txtQCPHARB").setValue(bean.QCPHARB_ESP);
         
         Ext.getCmp(prototype.id+"-cmbFSTAFI").setValue(bean.FSTAFI);
         /*if (bean.FSTAFI === '') {
@@ -273,7 +279,7 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
     btnUpdate_clickHandler: function () {
         this.FUNCION = 'UPDATE';
         var beanOption = {};
-        this.llenarData(beanOption, "U");
+            this.llenarData(beanOption, "U");
         var msjResult = this.validacionUpdate(beanOption);
         
         if(beanOption.STVAL === '3' && Ext.getCmp(prototype.id+'-txtQCPNOD').getValue().replace(',','') !==  Ext.getCmp(prototype.id+'-txtQCPNTOT').getValue().replace(',','') 
@@ -404,6 +410,9 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
             }
             if (Ext.getCmp(prototype.id+'-txtQCPNFRE').getErrors().length>0) {
                 msjResult = 'Invalid Physical File quantity coupons NR.';
+            }
+            if (Ext.getCmp(prototype.id+'-txtQCPHARB').getErrors().length>0) {
+                msjResult = 'Invalid Physical File quantity Inspectors.';
             }
             // </editor-fold>
             if(msjResult === ''){
@@ -551,7 +560,8 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
         }else{
             beanOption.FSTAOD = this.getValue('cmbFSTAOD');
         }
-        beanOption.strDescripcion = this.getValue('txtDESCRIP').padEnd(50, ' ') + this.getValue('txtDESCRIP2').padEnd(50, ' ');
+        beanOption.strDescripcion = this.getValue('txtDESCRIP');
+        beanOption.strDescripcion2 = this.getValue('txtDESCRIP2');
         beanOption.FSENDVC = Ext.util.Format.date(this.getValue('txtFSENDVC'), 'Ymd');
         if (this.getValue("txtQCPNVC").trim() !== '') {
             beanOption.QCPNVC = Number(this.getValue('txtQCPNVC').replace(',', '').trim());
@@ -603,15 +613,21 @@ Ext.define('Ext.Praxis.controller.flown.FlightConciliation.DataEntryFlightConcil
             beanOption.QCPNFI = 0;
         }
         if (this.getValue("txtQCPNFRE").trim() !== '') {
-            console.log(beanOption.QCPNFRE);
             beanOption.QCPNFRE = Number(this.getValue('txtQCPNFRE').replace(',', '').trim());
         } else {
             beanOption.QCPNFRE = 0;
         }
         beanOption.FSTAFI = this.getValue('cmbFSTAFI');
+//        beanOption.QCPHARB = this.getValue('txtQCPHARB');
+        if (this.getValue("txtQCPHARB").trim() !== '') {
+            beanOption.QCPHARB_ESP = Number(this.getValue('txtQCPHARB').replace(',', '').trim());
+        } else {
+            beanOption.QCPHARB_ESP = 0;
+        }
         beanOption.FCLOSE = this.getValue('txtFCLOSE').trim();
         beanOption.QCPNVAL = Number(this.getValue('txtQCPNVAL').replace(',', '').trim());
         beanOption.FSTAPO = this.getValue('cmbFSTAPO');
+        console.log(beanOption);
     },
     //</editor-fold>
     setValue: function(id, txt) {

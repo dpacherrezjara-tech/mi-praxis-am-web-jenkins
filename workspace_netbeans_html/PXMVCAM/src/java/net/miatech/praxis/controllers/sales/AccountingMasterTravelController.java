@@ -38,6 +38,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -91,6 +92,7 @@ public class AccountingMasterTravelController extends BaseController {
             filter.IN_A1838AGENT = request.getParameter("IN_A1838AGENT");
             filter.A1838CUENT = request.getParameter("A1838CUENT");
             filter.A1838SUBCT = request.getParameter("A1838SUBCT");
+            filter.OLD_REGISTERS = request.getParameter("OLD_REGISTERS").equals("true") ? "0" : "1";
          
             System.out.println("----------------- Parametros --------------------- ");
             System.out.println(" limit : " + request.getParameter("limit"));
@@ -330,7 +332,9 @@ public class AccountingMasterTravelController extends BaseController {
             filter.A1838FINI = request.getParameter("A1838FINI");
             filter.A1838FFIN = request.getParameter("A1838FFIN");
             filter.IN_A1838TIPO_OLD = request.getParameter("IN_A1838TIPO_OLD");
-            filter.IN_A1838AGENT_OLD = request.getParameter("IN_A1838AGENT_OLD");          
+            filter.IN_A1838AGENT_OLD = request.getParameter("IN_A1838AGENT_OLD");
+            filter.IN_A1838FINI_OLD = request.getParameter("IN_A1838FINI_OLD");
+            filter.IN_A1838FFIN_OLD = request.getParameter("IN_A1838FFIN_OLD");
             
              msj = logic.Maintance(filter, strOption);                  
 

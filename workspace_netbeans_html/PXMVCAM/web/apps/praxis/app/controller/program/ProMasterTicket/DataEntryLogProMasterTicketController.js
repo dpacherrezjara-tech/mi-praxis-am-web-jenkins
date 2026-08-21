@@ -2,19 +2,22 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryLogProMasterT
     extend: 'Ext.app.ViewController',
     alias: 'controller.DataEntryLogProMasterTicketController',
     beanA2289: {},
+    beanA4168: {},
     actionCode: '',
     gridDataAC: new Array(),
     lstA2289FilterAC: new Array(),
+    lstA4168FilterAC: new Array(),
     init: function () {
     },
     afterRender: function() {
         this.setStoreData();
         this.initDate();
         Ext.getCmp(prototype.id+'-2-txtTicketForSer').setValue(this.beanA2289.IN_FORMA+this.beanA2289.IN_SERIA);
+        this.beanA4168 = this.beanA2289;
         if(Ext.getCmp(prototype.id+'-2-txtTicketForSer').getValue()!==''){
-	  this.search(this.beanA2289);
-	  this.btn_LogCompare();
-	}
+            this.search(this.beanA2289);
+            this.btn_LogCompare();
+        }
     },
     // <editor-fold defaultstate="collapsed" desc="Combo Date">
     initDate: function() {
@@ -56,7 +59,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryLogProMasterT
 	    this.beanA2289.IN_CIA = Ext.getCmp(prototype.id+'-2-txtTicketCia').getValue();
             this.beanA2289.IN_FORMA = (Ext.getCmp(prototype.id+'-2-txtTicketForSer').getValue().trim().length >= 4) ? Ext.getCmp(prototype.id+'-2-txtTicketForSer').getValue().substr(0, 4) : '';
             this.beanA2289.IN_SERIA = (Ext.getCmp(prototype.id+'-2-txtTicketForSer').getValue().trim().length >= 10) ? Ext.getCmp(prototype.id+'-2-txtTicketForSer').getValue().substr(4, 6) : '';
-	    this.searchCompleteDetail(this.beanA2289);
+            this.searchCompleteDetail(this.beanA2289);
         }else{
             Ext.getCmp(prototype.id+'-2-btn').disable(true);
         }
@@ -64,19 +67,19 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryLogProMasterT
     
     //<editor-fold defaultstate="collapsed" desc="button">
     imgSearch_clickHandler: function () {
-	this.execSearch();
+        this.execSearch();
 	if(Ext.getCmp(prototype.id+'-2-txtTicketForSer').getValue()!==''){
             Ext.getCmp(prototype.id+'-2-btn').enable(true);
 	    this.beanA2289.IN_CIA = Ext.getCmp(prototype.id+'-2-txtTicketCia').getValue();
             this.beanA2289.IN_FORMA = (Ext.getCmp(prototype.id+'-2-txtTicketForSer').getValue().trim().length >= 4) ? Ext.getCmp(prototype.id+'-2-txtTicketForSer').getValue().substr(0, 4) : '';
             this.beanA2289.IN_SERIA = (Ext.getCmp(prototype.id+'-2-txtTicketForSer').getValue().trim().length >= 10) ? Ext.getCmp(prototype.id+'-2-txtTicketForSer').getValue().substr(4, 6) : '';
-	    this.searchCompleteDetail(this.beanA2289);
+            this.searchCompleteDetail(this.beanA2289);
         }else{
             Ext.getCmp(prototype.id+'-2-btn').disable(true);
         }
     },
     //</editor-fold>
-    
+
     execSearch: function () {
         this.beanA2289.IN_DATE_FROM = Ext.getCmp(prototype.id+'-2-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id+'-2-cmbDateFromMonth').getValue()+ Ext.getCmp(prototype.id+'-2-cmbDateFromDay').getValue();
         this.beanA2289.IN_DATE_TO = Ext.getCmp(prototype.id+'-2-cmbDateToYear').getValue() + Ext.getCmp(prototype.id+'-2-cmbDateToMonth').getValue()+ Ext.getCmp(prototype.id+'-2-cmbDateToDay').getValue();
@@ -86,6 +89,32 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryLogProMasterT
         this.beanA2289.IN_SERIA = (Ext.getCmp(prototype.id+'-2-txtTicketForSer').getValue().trim().length >= 10) ? Ext.getCmp(prototype.id+'-2-txtTicketForSer').getValue().substr(4, 6) : '';
 
         this.search(this.beanA2289);
+    },
+    
+    //<editor-fold defaultstate="collapsed" desc="buttonNewLog">
+    imgSearchNewLog_clickHandler: function () {
+        this.execSearchNewLog();
+	if(Ext.getCmp(prototype.id+'-2-txtTicketForSer').getValue()!==''){
+            Ext.getCmp(prototype.id+'-2-btn').enable(true);
+	    /*this.beanA4168.IN_CIA = Ext.getCmp(prototype.id+'-2-txtTicketCia').getValue();
+            this.beanA4168.IN_FORMA = (Ext.getCmp(prototype.id+'-2-txtTicketForSer').getValue().trim().length >= 4) ? Ext.getCmp(prototype.id+'-2-txtTicketForSer').getValue().substr(0, 4) : '';
+            this.beanA4168.IN_SERIA = (Ext.getCmp(prototype.id+'-2-txtTicketForSer').getValue().trim().length >= 10) ? Ext.getCmp(prototype.id+'-2-txtTicketForSer').getValue().substr(4, 6) : '';
+            this.searchNewLogCompleteDetail(this.beanA4168);*/
+        }else{
+            Ext.getCmp(prototype.id+'-2-btn').disable(true);
+        }
+    },
+    //</editor-fold>
+    
+    execSearchNewLog: function () {
+        this.beanA4168.IN_DATE_FROM = Ext.getCmp(prototype.id+'-2-cmbDateFromYear').getValue() + Ext.getCmp(prototype.id+'-2-cmbDateFromMonth').getValue()+ Ext.getCmp(prototype.id+'-2-cmbDateFromDay').getValue();
+        this.beanA4168.IN_DATE_TO = Ext.getCmp(prototype.id+'-2-cmbDateToYear').getValue() + Ext.getCmp(prototype.id+'-2-cmbDateToMonth').getValue()+ Ext.getCmp(prototype.id+'-2-cmbDateToDay').getValue();
+
+        this.beanA4168.IN_CIA = Ext.getCmp(prototype.id+'-2-txtTicketCia').getValue();
+        this.beanA4168.IN_FORMA = (Ext.getCmp(prototype.id+'-2-txtTicketForSer').getValue().trim().length >= 4) ? Ext.getCmp(prototype.id+'-2-txtTicketForSer').getValue().substr(0, 4) : '';
+        this.beanA4168.IN_SERIA = (Ext.getCmp(prototype.id+'-2-txtTicketForSer').getValue().trim().length >= 10) ? Ext.getCmp(prototype.id+'-2-txtTicketForSer').getValue().substr(4, 6) : '';
+
+        this.searchNewLog(this.beanA4168);
     },
     
     //<editor-fold defaultstate="collapsed" desc="search">
@@ -111,6 +140,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryLogProMasterT
                             Ext.getCmp(prototype.id+'-2-lblPagTotal').setText(win.formatLngNumber(me01.beanA2289.page.TOTPAG));
                             Ext.getCmp(prototype.id+'-2-lblRowsTotal').setText(win.formatLngNumber(me01.beanA2289.page.TOTROW));
                             Ext.getCmp(prototype.id+'-2-boxPaginacion').show();
+                            Ext.getCmp(prototype.id + '-2-columnFOP').setText('FOP ACCB');
                         } else {
                             global.Msg({msg: 'Data not found'});
                             Ext.getCmp(prototype.id+'-2-lblPagActual').setText('0');
@@ -156,7 +186,7 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryLogProMasterT
                             Ext.getCmp(prototype.id+'-3-msjDiff').show();
                          }else{
                             Ext.getCmp(prototype.id+'-3-msjDiff').hide();
-                         }
+                        }
                     } else {
                         global.Msg({msg: 'Data not found'});
                     }
@@ -171,7 +201,49 @@ Ext.define('Ext.Praxis.controller.program.ProMasterTicket.DataEntryLogProMasterT
     },
     //</editor-fold>
 
-    
+    //<editor-fold defaultstate="collapsed" desc="searchNewLog">
+    searchNewLog: function (beanA4168) {
+        var me01 = this;
+        var storeGridDatas = Ext.create('Ext.Praxis.store.payments.GridData', {
+            proxy: {
+                url: CONTEXTPATH + '/BwrLog/searchNewLog'
+            },
+            listeners: {
+                beforeload: function (obj) {
+                    obj.proxy.extraParams = {beanString: JSON.stringify(beanA4168)};
+                },
+                load: function (obj, obj2, success, response, obj5) {
+                    win.lblUser_toolTip("Estructura: A720");
+                    var res = Ext.JSON.decode(response._response.responseText);
+                    console.log(res);
+                    if (res.success) {
+                        me01.gridDataAC = res.data;
+                        if (me01.gridDataAC.length > 0) {
+                            me01.beanA4168 = me01.gridDataAC[0];
+                            Ext.getCmp(prototype.id + '-2-lblPagActual').setText(win.formatLngNumber(me01.beanA4168.page.PAGNUM));
+                            Ext.getCmp(prototype.id + '-2-lblPagTotal').setText(win.formatLngNumber(me01.beanA4168.page.TOTPAG));
+                            Ext.getCmp(prototype.id + '-2-lblRowsTotal').setText(win.formatLngNumber(me01.beanA4168.page.TOTROW));
+                            Ext.getCmp(prototype.id + '-2-boxPaginacion').show();
+                            Ext.getCmp(prototype.id + '-2-columnFOP').setText('FOP Reconciliation');
+                        } else {
+                            global.Msg({msg: 'Data not found'});
+                            Ext.getCmp(prototype.id + '-2-lblPagActual').setText('0');
+                            Ext.getCmp(prototype.id + '-2-lblPagTotal').setText('0');
+                            Ext.getCmp(prototype.id + '-2-lblRowsTotal').setText('0');
+                            Ext.getCmp(prototype.id + '-2-boxPaginacion').hide();
+                        }
+                    } else {
+                        global.Msg({msg: res.sesion});
+                    }
+                    global.clear();
+                }
+            }
+        });
+        Ext.getCmp(prototype.id + '-2-gridData').bindStore(storeGridDatas);
+        Ext.getCmp(prototype.id + '-2-paggin').bindStore(storeGridDatas);
+    },
+    //</editor-fold>
+
     pagFirst: function(obj, e) {
         Ext.getCmp(prototype.id+'-2-paggin').moveFirst();
     },

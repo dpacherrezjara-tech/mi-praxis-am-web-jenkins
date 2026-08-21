@@ -37,6 +37,7 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.DataEntryOwnerlessCoupon
                 break;
         }
         // global.AccessControlMaganer();
+        global.AccessControlMaganerByMode(this.p);
     }
     ,
     setStoreData: function() {
@@ -215,6 +216,7 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.DataEntryOwnerlessCoupon
         var strOption = strOption;
         var A1413DATE = Ext.getCmp(prototype.id + '-txtA1413DATE').getValue();
         var A1413SEC = Ext.getCmp(prototype.id + '-txtA1413SEC').getValue();
+        var A1413NENV = Ext.getCmp(prototype.id + '-txtA1413NENV').getValue();
         var A1413DATA = Ext.getCmp(prototype.id + '-txtA1413DATA').getValue();
         var A1413STATU = Ext.getCmp(prototype.id + '-txtA1413STATU').getValue();
         var strTicket = Ext.getCmp(prototype.id + '-txtStrTicket').getValue();
@@ -244,6 +246,7 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.DataEntryOwnerlessCoupon
             strOption: strOption,
             A1413DATE: A1413DATE,
             A1413SEC: A1413SEC,
+            A1413NENV: A1413NENV,
             A1413DATA: A1413DATA,
             A1413STATU: A1413STATU,
             A1413CIA: A1413CIA,
@@ -287,6 +290,10 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.DataEntryOwnerlessCoupon
         var A1413CIA = rec.get('A1413CIA');
         var A1413FORSE = rec.get('A1413FORSE');
         var A1413CUPON = rec.get('A1413CUPON');
+        
+        var A1413NENV = rec.get('A1413NENV');
+        var A1413SEC = rec.get('A1413SEC');
+        
         Ext.Ajax.request({
             url: prototype.url + '/searchBeans',
             method: 'POST',
@@ -295,7 +302,9 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.DataEntryOwnerlessCoupon
                 A1413DATE: A1413DATE,
                 A1413CIA: A1413CIA,
                 A1413FORSE: A1413FORSE,
-                A1413CUPON: A1413CUPON
+                A1413CUPON: A1413CUPON,
+                A1413NENV: A1413NENV,
+                A1413SEC: A1413SEC
             }           
             ,
             success: function(response, options) {
@@ -312,6 +321,7 @@ Ext.define('Ext.Praxis.controller.flown.OwnerlessCoupon.DataEntryOwnerlessCoupon
                 Ext.getCmp(prototype.id + '-cmbA1413TYPE').setValue(resp.beanCons.A1413TYPE);
                 Ext.getCmp(prototype.id + '-cmbA1413SOURC').setValue(resp.beanCons.A1413SOURC);
                 Ext.getCmp(prototype.id + '-txtA1413SEC').setValue(resp.beanCons.A1413SEC);
+                Ext.getCmp(prototype.id + '-txtA1413NENV').setValue(resp.beanCons.A1413NENV);
                 Ext.getCmp(prototype.id + '-txtA1413PNROR').setValue(resp.beanCons.A1413PNROR);
                 Ext.getCmp(prototype.id + '-txtA1413PNR').setValue(resp.beanCons.A1413PNROR);
                 Ext.getCmp(prototype.id + '-txtA1413DATA').setValue(resp.beanCons.A1413DATA);

@@ -16,6 +16,7 @@ import net.miatech.beans.A720Filter;
 import net.miatech.beans.DashboardFilter;
 import net.miatech.beans.IMF053Filter;
 import net.miatech.beans.IMF111Filter;
+import net.miatech.beans.PX228S01Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.libcust.A051wr;
 import net.miatech.praxis.dao.screens.Dashboard01DAO;
@@ -56,6 +57,10 @@ public class Dashboard01Logic {
 
     public List<DashboardFilter> loadPX109SQP01540(DashboardFilter filter) throws SQLException, Exception {
         return Dashboard01DAO.loadPX109SQP01540(filter);
+    }
+    
+    public List<DashboardFilter> loadPX109SQP04921(DashboardFilter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP04921(filter);
     }
 
     public List<DashboardFilter> loadPX109SQP00644(DashboardFilter filter, String strGROUPBY) throws SQLException, Exception {
@@ -214,9 +219,29 @@ public class Dashboard01Logic {
     public List<A1971Filter> loadPX109SQP00556(A1971Filter filter) throws SQLException, Exception {
         return Dashboard01DAO.loadPX109SQP00556(filter);
     }
+    
+    public List<A1971Filter> loadPX109SQP00556MT(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP00556MT(filter);
+    }
+    
+    public List<A1971Filter> loadPX109SQP00556NF(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP00556NF(filter);
+    }
+
+    public List<A1971Filter> loadPX109SQP00556ZN(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP00556ZN(filter);
+    }
+    
+    public List<A1971Filter> loadPX109SQP00556CA(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP00556CA(filter);
+    }
 
     public List<A1971Filter> loadPX109SQP01927(A1971Filter filter) throws SQLException, Exception {
         return Dashboard01DAO.loadPX109SQP01927(filter);
+    }
+    
+    public List<A1971Filter> loadPX109SQP01927M(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX109SQP01927M(filter);
     }
 
     public List<A1971Filter> loadPX246SQP01130(A1971Filter filter) throws SQLException, Exception {
@@ -239,6 +264,54 @@ public class Dashboard01Logic {
         return Dashboard01DAO.loadPX246SQP00333(filter);
     }
     
+    public List<A1971Filter> loadPX241S01_D(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX241S01_D(filter);
+    }
+    
+    public List<A1971Filter> loadPX241S01_Charts(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX241S01_Charts(filter);
+    }
+    
+    public List<A1971Filter> loadPX241SQP01404(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX241SQP01404(filter);
+    }
+    
+    public List<A1971Filter> loadPX241SQP01398(A1971Filter filter, String strIndSpa) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX241SQP01398(filter,strIndSpa);
+    }
+    
+    public List<A1971Filter> loadPX241SQP01493(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX241SQP01493(filter);
+    }
+    
+    public List<A1971Filter> loadPX241S02_D(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX241S02_D(filter);
+    }
+    
+    public List<A1971Filter> loadPX241S02_DNot(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX241S02_DNot(filter);
+    }
+    
+    public List<A1971Filter> loadPX241SQP01253(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX241SQP01253(filter);
+    }
+    
+    public List<A1971Filter> loadPX241SQP01254(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX241SQP01254(filter);
+    }
+    
+    public List<A1971Filter> loadPX241S09_D(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX241S09_D(filter);
+    }
+    
+    public List<A1971Filter> loadPX241S07_D(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX241S07_D(filter);
+    }
+    
+    public List<A1971Filter> loadPX241S08_D(A1971Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.loadPX241S08_D(filter);
+    }
+    
     public List<A1971Filter> loadPX246SQP00329(A1971Filter filter) throws SQLException, Exception {
         return Dashboard01DAO.loadPX246SQP00329(filter);
     }
@@ -255,12 +328,6 @@ public class Dashboard01Logic {
         return Dashboard01DAO.loadPX246SQP00342(filter);
     }
     
-    
-    
-    
-    
-    
-
     //* ***************************Expired*******************************
     public List<IMF117Filter> loadPX109SQP02666(IMF117Filter filter) throws SQLException, Exception {
         return Dashboard01DAO.loadPX109SQP02666(filter);
@@ -269,5 +336,36 @@ public class Dashboard01Logic {
     public List<IMF117Filter> loadPX109SQP02667(IMF117Filter filter) throws SQLException, Exception {
         return Dashboard01DAO.loadPX109SQP02667(filter);
     }
-
+    
+    //* ***************************Iata*******************************
+    
+    public List<IMF117Filter> SQP02271(IMF117Filter filter) throws SQLException, Exception {
+        return Dashboard01DAO.SQP02271(filter);
+    }
+    
+    public List<IMF117Filter> loadPX226S01(IMF117Filter filter) throws Exception {
+        return Dashboard01DAO.loadPX226S01(filter);
+    }
+    
+    //* ***************************Forecast*******************************
+    
+    public List<IMF117Filter> loadPX226SQP05098(IMF117Filter filter) throws Exception {
+        return Dashboard01DAO.loadPX226SQP05098(filter);
+    }
+    
+    public List<IMF117Filter> loadPX226SQP05098Down(IMF117Filter filter) throws Exception {
+        return Dashboard01DAO.loadPX226SQP05098Down(filter);
+    }
+    
+    public List<IMF117Filter> loadPX226SQP05098Graph(IMF117Filter filter) throws Exception {
+        return Dashboard01DAO.loadPX226SQP05098Graph(filter);
+    }
+    
+    public List<IMF117Filter> loadPX226SQP05098Chart(IMF117Filter filter) throws Exception {
+        return Dashboard01DAO.loadPX226SQP05098Chart(filter);
+    }
+    
+//    public List<IMF117Filter> loadPX228S01A1890(IMF117Filter filter) throws Exception {
+//        return Dashboard01DAO.loadPX228S01A1890(filter);
+//    }
 }

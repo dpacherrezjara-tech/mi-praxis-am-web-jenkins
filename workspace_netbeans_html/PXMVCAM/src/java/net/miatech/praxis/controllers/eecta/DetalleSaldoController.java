@@ -6,8 +6,14 @@
 package net.miatech.praxis.controllers.eecta;
 
 import com.google.gson.Gson;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +24,7 @@ import net.miatech.praxis.eecta.SQP04000Filter;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.logic.eecta.DetalleSaldoLogic;
 import net.miatech.utils.Functions;
+import org.apache.commons.io.IOUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
@@ -104,17 +111,16 @@ public class DetalleSaldoController extends BaseController {
             filter.page.PAGNUM = (start / filter.page.PAGROW) + 1; 
             
             List<SQP04000Filter> lst = logic.getSQP04000(filter);
+                        
             
             // <editor-fold defaultstate="collapsed" desc="Estilo del Excel">
             Workbook workbook = new XSSFWorkbook();
             Sheet sheet = workbook.createSheet(fileName);
             XSSFCellStyle headerStyle = (XSSFCellStyle) workbook.createCellStyle();
-//            CellStyle headerStyle = workbook.createCellStyle();
             CellStyle bodyStyle = workbook.createCellStyle();
             Font headerFont = workbook.createFont();
             headerFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
             headerFont.setColor(IndexedColors.BLACK.getIndex());
-
             headerStyle.setBorderRight(CellStyle.BORDER_THIN);
             headerStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
             headerStyle.setBorderBottom(CellStyle.BORDER_THIN);
@@ -124,12 +130,10 @@ public class DetalleSaldoController extends BaseController {
             headerStyle.setBorderTop(CellStyle.BORDER_THIN);
             headerStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
             headerStyle.setAlignment(CellStyle.ALIGN_CENTER);
-//            headerStyle.setFillForegroundColor(IndexedColors.BLUE_GREY.getIndex());
             headerStyle.setFillForegroundColor(new XSSFColor(new java.awt.Color(127, 152, 168)));
             headerStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
             headerStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
-            headerStyle.setFont(headerFont);
-            
+            headerStyle.setFont(headerFont);            
             bodyStyle.setBorderRight(CellStyle.BORDER_THIN);
             bodyStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
             bodyStyle.setBorderBottom(CellStyle.BORDER_THIN);
@@ -147,6 +151,8 @@ public class DetalleSaldoController extends BaseController {
             Cell cell50, cell51, cell52, cell53, cell54, cell55, cell56;
             Cell cell57, cell58, cell59, cell60, cell61, cell62, cell63, cell64, cell65;
             Cell cell66, cell67, cell68, cell69, cell70;
+            
+            
             
             // <editor-fold defaultstate="collapsed" desc="row">
             row = sheet.createRow(vj);
@@ -332,4 +338,75 @@ public class DetalleSaldoController extends BaseController {
         }
     }
     
+    /*
+    * API descarga reporte de VENTA EECC. Report01 
+    */
+    @RequestMapping(value = "getEECCReport01")
+    public @ResponseBody
+    void getEECCReport01(HttpServletRequest request, HttpServletResponse response) {
+//        String rutaTemp = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD_DJANGO").toString(); // NO USAR 
+        String rutaTemp = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();         
+        try {            
+            SQP04000Filter filter;
+            filter = new SQP04000Filter();
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());            
+//            JsonParser parser = new JsonParser();
+//            JsonArray gridColumns = parser.parse(request.getParameter("gridColumns")).getAsJsonArray();
+
+            Unirest.setTimeouts(3600000, 3600000);           
+            HashMap bodyData = new HashMap<>();                        
+            bodyData.put("VP_FDATE1", filter.VP_FDATE1 );
+            bodyData.put("VP_FDATE2", filter.VP_FDATE2);   
+            bodyData.put("VP_CDCLI", filter.VP_CDCLI);   
+            bodyData.put("VP_RSOCI", filter.VP_RSOCI);
+            bodyData.put("VP_NRRPT", filter.VP_NRRPT);              
+            bodyData.put("VP_REFPG", filter.VP_REFPG);   
+            bodyData.put("VP_CTABC", filter.VP_CTABC); 
+            bodyData.put("VP_STSPG", filter.VP_STSPG); 
+            bodyData.put("VP_BOLETO", filter.VP_BOLETO); 
+            bodyData.put("VP_COLUMN", request.getParameter("gridColumns") );
+            bodyData.put("VP_ENV", serverSession.getServerSession().getPropertySession().get("SERVER_DJANGO").toString()); //"AEROMEXICO_TEST"             
+            bodyData.put("VP_PATH_TEMP", rutaTemp );             
+            
+            String urlREST = serverSession.getServerSession().getPropertySession().get("RUTA_REST_DJANGO").toString();
+            //String urlREST = "http://127.0.0.1:5557";
+            String urlAPI  = "/api/praxis/praxis_eecc_reporte01/";  
+            HttpResponse<JsonNode> responseAPI = Unirest.post(urlREST + urlAPI )
+                    .header("content-type", "application/json") 
+                    .header("cache-control", "no-cache")
+                    .body(new Gson().toJson(bodyData))
+                    .asJson();
+            
+            String error_code = responseAPI.getBody().getObject().get("RESPONSE").toString();
+            String error_msg = responseAPI.getBody().getObject().get("MESSAGE_TEXT").toString();
+            String file_path = responseAPI.getBody().getObject().get("FILEPATH").toString();
+            String file_name = responseAPI.getBody().getObject().get("FILENAME").toString();
+            
+            String fileNameDownload = file_path +"\\"+ file_name;
+            response.setContentType("application/vnd.openxml");
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + file_name  + "\"");
+            InputStream is = new FileInputStream( fileNameDownload );
+            IOUtils.copy(is, response.getOutputStream());
+            response.flushBuffer();            
+// ZIP            
+//            response.setContentType("application/zip");
+//            response.setHeader("Content-Disposition", "attachment;filename=\"" + rutaFile + "\\" + filename + ".zip" + "\"");
+//            InputStream is = new FileInputStream(rutaFile + "\\" + filename + ".zip");
+//            IOUtils.copy(is, response.getOutputStream());
+//            response.flushBuffer();
+            
+            delete_fichero(fileNameDownload);
+            
+        } catch (Exception e) {
+            throw new SpringException(e);
+        }
+    }
+    
+    public Boolean delete_fichero( String fileName ) {
+        //String path = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString();
+        String sFichero = fileName; //path + "\\" + fileName + ".pdf";
+        File f = new File(sFichero);
+        f.delete();
+        return true;
+    }
 }

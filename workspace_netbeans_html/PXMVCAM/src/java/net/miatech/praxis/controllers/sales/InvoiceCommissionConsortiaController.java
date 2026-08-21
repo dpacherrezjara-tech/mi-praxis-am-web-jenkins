@@ -5,7 +5,6 @@
  */
 package net.miatech.praxis.controllers.sales;
 
-import net.miatech.praxis.controllers.flown.*;
 import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -14,29 +13,21 @@ import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.miatech.beans.A1952Filter;
-import net.miatech.beans.PX019S01A004Filter;
-import net.miatech.beans.PX019S01A823Filter;
-import net.miatech.beans.SQP00796Filter;
 import net.miatech.beans.SQP00801Filter;
 import net.miatech.beans.SQP00802Filter;
 import net.miatech.beans.SQP00804Filter;
-import net.miatech.beans.SQP00806Filter;
-import net.miatech.libmiatec.A722;
+import net.miatech.beans.spring.implement.IServerSession;
+import net.miatech.praxis.SQP04749Filter;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.exceptions.SpringException;
-import net.miatech.praxis.logic.flown.CatalogueFlightLogic;
-import net.miatech.praxis.logic.sales.FptfAirlineLogic;
-import net.miatech.praxis.logic.sales.FptfBestPracticeLogic;
 import net.miatech.praxis.logic.sales.InvoiceCommissionConsortiaLogic;
-import net.miatech.praxis.logic.sales.InvoiceCommissionConsortiaLogic;
-import net.miatech.praxis.logic.sales.ProvisosTextLogic;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
@@ -46,13 +37,15 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.context.annotation.Scope;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -289,7 +282,8 @@ public class InvoiceCommissionConsortiaController extends BaseController {
             CH1_06.setCellValue("IVA");
             CH1_07.setCellValue("Commission+IVA");
             CH1_08.setCellValue("Total Cash");
-            CH1_09.setCellValue("Total Cash - Commision");
+//            CH1_09.setCellValue("Total Cash - Commision");
+            CH1_09.setCellValue("Total");
             CH1_10.setCellValue("App.");
             CH1_11.setCellValue("Acc.");
 
@@ -472,5 +466,25 @@ public class InvoiceCommissionConsortiaController extends BaseController {
         }
         return new Gson().toJson(map);
     }
-   
+    
+    //DVT 20221215
+    //Obtiene datos del EMD solicitado en request(valida body en front end)
+    @RequestMapping(value = "/getValidateEmd",method = RequestMethod.POST)
+    public ResponseEntity<?> validateEmdConsortia(@RequestBody Map<String,String> body){
+        SQP04749Filter filter = new SQP04749Filter();
+        List<SQP04749Filter> lstResponse =  null;
+        try {
+            filter.setInputVars(body.get("CCUST"), body.get("LOTE"), body.get("AGENT"), body.get("RFIS"));
+            logic = new InvoiceCommissionConsortiaLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            lstResponse = logic.getSQP04749Filter(filter);
+            if (lstResponse.isEmpty()) {
+                return new ResponseEntity("Not found",HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return new ResponseEntity(Collections.singletonMap("msg", "Error al consultar RFIS"),HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity(lstResponse,HttpStatus.OK);
+    }
 }

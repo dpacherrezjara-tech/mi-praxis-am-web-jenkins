@@ -21,6 +21,11 @@ public class A1819Filter extends A1819{
     
     public String IN_A1819CCUST_OLD = "";
     public String IN_A1819TACC_OLD ="";
+    public String OLD_REGISTERS = "";
+    public String IN_A1819FINI_OLD = "";
+    public String IN_A1819FFIN_OLD = "";
+    
+    
     
     public Pagination page = new Pagination();
 }

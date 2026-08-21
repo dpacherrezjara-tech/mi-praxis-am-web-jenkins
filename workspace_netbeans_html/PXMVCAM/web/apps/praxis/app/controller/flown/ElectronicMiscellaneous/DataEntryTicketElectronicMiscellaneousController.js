@@ -18,14 +18,32 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
     afterRender: function() {
         this.setStoreData();
         this.p = this.view.params;
+        var menuUser = document.getElementById('menuUser').innerText;
+        console.log(this.p,'LA OPCION P')
         switch (this.p.action) {
             case 'I':
                 Ext.getCmp(prototype.id + '-t' + '-btn-save').show();
                 this.disabledField();//La version de flex lo mantiene asi
                 break;
             case 'U':
-                Ext.getCmp(prototype.id + '-t' + '-btn-update').show();
-                Ext.getCmp(prototype.id + '-t' + '-btn-delete').show();
+                
+                
+                
+//                if (menuUser !== "LAGREDA") {
+                    
+                    let showOptions = (this.p.rec.data.IDCON || '').toString().trim();
+                    if (showOptions) {
+                        Ext.getCmp(prototype.id + '-t' + '-btn-update').hide();
+                        Ext.getCmp(prototype.id + '-t' + '-btn-delete').hide();
+                    } else {
+                        Ext.getCmp(prototype.id + '-t' + '-btn-update').show();
+                        Ext.getCmp(prototype.id + '-t' + '-btn-delete').hide();
+                    }
+                    
+//                }
+                
+                
+                
                 Ext.getCmp(prototype.id + '-t' + '-btn-cancel').show();
                 this.getDataInputs();
 //                this.disabledField();
@@ -33,13 +51,22 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
                 break;
         }
         // global.AccessControlMaganer();
+        console.log(menuUser !== "LAGREDA","validacion")
+//        if (menuUser !== "LAGREDA") {
+//            global.AccessControlMaganerByMode(this.p);
+//            
+//        } else {
+//            Ext.getCmp(prototype.id + '-t' + '-btn-update').show();
+//        }
+        
+        
     },
     onFocusLeaveOpe: function(obj) {
         console.log(obj.getValue());
 
-        if (obj.getValue().trim() !== '5D' && obj.getValue().trim() !== 'AM') {
-            Ext.getCmp(prototype.id + '-t' + '-txtCARR').setValue('');
-        }
+//        if (obj.getValue().trim() !== '5D' && obj.getValue().trim() !== 'AM') {
+//            Ext.getCmp(prototype.id + '-t' + '-txtCARR').setValue('');
+//        }
     },
     setStoreData: function() {
         var cmbTEMD = Ext.getCmp(prototype.id + '-t' + '-cmbTEMD');
@@ -78,7 +105,9 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
                 ["0", "Hard Block"],
                 ["1", "Pending"],
                 ["2", "Valued"],
-                ["3", "Closed"]
+                ["3", "Closed"],
+                ["7", "BPO Volado"],
+                ["9", "Poliza Errada"]
             ]}));
         cmbSTVAL.setValue("");
         cmbFTE.bindStore(Ext.create('Ext.data.ArrayStore', {
@@ -262,9 +291,16 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
         //Fecha Contable (x ahora lo saca de la Fecha de Vuelo a pedido de ENS)
         var FCONT = Ext.util.Format.date(Ext.getCmp(prototype.id + '-t' + '-txtFCONT').getValue(), 'Ymd');
         var DFLIGHT = Ext.util.Format.date(Ext.getCmp(prototype.id + '-t' + '-txtDFLIGHT').getValue(), 'Ymd');
+        
+        var CDEPART_OLD = this.CDEPART_OLD;
+        var CARRIVA_OLD = this.CARRIVA_OLD;
+        var NFLIGHT_OLD = this.NFLIGHT_OLD;
+        var DFLIGHT_OLD = this.DFLIGHT_OLD;
+        
+        /*
         if (FCONT === '' && DFLIGHT.length === 8) {
             FCONT = DFLIGHT.substring(0, 6);
-        }
+        }*/
         //Valida el origen según la CIA.
         var STORG;
         var cia = strTicket.substring(0, 3);
@@ -363,12 +399,23 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
             TCMUS: TCMUS,
             VCPUS: VCPUS,
             NFLIGHT: NFLIGHT,
+            CDEPART_OLD : CDEPART_OLD,
+            CARRIVA_OLD: CARRIVA_OLD,
+            NFLIGHT_OLD: NFLIGHT_OLD,
+            DFLIGHT_OLD: DFLIGHT_OLD
         };
     },
     validationFields: function(bean) {
 
         var rec = this.p.rec.data;
         var msjResult = "";
+        
+        /* VALIDACION PARA CARRIER, SOLO PERMITIR AM O 5D */
+        
+        if (bean.CARR !== '' && bean.CARR !== 'AM' && bean.CARR !== '5D') {
+            msjResult = "The Carrier can only have the values '5D', 'AM', or be empty.";
+            return msjResult;
+        }
 
         if (bean.strTicket === '') {
             msjResult = "A Ticket number is required.";
@@ -437,20 +484,26 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
         }
         var fechaHoy = Ext.util.Format.date(this.fechaHoy, 'Ymd');
 
-        if (msjResult.trim() === '') {
-            if (parseInt(bean.FVTA) > parseInt(bean.DFLIGHT)) {
-                msjResult = "Sales Date cannot be higher than Flight Date";
-                return msjResult;
-            } else {
-                if (parseInt(bean.FVTA) > parseInt(fechaHoy)) {
-                    msjResult = "Sales Date cannot be higher than Current Date";
+        var menuUser = document.getElementById('menuUser').innerText;
+                
+        if (menuUser !== "LAGREDA") {
+            
+            if (msjResult.trim() === '') {
+                if (parseInt(bean.FVTA) > parseInt(bean.DFLIGHT)) {
+                    msjResult = "Sales Date cannot be higher than Flight Date";
                     return msjResult;
-                }
-                if (parseInt(bean.DFLIGHT) > parseInt(fechaHoy)) {
-                    msjResult = "Flight Date cannot be higher than Current Date";
-                    return msjResult;
+                } else {
+                    if (parseInt(bean.FVTA) > parseInt(fechaHoy)) {
+                        msjResult = "Sales Date cannot be higher than Current Date";
+                        return msjResult;
+                    }
+                    if (parseInt(bean.DFLIGHT) > parseInt(fechaHoy)) {
+                        msjResult = "Flight Date cannot be higher than Current Date";
+                        return msjResult;
+                    }
                 }
             }
+            
         }
 
         return msjResult;
@@ -503,7 +556,8 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
             CCIA: rec.CCIA,
             FORMA: rec.FORMA,
             SERIE: rec.SERIE,
-            CUPON: rec.CUPON
+            CUPON: rec.CUPON,
+            SEQ: rec.SEQ
         };
         Ext.Ajax.request({
             url: prototype.url + '/searcheEntyTKT',
@@ -521,10 +575,13 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
     },
     showDataInputs: function(rec) {
         
+        console.log(rec,'TODO LO QUE TRAJE')
+        
         Ext.getCmp(prototype.id + '-t' + '-txtTicket').setValue(rec.strTicket.trim());
         Ext.getCmp(prototype.id + '-t' + '-txtRoll').setValue(rec.SEQRO.trim());
         Ext.getCmp(prototype.id + '-t' + '-txtCupon').setValue(rec.CUPON.trim());
         Ext.getCmp(prototype.id + '-t' + '-txtDCHEQ').setValue(rec.DCHEQ.trim());
+        Ext.getCmp(prototype.id + '-t' + '-txtSEQ').setValue(rec.SEQ.trim());
         Ext.getCmp(prototype.id + '-t' + '-txtFCONT').setValue(rec.FCONT.trim());
         Ext.getCmp(prototype.id + '-t' + '-txtCDEPART').setValue(rec.CDEPART.trim());
         Ext.getCmp(prototype.id + '-t' + '-txtCARRIVA').setValue(rec.CARRIVA.trim());
@@ -569,6 +626,13 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
         Ext.getCmp(prototype.id + '-t' + '-txtTKTASO').setValue(rec.TKTASO);
         Ext.getCmp(prototype.id + '-t' + '-txtFVAL').setValue(rec.FVAL);
         Ext.getCmp(prototype.id + '-t' + '-txtIDCON').setValue(rec.IDCON);
+        Ext.getCmp(prototype.id + '-t' + '-txtCodeErrorVo').setValue(rec.CODER_EXTRA);
+        
+        Ext.tip.QuickTipManager.register({
+            target: prototype.id + '-t' + '-txtCodeErrorVo',
+            text: rec.DESC_ERROR_EXTRA
+        });
+        
         Ext.create('Ext.tip.ToolTip', {
             target: prototype.id + '-t' + '-txtCDEPART',
             html: rec.strDescCDEPART.trim()
@@ -581,22 +645,25 @@ Ext.define('Ext.Praxis.controller.flown.ElectronicMiscellaneous.DataEntryTicketE
             target: prototype.id + '-t' + '-txtPSVVTA',
             html: rec.strDescPSVVTA.trim()
         });
-        if (rec.SEQ.trim() === '') {
-            Ext.getCmp(prototype.id + '-t' + '-txtDCHEQ').setValue('00');
-        } else {
-            Ext.getCmp(prototype.id + '-t' + '-txtDCHEQ').setValue(rec.SEQ.trim());
+//        if (rec.SEQ.trim() === '') {
+//            Ext.getCmp(prototype.id + '-t' + '-txtDCHEQ').setValue('00');
+//        } else {
+//            Ext.getCmp(prototype.id + '-t' + '-txtDCHEQ').setValue(rec.SEQ.trim());
+//        }
+
+        var menuUser = document.getElementById('menuUser').innerText;
+                
+        if (menuUser !== "LAGREDA") {
+            
+                //Sólo son editables si la información que viene es vacía (A pedido de Javier Toledo)
+            if (rec.CDOC.trim() === '' && rec.TDOC.trim() === '' && rec.PSVVTA.trim() === '' && rec.AGTIA.trim() === '' && rec.FVTA.trim() === ''
+                    && rec.TVTA.trim() === '' && rec.TPAX.trim() === '') {
+                //Mantener activados
+            } else {
+                this.disabledField();
+            }
+            
         }
-
-        //Sólo son editables si la información que viene es vacía (A pedido de Javier Toledo)
-        if (rec.CDOC.trim() === '' && rec.TDOC.trim() === '' && rec.PSVVTA.trim() === '' && rec.AGTIA.trim() === '' && rec.FVTA.trim() === ''
-                && rec.TVTA.trim() === '' && rec.TPAX.trim() === '') {
-            //Mantener activados
-        } else {
-            this.disabledField();
-        }
-
-
-
 
 
 

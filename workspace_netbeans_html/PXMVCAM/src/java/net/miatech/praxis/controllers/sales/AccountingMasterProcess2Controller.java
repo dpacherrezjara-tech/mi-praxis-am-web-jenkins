@@ -134,6 +134,18 @@ public class AccountingMasterProcess2Controller extends BaseController {
                         }                
                         logic.reversaSalesReg(reversa.IN_FECHA_PROCESO,"", "F");
                         break;
+                    case "PSALESARC" :
+                        logic.reversaSales(reversa,"ARC","S");
+                        break;    
+                    case "PSALESASR" :
+                        logic.reversaSales(reversa,"ASR","S");
+                        break;    
+                    case "PSALESBSP" :
+                        logic.reversaSales(reversa,"BSP","S");
+                        break;    
+                    case "PSALESMAN" :
+                        logic.reversaSales(reversa,"MAN","S");
+                        break;    
                     case "PFLOWN" :
                         logic.reversaFlown(filter);
                         break;                        

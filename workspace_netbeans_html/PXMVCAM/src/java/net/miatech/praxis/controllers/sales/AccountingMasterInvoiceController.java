@@ -123,7 +123,7 @@ public class AccountingMasterInvoiceController extends BaseController {
     public @ResponseBody
     void GetXLSX(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        String fileNameDownload = String.format("CATALOGO_" + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
+        String fileNameDownload = String.format("Accounting_Master_Invoice_" + Functions.getFechaActual() + ".xlsx", UUID.randomUUID().toString().toLowerCase());
         SQP02299Filter filter = new SQP02299Filter();
         try {
 

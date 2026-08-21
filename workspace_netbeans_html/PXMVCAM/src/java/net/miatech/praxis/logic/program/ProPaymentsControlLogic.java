@@ -10,8 +10,8 @@ import java.util.List;
 import net.miatech.beans.IMF145Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.praxis.dao.program.ProPaymentsControlDAO;
-import net.miatech.praxis.payment.filter.A2331Filter;
-import net.miatech.praxis.payment.filter.A3020Filter;
+import net.miatech.praxis.payment.old.A2331Filter;
+import net.miatech.praxis.payment.old.A3020Filter;
 
 /**
  *
@@ -55,6 +55,10 @@ public class ProPaymentsControlLogic {
     
     public List<A3020Filter> loadPX418SQP02148(A3020Filter filter) throws SQLException, Exception {
         return ProPaymentsControlDAO.loadPX418SQP02148(filter);
+    }
+    
+    public List<A3020Filter> loadPX418SQP02149(A3020Filter filter) throws SQLException, Exception {
+        return ProPaymentsControlDAO.loadPX418SQP02149(filter);
     }
     
     public List<A3020Filter> loadPX418SQP02215(A3020Filter filter) throws SQLException, Exception {
@@ -116,5 +120,23 @@ public class ProPaymentsControlLogic {
     
     public List<IMF145Filter> loadSQP04541(IMF145Filter filter) throws SQLException, Exception {
         return ProPaymentsControlDAO.loadSQP04541(filter);
+    }
+    
+    // -------------------------------------------------------------------------------------------
+    
+    public List<IMF145Filter> loadSQP04912(IMF145Filter filter) throws SQLException, Exception {
+        return ProPaymentsControlDAO.loadSQP04912(filter);
+    }
+    
+    public List<IMF145Filter> loadSQP04915(IMF145Filter filter) throws SQLException, Exception {
+        return ProPaymentsControlDAO.loadSQP04915(filter);
+    }
+    
+    public List<IMF145Filter> loadSQP04913(IMF145Filter filter) throws SQLException, Exception {
+        return ProPaymentsControlDAO.loadSQP04913(filter);
+    }
+    
+    public List<IMF145Filter> loadSQP04914(IMF145Filter filter) throws SQLException, Exception {
+        return ProPaymentsControlDAO.loadSQP04914(filter);
     }
 }

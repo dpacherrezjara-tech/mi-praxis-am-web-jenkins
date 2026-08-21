@@ -1,6 +1,6 @@
 // <editor-fold defaultstate="collapsed" desc="prototype">
 prototype.id = 'CalendarControlBSPForm';
-prototype.url = CONTEXTPATH+'/CalendarControlBSP';
+prototype.url = CONTEXTPATH + '/CalendarControlBSP';
 prototype.widthContenedor = 1100;
 // </editor-fold>
 
@@ -70,7 +70,7 @@ Ext.define('Ext.Praxis.view.sales.CalendarControlBSPForm.CalendarControlBSPForm'
                                         ,
                                         {
                                             xtype: 'panel',
-                                            height: 2120,
+                                            height:'120%',
                                             layout: 'fit',
                                             items: [
                                                 {

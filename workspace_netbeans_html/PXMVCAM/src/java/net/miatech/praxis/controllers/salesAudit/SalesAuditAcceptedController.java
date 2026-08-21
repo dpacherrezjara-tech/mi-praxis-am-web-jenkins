@@ -9,12 +9,10 @@ import com.google.gson.JsonParser;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
-import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -35,15 +33,12 @@ import net.miatech.beans.SaleAudit.A1674Filter;
 import net.miatech.beans.SaleAudit.A1675Filter;
 import net.miatech.beans.SaleAudit.A2537Filter;
 import net.miatech.beans.SaleAudit.SQP00989Filter;
-import net.miatech.beans.SaleAudit.SQP00989Filter_1;
 import net.miatech.libmiatec.A1248;
 import net.miatech.praxis.BSPF104;
 import net.miatech.praxis.controllers.BaseController;
 import net.miatech.praxis.dao.master.MasterDAO;
-import net.miatech.praxis.dao.program.ProrrateoNewDAO;
-import net.miatech.praxis.dao.screens.ProrrateoDAO;
+import net.miatech.praxis.dao.widgets.FacsimilDAO;
 import net.miatech.praxis.exceptions.SpringException;
-import net.miatech.praxis.logic.program.ProrrateoNewLogic;
 import net.miatech.utils.Functions;
 import org.apache.log4j.Logger;
 import net.miatech.praxis.logic.salesAudit.SalesAuditAcceptedLogic;
@@ -82,7 +77,7 @@ public class SalesAuditAcceptedController extends BaseController {
     private SalesAuditAcceptedLogic logic;
     private SQP00989Filter filter;
     private FACSIMILFilter filter2;
-    private ProrrateoDAO prorrateoDAO;
+    private FacsimilDAO facsimilDAO;
     private MasterDAO masterDAO;
     //private ProrrateoNewLogic prorrateoNewLogic;
 
@@ -264,9 +259,10 @@ public class SalesAuditAcceptedController extends BaseController {
         FACSIMILFilter beanFaximil = new FACSIMILFilter();
         BSPF104 filter2 = new BSPF104();
         HashMap<String, String> hmCiudades;
-        masterDAO = new MasterDAO();
-        prorrateoDAO = new ProrrateoDAO();
+        //masterDAO = new MasterDAO();
+        facsimilDAO = new FacsimilDAO();
         INF020 cliente = this.serverSession.getServerSession().getUserView().getCustomerInfo();
+        HashMap<String, String> hmAeropuertos = new MasterDAO(this.serverSession.getServerSession()).loadCiudadesHash();
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
@@ -280,23 +276,23 @@ public class SalesAuditAcceptedController extends BaseController {
             SQP00989Filter beanADM = logic.searchADMData(filter);
             List<A1672Filter> lstItinerary = logic.lstItinerary(filter);
             //para el devlivery
-            masterDAO.setSession(this.serverSession.getServerSession());
-            hmCiudades = masterDAO.loadCiudadesHash();
+            //masterDAO.setSession(this.serverSession.getServerSession());
+           // hmCiudades = masterDAO.loadCiudadesHash();
             filter2.TDNR = cliente.CCUST + "" + filter.VP_FRMSRIE;
             filter2.COUNTRY = filter.A1672PAIVT;
             filter2.AGTN = filter.A1672AGENT;
             filter2.FUENTE = filter.A1672FUENT;
             filter2.SEQTKT = filter.VP_SEQ;
             filter2.IDFILE = filter.VP_IDFILE;
-            prorrateoDAO.setSession(this.serverSession.getServerSession());
+            facsimilDAO.setSession(this.serverSession.getServerSession());
             if (filter.A1672FUENT.equals("BSP")) {
-                beanFaximil = prorrateoDAO.loadBSPFacsimilProrate(cliente.CCUST, filter2, hmCiudades);
+                beanFaximil = facsimilDAO.loadBSPFacsimilProrate(filter2, hmAeropuertos);
             }
             if (filter.A1672FUENT.equals("ARC")) {
-                beanFaximil = prorrateoDAO.loadARCFacsimilProrate(cliente.CCUST, filter2, hmCiudades);
+                beanFaximil = facsimilDAO.loadARCFacsimilProrate(filter2, hmAeropuertos);
             }
             if (filter.A1672FUENT.equals("ASR")) {
-                beanFaximil = prorrateoDAO.loadASRFacsimilProrate(cliente.CCUST, filter2, hmCiudades);
+                beanFaximil = facsimilDAO.loadASRFacsimilProrate(filter2, hmAeropuertos);
             }
 
             map.put("success", true);
@@ -550,31 +546,38 @@ public class SalesAuditAcceptedController extends BaseController {
         FACSIMILFilter beanFaximil = new FACSIMILFilter();
         BSPF104 filter2 = new BSPF104();
         HashMap<String, String> hmCiudades;
-        masterDAO = new MasterDAO();
-        prorrateoDAO = new ProrrateoDAO();
+        String listaData;
+        //masterDAO = new MasterDAO();
+        facsimilDAO = new FacsimilDAO();
         INF020 cliente = this.serverSession.getServerSession().getUserView().getCustomerInfo();
+        HashMap<String, String> hmAeropuertos = new MasterDAO(this.serverSession.getServerSession()).loadCiudadesHash();
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
 
-            SalesAuditAcceptedLogic logic = new SalesAuditAcceptedLogic();
+            logic = new SalesAuditAcceptedLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            listaData = logic.searchIDFILE(filter);
             //para el devlivery
-            masterDAO.setSession(this.serverSession.getServerSession());
-            hmCiudades = masterDAO.loadCiudadesHash();
+           // masterDAO.setSession(this.serverSession.getServerSession());
+            //hmCiudades = masterDAO.loadCiudadesHash();
             filter2.TDNR = filter.VP_FRMSRIE;
             filter2.COUNTRY = filter.A1672PAIVT;
             filter2.AGTN = filter.A1672AGENT;
             filter2.FUENTE = filter.A1672FUENT;
-            prorrateoDAO.setSession(this.serverSession.getServerSession());
+            filter2.IDFILE = listaData;
+            facsimilDAO.setSession(this.serverSession.getServerSession());
+            
             if (filter.A1672FUENT.equals("BSP")) {
-                beanFaximil = prorrateoDAO.loadBSPFacsimilProrate(cliente.CCUST, filter2, hmCiudades);
+                beanFaximil = facsimilDAO.loadBSPFacsimilProrate(filter2, hmAeropuertos);
             }
             if (filter.A1672FUENT.equals("ARC")) {
-                beanFaximil = prorrateoDAO.loadARCFacsimilProrate(cliente.CCUST, filter2, hmCiudades);
+                beanFaximil = facsimilDAO.loadARCFacsimilProrate(filter2, hmAeropuertos);
             }
             if (filter.A1672FUENT.equals("ASR")) {
-                beanFaximil = prorrateoDAO.loadASRFacsimilProrate(cliente.CCUST, filter2, hmCiudades);
+                beanFaximil = facsimilDAO.loadASRFacsimilProrate(filter2, hmAeropuertos);
             }
+            
 
             map.put("success", true);
             map.put("lstFaximil", beanFaximil);

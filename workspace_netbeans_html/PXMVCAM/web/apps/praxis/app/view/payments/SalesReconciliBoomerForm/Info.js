@@ -748,7 +748,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                     metaData.style = "text-align:right";
                                                     value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
                                                     return value;
-                                                }, 
+                                                },
                                             },
                                             {
                                                 text: 'PNR', dataIndex: 'SPNR', width: 60,
@@ -1333,7 +1333,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                         renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                             var data = record.data;
                                                             metaData.style = 'text-align:right;';
-
                                                             var rtn = '';
                                                             switch (data.A1716MODO.trim()) {
                                                                 case 'S':
@@ -2964,7 +2963,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                             id: prototype.id + '-panelGridDataHeader',
                             bodyStyle: 'background-color: #E3EAEF;',
                             border: true,
-                            width: 1525,
+                            width: 1564,
                             margin: '0 0 0 0 ',
                             layout: {
                                 type: 'vbox',
@@ -2975,7 +2974,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                     xtype: 'grid',
                                     id: prototype.id + '-gridDataHeader',
                                     height: 600,
-                                    width: 1525,
+                                    width: 1564,
                                     columnLines: true,
                                     /*features: [{
                                      ftype: 'summary'
@@ -3201,6 +3200,20 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                             return value;
                                                         }
                                                     },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Edit',
+                                                sortable: false,
+                                                xtype: 'actioncolumn',
+                                                width: 39,
+                                                align: 'center',
+                                                items: [
+                                                    {
+                                                        iconCls: 'prx-icon-edit',
+                                                        tooltip: 'Edit',
+                                                        handler: 'onEditClick1'
+                                                    }
                                                 ]
                                             },
                                                     /*{
@@ -3735,7 +3748,7 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                     store: new Ext.data.SimpleStore({
                                         fields: ['code', 'name'],
                                         data: [
-                                            ["first", "First Layout"], ["second", "Second Layout"],
+                                            ["first", "First Layout"], ["second", "Second Layout"], ["third", "Third Layout"],
                                         ]
                                     }),
                                     labelWidth: 100,
@@ -3965,7 +3978,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').getStore().getData().items[rowIndex].data;
                                                     metaData.style = "text-align:center";
-
                                                     if (data.FCOMPLEMENTO === '1') {
                                                         metaData.style = "text-align:center;background-color:#FD7355";
                                                         return "*123456";
@@ -4027,7 +4039,6 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').getStore().getData().items[rowIndex].data;
                                                     metaData.style = "text-align:center";
-
                                                     if (data.FCOMPLEMENTO === '1') {
                                                         metaData.style = "text-align:center;background-color:#FD7355";
                                                         return "NC";
@@ -4266,6 +4277,371 @@ Ext.define('Ext.Praxis.view.payments.SalesReconciliBoomerForm.Info', {
                                             {text: 'Reference', width: 70,
                                                 renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
                                                     var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod2nd').getStore().getData().items[rowIndex].data;
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                    } else {
+                                                        metaData.style = "text-align:center;";
+                                                    }
+                                                    return "";
+                                                }
+                                            },
+                                        ]
+                                    }
+                                },
+                                {
+                                    xtype: 'grid',
+                                    id: prototype.id + '-gridDataHeaderDetailByPeriod3th',
+                                    hidden: true,
+                                    width: 1500,
+                                    height: 630,
+                                    columnLines: true,
+                                    features: [{
+                                            ftype: 'summary',
+                                            dock: 'bottom'
+                                        }],
+                                    columns: {
+                                        defaults: {
+                                            menuDisabled: true,
+                                            sortable: false,
+                                            align: 'center'
+                                        },
+                                        items: [
+                                            {
+                                                text: 'Control',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center',
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Number', dataIndex: '', width: 60, //flex: 1
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod3th').getStore().getData().items[rowIndex].data;
+                                                            if (data.FCOMPLEMENTO === '1') {
+                                                                metaData.style = "text-align:center;background-color:#FD7355";
+                                                            } else {
+                                                                metaData.style = "text-align:center;";
+                                                            }
+
+                                                            return "";
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Operative',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center',
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Unit', dataIndex: '', width: 90, //flex: 1
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod3th').getStore().getData().items[rowIndex].data;
+                                                            if (data.FCOMPLEMENTO === '1') {
+                                                                metaData.style = "text-align:center;background-color:#FD7355";
+                                                            } else {
+                                                                metaData.style = "text-align:center;";
+                                                            }
+                                                            return "02_AEROVIAS";
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {text: 'Origin Transaction', dataIndex: 'VOUCHER', width: 130,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod3th').getStore().getData().items[rowIndex].data;
+                                                    metaData.style = "text-align:center";
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Amount',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center',
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Available', dataIndex: 'VAMOUNT', width: 90, //flex: 1
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod3th').getStore().getData().items[rowIndex].data;
+                                                            metaData.style = "text-align:right;";
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                            return value;
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'TRX',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center',
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Currency', dataIndex: '', width: 70, //flex: 1
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod3th').getStore().getData().items[rowIndex].data;
+                                                            if (data.FCOMPLEMENTO === '1') {
+                                                                metaData.style = "text-align:center;background-color:#FD7355";
+                                                            } else {
+                                                                metaData.style = "text-align:center;";
+                                                            }
+                                                            value = "MXN";
+                                                            return value;
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {text: 'Type', width: 50,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod3th').getStore().getData().items[rowIndex].data;
+                                                    metaData.style = "text-align:center";
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                        return "NC";
+                                                    } else {
+                                                        return "R";
+                                                    }
+                                                }
+                                            },
+                                            {text: 'Status', width: 50,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod3th').getStore().getData().items[rowIndex].data;
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                    } else {
+                                                        metaData.style = "text-align:center;";
+                                                    }
+                                                    return "N/A";
+                                                }
+                                            },
+                                            {text: 'Account', width: 60,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod3th').getStore().getData().items[rowIndex].data;
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                    } else {
+                                                        metaData.style = "text-align:center;";
+                                                    }
+                                                    return "*8221";
+                                                }
+                                            },
+                                            {
+                                                text: 'Client',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center',
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Number', dataIndex: '', width: 60, //flex: 1
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod3th').getStore().getData().items[rowIndex].data;
+                                                            if (data.FCOMPLEMENTO === '1') {
+                                                                metaData.style = "text-align:center;background-color:#FD7355";
+                                                            } else {
+                                                                metaData.style = "text-align:center;";
+                                                            }
+                                                            return "2103";
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {text: 'Destination<br>Transaction', dataIndex: 'SPNR', width: 100,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod3th').getStore().getData().items[rowIndex].data;
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                    } else {
+                                                        metaData.style = "text-align:center;";
+                                                    }
+                                                    return value;
+                                                }
+                                            },
+                                            {
+                                                text: 'Document',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center',
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Type', dataIndex: '', width: 70, //flex: 1
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod3th').getStore().getData().items[rowIndex].data;
+                                                            if (data.FCOMPLEMENTO === '1') {
+                                                                metaData.style = "text-align:center;background-color:#FD7355";
+                                                            } else {
+                                                                metaData.style = "text-align:center;";
+                                                            }
+                                                            return "F";
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Currency', dataIndex: '', width: 70, //flex: 1
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod3th').getStore().getData().items[rowIndex].data;
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                    } else {
+                                                        metaData.style = "text-align:center;";
+                                                    }
+                                                    return "MXN";
+                                                }
+                                            },
+                                            {
+                                                text: 'Client',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center',
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Number', dataIndex: '', width: 60, //flex: 1
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod3th').getStore().getData().items[rowIndex].data;
+                                                            if (data.FCOMPLEMENTO === '1') {
+                                                                metaData.style = "text-align:center;background-color:#FD7355";
+                                                            } else {
+                                                                metaData.style = "text-align:center;";
+                                                            }
+                                                            return "2103";
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Amount to',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center',
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Apply', dataIndex: 'SVFOP', width: 80, //flex: 1
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod3th').getStore().getData().items[rowIndex].data;
+                                                            if (data.FCOMPLEMENTO === '1') {
+                                                                metaData.style = "text-align:right;background-color:#FD7355";
+                                                            } else {
+                                                                metaData.style = "text-align:right;";
+                                                            }
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                            return value;
+                                                        }, summaryRenderer: function (value, summaryData, dataIndex, metaData, record) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod3th').getStore().getData().items[0].data;
+                                                            metaData.style = 'text-align:right; margin-right:3px ';
+                                                            return '<b>' + Ext.util.Format.number(data.totSVFOP, '0,000.00') + '<b>';
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Amount',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center',
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Aggregate', dataIndex: 'SVFOP_ACUMULADO', width: 80, //flex: 1
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod3th').getStore().getData().items[rowIndex].data;
+                                                            if (data.FCOMPLEMENTO === '1') {
+                                                                metaData.style = "text-align:right;background-color:#FD7355";
+                                                            } else {
+                                                                metaData.style = "text-align:right;";
+                                                            }
+                                                            value = '<b>' + Ext.util.Format.number(value, '0,000.00') + '<b>';
+                                                            return value;
+                                                        },
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Exchange',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center',
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Rate', dataIndex: '', width: 70, //flex: 1
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod3th').getStore().getData().items[rowIndex].data;
+                                                            if (data.FCOMPLEMENTO === '1') {
+                                                                metaData.style = "text-align:center;background-color:#FD7355";
+                                                            } else {
+                                                                metaData.style = "text-align:center;";
+                                                            }
+                                                            return "";
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                text: 'Type',
+                                                defaults: {
+                                                    menuDisabled: true,
+                                                    sortable: false,
+                                                    align: 'center',
+                                                },
+                                                columns: [
+                                                    {
+                                                        text: 'Value', dataIndex: '', width: 60, //flex: 1
+                                                        renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                            var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod3th').getStore().getData().items[rowIndex].data;
+                                                            if (data.FCOMPLEMENTO === '1') {
+                                                                metaData.style = "text-align:center;background-color:#FD7355";
+                                                            } else {
+                                                                metaData.style = "text-align:center;";
+                                                            }
+                                                            return "";
+                                                        }
+                                                    },
+                                                ]
+                                            },
+                                            {text: 'Date', width: 70,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod3th').getStore().getData().items[rowIndex].data;
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                    } else {
+                                                        metaData.style = "text-align:center;";
+                                                    }
+                                                    return "";
+                                                }
+                                            },
+                                            {text: 'Description', width: 80,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod3th').getStore().getData().items[rowIndex].data;
+                                                    if (data.FCOMPLEMENTO === '1') {
+                                                        metaData.style = "text-align:center;background-color:#FD7355";
+                                                    } else {
+                                                        metaData.style = "text-align:center;";
+                                                    }
+                                                    return "";
+                                                }
+                                            },
+                                            {text: 'Reference', width: 70,
+                                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                                    var data = Ext.getCmp(prototype.id + '-gridDataHeaderDetailByPeriod3th').getStore().getData().items[rowIndex].data;
                                                     if (data.FCOMPLEMENTO === '1') {
                                                         metaData.style = "text-align:center;background-color:#FD7355";
                                                     } else {

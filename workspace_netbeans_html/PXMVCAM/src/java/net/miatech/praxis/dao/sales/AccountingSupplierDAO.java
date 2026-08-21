@@ -120,6 +120,7 @@ public class AccountingSupplierDAO {
                 objRtn.A1806NUM = rs01.getString("A1806NUM");
                 objRtn.A1806REFE = rs01.getString("A1806REFE");
                 objRtn.A1806CIA = rs01.getString("A1806CIA");
+                objRtn.A1806MONED = rs01.getString("A1806MONED");
                 objRtn.A1806UNIDA = rs01.getString("A1806UNIDA");
                 objRtn.A1806CENCO = rs01.getString("A1806CENCO");
                 objRtn.A1806UBICA = rs01.getString("A1806UBICA");
@@ -173,7 +174,7 @@ public class AccountingSupplierDAO {
         
         Connection cnx = null;
         try {    
-            strSQL = "{CALL " + session.getMainLibrary() + ".PX155S07A1806(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}"; 
+            strSQL = "{CALL " + session.getMainLibrary() + ".PX155S07A1806(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();  cs = cnx.prepareCall(strSQL);   
             cs.setString(1, strOption);
             cs.setString(2, filter.A1806CCUST);
@@ -183,21 +184,22 @@ public class AccountingSupplierDAO {
             cs.setString(6, filter.A1806REFE);
             cs.setString(7, filter.A1806CIA);
             cs.setString(8, filter.A1806UNIDA);
+            cs.setString(9, filter.A1806MONED);
+            cs.setString(10, filter.A1806CENCO);
+            cs.setString(11, filter.A1806UBICA);
+            cs.setString(12, filter.A1806CUENT);
+            cs.setString(13, filter.A1806SUBCT);
+            cs.setString(14, filter.A1806EQUI);
+            cs.setString(15, filter.A1806INCIA);
+            cs.setString(16, filter.A1806FINI);
+            cs.setString(17, filter.A1806FFIN);
             
-            cs.setString(9, filter.A1806CENCO);
-            cs.setString(10, filter.A1806UBICA);
-            cs.setString(11, filter.A1806CUENT);
-            cs.setString(12, filter.A1806SUBCT);
-            cs.setString(13, filter.A1806EQUI);
-            cs.setString(14, filter.A1806INCIA);
-            cs.setString(15, filter.A1806FINI);
-            cs.setString(16, filter.A1806FFIN);
-            
-            cs.setString(17, session.getUserView().getUserInfo().USR);
-            cs.setString(18, Functions.getFechaActual());
-            cs.setString(19, Functions.getHoraActual());
-            cs.setString(20, filter.IN_A1806TIPOC_OLD);
-            cs.setString(21, filter.IN_A1806NUM_OLD);
+            cs.setString(18, session.getUserView().getUserInfo().USR);
+            cs.setString(19, Functions.getFechaActual());
+            cs.setString(20, Functions.getHoraActual());
+            cs.setString(21, filter.IN_A1806TIPOC_OLD);
+            cs.setString(22, filter.IN_A1806NUM_OLD);
+            cs.setString(23, filter.IN_A1806MONED_OLD);
             cs.execute();
             
             rst = cs.getResultSet();

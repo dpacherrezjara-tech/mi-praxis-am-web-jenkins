@@ -63,7 +63,7 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotdisputeMyarcForm.RobotdisputeMyarcFo
                                     xtype: 'button',
                                     id: prototype.idRobotdisputeMyarc + '-btn-search2',
                                     iconCls: 'prx-icon-search',
-                                    tooltip: 'Search',hidden: true,
+                                    tooltip: 'Search', hidden: true,
                                     listeners: {
                                         click: 'imgSearch_clickHandler2'
                                     }
@@ -350,7 +350,23 @@ Ext.define('Ext.Praxis.view.salesaudit.RobotdisputeMyarcForm.RobotdisputeMyarcFo
                                     {text: 'Amount', dataIndex: 'A4139NETO', width: 120, renderer: 'onColumnAmountRenderer'},
                                     {text: 'Audit', dataIndex: 'A4139USER', width: 100, align: 'right'},
                                     //{text: 'Days', dataIndex: 'A3268DIAS', width: 50, align: 'center'},
-                                    {text: 'Status', dataIndex: 'A4139FLAG', width: 140, align: 'right'}
+                                    {text: 'Status', dataIndex: 'A4139FLAG', width: 140, align: 'right'},
+                                    {
+                                        text: 'Log',
+                                        xtype: 'actioncolumn',
+                                        sortable: false,
+                                        width: 50,
+                                        align: 'center',
+                                        items: [
+                                            {
+                                                getClass: function (value, metadata, record) {
+                                                    return 'prx-icon-image-log_tem';
+                                                },
+                                                tooltip: 'History Log',
+                                                handler: 'loadHistoryLogDetails'
+                                            }
+                                        ]
+                                    }
                                     //{ text: '',dataIndex: '',width: 60,renderer: 'onRendererColumnOnStatus'}
 
                                 ]

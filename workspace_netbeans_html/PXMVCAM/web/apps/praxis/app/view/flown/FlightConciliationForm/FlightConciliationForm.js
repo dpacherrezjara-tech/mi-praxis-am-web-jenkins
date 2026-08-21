@@ -1,4 +1,4 @@
-prototype.widthContenedor = 1660;
+prototype.widthContenedor = 1750;
 console.log(prototype);
 Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.FlightConciliationForm', {
     extend: 'Ext.form.Panel',

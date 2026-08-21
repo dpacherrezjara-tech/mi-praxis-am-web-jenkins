@@ -30,5 +30,9 @@ public class ViewTicketAccountingLogic {
     public List<PX0241S01A720Filter> load(PX0241S01A720Filter filter) throws SQLException, Exception {
         return viewTicketAccountingDAO.load(filter);
     }
+    
+    public List<PX0241S01A720Filter> loadRFTX(PX0241S01A720Filter filter) throws SQLException, Exception {
+        return viewTicketAccountingDAO.loadRFTX(filter);
+    }
 
 }

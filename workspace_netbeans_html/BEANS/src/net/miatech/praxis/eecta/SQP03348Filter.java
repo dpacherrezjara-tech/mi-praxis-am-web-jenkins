@@ -13,12 +13,12 @@ import net.miatech.beans.DBException;
  */
 public class SQP03348Filter {
     public String VP_CCUST = "";
-    public String VP_CCIA = "";
-    public String VP_FORMA = "";
-    public String VP_SERIE = "";
-    public String VP_SEQ = "";
-    public String VP_TRNCU = "";
-    public String VP_GRUPO = "";
+//    public String VP_CCIA = "";
+//    public String VP_FORMA = "";
+//    public String VP_SERIE = "";
+//    public String VP_SEQ = "";
+//    public String VP_TRNCU = "";
+//    public String VP_GRUPO = "";
     public String vp_json = "";
     public DBException dbException = new DBException();
 }

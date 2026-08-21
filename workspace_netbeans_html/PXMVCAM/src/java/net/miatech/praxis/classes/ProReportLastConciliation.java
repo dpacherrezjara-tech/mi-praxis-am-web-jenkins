@@ -34,7 +34,7 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import net.miatech.praxis.payment.filter.A2290Filter;
+import net.miatech.praxis.payment.old.A2290Filter;
 import net.miatech.utils.Functions;
 
 /**

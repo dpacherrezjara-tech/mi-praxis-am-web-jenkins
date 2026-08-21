@@ -7,13 +7,21 @@ package net.miatech.praxis.dao.gerencial;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import net.miatech.beans.SQP00768;
+import net.miatech.beans.SaleAudit.A1672Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.libmiatec.A1248;
 import net.miatech.praxis.exceptions.SpringException;
@@ -239,6 +247,21 @@ public class BusinessToolsDAO {
     }
 
     public List<SQP00768> loadPXPRUEBA(SQP00768 filter) throws Exception {
+        return loadPXPRUEBA(filter, "SQP00768");
+    }
+
+    public List<SQP00768> loadSQP0076VSales(SQP00768 filter) throws Exception {
+        return loadPXPRUEBA(filter, "SQP0076_V_SALES");
+    }
+
+    // Tickets SKCHG (funcion 3): identico a Tickets Invol, solo que el SP
+    // arranca la cadena desde el logico A1672Z (SELECT/OMIT A1672QUEUE =
+    // 'SKCHG') en vez de A1672W -- ver SQP0076_V_SALES_SKCHG.sql.
+    public List<SQP00768> loadSQP0076VSalesSkchg(SQP00768 filter) throws Exception {
+        return loadPXPRUEBA(filter, "SQP0076_V_SALES_SKCHG");
+    }
+
+    private List<SQP00768> loadPXPRUEBA(SQP00768 filter, String procName) throws Exception {
 
         //Para traer data del Programa de Query del Manifiesto de Vuelo
         List<SQP00768> lista = new ArrayList<SQP00768>(0);
@@ -256,12 +279,58 @@ public class BusinessToolsDAO {
         double TOT51 = 0, TOT52 = 0, TOT53 = 0, TOT54 = 0, TOT55 = 0, TOT56 = 0, TOT57 = 0, TOT58 = 0, TOT59 = 0, TOT60 = 0;
         double TOT61 = 0, TOT62 = 0, TOT63 = 0, TOT64 = 0, TOT65 = 0, TOT66 = 0, TOT67 = 0, TOT68 = 0, TOT69 = 0, TOT70 = 0;
         double TOT71 = 0, TOT72 = 0, TOT73 = 0, TOT74 = 0, TOT75 = 0, TOT76 = 0, TOT77 = 0;
-        SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP00768(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        SQLCLL01 = "{CALL " + session.getMainLibrary() + "." + procName + "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
 
         Connection cnx = null;
+
+        if ("1".equals(filter.IN_FLAG_CPN_SALE)) {
+            String strSql_FVLO = "";
+            String strSql_NVLO = "";
+            String strSql_ORI = "";
+            String strSql_DES = "";
+            String strSql_VALUE= "";
+
+            strSql_FVLO = " CASE WHEN A1692.CUPON ='1' THEN  A720FVLO1  "
+                    + "WHEN A1692.CUPON='2' THEN  A720FVLO2   "
+                    + "WHEN A1692.CUPON='3' THEN  A720FVLO3   "
+                    + "WHEN A1692.CUPON='4' THEN  A720FVLO4   END AS A720FVLO";
+
+            strSql_NVLO = " CASE WHEN A1692.CUPON='1' THEN  A720NVLO1  "
+                    + "WHEN A1692.CUPON='2' THEN  A720NVLO2   "
+                    + "WHEN A1692.CUPON='3' THEN  A720NVLO3   "
+                    + "WHEN A1692.CUPON='4' THEN  A720NVLO4   END AS A720NVLO";
+
+            strSql_ORI = " CASE WHEN A1692.CUPON='1' THEN  A720RUTA0  "
+                    + "WHEN A1692.CUPON='2' THEN  A720RUTA1   "
+                    + "WHEN A1692.CUPON='3' THEN  A720RUTA2   "
+                    + "WHEN A1692.CUPON='4' THEN  A720RUTA3   END AS A720RUTA_0";
+
+            strSql_DES = " CASE WHEN A1692.CUPON='1' THEN  A720RUTA1  "
+                    + "WHEN A1692.CUPON='2' THEN  A720RUTA2   "
+                    + "WHEN A1692.CUPON='3' THEN  A720RUTA3   "
+                    + "WHEN A1692.CUPON='4' THEN  A720RUTA4   END AS A720RUTA_1";
+            
+            strSql_VALUE = " CASE WHEN A1692.CUPON='1' THEN  A720VALOR1  "
+                    + "WHEN A1692.CUPON='2' THEN  A720VALOR2   "
+                    + "WHEN A1692.CUPON='3' THEN  A720VALOR3   "
+                    + "WHEN A1692.CUPON='4' THEN  A720VALOR4   END AS A720VALOR";
+
+            filter.strSelectA = filter.strSelectA.trim() + "," + strSql_FVLO + "," + strSql_NVLO + "," + strSql_ORI + "," + strSql_DES+ "," + strSql_VALUE +", A720FECVTA";
+        }
+        System.out.println(filter.strSelectA);
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
+
+            // PRUEBA: en SQP0076_V_SALES, con 2+ filas en el mismo fetch, la
+            // columna calculada por PRAXIS.F01_PX449_USO pierde su primer
+            // caracter a partir de la 2da fila en adelante (la 1ra siempre
+            // sale bien). Forzando fetch de 1 fila a la vez se descarta que
+            // sea un problema del driver JDBC reusando buffer entre filas
+            // de un mismo bloque para una columna no-fisica (funcion SQL).
+            if ("SQP0076_V_SALES".equals(procName) || "SQP0076_V_SALES_SKCHG".equals(procName)) {
+                cstmt.setFetchSize(1);
+            }
 
             cstmt.registerOutParameter(14, Types.INTEGER);
             cstmt.registerOutParameter(15, Types.INTEGER);
@@ -410,6 +479,18 @@ public class BusinessToolsDAO {
                     obj.column6 = rst.getString("column6");
                     obj.column7 = rst.getString("column7");
 
+                    if ("A1672".equals(filter.IN_TABLA) && ("2".equals(filter.IN_FUNCTION) || "3".equals(filter.IN_FUNCTION))) {
+                        // Asume el orden por defecto de defaultFieldsA1672 (JS): column1..6 =
+                        // CIA,FORMA,SERIE,CIAOR,FOROR,SEROR y column10 = TRNCU. Si el usuario
+                        // reordena manualmente las columnas en la grilla esto podria calcular mal
+                        // -- son campos "protegidos" (no se pueden desmarcar) pero si se pueden mover.
+                        obj.ticket = obj.column1.trim() + obj.column2.trim() + obj.column3.trim();
+                        obj.ticketOri = obj.column4.trim() + obj.column5.trim() + obj.column6.trim();
+                        // PXSEQKEY/SORTKEY siempre vienen del SP (no dependen de columnN).
+                        obj.pxSeqKey = rst.getString("PXSEQKEY");
+                        obj.sortKey = rst.getString("SORTKEY");
+                    }
+
                     if (filter.RN > 7) {
                         obj.column8 = rst.getString("column8");
                         obj.column9 = rst.getString("column9");
@@ -418,6 +499,10 @@ public class BusinessToolsDAO {
                         obj.column12 = rst.getString("column12");
                         obj.column13 = rst.getString("column13");
                         obj.column14 = rst.getString("column14");
+
+                        if ("A1672".equals(filter.IN_TABLA) && ("2".equals(filter.IN_FUNCTION) || "3".equals(filter.IN_FUNCTION))) {
+                            obj.isChainRoot = !"EXCH".equals(obj.column10.trim());
+                        }
                     }
                     if (filter.RN > 14) {
                         obj.column15 = rst.getString("column15");
@@ -501,6 +586,16 @@ public class BusinessToolsDAO {
                         obj.column63 = rst.getString("column77");
                     }
 
+                    if ("1".equals(filter.IN_FLAG_CPN_SALE)) {
+                        obj.A720FVLO = rst.getString("A720FVLO");
+                        obj.A720NVLO = rst.getString("A720NVLO");
+                        obj.A720RUTA_0 = rst.getString("A720RUTA_0");
+                        obj.A720RUTA_1 = rst.getString("A720RUTA_1");
+                        obj.A720FECVTA = rst.getString("A720FECVTA");
+                        obj.A720VALOR = rst.getDouble("A720VALOR");
+
+                    }
+                    
                     obj.tot1 = TOT1;
                     obj.tot2 = TOT2;
                     obj.tot3 = TOT3;
@@ -610,7 +705,299 @@ public class BusinessToolsDAO {
             pasarGarbageCollector();
         }
 
+        // A1672 (Tickets Invol): PRAXIS.F01_PX449_USO/F02_PX449_USO pierden su
+        // primer caracter cuando su fila queda justo despues de una fila
+        // SALE en el mismo fetch (bug del driver JDBC de IBM i, confirmado
+        // con pruebas -- no reproducible con SQL directo ni cambiando el
+        // orden en general, solo con esa transicion puntual). Se evita
+        // re-trayendo esas 2 columnas con una consulta de una sola fila por
+        // ticket (esa siempre sale bien, es la unica fila de su propio
+        // fetch). De paso, valida si el PNR difiere dentro de la misma
+        // cadena (pnrMismatch) para poder pintarlo en la grilla.
+        //
+        // No se asume una posicion fija de columna: se busca en el SELECT
+        // real (filter.strSelectA) en que columnN quedo cada campo, asi
+        // funciona sin importar el orden en que el usuario los marco.
+        if (("SQP0076_V_SALES".equals(procName) || "SQP0076_V_SALES_SKCHG".equals(procName)) && !lista.isEmpty()) {
+            Integer colUsos = findColumnNumber(filter.strSelectA, "F01_PX449_USO");
+            Integer colIndicCpn = findColumnNumber(filter.strSelectA, "F02_PX449_USO");
+            Integer colPnr = findColumnNumber(filter.strSelectA, "A1672PNR");
+
+            if (colUsos != null || colIndicCpn != null) {
+                // Antes se abria/cerraba una conexion IBM i nueva POR CADA
+                // TICKET (login completo contra el AS400 en cada una) -- con
+                // pocas filas en la grilla no se notaba, pero en el Excel
+                // (sin paginar, puede ser cientos/miles de filas) esto era
+                // el cuello de botella real, no la query en si (que sigue
+                // trayendo 1 sola fila por ejecucion, igual que antes, para
+                // no reintroducir el bug de la transicion SALE->EXCH). Se
+                // abre una sola conexion/PreparedStatement para todo el lote
+                // y se reusa por fila.
+                Connection cnxUso = null;
+                PreparedStatement pstmtUso = null;
+                try {
+                    cnxUso = session.getCNXIBMDB2().getIBMDB2Connection();
+                    pstmtUso = cnxUso.prepareStatement(
+                            "SELECT PRAXIS.F01_PX449_USO(?,?,?,?,?) AS USOS, PRAXIS.F02_PX449_USO(?,?,?,?,?) AS INDIC_CPN FROM SYSIBM.SYSDUMMY1");
+                    String ccustSession = session.getUserView().getCustomerInfo().CCUST;
+                    for (SQP00768 objRow : lista) {
+                        try {
+                            String[] usoIndicCpn = fetchUsoIndicCpn(pstmtUso,
+                                    ccustSession,
+                                    objRow.column1 == null ? "" : objRow.column1.trim(),
+                                    objRow.column2 == null ? "" : objRow.column2.trim(),
+                                    objRow.column3 == null ? "" : objRow.column3.trim(),
+                                    objRow.pxSeqKey == null ? "" : objRow.pxSeqKey.trim());
+                            if (colUsos != null) {
+                                setColumnValue(objRow, colUsos, usoIndicCpn[0]);
+                            }
+                            if (colIndicCpn != null) {
+                                setColumnValue(objRow, colIndicCpn, usoIndicCpn[1]);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } finally {
+                    if (pstmtUso != null) {
+                        try {
+                            pstmtUso.close();
+                        } catch (SQLException e) {
+                        }
+                    }
+                    session.getCNXIBMDB2().closeIBMDB2Connection(cnxUso);
+                }
+            }
+
+            // PNR/PAX: si dentro de la misma cadena (sortKey) hay mas de un
+            // valor distinto, se marca esa cadena entera como mismatch (se
+            // pinta en la grilla y en el Excel como alerta de calidad).
+            Integer colPax = findColumnNumber(filter.strSelectA, "A1672PAX");
+            computeGroupMismatch(lista, colPnr, "pnrMismatch");
+            computeGroupMismatch(lista, colPax, "paxMismatch");
+            computeReglaCierre(lista, filter.strSelectA);
+        }
+
         return lista;
+    }
+
+    // CSR "Match Masivos ASR" (Casuisticas 1/2/3): valida SOLO la regla de
+    // cierre comun a esas 3 casuisticas -- NO detecta la evidencia (REAC/OSI
+    // ATREVETE/IT flexibilidad), eso sigue siendo manual por ahora. Para cada
+    // fila EXCH, compara contra su predecesor inmediato (Ticket Ori, no
+    // necesariamente la raiz de la cadena -- puede haber re-exchanges):
+    //   a) misma ruta = mismo origen y mismo destino final del ITIN, aunque
+    //      cambien las escalas intermedias (asi lo pide el CSR: "Origen
+    //      destino, from to").
+    //   b) variacion de fecha de vuelo dentro del umbral segun DI (48h
+    //      domestico / 72h internacional -- FVLO solo trae fecha, no hora,
+    //      asi que el umbral se compara en dias: 2 / 3).
+    // Requiere que el usuario tenga marcados A1672ITIN, A1672FVLO y A1672DI
+    // como columnas (los 2 primeros no estan en protectedFieldsA1672 -- si
+    // los desmarca, esta validacion se salta silenciosamente para esa busqueda).
+    private void computeReglaCierre(List<SQP00768> lista, String selectA) {
+        Integer colItin = findColumnNumber(selectA, "A1672ITIN");
+        Integer colFvlo = findColumnNumber(selectA, "A1672FVLO");
+        Integer colDi = findColumnNumber(selectA, "A1672DI");
+        if (colItin == null || colFvlo == null || colDi == null) {
+            return;
+        }
+
+        Map<String, SQP00768> porTicket = new HashMap<>();
+        for (SQP00768 objRow : lista) {
+            if (objRow.ticket != null && !objRow.ticket.isEmpty()) {
+                porTicket.put(objRow.ticket, objRow);
+            }
+        }
+
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyyMMdd");
+
+        for (SQP00768 objRow : lista) {
+            if (objRow.isChainRoot || objRow.ticketOri == null || objRow.ticketOri.isEmpty()) {
+                continue;
+            }
+            SQP00768 pred = porTicket.get(objRow.ticketOri);
+            if (pred == null) {
+                continue;
+            }
+
+            String rutaPred = rutaEndpoints(getColumnValue(pred, colItin));
+            String rutaThis = rutaEndpoints(getColumnValue(objRow, colItin));
+            objRow.rutaOK = !rutaPred.isEmpty() && rutaPred.equals(rutaThis);
+
+            LocalDate fechaPred = maxFecha(getColumnValue(pred, colFvlo), fmt);
+            LocalDate fechaThis = maxFecha(getColumnValue(objRow, colFvlo), fmt);
+            String di = getColumnValue(objRow, colDi);
+            di = di == null ? "" : di.trim().toUpperCase();
+            long umbralDias = "D".equals(di) ? 2 : 3;
+
+            if (fechaPred != null && fechaThis != null) {
+                long dias = Math.abs(ChronoUnit.DAYS.between(fechaPred, fechaThis));
+                objRow.fechaOK = dias <= umbralDias;
+                objRow.reglaCierreOK = objRow.rutaOK && objRow.fechaOK;
+                // El texto deja explicito que es un GATE: si no cumple, no hace
+                // falta seguir buscando evidencia (REAC/OSI/IT) para este ticket.
+                objRow.reglaCierreDetalle = (objRow.reglaCierreOK
+                        ? "CUMPLE - continuar validando evidencia - "
+                        : "NO CUMPLE - no revisar evidencia - ")
+                        + dias + " dia(s) (umbral " + umbralDias + "d, DI=" + (di.isEmpty() ? "?" : di) + ")"
+                        + (objRow.rutaOK ? "" : ", ruta distinta");
+            } else {
+                objRow.reglaCierreOK = false;
+                objRow.reglaCierreDetalle = "NO CUMPLE - no se pudo leer FVLO";
+            }
+        }
+    }
+
+    // Primer y ultimo aeropuerto del ITIN (ej. "SFO-GDL-MEX-SFO" -> "SFO|SFO")
+    // -- compara origen/destino sin importar cuantas escalas intermedias
+    // cambien entre el ticket original y el canje.
+    private String rutaEndpoints(String itin) {
+        if (itin == null) {
+            return "";
+        }
+        String[] tramos = itin.trim().split("-");
+        if (tramos.length == 0 || tramos[0].trim().isEmpty()) {
+            return "";
+        }
+        String origen = tramos[0].trim();
+        String destino = tramos[tramos.length - 1].trim();
+        return origen + "|" + destino;
+    }
+
+    // FVLO trae varias fechas separadas por "-" (una por tramo, ej.
+    // "20260509-20260526-20260526") -- se toma la mas reciente como la fecha
+    // "de cierre" del itinerario para comparar contra el canje.
+    private LocalDate maxFecha(String fvlo, DateTimeFormatter fmt) {
+        if (fvlo == null) {
+            return null;
+        }
+        LocalDate max = null;
+        for (String parte : fvlo.trim().split("-")) {
+            String p = parte.trim();
+            if (p.length() != 8) {
+                continue;
+            }
+            try {
+                LocalDate fecha = LocalDate.parse(p, fmt);
+                if (max == null || fecha.isAfter(max)) {
+                    max = fecha;
+                }
+            } catch (DateTimeParseException e) {
+                // segmento no parseable (ej. relleno de blancos), se ignora
+            }
+        }
+        return max;
+    }
+
+    private void computeGroupMismatch(List<SQP00768> lista, Integer colNumber, String targetField) {
+        if (colNumber == null) {
+            return;
+        }
+        Map<String, String> valorPorCadena = new HashMap<>();
+        Map<String, Boolean> mismatchPorCadena = new HashMap<>();
+        for (SQP00768 objRow : lista) {
+            String valor = normalizeForCompare(getColumnValue(objRow, colNumber));
+            String key = objRow.sortKey == null ? "" : objRow.sortKey;
+            if (!valorPorCadena.containsKey(key)) {
+                valorPorCadena.put(key, valor);
+            } else if (!valorPorCadena.get(key).equals(valor)) {
+                mismatchPorCadena.put(key, Boolean.TRUE);
+            }
+        }
+        for (SQP00768 objRow : lista) {
+            String key = objRow.sortKey == null ? "" : objRow.sortKey;
+            boolean mismatch = Boolean.TRUE.equals(mismatchPorCadena.get(key));
+            try {
+                SQP00768.class.getField(targetField).set(objRow, mismatch);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    // Solo para comparar (nunca se usa para mostrar): sube a mayusculas y
+    // quita todo lo que no sea letra/numero. El PAX puede venir en una fila
+    // como "DIAZ GUEVARA/JUAN JESUS" y en otra fila de la misma cadena como
+    // "DIAZGUEVARAJUANJESUS" (mismo pasajero, solo cambia el formato segun
+    // el origen del dato) -- sin esto se marcaba como mismatch por error.
+    private String normalizeForCompare(String value) {
+        if (value == null) {
+            return "";
+        }
+        return value.trim().toUpperCase().replaceAll("[^A-Z0-9]", "");
+    }
+
+    // Busca en el SELECT dinamico (filter.strSelectA) en que "columnN" quedo
+    // el campo identificado por marker (ej. "F01_PX449_USO" o "A1672PNR") --
+    // asi no se depende de una posicion fija sin importar el orden en que el
+    // usuario marco los campos en la grilla. Retorna null si no lo selecciono.
+    // Publico/estatico para que BusinessToolsController lo reuse en el export.
+    public static Integer findColumnNumber(String selectA, String marker) {
+        if (selectA == null) {
+            return null;
+        }
+        int idx = selectA.indexOf(marker);
+        if (idx == -1) {
+            return null;
+        }
+        java.util.regex.Matcher m = java.util.regex.Pattern.compile("column(\\d+)").matcher(selectA.substring(idx));
+        if (m.find()) {
+            return Integer.parseInt(m.group(1));
+        }
+        return null;
+    }
+
+    private String getColumnValue(SQP00768 objRow, int columnNumber) {
+        try {
+            return (String) SQP00768.class.getField("column" + columnNumber).get(objRow);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    private void setColumnValue(SQP00768 objRow, int columnNumber, String value) {
+        try {
+            SQP00768.class.getField("column" + columnNumber).set(objRow, value);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Trae USOS/INDIC_CPN con una consulta de una sola fila (sin tabla real
+    // de por medio), evitando la transicion SALE->EXCH que corrompe el dato
+    // cuando se calculan dentro del mismo SELECT de varias filas. Recibe un
+    // PreparedStatement ya abierto (una sola conexion para todo el lote,
+    // ver caller) en vez de abrir conexion propia por fila.
+    private String[] fetchUsoIndicCpn(PreparedStatement pstmt, String ccust, String cia, String forma, String serie, String seq) throws SQLException {
+        String usos = "";
+        String indicCpn = "";
+        ResultSet rst2 = null;
+        try {
+            pstmt.setString(1, ccust);
+            pstmt.setString(2, cia);
+            pstmt.setString(3, forma);
+            pstmt.setString(4, serie);
+            pstmt.setString(5, seq);
+            pstmt.setString(6, ccust);
+            pstmt.setString(7, cia);
+            pstmt.setString(8, forma);
+            pstmt.setString(9, serie);
+            pstmt.setString(10, seq);
+            rst2 = pstmt.executeQuery();
+            if (rst2.next()) {
+                usos = rst2.getString("USOS");
+                indicCpn = rst2.getString("INDIC_CPN");
+            }
+        } finally {
+            if (rst2 != null) {
+                try {
+                    rst2.close();
+                } catch (SQLException e) {
+                }
+            }
+        }
+        return new String[]{usos, indicCpn};
     }
 
     public List<SQP00768> loadPXPRUEBA2(SQP00768 filter) throws Exception {
@@ -1199,6 +1586,7 @@ public class BusinessToolsDAO {
 
         } catch (Exception e) {
             e.printStackTrace();
+            filter.strMSG = e.getMessage();
         } finally {
             try {
                 if (rst != null) {
@@ -1223,5 +1611,59 @@ public class BusinessToolsDAO {
         }
 
         return filter;
+    }
+
+    // Actualiza A1672CMBPO de cada ticket "I" (Tickets Invol) que trajo CMBPO
+    // en el Excel. Una llamada al SP por registro, para que si un ticket falla
+    // (llave no encontrada u otro error) no tumbe el resto del batch.
+    public List<A1672Filter> updateCMBPOTicketsInvol(List<A1672Filter> lista) throws SQLException, Exception {
+
+        List<A1672Filter> lstFallos = new ArrayList<>(0);
+        String SQLCLL01 = "{CALL " + session.getMainLibrary() + ".SQP0076_V_SALES_UPDATE(?,?,?,?,?,?,?,?,?)}";
+
+        for (A1672Filter item : lista) {
+
+            CallableStatement cstmt = null;
+            Connection cnx = null;
+
+            try {
+                cnx = session.getCNXIBMDB2().getIBMDB2Connection();
+                cstmt = cnx.prepareCall(SQLCLL01);
+                cstmt.registerOutParameter(9, Types.VARCHAR);
+
+                cstmt.setString(1, session.getUserView().getCustomerInfo().CCUST);
+                cstmt.setString(2, item.A1672CIA.trim());
+                cstmt.setString(3, item.A1672FORMA.trim());
+                cstmt.setString(4, item.A1672SERIE.trim());
+                cstmt.setString(5, item.A1672SEQ.trim());
+                cstmt.setString(6, item.A1672CUPON.trim());
+                cstmt.setString(7, item.A1672TRNCU.trim());
+                cstmt.setString(8, item.A1672CMBPO.trim());
+
+                cstmt.execute();
+
+                String msj = cstmt.getString(9);
+                if (msj != null && msj.startsWith("No se encontro")) {
+                    item.dbException.MESSAGE = msj;
+                    lstFallos.add(item);
+                }
+
+            } catch (Exception e) {
+                item.dbException.MESSAGE = e.getMessage();
+                lstFallos.add(item);
+            } finally {
+                try {
+                    if (cstmt != null) {
+                        cstmt.close();
+                    }
+                    session.getCNXIBMDB2().closeIBMDB2Connection(cnx);
+                } catch (Exception e) {
+                }
+            }
+        }
+
+        pasarGarbageCollector();
+
+        return lstFallos;
     }
 }

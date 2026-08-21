@@ -7,65 +7,65 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Options', {
         pack: 'end'
     },
     items: [
-        {
-            xtype: 'panel',
-            id: prototype.id+'-boxPaginacion__',
-            hidden: true,
-            width: 100,            
-            border: false,                        
-            items: [
-                {
-                    xtype: 'toolbar',
-                    cls: 'x-toolbar-pag',
-                    items: [
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btn-pag-first',
-                            iconCls: 'prx-icon-pagination-first',
-                            tooltip: 'First Page',
-                            listeners: {
-                                click: 'pagFirst'
-                            }
-                        },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btn-pag-previous',
-                            iconCls: 'prx-icon-pagination-previous',
-                            tooltip: 'Previous Page',
-                            listeners: {
-                                click: 'pagPrevious'
-                            }
-                        },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btn-pag-next',
-                            iconCls: 'prx-icon-pagination-next',
-                            tooltip: 'Next Page',
-                            listeners: {
-                                click: 'pagNext'
-                            }
-                        },
-                        {
-                            xtype: 'button',
-                            id: prototype.id + '-btn-pag-last',
-                            iconCls: 'prx-icon-pagination-last',
-                            tooltip: 'Last Page',
-                            listeners: {
-                                click: 'pagLast'
-                            }
-                        },
-                        {
-                            xtype: 'pagingtoolbar',
-                            id: prototype.id + '-paggin__',                            
-                            pageSize: 10,
-                            border: false,
-                            displayInfo: false,
-                            hidden:true
-                        }
-                    ]
-                }
-            ]
-        },
+//        {
+//            xtype: 'panel',
+//            id: prototype.id+'-boxPaginacion__',
+//            hidden: true,
+//            width: 100,            
+//            border: false,                        
+//            items: [
+//                {
+//                    xtype: 'toolbar',
+//                    cls: 'x-toolbar-pag',
+//                    items: [
+//                        {
+//                            xtype: 'button',
+//                            id: prototype.id + '-btn-pag-first',
+//                            iconCls: 'prx-icon-pagination-first',
+//                            tooltip: 'First Page',
+//                            listeners: {
+//                                click: 'pagFirst'
+//                            }
+//                        },
+//                        {
+//                            xtype: 'button',
+//                            id: prototype.id + '-btn-pag-previous',
+//                            iconCls: 'prx-icon-pagination-previous',
+//                            tooltip: 'Previous Page',
+//                            listeners: {
+//                                click: 'pagPrevious'
+//                            }
+//                        },
+//                        {
+//                            xtype: 'button',
+//                            id: prototype.id + '-btn-pag-next',
+//                            iconCls: 'prx-icon-pagination-next',
+//                            tooltip: 'Next Page',
+//                            listeners: {
+//                                click: 'pagNext'
+//                            }
+//                        },
+//                        {
+//                            xtype: 'button',
+//                            id: prototype.id + '-btn-pag-last',
+//                            iconCls: 'prx-icon-pagination-last',
+//                            tooltip: 'Last Page',
+//                            listeners: {
+//                                click: 'pagLast'
+//                            }
+//                        },
+//                        {
+//                            xtype: 'pagingtoolbar',
+//                            id: prototype.id + '-paggin__',                            
+//                            pageSize: 10,
+//                            border: false,
+//                            displayInfo: false,
+//                            hidden:true
+//                        }
+//                    ]
+//                }
+//            ]
+//        },
         {xtype: 'tbspacer', width: 20},
         {
             xtype: 'panel',
@@ -85,6 +85,33 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Options', {
                         },
                         {
                             xtype: 'button',
+                            id: prototype.id + '-btn-procesar',
+                            text: 'Procesar',
+                            icon: 'resources/img/botones/process.png',
+                            listeners: {
+                                click: 'btnProcesar_click'
+                            }
+                        },
+                        {
+                            xtype: 'button',
+                            id: prototype.id + '-btn-get-facturacion',
+                            text: 'Facturación',
+                            icon: 'resources/img/botones/Select_Information.png',
+                            listeners: {
+                                click: 'btnUUIDForm_click'
+                            }
+                        },
+//                        {
+//                            xtype: 'button',
+//                            id: prototype.id + '-btn-get-facturacion',
+//                            text: 'Facturacion',
+//                            icon: 'resources/img/botones/Select_Information.png',
+//                            listeners: {
+//                                click: 'btnFacturacionForm_click'
+//                            }
+//                        },
+                        {
+                            xtype: 'button',
                             id: prototype.id + '-btnFilter',
                             iconCls: 'prx-icon-filter',
                             tooltip: 'Display filter',
@@ -97,7 +124,7 @@ Ext.define('Ext.Praxis.view.eecta.ControlUATPForm.Options', {
                             id: prototype.id + '-btnExcel',
                             iconCls: 'prx-icon-excel',
                             tooltip: 'Export to Excel',
-                            hidden:true,
+                            hidden: true,
                             listeners: {
                                 click: 'btnExcel_click'
                             }

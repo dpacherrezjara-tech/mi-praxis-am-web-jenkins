@@ -38,7 +38,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterUATPForm.Filters', {
                     padding: '10 5 5 5'
 
                 }
-                , {xtype: 'tbspacer', width: 5},
+                , { xtype: 'tbspacer', width: 5 },
                 {
                     xtype: 'combo',
                     id: prototype.id + '-cmbSearchBy',
@@ -55,7 +55,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterUATPForm.Filters', {
                     labelWidth: 35,
                     width: 130
 
-                }, {xtype: 'tbspacer', width: 5},
+                }, { xtype: 'tbspacer', width: 5 },
                 {
                     xtype: 'textfield',
                     id: prototype.id + '-txtCliente',
@@ -66,7 +66,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterUATPForm.Filters', {
                     maxLength: 15,
                     enforceMaxLength: true
                 }
-                , {xtype: 'tbspacer', width: 5},
+                , { xtype: 'tbspacer', width: 5 },
                 {
                     xtype: 'textfield',
                     id: prototype.id + '-txtNumber',
@@ -77,7 +77,7 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterUATPForm.Filters', {
                     maxLength: 20,
                     enforceMaxLength: true
                 }
-                , {xtype: 'tbspacer', width: 5},
+                , { xtype: 'tbspacer', width: 5 },
                 {
                     xtype: 'textfield',
                     id: prototype.id + '-txtCta',
@@ -85,20 +85,21 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterUATPForm.Filters', {
                     fieldLabel: 'Account',
                     labelWidth: 50,
                     width: 110,
-                    maxLength: 5,
+                    maxLength: 6,
                     enforceMaxLength: true
                 }
-                , {xtype: 'tbspacer', width: 5},
+                , { xtype: 'tbspacer', width: 5 },
                 {
                     xtype: 'textfield',
                     id: prototype.id + '-txtSubCta',
                     labelAlign: 'left',
                     fieldLabel: 'Sub Account',
-                    labelWidth: 110,
+                    labelWidth: 85,
                     width: 160,
                     maxLength: 5,
                     enforceMaxLength: true
                 },
+                { xtype: 'tbspacer', width: 5 },
                 {
                     xtype: 'combo',
                     id: prototype.id + '-cboMode',
@@ -115,6 +116,17 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterUATPForm.Filters', {
                     labelWidth: 35,
                     width: 130
 
+                },
+                { xtype: 'tbspacer', width: 5 },
+                {
+                    xtype: 'label',
+                    html: 'Old Registers',
+                    fieldStyle: 'text-align: center;',
+                    padding: '8px 7px 8px 0px'
+                },
+                {
+                    xtype: 'checkboxfield',
+                    id: prototype.id + '-txtoldregisters'
                 }
 
             ]

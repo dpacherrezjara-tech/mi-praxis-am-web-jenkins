@@ -92,6 +92,21 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterTravelForm.Info', {
                                     metaData.style = 'text-align :center ; margin-left : 3px ';
                                     return value;
                                 }},
+                            
+                            {
+                                text: 'Initial Date', width: 100, dataIndex: 'A1838FINI',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:left;";
+                                    return value;
+                                }
+                            },
+                            {
+                                text: 'End Date', width: 100, dataIndex: 'A1838FFIN',
+                                renderer: function (value, metaData, record, rowIndex, colIndex, store, view) {
+                                    metaData.style = "text-align:left;";
+                                    return value;
+                                }
+                            },
                             {
                                 sortable: false,
                                 xtype: 'actioncolumn',

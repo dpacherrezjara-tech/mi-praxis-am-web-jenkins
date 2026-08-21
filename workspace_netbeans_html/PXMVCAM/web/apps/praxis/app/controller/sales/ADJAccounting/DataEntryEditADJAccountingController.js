@@ -23,6 +23,7 @@ Ext.define('Ext.Praxis.controller.sales.ADJAccounting.DataEntryEditADJAccounting
         var p = this.view.params;
         this.setStoreData();
         this.getDataInputs();
+        global.AccessControlMaganerByMode(p);
     },
     setStoreData: function() {
         var cmbTypeBusq = Ext.getCmp(prototype.id + '-de-cmbTypeBusq');
@@ -572,11 +573,7 @@ Ext.define('Ext.Praxis.controller.sales.ADJAccounting.DataEntryEditADJAccounting
         var txtCupon3 = Ext.getCmp(prototype.id + '-de-txtCupon3').getValue().trim();
         var txtCupon4 = Ext.getCmp(prototype.id + '-de-txtCupon4').getValue().trim();
         var msj = '';
-
-        console.log(txtCupon1);
-        console.log(txtCupon2);
-        console.log(txtCupon3);
-        console.log(txtCupon4);
+           
 
         if (txtCia.trim() === '') {
             msj = 'Enter Cia';
@@ -679,8 +676,6 @@ Ext.define('Ext.Praxis.controller.sales.ADJAccounting.DataEntryEditADJAccounting
             });
         }
         else {
-            console.log(this.getDataEntryValues());
-
             Ext.Msg.show({
                 title: '.:PRAXIS:.',
                 msg: 'Are you sure to insert?',

@@ -163,6 +163,15 @@ Ext.define('Ext.Praxis.view.flown.FlightConciliationForm.Options', {
                         },
                         {
                             xtype: 'button',
+                            id: prototype.id + '-btnQuery',
+                            icon: 'resources/img/botones/delete.png',
+                            tooltip: 'Remove duplicate manifests',
+                            listeners: {
+                                click: 'btnDuplicate_click'
+                            }
+                        },
+                        {
+                            xtype: 'button',
                             id: prototype.id + '-btnBack',
                             iconCls: 'prx-icon-back',
                             tooltip: 'Back',

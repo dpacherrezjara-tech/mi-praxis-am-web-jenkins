@@ -73,8 +73,11 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.AccountingMaster
             fields: ['code', 'name'],
             data: [
                 ["", "(Select)"],
-                ["PFLOWN", "Flown Accounting"],
+                ["PFLOWNPRE", "Flown Accounting"],
+                //["PFLOWN", "Flown Accounting Policies"],
                 ["PPFLOWN", "Flown Accounting Pending"]
+                //["PFLOWNLEG", "Flown Accounting LEG"],
+                ////["PFLOWNLOG", "Flown Accounting Log"]
             ]}));
         cboModulo.setValue("");
 
@@ -119,6 +122,7 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.AccountingMaster
             case 'PSALES':
             case 'PADJMA':
             case 'PFLOWN':
+            case 'PFLOWNPRE':
             case 'PPFLOWN':
                 IN_FECHA_PROCESO = IN_FINI;
                 IN_FECHA_ACUSE = IN_FFIN;
@@ -220,7 +224,8 @@ Ext.define('Ext.Praxis.controller.flown.AccountingMasterProcess.AccountingMaster
         rec = rec === null || rec === undefined ? {} : rec;
         all = all === null || all === undefined ? {} : all;
         rowIndex = rowIndex === null || rowIndex === undefined ? {} : rowIndex;
-
+        
+        //console.log(rec);
         Ext.create('Ext.Praxis.view.flown.AccountingMasterProcessForm.DataEntry', {
             //id: prototype.id + '-dataEntry',
             id: 'DataEntryAccountingMasterProcessForm',

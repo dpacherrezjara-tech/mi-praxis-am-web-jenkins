@@ -219,7 +219,7 @@ Ext.define('Ext.Praxis.view.flown.OwnerlessCouponForm.Filters', {
                         {xtype: 'tbspacer', width: 30},
                         {
                             xtype: 'textfield',
-                            id: prototype.id+'-txtA1413FVLOB',     
+                            id: prototype.id+'-txtA1413FVLOBFiltro',     
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,     
                             maskRe: /[0-9]/,      
@@ -240,7 +240,7 @@ Ext.define('Ext.Praxis.view.flown.OwnerlessCouponForm.Filters', {
                         {xtype: 'tbspacer', width: 30},
                         {
                             xtype: 'textfield',
-                            id: prototype.id+'-txtA1413NVLOB',     
+                            id: prototype.id+'-txtA1413NVLOBFiltro',     
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,     
                             maskRe: /[0-9]/,      
@@ -261,7 +261,7 @@ Ext.define('Ext.Praxis.view.flown.OwnerlessCouponForm.Filters', {
                         {xtype: 'tbspacer', width: 30},
                         {
                             xtype: 'textfield',
-                            id: prototype.id+'-txtA1413FROM',     
+                            id: prototype.id+'-txtA1413FROMFiltro',     
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,     
                             maskRe: /[a-zA-Z]/,
@@ -284,7 +284,7 @@ Ext.define('Ext.Praxis.view.flown.OwnerlessCouponForm.Filters', {
                         {xtype: 'tbspacer', width: 20},
                         {
                             xtype: 'textfield',
-                            id: prototype.id+'-txtA1413TO',     
+                            id: prototype.id+'-txtA1413TOFiltro',     
                             fieldStyle: 'text-align:center',
                             enforceMaxLength: true,     
                             maskRe: /[a-zA-Z]/,      

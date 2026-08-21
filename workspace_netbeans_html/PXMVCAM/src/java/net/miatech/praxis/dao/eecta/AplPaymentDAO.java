@@ -107,6 +107,7 @@ public class AplPaymentDAO {
                 objRtn.A3957TIPPG = rs01.getString("A3957TIPPG");      
                 objRtn.A3957STSPG = rs01.getString("A3957STSPG");                                     
                 objRtn.A3957TOTAP = rs01.getDouble("A3957TOTAP");
+                objRtn.A3957TAJUS = rs01.getDouble("A3957TAJUS");
                 objRtn.A3957SALDP = rs01.getDouble("A3957SALDP");
                     
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
@@ -186,7 +187,8 @@ public class AplPaymentDAO {
                 objRtn.A3958PAX = rs01.getString("A3958PAX");
                 objRtn.A3958IDCON = rs01.getString("A3958IDCON");
                 objRtn.A3958FCONT = rs01.getString("A3958FCONT");     
-                objRtn.A3958TOTAP = rs01.getDouble("A3958TOTAP");     
+                objRtn.A3958TOTAP = rs01.getDouble("A3958TOTAP"); 
+                objRtn.A3958TAJUS = rs01.getDouble("A3958TAJUS"); 
                 objRtn.A3958SALDP = rs01.getDouble("A3958SALDP");
                 objRtn.A3958STSPG = rs01.getString("A3958STSPG");                
                 lstRtn.add(objRtn);
@@ -216,13 +218,13 @@ public class AplPaymentDAO {
     
     public SQP03952Filter setSQP03952Filter(SQP03952Filter filter) throws SQLException, Exception {
         CallableStatement cstmt = null;
-        String SQLCLL01 = "{CALL PXUATP.SQP03952(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String SQLCLL01 = "{CALL PXUATP.SQP03952(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}";
         Connection cnx = null;
         try {
             cnx = session.getCNXIBMDB2().getIBMDB2Connection();
             cstmt = cnx.prepareCall(SQLCLL01);
-            cstmt.registerOutParameter(14, Types.VARCHAR);
-            cstmt.registerOutParameter(15, Types.VARCHAR);            
+            cstmt.registerOutParameter(15, Types.VARCHAR);
+            cstmt.registerOutParameter(16, Types.VARCHAR);            
             cstmt.setString(1, filter.VP_ACTION);
             cstmt.setString(2, session.getUserView().getCustomerInfo().CCUST);
             cstmt.setString(3, filter.A3959REFPG);
@@ -235,10 +237,11 @@ public class AplPaymentDAO {
             cstmt.setString(10, filter.A3959BANCO.trim());
             cstmt.setString(11, filter.A3959CTABC.trim());
             cstmt.setString(12, filter.VP_TICKET_NC.trim());
-            cstmt.setString(13, filter.VP_json_detail);
+            cstmt.setString(13, filter.VP_NUM_RECIBO.trim());
+            cstmt.setString(14, filter.VP_json_detail);
             cstmt.execute();
-            filter.dbException.SQLCODE = cstmt.getString(14);
-            filter.dbException.MESSAGE = cstmt.getString(15);
+            filter.dbException.SQLCODE = cstmt.getString(15);
+            filter.dbException.MESSAGE = cstmt.getString(16);
                         
         } finally {
             if (cstmt != null) {
@@ -371,6 +374,7 @@ public class AplPaymentDAO {
                 //importe
                 objRtn.A3977TOT = rs01.getDouble("A3977TOT");
                 objRtn.A3977TOTAP = rs01.getDouble("A3977TOTAP");
+                objRtn.A3977TAJUS = rs01.getDouble("A3977TAJUS");
                 objRtn.A3977SALD = rs01.getDouble("A3977SALD");
                 objRtn.A3977MDA = rs01.getString("A3977MDA");
                 //audit

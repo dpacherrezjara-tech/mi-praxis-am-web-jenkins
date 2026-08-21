@@ -8,6 +8,7 @@ package net.miatech.praxis.logic.sales;
 import com.google.gson.JsonArray;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import net.miatech.beans.PX036S01A1531Filter;
 import net.miatech.beans.PX036S01A1532Filter;
 import net.miatech.beans.PX036S01A1533Filter;
@@ -30,12 +31,20 @@ import net.miatech.beans.S0001A714Filter;
 import net.miatech.beans.S0002A1530Filter;
 import net.miatech.beans.S0007A720Filter;
 import net.miatech.beans.S0007A730Filter;
+import net.miatech.beans.SQP04874Filter;
 import net.miatech.beans.spring.implement.IServerSession;
 import net.miatech.libmiatec.A006;
 import net.miatech.libmiatec.A1007;
 import net.miatech.praxis.A003;
 import net.miatech.praxis.A005;
 import net.miatech.praxis.A1772;
+import net.miatech.praxis.Sales.filters.PX036S01A4374Filter;
+import net.miatech.praxis.Sales.filters.PX036S01A4375Filter;
+import net.miatech.praxis.Sales.filters.PX036S01A4376Filter;
+import net.miatech.praxis.Sales.filters.PX036S02A4376Filter;
+import net.miatech.praxis.Sales.filters.S0001A4373Filter;
+import net.miatech.praxis.Sales.filters.S0001A4373TOTFilter;
+import net.miatech.praxis.Sales.filters.SQP04747Filter;
 import net.miatech.praxis.dao.sales.SalesReportDAO;
 
 /**
@@ -66,11 +75,11 @@ public class SalesReportLogic {
     public A1007 loadPX038S01A1007(A1007 filter) throws SQLException, Exception {
         return salesReportDAO.loadPX038S01A1007(filter);
     }
-    
+
     public A1772 loadA1772(A1772 filter) throws SQLException, Exception {
         return salesReportDAO.loadA1772(filter);
     }
-    
+
     public A005 loadA005(A005 filter) throws SQLException, Exception {
         return salesReportDAO.loadA005(filter);
     }
@@ -102,7 +111,7 @@ public class SalesReportLogic {
     public List<S0007A730Filter> loadS0007A730EXCH(S0007A730Filter filter) throws SQLException, Exception {
         return salesReportDAO.loadS0007A730EXCH(filter);
     }
-    
+
     public List<S0007A730Filter> loadS0007A730EXCHGrilla(S0007A730Filter filter) throws SQLException, Exception {
         return salesReportDAO.loadS0007A730EXCHGrilla(filter);
     }
@@ -114,7 +123,7 @@ public class SalesReportLogic {
     public List<S0007A720Filter> loadS0007A720Grilla(S0007A720Filter filter) throws SQLException, Exception {
         return salesReportDAO.loadS0007A720Grilla(filter);
     }
-    
+
     public List<S0001A713Filter> loadS0001A713(S0001A713Filter filter) throws SQLException, Exception {
         return salesReportDAO.loadS0001A713(filter);
     }
@@ -126,7 +135,7 @@ public class SalesReportLogic {
     public List<S0007A720Filter> loadS0007A720Tot(S0007A720Filter filter) throws SQLException, Exception {
         return salesReportDAO.loadS0007A720Tot(filter);
     }
-    
+
     public List<S0001A713Filter> S0001A713TOT(S0001A713Filter filter) throws SQLException, Exception {
         return salesReportDAO.S0001A713TOT(filter);
     }
@@ -146,19 +155,19 @@ public class SalesReportLogic {
     public List<PX036S01A1534Filter> loadPX036S01A1534(PX036S01A1534Filter filter) throws SQLException, Exception {
         return salesReportDAO.loadPX036S01A1534(filter);
     }
-    
+
     public List<PX036S01A1721Filter> loadPX036S01A1721(PX036S01A1721Filter filter) throws SQLException, Exception {
         return salesReportDAO.loadPX036S01A1721(filter);
     }
-     
+
     public List<S0001A1730Filter> loadBalance(S0001A1730Filter filter) throws SQLException, Exception {
         return salesReportDAO.loadBalance(filter);
     }
-            
+
     public List<PX036S01A1721Filter> loadReference(PX036S01A1721Filter filter) throws SQLException, Exception {
         return salesReportDAO.loadReference(filter);
     }
-    
+
     public List<PX036S01A1731Filter> loadPX036S01A1731(PX036S01A1731Filter filter) throws SQLException, Exception {
         return salesReportDAO.loadPX036S01A1731(filter);
     }
@@ -174,61 +183,108 @@ public class SalesReportLogic {
     public List<PX036S01A1734Filter> loadPX036S01A1734(PX036S01A1734Filter filter) throws SQLException, Exception {
         return salesReportDAO.loadPX036S01A1734(filter);
     }
-    
-     public List<PX036S01A1735Filter> loadPX036S01A1735(PX036S01A1735Filter filter) throws SQLException, Exception {
+
+    public List<PX036S01A1735Filter> loadPX036S01A1735(PX036S01A1735Filter filter) throws SQLException, Exception {
         return salesReportDAO.loadPX036S01A1735(filter);
     }
-            
+
     public List<PX036S01A1735Filter> loadReferenceRfnd(PX036S01A1735Filter filter) throws SQLException, Exception {
         return salesReportDAO.loadReferenceRfnd(filter);
     }
-    
-    public List<S0007A730Filter> loadExchange(S0007A720Filter filter) throws SQLException,Exception {
+
+    public List<S0007A730Filter> loadExchange(S0007A720Filter filter) throws SQLException, Exception {
         return salesReportDAO.loadExchange(filter);
     }
-    
-    public List<S0007A720Filter> loadEMD(S0007A720Filter filter) throws SQLException,Exception {
+
+    public List<S0007A720Filter> loadEMD(S0007A720Filter filter) throws SQLException, Exception {
         return salesReportDAO.loadEMD(filter);
     }
-    
-    public List<S0001A713Filter> loadEMDRfnd(S0001A713Filter filter) throws SQLException,Exception {
+
+    public List<S0001A713Filter> loadEMDRfnd(S0001A713Filter filter) throws SQLException, Exception {
         return salesReportDAO.loadEMDRfnd(filter);
     }
-    
-    public List<S0001A714Filter> loadS0001A714(S0001A714Filter filter) throws SQLException,Exception {
+
+    public List<S0001A714Filter> loadS0001A714(S0001A714Filter filter) throws SQLException, Exception {
         return salesReportDAO.loadS0001A714(filter);
     }
+
     public S0001A1530Filter setS0003A1530(S0001A1530Filter filter) throws SQLException, Exception {
         return salesReportDAO.setS0003A1530(filter);
     }
+
     public List<PX038S02A720Filter> getdetailloadErrorTKT(PX038S02A720Filter filter) throws SQLException, Exception {
         return salesReportDAO.getdetailloadErrorTKT(filter);
     }
+
     public List<PX038S02A720Filter> getdetailloadErrorRFND(PX038S02A720Filter filter) throws SQLException, Exception {
         return salesReportDAO.getdetailloadErrorRFND(filter);
     }
+
     public List<PX038S02A720Filter> getdetailloadErrorADMACM(PX038S02A720Filter filter) throws SQLException, Exception {
         return salesReportDAO.getdetailloadErrorADMACM(filter);
     }
+
     public S0001A1530Filter refreshGroup(S0001A1530Filter filter) throws SQLException, Exception {
         return salesReportDAO.refreshGroup(filter);
     }
-    public String ProcesaInsertFopManual(PX036S01A1731Filter filter,String ListFop) throws SQLException, Exception {
-        return salesReportDAO.ProcesaInsertFopManual(filter,ListFop);
+
+    public String ProcesaInsertFopManual(PX036S01A1731Filter filter, String ListFop) throws SQLException, Exception {
+        return salesReportDAO.ProcesaInsertFopManual(filter, ListFop);
     }
+
     public String ProcesaDeleteEntryRfndCompleManual(PX036S01A1731Filter filter) throws SQLException, Exception {
         return salesReportDAO.ProcesaDeleteEntryRfndCompleManual(filter);
     }
-    public String ProcesaInsertTAXManual(PX036S01A1732Filter filter,String ListTAX) throws SQLException, Exception {
-        return salesReportDAO.ProcesaInsertTAXManual(filter,ListTAX);
+
+    public String ProcesaInsertTAXManual(PX036S01A1732Filter filter, String ListTAX) throws SQLException, Exception {
+        return salesReportDAO.ProcesaInsertTAXManual(filter, ListTAX);
     }
-    public String ProcesaInsertCommiManual(PX036S01A1733Filter filter,String ListCommi) throws SQLException, Exception {
-        return salesReportDAO.ProcesaInsertCommiManual(filter,ListCommi);
+
+    public String ProcesaInsertCommiManual(PX036S01A1733Filter filter, String ListCommi) throws SQLException, Exception {
+        return salesReportDAO.ProcesaInsertCommiManual(filter, ListCommi);
     }
-    public String ProcesaInsertTAXCOMMManual(PX036S01A1731Filter filter,String lstTaxComm) throws SQLException, Exception {
-        return salesReportDAO.ProcesaInsertTAXCOMMManual(filter,lstTaxComm);
+
+    public String ProcesaInsertTAXCOMMManual(PX036S01A1731Filter filter, String lstTaxComm) throws SQLException, Exception {
+        return salesReportDAO.ProcesaInsertTAXCOMMManual(filter, lstTaxComm);
     }
+
     public String ProcesaInsertFareCalcRfnd(PX036S01A1735Filter filter) throws SQLException, Exception {
         return salesReportDAO.ProcesaInsertFareCalcRfnd(filter);
     }
+
+    public List<SQP04874Filter> loadSQP04874Filter(SQP04874Filter filter) throws Exception {
+        return salesReportDAO.loadSQP04874Filter(filter);
+    }
+    
+    public List<SQP04747Filter> loadSQP04747(SQP04747Filter filter) throws SQLException, Exception{
+        return salesReportDAO.loadSQP04747(filter);
+    }
+    
+    public List<S0001A4373Filter> loadS0001A4373(S0001A4373Filter filter) throws Exception{
+        return salesReportDAO.loadS0001A4373(filter);
+    }
+    
+    public List<PX036S01A4374Filter> loadPX036S01A4374(PX036S01A4374Filter filter) throws Exception{
+        return salesReportDAO.loadPX036S01A4374(filter);
+    }
+    
+    public List<PX036S01A4375Filter> loadPX036S01A4375(PX036S01A4375Filter filter) throws Exception{
+        return salesReportDAO.loadPX036S01A4375(filter);
+    }
+    
+    public S0001A4373TOTFilter loadS0001A4373TOT(S0001A4373TOTFilter filter) throws Exception {
+        return salesReportDAO.loadS0001A4373TOT(filter);
+    }
+    
+    public List<PX036S01A4376Filter> loadPX036S01A4376Filter(PX036S01A4376Filter filter) throws Exception{
+        return salesReportDAO.loadPX036S01A4376Filter(filter);
+    }
+    
+    public List<PX036S02A4376Filter> loadRftxReferences (PX036S02A4376Filter filter)throws Exception{
+        return salesReportDAO.loadRftxReferences(filter);
+    }
+    
+     public Map<String,String> loadTicketFinder(Map<String,String> filter)throws Exception{
+         return salesReportDAO.loadTicketFinder(filter);
+     }
 }

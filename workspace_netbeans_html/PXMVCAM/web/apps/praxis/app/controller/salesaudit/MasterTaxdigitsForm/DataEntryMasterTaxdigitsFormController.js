@@ -17,6 +17,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MasterTaxdigitsForm.DataEntryMaster
      */
     afterRender: function () {
         var me = this;
+        this.p = this.view.params;
         switch (String(this.view.params.action)) {
             case 'U':
                 var rec = this.view.params.rec;
@@ -57,6 +58,7 @@ Ext.define('Ext.Praxis.controller.salesaudit.MasterTaxdigitsForm.DataEntryMaster
                 Ext.getCmp(prototype.idDataEntryMasterTaxdigitsForm + '-btn-update').hide();
                 Ext.getCmp(prototype.idDataEntryMasterTaxdigitsForm + '-btn-delete').hide();
         }
+        global.AccessControlManagerByModeById(this.p, prototype.idDataEntryMasterTaxdigitsForm);
     },
     onSaveClick: function (obj) {
         var me = this;

@@ -28,6 +28,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.AccountingMaste
         
         switch (strModulo) {
             case 'PSALES':
+            case 'PSALESEMDS': 
             case 'PADM':
             case 'PFOB':
             case 'PCONSORTIA':
@@ -157,7 +158,7 @@ Ext.define('Ext.Praxis.controller.sales.AccountingMasterProcess2.AccountingMaste
         // <editor-fold defaultstate="collapsed" desc="llenarData">
         var cboModulo = this.getValue('cboModulo');
         switch (cboModulo) {
-            case 'PSALES': case 'PFLOWN': case 'PADJMA': case 'PCADUCOS': case 'PPSALES': case 'PADM': case 'PFOB': case 'PCONSORTIA':
+            case 'PSALES': case 'PSALESEMDS' : case 'PFLOWN': case 'PADJMA': case 'PCADUCOS': case 'PPSALES': case 'PADM': case 'PFOB': case 'PCONSORTIA':
                 searchParams.IN_FECHA_PROCESO = Ext.util.Format.date(Ext.getCmp(prototype.id+'-txtDateFrom').getValue(), 'Ymd');
                 searchParams.IN_FECHA_ACUSE = Ext.util.Format.date(Ext.getCmp(prototype.id+'-txtDateTo').getValue(), 'Ymd');
                 break;

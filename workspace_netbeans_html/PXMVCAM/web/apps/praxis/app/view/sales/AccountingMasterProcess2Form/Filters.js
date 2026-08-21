@@ -91,10 +91,11 @@ Ext.define('Ext.Praxis.view.sales.AccountingMasterProcess2Form.Filters', {
                                         data: [
                                             ["", "(Select)"],
                                             ["PSALES", "Sales Accounting"],
+                                            ["PSALESEMDS", "Sales EMDs"],
                                             ["PADM", "ADM Accounting"],
                                             ["PFOB", "FOB Accounting"],
                                             ["PCONSORTIA", "CONSORTIA Accounting"],
-                                            ["PCADUCOS", "Caducos"],
+                                            //["PCADUCOS", "Caducos"],
                                             ["PPSALES", "Sales Accounting Pending"]
                                         ]
                                     }),

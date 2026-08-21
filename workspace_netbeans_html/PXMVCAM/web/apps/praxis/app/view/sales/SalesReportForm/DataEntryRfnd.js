@@ -13,6 +13,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRfnd', {
         'Ext.Praxis.view.widgets.facsimil',
         'Ext.Praxis.view.widgets.prorrate',
         'Ext.Praxis.view.sales.SalesReportForm.DataEntryFOPRfnd',
+        'Ext.Praxis.view.sales.SalesReportForm.DataEntryFOPVoid',
         'Ext.Praxis.view.sales.SalesReportForm.DataEntryTAXRfnd',
         'Ext.Praxis.view.sales.SalesReportForm.DataEntryTAXCOMMRfnd',
         'Ext.Praxis.view.sales.SalesReportForm.DataEntryCOMMRfnd',
@@ -472,7 +473,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRfnd', {
                                                         }
                                                     ]
                                                 },
-                                                // </editor-fold
+                                                // </editor-fold>
 
                                                 // <editor-fold defaultstate="collapsed" desc="Panel 2">
                                                 {
@@ -714,7 +715,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRfnd', {
                                                                                 }
                                                                             ]
                                                                         },
-                                                                        // </editor-fold
+                                                                        // </editor-fold>
                                                                         //PANEL 2_1 Reference
                                                                         // <editor-fold defaultstate="collapsed" desc="Reference">
                                                                         {
@@ -2828,7 +2829,7 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRfnd', {
                                                     listeners: {
                                                         click: 'onProrrate'
                                                     }
-                                                }/*,
+                                                },/*,
                                                 {
                                                     text: '<strong style="color:white;">Taxes-TUAS<strong>',
                                                     id: prototype.idRfnd + '-det-btnTUAS',
@@ -2838,6 +2839,16 @@ Ext.define('Ext.Praxis.view.sales.SalesReportForm.DataEntryRfnd', {
                                                         click: 'onTaxes'
                                                     }
                                                 }*/
+                                                {
+                                                    text: '<strong style="color:white;">FOP VOID<strong>',
+                                                    id: prototype.idRfnd + '-det-btnFopVOID',
+                                                    cls: 'x-btn-sent',
+                                                    overCls: 'x-btn-sent-over',
+                                                    hidden:true,
+                                                    listeners: {
+                                                        click: 'onFopVoid'
+                                                    }
+                                                }
                                             ]
                                         }
                                     ]

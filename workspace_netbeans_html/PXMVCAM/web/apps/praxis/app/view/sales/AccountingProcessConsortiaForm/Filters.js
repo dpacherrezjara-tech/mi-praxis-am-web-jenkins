@@ -482,6 +482,8 @@ Ext.define('Ext.Praxis.view.sales.AccountingProcessConsortiaForm.Filters', {
                                             ["C", "Completed"],
                                             ["N", "New"],
                                             ["P", "In Process"],
+                                            ["O", "Process OK"],
+                                            ["S", "Sent Email"],
                                             ["E", "Error"]
                                         ]
                                     }),

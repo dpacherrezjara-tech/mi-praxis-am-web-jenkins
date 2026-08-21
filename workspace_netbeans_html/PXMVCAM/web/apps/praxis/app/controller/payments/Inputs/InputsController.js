@@ -113,12 +113,19 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
         var storeComboDataYear = win.getStoreYear(false);
         var storeComboDataMonth = win.getStoreMonth(true);
         var storeComboDataDay = win.getStoreDays(true);
+        
+        var month = this.fecha.getMonth() + 1;
+        
+        if (month < 10) {
+            month = '0' + month;
+        }
 
         Ext.getCmp(prototype.id + '-cmbDateFromYear').bindStore(storeComboDataYear);
         Ext.getCmp(prototype.id + '-cmbDateFromMonth').bindStore(storeComboDataMonth);
         Ext.getCmp(prototype.id + '-cmbDateFromDay').bindStore(storeComboDataDay);
 
         Ext.getCmp(prototype.id + '-cmbDateFromYear').setValue(this.fecha.getFullYear());
+        Ext.getCmp(prototype.id + '-cmbDateFromMonth').setValue(month);
         Ext.getCmp(prototype.id + '-cmbDateFromDay').setValue('');
 
 
@@ -127,6 +134,7 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
         Ext.getCmp(prototype.id + '-cmbDateToDay').bindStore(storeComboDataDay);
 
         Ext.getCmp(prototype.id + '-cmbDateToYear').setValue(this.fecha.getFullYear());
+        Ext.getCmp(prototype.id + '-cmbDateToMonth').setValue(month);
         Ext.getCmp(prototype.id + '-cmbDateToDay').setValue('');
 
         Ext.getCmp(prototype.id + '-cmbYear').bindStore(storeComboDataYear);
@@ -559,23 +567,8 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
             day = 1;
             
             var panelmes = Ext.getCmp(prototype.id +'panel'+ (i < 10 ? '0' : '') + i);
-            panelmes.suspendLayout = true;
+            panelmes.suspendLayout  = true;
             for (var n = init; n < fin; n++) {
-//                if (n % 7 === 1) {
-//                    colorFlag = '#D6D6D6';
-//                } else {
-//                    if (i % 2 !== 0) {
-//                        colorFlag = '#65C3E5';
-//                    } else {
-//                        colorFlag = '#2e6bf4';
-//                    }
-//                }
-//                Ext.getCmp(prototype.id + '-lblDay_' + i + '_' + (parseInt(n))).setText(day);
-//                Ext.getCmp(prototype.id + '-lblDay_' + i + '_' + (parseInt(n))).setStyle('backgroundColor', '#ffffff');
-//                Ext.getCmp(prototype.id + '-lblDay_' + i + '_' + (parseInt(n))).setStyle('color', '#000000');
-//                Ext.getCmp(prototype.id + 'gdiFlag_' + i + '_' + (parseInt(n))).setStyle('backgroundColor', colorFlag);
-                
-                    
                     
                     if(n === init){
                         for (var c = 1; c < init; c++) {
@@ -588,7 +581,7 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
                     var fday = (day < 10 ? '0' : '') + day;
                     var v_id = 'lbl'+anio+''+mes+''+ fday ;
                     var v_label = new Ext.form.Label({
-                                        id:v_id , text: day,backgroundColor:'#ffffff',color:'#000000',backgroundColor:colorFlag
+                                        id:v_id , text: day,backgroundColor:'#ffffff',color:'#000000'
                                     });
                     panelmes.add( v_label);
                 
@@ -596,7 +589,7 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
                 day++;
             }
         }
-        console.log('termina cracion-----------****');
+        console.log('Termina Creacion');
         Ext.getCmp(prototype.id +'panel05').suspendLayout = false;
         Ext.getCmp(prototype.id +'panel05').updateLayout();
     },
@@ -630,7 +623,7 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
                     var dias = ["7", "1", "2", "3", "4", "5", "6"];
                     var colorFlag;
                     var dia, mes, anio, mesf;
-
+                    
                     for (var i = 0; i < res.length; i++) {
                         dia = res[i].fecha.substring(6, 8);
                         mes = res[i].fecha.substring(4, 6);
@@ -638,13 +631,28 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
                         mesf = (new Date(mes + ' ' + dia + ', ' + anio + ' 12:00:00').getMonth() + 1).toString();
 
                         var dt = new Date(mes + ' ' + dia + ', ' + anio + ' 12:00:00');
-                        var color = res[i].strFormatDate === 'ROJO' ? '#ff0000' : '#00ff00';
-
+                        var color = '';
+                        //var color = res[i].strFormatDate === 'ROJO' ? '#ff0000' : '#00ff00';
+                        
+                        
+                        if (dt.getDay() === 0 || dt.getDay() === 6) {   // Domingo y Sabado
+                            if(me.beanCalendar.IN_FUENTE === 'AXPLUSGR-D' || me.beanCalendar.IN_FUENTE === 'AXLIGATB-D'){
+                                color = res[i].strFormatDate === 'AMBAR' ? '#ff4d00' : '#00ff00';
+                            }else{
+                                color = '#FFFFFF'
+                            }
+                        } else if(res[i].strFormatDate === 'YELLOW' ){
+                            color = '#D8FF02'
+                        } else{
+                            color = res[i].strFormatDate === 'AMBAR' ? '#ff4d00' : '#00ff00';
+                        }
+                        
 
                         if (mesf % 2 !== 0) {
                             colorFlag = '#65C3E5';
                         } else {
                             colorFlag = '#2e6bf4';
+                            //colorFlag = '#ffffff';
                         }
                         
 //                        console.log('fecha : ' + res[i].fecha + ' date: ' + dt +  ' getUTC : ' + dias[dt.getUTCDay()] );
@@ -681,8 +689,9 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
     
     searchDelivery_clickHandler: function (obj, metaData, rowNum, columnNum, obj2, rowData) {
         var beanDeliv = rowData.data;
+        beanDeliv.IN_FECRFILE = rowData.data.strFormatDate.replaceAll('-','');
         switch (columnNum) {
-            case 1:
+            case 4:
                 beanDeliv.IN_ERROR = '';
                 break;
             case 9:
@@ -697,6 +706,7 @@ Ext.define('Ext.Praxis.controller.payments.Inputs.InputsController', {
             me.paramsDetail.consulta = '1';
             this.searchDelivery();
         }
+        console.log(beanDeliv);
     },
     searchDelivery: function () {
         me.setWidthPie();

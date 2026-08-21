@@ -109,7 +109,8 @@ public class DetalleSaldoDAO {
                 objRtn.A3958FCONT = rs01.getString("A3958FCONT");     
                 objRtn.A3958TOTAP = rs01.getDouble("A3958TOTAP");     
                 objRtn.A3958SALDP = rs01.getDouble("A3958SALDP");
-                objRtn.A3958STSPG = rs01.getString("A3958STSPG");                
+                objRtn.A3958STSPG = rs01.getString("A3958STSPG"); 
+                objRtn.A3958RUTA = rs01.getString("A3958RUTA"); //NEW                
                 objRtn.page.PAGNUM = filter.page.PAGNUM;
                 objRtn.page.PAGROW = filter.page.PAGROW;
                 objRtn.page.TOTPAG = filter.page.TOTPAG;

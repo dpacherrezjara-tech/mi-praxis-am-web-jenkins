@@ -178,10 +178,31 @@ public final class ExportUtil {
      */
     public static void exportToXLSX(HttpServletResponse response, String downloadName, Class _class, List list, ExportSchema schema) {
         ExportSchema footer = new ExportSchema();
-        _exportToXLSX(response, downloadName, _class, list, schema);
+        _exportToXLSX(response, downloadName, _class, list, schema, null, null);
     }
-    
-    private static void _exportToXLSX(HttpServletResponse response, String downloadName, Class _class, List list, ExportSchema schema) {
+
+    /**
+     * Igual que exportToXLSX(...,schema), pero alterna el color de fondo de las
+     * filas cada vez que el campo boolean indicado por groupBreakField es true
+     * (pensado para agrupar visualmente cadenas de registros relacionados, ej.
+     * Tickets Invol: alterna cada vez que aparece un ticket raiz nuevo).
+     * @param groupBreakField Nombre de un campo boolean de _class; null = sin alternar color (comportamiento anterior).
+     */
+    public static void exportToXLSX(HttpServletResponse response, String downloadName, Class _class, List list, ExportSchema schema, String groupBreakField) {
+        _exportToXLSX(response, downloadName, _class, list, schema, groupBreakField, null);
+    }
+
+    /**
+     * Igual que exportToXLSX(...,groupBreakField), pero ademas pinta en verde
+     * celdas puntuales cuando el campo boolean indicado sea true (ej. Tickets
+     * Invol: PNR/PAX distintos dentro de la misma cadena).
+     * @param highlightFields Mapa dataIndex -> nombre de campo boolean de _class; null = sin resaltar celdas.
+     */
+    public static void exportToXLSX(HttpServletResponse response, String downloadName, Class _class, List list, ExportSchema schema, String groupBreakField, Map<String, String> highlightFields) {
+        _exportToXLSX(response, downloadName, _class, list, schema, groupBreakField, highlightFields);
+    }
+
+    private static void _exportToXLSX(HttpServletResponse response, String downloadName, Class _class, List list, ExportSchema schema, String groupBreakField, Map<String, String> highlightFields) {
         //Declaración de variables
         String nombreHoja = "Sheet1";
         Workbook workbook = null;
@@ -296,41 +317,71 @@ public final class ExportUtil {
             //Generar filas de datos
             Integer rowIndex = headersQty;
             
-            CellStyle rowStyle = getCellStyle(workbook, "default");
-            CellStyle intRowStyle = getCellStyle(workbook, "int");
-            CellStyle floatRowStyle = getCellStyle(workbook, "float");
-            
+            CellStyle rowStyle = getCellStyle(workbook, "default", false);
+            CellStyle intRowStyle = getCellStyle(workbook, "int", false);
+            CellStyle floatRowStyle = getCellStyle(workbook, "float", false);
+
+            CellStyle rowStyleAlt = getCellStyle(workbook, "default", true);
+            CellStyle intRowStyleAlt = getCellStyle(workbook, "int", true);
+            CellStyle floatRowStyleAlt = getCellStyle(workbook, "float", true);
+
+            CellStyle rowStyleHighlight = getCellStyleHighlight(workbook, "default");
+            CellStyle intRowStyleHighlight = getCellStyleHighlight(workbook, "int");
+            CellStyle floatRowStyleHighlight = getCellStyleHighlight(workbook, "float");
+
+            boolean groupToggle = false;
+            Field breakField = (groupBreakField != null) ? _class.getField(groupBreakField) : null;
+
             for (Object obj : list){
-                
+
+                if (breakField != null) {
+                    boolean isGroupBreak = (Boolean) breakField.get(obj);
+                    if (isGroupBreak) {
+                        groupToggle = !groupToggle;
+                    }
+                }
+                CellStyle useRowStyle = groupToggle ? rowStyleAlt : rowStyle;
+                CellStyle useIntRowStyle = groupToggle ? intRowStyleAlt : intRowStyle;
+                CellStyle useFloatRowStyle = groupToggle ? floatRowStyleAlt : floatRowStyle;
+
                 Row row = sheet.createRow(rowIndex);
                 Integer cellIndex = 0;
-                
+
                 for (String dataIndex: fields) {
                     String fieldName = dataIndex;
                     Field field = _class.getField(fieldName);
                     String value = field.get(obj).toString();
-                    
+
                     Cell cell = row.createCell(cellIndex);
-                    
+
                     String type = field.getType().getCanonicalName();
-                    
+
                     for(ExportSchema head:headers.get(0).headerRows){
                         if(fieldName.equals(head.dataIndex)){
                             type = head.type;
                             break;
                         }
                     }
-                    
+
+                    boolean isHighlighted = false;
+                    if (highlightFields != null && highlightFields.containsKey(fieldName)) {
+                        Field highlightField = _class.getField(highlightFields.get(fieldName));
+                        isHighlighted = (Boolean) highlightField.get(obj);
+                    }
+                    CellStyle cellRowStyle = isHighlighted ? rowStyleHighlight : useRowStyle;
+                    CellStyle cellIntRowStyle = isHighlighted ? intRowStyleHighlight : useIntRowStyle;
+                    CellStyle cellFloatRowStyle = isHighlighted ? floatRowStyleHighlight : useFloatRowStyle;
+
                     switch(type){
                         case "int": case "long": {
                             long longVal = Math.round(Double.parseDouble(value));
                             cell.setCellValue(longVal);
-                            cell.setCellStyle(intRowStyle);
+                            cell.setCellStyle(cellIntRowStyle);
                         } break;
                         case "float":
                         case "double": {
                             cell.setCellValue(Double.parseDouble(value));
-                            cell.setCellStyle(floatRowStyle);
+                            cell.setCellStyle(cellFloatRowStyle);
                         } break;
 //                        case "float": {
 //                            cell.setCellValue(Float.parseFloat(value));
@@ -338,13 +389,13 @@ public final class ExportUtil {
 //                        } break;
                         default: {
                             cell.setCellValue(value);
-                            cell.setCellStyle(rowStyle);
+                            cell.setCellStyle(cellRowStyle);
                         } break;
                     }
-                    
+
                     cellIndex++;
                 }
-                
+
                 rowIndex++;
             }
 
@@ -431,11 +482,33 @@ public final class ExportUtil {
             //Redireccionando el stream hacia el response
             workbook.write(response.getOutputStream());
         } catch(Exception ex){
-            System.out.println(ex.getMessage());
+            // "Fail to save: ... docProps/core.xml ..." es un mensaje generico
+            // de POI que envuelve la causa real (ex.getCause()); sin esto se
+            // pierde el detalle util para diagnosticar.
+            ex.printStackTrace();
+            Throwable cause = ex.getCause();
+            while (cause != null) {
+                System.out.println("Causa: " + cause);
+                cause = cause.getCause();
+            }
         }
-    }    
+    }
     
     private static CellStyle getCellStyle(Workbook workbook, String style){
+        return getCellStyle(workbook, style, false);
+    }
+
+    // Rojo -- se usa para marcar mismatch de PNR/PAX dentro de la misma
+    // cadena (Tickets Invol/SKCHG): es una alerta de dato inconsistente, no
+    // un "ok", por eso rojo y no verde.
+    private static CellStyle getCellStyleHighlight(Workbook workbook, String style){
+        CellStyle rowStyle = getCellStyle(workbook, style, false);
+        rowStyle.setFillForegroundColor(IndexedColors.ROSE.getIndex());
+        rowStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        return rowStyle;
+    }
+
+    private static CellStyle getCellStyle(Workbook workbook, String style, boolean highlight){
         CellStyle rowStyle = workbook.createCellStyle();
 
         rowStyle.setBorderRight(CellStyle.BORDER_THIN);
@@ -446,15 +519,20 @@ public final class ExportUtil {
         rowStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
         rowStyle.setBorderTop(CellStyle.BORDER_THIN);
         rowStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-        
+
+        if(highlight){
+            rowStyle.setFillForegroundColor(IndexedColors.LIGHT_CORNFLOWER_BLUE.getIndex());
+            rowStyle.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        }
+
         if("int".equals(style)){
             rowStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("#,##0"));
         }
-        
+
         if("float".equals(style)){
             rowStyle.setDataFormat(HSSFDataFormat.getBuiltinFormat("#,##0.00"));
         }
-        
+
         return rowStyle;
     }
     

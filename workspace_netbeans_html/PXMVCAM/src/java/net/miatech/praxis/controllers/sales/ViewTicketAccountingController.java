@@ -133,8 +133,12 @@ public class ViewTicketAccountingController extends BaseController {
             filter.page.PAGNUM = -1;
             filter.page.TOTPAG = 300;
             filter.page.TOTROW = 300;
-
-            lst = logic.load(filter);
+            
+            if (filter.TRANSACTION.equals("RFTX")){
+                lst = logic.loadRFTX(filter);
+            }else{
+                lst = logic.load(filter);
+            }
 
         } catch (Exception e) {
             System.out.println("--->"+e.getMessage());

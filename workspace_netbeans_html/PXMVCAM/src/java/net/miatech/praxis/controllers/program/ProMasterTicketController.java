@@ -40,6 +40,9 @@ import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.X509Certificate;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,6 +50,12 @@ import java.util.Date;
 import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
@@ -54,11 +63,15 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.sax.SAXTransformerFactory;
 import javax.xml.transform.stream.StreamResult;
+import net.miatech.beans.A4471Filter;
+import net.miatech.beans.A4474Filter;
 import net.miatech.beans.PX0094S01A007Filter;
 import static net.miatech.praxis.controllers.tnu.AtlUsageNoSaleController.zipFile;
 import net.miatech.praxis.exceptions.SpringException;
 import net.miatech.praxis.exceptions.SpringLog;
 import net.miatech.praxis.logic.LoadDataLogic;
+import net.miatech.praxis.logic.program.ProrrateoNewLogic;
+import net.miatech.praxis.spring.INF020;
 import net.sabre.miatech.praxis.SabreRecordLocator;
 import net.sabre.miatech.praxis.SabreRecordLocatorSoap;
 import net.sabre.miatech.praxis.TicketREQ;
@@ -70,7 +83,7 @@ import org.xml.sax.InputSource;
 // </editor-fold>
 /**
  *
- * @author gsanchez
+ * @author gsanche
  */
 @Controller
 @Scope("request")
@@ -123,9 +136,60 @@ public class ProMasterTicketController extends BaseController {
             List<PX040S01A720Filter> filterTKT = new ArrayList<PX040S01A720Filter>();
             if (!filter.IN_CIA.equals("") && !filter.IN_FORMA.trim().equals("") && !filter.IN_SERIE.trim().equals("") ){
                 filterTKT = logic.SQP04422(filter);
+//                for (PX040S01A720Filter f: filterTKT){
+//                    f.IN_STVAL = logic.SQP05174(f).get(0).IN_STVAL;
+//                }
             }
             map.put("success", true);
             map.put("filterTKTSeq", filterTKT);
+        } catch (Exception e) {
+            map.put("success", false);
+            new SpringLog(e.getMessage());
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "/loadSTVAL")
+    public @ResponseBody
+    String loadSTVAL(ModelMap map, HttpServletRequest request) {
+        PX040S01A720Filter filter = new PX040S01A720Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            
+            logic = new ProMasterTicketLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            List<PX040S01A720Filter> filterTKT = new ArrayList<PX040S01A720Filter>();
+            if (!filter.IN_CIA.equals("") && !filter.IN_FORMA.trim().equals("") && !filter.IN_SERIE.trim().equals("") ){
+                filterTKT = logic.SQP05174(filter);
+            }
+            map.put("success", true);
+            map.put("filterTKTSTVAL", filterTKT);
+        } catch (Exception e) {
+            map.put("success", false);
+            new SpringLog(e.getMessage());
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+    }
+    
+    @RequestMapping(value = "/loadPayment")
+    public @ResponseBody
+    String loadPayment(ModelMap map, HttpServletRequest request) {
+        PX040S01A720Filter filter = new PX040S01A720Filter();
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            
+            logic = new ProMasterTicketLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            List<PX040S01A720Filter> filterTKT = new ArrayList<PX040S01A720Filter>();
+            if (!filter.IN_CIA.equals("") && !filter.IN_FORMA.trim().equals("") && !filter.IN_SERIE.trim().equals("") ){
+                filterTKT = logic.SQP05175(filter);
+            }
+            map.put("success", true);
+            map.put("filterPayment", filterTKT);
         } catch (Exception e) {
             map.put("success", false);
             new SpringLog(e.getMessage());
@@ -158,6 +222,37 @@ public class ProMasterTicketController extends BaseController {
         return new Gson().toJson(map);
     }
     
+    @RequestMapping(value = "/loadPurge")
+    public @ResponseBody
+    String loadPurge(ModelMap map, HttpServletRequest request) {
+        System.out.println("-------------- loadPurge -------------");
+        try {
+            A4474Filter filter = new A4474Filter();
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            
+            logic = new ProMasterTicketLogic();
+            logic.setSession((IServerSession) serverSession.getServerSession());
+            List<A4474Filter> lst_Accounting = logic.loadSQP05045(filter);
+            
+            map.put("success", true);
+            map.put("lst_PurgeAccounting", lst_Accounting);
+            map.put("total", lst_Accounting.size() > 0 ? lst_Accounting.size() : 0);
+        }catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+        //List<PX040S01A1716Filter> lst = this.getList(request, false);
+        //System.out.println("Total : " + lst.size());
+        //map.put("total", lst.size() > 0 ? lst.get(0).page.TOTROW : 0);
+        //map.put("data", lst);
+        //return new Gson().toJson(map);
+    }
+    
     @RequestMapping(value = "/loadSabre")
     public @ResponseBody
     String loadSabre(ModelMap map, HttpServletRequest request) {
@@ -166,7 +261,13 @@ public class ProMasterTicketController extends BaseController {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             filter = new Gson().fromJson(request.getParameter("beanSabre"), filter.getClass());            
             
-            SabreRecordLocator sabre = new SabreRecordLocator();
+            //Get the endpoint
+            String wsURL = serverSession.getServerSession().getPropertySession().get("SABRE_WS").toString(); // "http://10.101.2.137/SabreRecloc/SabreReclocRetriever.asmx" ;
+            
+            disableSslVerification(); // Deshabilitamos validacion certificado
+            
+            URL url = new URL(wsURL);
+            SabreRecordLocator sabre = new SabreRecordLocator(url);
             SabreRecordLocatorSoap relocSOA = sabre.getSabreRecordLocatorSoap();
             TicketREQ ticketREQ = new TicketREQ();
             ticketREQ.setTicketNumber(filter.VP_A1716CIA + filter.VP_A1716FORMA + filter.VP_A1716SERIE);
@@ -186,7 +287,44 @@ public class ProMasterTicketController extends BaseController {
             map.put("sesion", SESSION_CONTROL);
         }
         return new Gson().toJson(map);
-    }  
+    }
+    
+    private static void disableSslVerification() 
+    {
+        try
+        {
+            // Create a trust manager that does not validate certificate chains
+            TrustManager[] trustAllCerts = new TrustManager[] {new X509TrustManager() {
+                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+                public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                }
+                public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                }
+            }
+            };
+
+            // Install the all-trusting trust manager
+            SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+            // Create all-trusting host name verifier
+            HostnameVerifier allHostsValid = new HostnameVerifier() {
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            };
+
+            // Install the all-trusting host verifier
+            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+    }
        
     public static String prettyPrintXml(String sourceXml) {
         try {
@@ -211,6 +349,8 @@ public class ProMasterTicketController extends BaseController {
         String fileNameDownload = String.format("Sabre File-" + strTicket + "-" + Functions.getFechaActual(), UUID.randomUUID().toString().toLowerCase());
         String rutaFile = serverSession.getServerSession().getPropertySession().get("RUTA_DOWNLOAD").toString(); 
         try {
+            
+            disableSslVerification();
             
             //Get the endpoint
             String wsURL = serverSession.getServerSession().getPropertySession().get("SABRE_WS").toString(); // "http://10.101.2.137/SabreRecloc/SabreReclocRetriever.asmx" ;
@@ -427,19 +567,49 @@ public class ProMasterTicketController extends BaseController {
         return new Gson().toJson(map);
     }
     
-    
-    @RequestMapping(value = "getXLSX")
+    @RequestMapping(value = "searchDeliveryARC")
     public @ResponseBody
-    void GetXLSX(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    String searchDeliveryARC(ModelMap map, HttpServletRequest request) {
+        A4471Filter filter = new A4471Filter();
+        String strTexto = "";
+        try {
+            Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
+            filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            
+            INF020 cliente = this.serverSession.getServerSession().getUserView().getCustomerInfo();
+            
+            ProrrateoNewLogic logic = new ProrrateoNewLogic();
+            logic.setSession(this.serverSession.getServerSession());
+            A4471Filter beansA4471 = logic.searchDeliveryARC(cliente.CCUST, filter, "B");
+
+            
+            map.put("success", true);
+            map.put("data", beansA4471);
+        } catch (SQLException e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("sesion", SESSION_CONTROL);
+        }
+        return new Gson().toJson(map);
+    }
     
+    
+    @RequestMapping(value = "/getXLSX")
+    public @ResponseBody
+    void getXLSX(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        
         SQP00697Filter filter = new SQP00697Filter();
         String strALL = "";
         Functions.msjConsola("PRAXIS",  this.serverSession.getServerSession().getUserView().getUserInfo().USR, "ScrProrationFactorsPMP");
         try {
             Functions.msjConsola("PRAXIS", this.serverSession.getServerSession().getUserView().getUserInfo().USR, getClass().getSimpleName() + " : " + Thread.currentThread().getStackTrace()[1].getMethodName());
             //filter = new Gson().fromJson(request.getParameter("beanString"), filter.getClass());
+            
             filter.IN_TFILTER = Integer.parseInt(request.getParameter("IN_TFILTER").trim());
-            filter.IN_TEXT = request.getParameter("IN_TEXT").trim();            
+            filter.IN_TEXT = request.getParameter("IN_TEXT").trim();
+            filter.IN_TEXT = filter.IN_TEXT.replaceAll("_","%");
             filter.IN_IATA = request.getParameter("IN_IATA").trim();
             filter.IN_DATE_FROM = request.getParameter("IN_DATE_FROM").trim();
             filter.IN_DATE_TO = request.getParameter("IN_DATE_TO").trim();            

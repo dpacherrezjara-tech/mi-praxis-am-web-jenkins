@@ -10,6 +10,8 @@ public class A1691Filter2 {
     public String NFLIGHT = "";
     public String CARRI = "";
     public String DESCRIP = "";
+    public String DESCRIP2 = "";
+    public String TKTS = "";
     public String strDescFFLOW = "";
     public String CDEPART = "";
     public String CARRIVA = "";
@@ -39,10 +41,13 @@ public class A1691Filter2 {
     public long QCPNTOT = 0;
     public long totQCPNTOT = 0;
     public long QCPNVAL = 0;
+    public long QCPNCONTAB = 0;
     public long totQCPNVAL = 0;
+    public long totQCPNCONTAB = 0;
     public String strFormatDate3 = "";
     public int QCPNFI = 0;
     public int QCPNFRE = 0;
+    public int QCPHARB_ESP = 0;
     public String IN_OBS = "";
     public String yearFrom = "";
     public String monthFrom = "";
@@ -59,6 +64,8 @@ public class A1691Filter2 {
     public String strSQL = "";
     public int totQCPNFI = 0;
     public int totQCPNFRE = 0;
+    public int totQCPHARB_ESP = 0;
+    public int totQTYTOTPS = 0;
     
     public long lngQDIFF = 0;
     public double totDiff = 0;
@@ -69,6 +76,7 @@ public class A1691Filter2 {
     public String FSENDSS = "";
     public String LEGSEQ = "";
     public String DFLIGHT = "";
+    public int QTYTOTPS = 0;
     public String FOPERZUL = "";
     public String FSENDOD = "";
     public String FSENDVC = "";

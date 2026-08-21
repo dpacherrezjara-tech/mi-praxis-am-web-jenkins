@@ -1,6 +1,6 @@
 Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
     extend: 'Ext.form.Panel',
-    alias: 'widget.'+prototype.id+'-filters',
+    alias: 'widget.' + prototype.id + '-filters',
     border: true,
     bodyStyle: 'background-color: #E3EAF9;',
     padding: '3 0',
@@ -8,7 +8,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
     items: [
         {
             xtype: 'panel',
-            id: prototype.id+'-boxSearchFilter',
+            id: prototype.id + '-boxSearchFilter',
             margin: '0 40',
             border: false,
             width: 1210,
@@ -29,8 +29,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                     },
                     items: [
                         {
-                            xtype:'combo',
-                            id: prototype.id+'-cmbType',
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbType',
                             queryMode: 'local',
                             allowBlank: false,
                             forceSelection: true,
@@ -40,12 +40,12 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                             editable: true,
                             width: 125,
                             typeAhead: true,
-                            valueField: 'code', 
+                            valueField: 'code',
                             displayField: 'name',
                             listConfig: {maxHeight: 111, minWidth: 70},
                             enableKeyEvents: true,
                             triggerAction: 'all',
-                            listeners:{
+                            listeners: {
                                 select: 'cmbType_clickHandler'
                             }
                         },
@@ -55,11 +55,11 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                             text: 'Sales Date',
                             padding: '3 0',
                             width: 60,
-                            id: prototype.id+'-lblDate'
+                            id: prototype.id + '-lblDate'
                         },
                         {
-                            xtype:'combo',
-                            id: prototype.id+'-cmbFecFiltro',
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbFecFiltro',
                             queryMode: 'local',
                             allowBlank: false,
                             forceSelection: true,
@@ -70,7 +70,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                             width: 125,
                             hidden: true,
                             typeAhead: true,
-                            valueField: 'code', 
+                            valueField: 'code',
                             displayField: 'name',
                             listConfig: {maxHeight: 111, minWidth: 70},
                             enableKeyEvents: true,
@@ -80,7 +80,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                         //<editor-fold defaultstate="collapsed" desc="cmbDate">
                         {
                             xtype: 'combo',
-                            id: prototype.id+'-cmbDateFromYear',
+                            id: prototype.id + '-cmbDateFromYear',
                             fieldStyle: 'text-align: left;',
                             disabled: false,
                             editable: false,
@@ -90,7 +90,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                             labelAlign: 'right',
                             queryMode: 'local',
                             triggerAction: 'all',
-                            valueField: 'code', 
+                            valueField: 'code',
                             displayField: 'name',
                             listConfig: {maxHeight: 111, minWidth: 70},
                             maxLength: 4,
@@ -103,7 +103,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                         {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'combo',
-                            id: prototype.id+'-cmbDateFromMonth',
+                            id: prototype.id + '-cmbDateFromMonth',
                             fieldStyle: 'text-align: left;',
                             disabled: false,
                             editable: false,
@@ -124,7 +124,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                         {xtype: 'tbspacer', width: 20},
                         {
                             xtype: 'combo',
-                            id: prototype.id+'-cmbDateToYear',
+                            id: prototype.id + '-cmbDateToYear',
                             fieldStyle: 'text-align: left;',
                             disabled: false,
                             editable: false,
@@ -143,7 +143,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                         {xtype: 'tbspacer', width: 10},
                         {
                             xtype: 'combo',
-                            id: prototype.id+'-cmbDateToMonth',
+                            id: prototype.id + '-cmbDateToMonth',
                             fieldStyle: 'text-align: left;',
                             disabled: false,
                             editable: false,
@@ -163,14 +163,14 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                         {
                             xtype: 'label',
                             text: 'Source:',
-                            id: prototype.id+'-lblFTE',
+                            id: prototype.id + '-lblFTE',
                             padding: '3 0',
                             width: 50
                         },
                         {xtype: 'tbspacer', width: 7},
                         {
-                            xtype:'combo',
-                            id: prototype.id+'-cmbFTE',
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbFTE',
                             queryMode: 'local',
                             allowBlank: false,
                             forceSelection: true,
@@ -181,12 +181,12 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                             width: 80,
 //                            readOnly: true,
                             typeAhead: true,
-                            valueField: 'code', 
+                            valueField: 'code',
                             displayField: 'name',
                             listConfig: {maxHeight: 111, minWidth: 70},
                             enableKeyEvents: true,
                             triggerAction: 'all',
-                            listeners:{
+                            listeners: {
                                 select: 'btnSearch_click'
                             }
                         },
@@ -194,14 +194,14 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                         {
                             xtype: 'label',
                             text: 'Type of Sale:',
-                            id: prototype.id+'-lblTARJ',
+                            id: prototype.id + '-lblTARJ',
                             padding: '3 0',
                             width: 75
                         },
                         {xtype: 'tbspacer', width: 10},
                         {
-                            xtype:'combo',
-                            id: prototype.id+'-cmbTARJ',
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbTARJ',
                             allowBlank: false,
                             forceSelection: true,
                             selectOnFocus: true,
@@ -210,27 +210,67 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                             editable: true,
                             width: 90,
                             typeAhead: true,
-                            valueField: 'code', 
+                            valueField: 'code',
                             displayField: 'name',
                             listConfig: {maxHeight: 111, minWidth: 70},
                             enableKeyEvents: true,
                             triggerAction: 'all',
-                            listeners:{
+                            listeners: {
                                 select: 'btnSearch_click'
                             }
                         },
                         {xtype: 'tbspacer', width: 20},
                         {
                             xtype: 'radiogroup',
-                            id:prototype.id+'-rbgType',
+                            id: prototype.id + '-rbgType',
                             items: [
-                                { boxLabel: '<b style="color:#148D28;">Sales</b>', inputValue: 'S', name: 'rbgTDOC', checked: true},
+                                {boxLabel: '<b style="color:#148D28;">Sales</b>', inputValue: 'S', name: 'rbgTDOC', checked: true},
                                 {xtype: 'tbspacer', width: 20},
-                                { boxLabel: '<b style="color:#148D28;">Refund</b>', inputValue: 'R', name: 'rbgTDOC'}
+                                {boxLabel: '<b style="color:#148D28;">Refund</b>', inputValue: 'R', name: 'rbgTDOC'}
                             ],
                             listeners: {
-                                change: 'btnSearch_click' 
+                                change: 'btnSearch_click'
                             }
+                        },
+                        {
+                            xtype: 'panel',
+                            width: '100%',
+                            layout: 'hbox',
+                            hidden:true,
+                            border:false,
+                            id: prototype.id + '-hboxFilterAudit',
+                            bodyStyle: 'background: transparent;"',
+                            defaults: {
+                                margin: '4 0'
+                            },
+                            items: [
+                                {
+                                    xtype: 'label',
+                                    text: 'Country:',
+                                    padding: '3 0',
+                                    width: 50
+                                },
+                                {xtype: 'tbspacer', width: 10},
+                                {
+                                    xtype: 'combo',
+                                    id: prototype.id + '-cmbPaises',
+                                    queryMode: 'local',
+                                    allowBlank: false,
+                                    forceSelection: true,
+                                    selectOnFocus: true,
+                                    caseSensitive: false,
+                                    autoSelect: true,
+                                    editable: true,
+                                    width: 180,
+//                                  readOnly: true,
+                                    typeAhead: true,
+                                    valueField: 'A006PAIS',
+                                    displayField: 'A006NOMBRE',
+                                    listConfig: {maxHeight: 111, minWidth: 70},
+                                    enableKeyEvents: true,
+                                    triggerAction: 'all'
+                                },
+                            ]
                         }
                     ]
                 },
@@ -238,7 +278,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                     xtype: 'panel',
                     width: '100%',
                     layout: 'hbox',
-                    id: prototype.id+'-hboxFilter2',
+                    id: prototype.id + '-hboxFilter2',
                     bodyStyle: 'background: transparent;"',
                     defaults: {
                         margin: '4 0'
@@ -252,8 +292,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                         },
                         {xtype: 'tbspacer', width: 10},
                         {
-                            xtype:'combo',
-                            id: prototype.id+'-cmbPais',
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbPais',
                             queryMode: 'local',
                             allowBlank: false,
                             forceSelection: true,
@@ -264,7 +304,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                             width: 180,
 //                            readOnly: true,
                             typeAhead: true,
-                            valueField: 'A006PAIS', 
+                            valueField: 'A006PAIS',
                             displayField: 'A006NOMBRE',
                             listConfig: {maxHeight: 111, minWidth: 70},
                             enableKeyEvents: true,
@@ -273,11 +313,11 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                         {xtype: 'tbspacer', width: 75},
                         {
                             xtype: 'checkboxfield',
-                            id: prototype.id+'-chkEECC',
+                            id: prototype.id + '-chkEECC',
                             boxLabel: '<b>Statement</b>',
                             checked: false,
                             width: 90,
-                            listeners:{
+                            listeners: {
                                 change: 'btnSearch_click'
                             }
                         },
@@ -285,14 +325,14 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                         {
                             xtype: 'label',
                             text: 'Bank Status:',
-                            id: prototype.id+'-lblFINSUMO',
+                            id: prototype.id + '-lblFINSUMO',
                             padding: '3 0',
                             width: 70
                         },
                         {xtype: 'tbspacer', width: 10},
                         {
-                            xtype:'combo',
-                            id: prototype.id+'-cmbFINSUMO',
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbFINSUMO',
                             queryMode: 'local',
                             allowBlank: false,
                             forceSelection: true,
@@ -302,12 +342,12 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                             editable: true,
                             width: 120,
                             typeAhead: true,
-                            valueField: 'code', 
+                            valueField: 'code',
                             displayField: 'name',
                             listConfig: {maxHeight: 111, minWidth: 70},
                             enableKeyEvents: true,
                             triggerAction: 'all',
-                            listeners:{
+                            listeners: {
                                 select: 'btnSearch_click'
                             }
                         },
@@ -320,8 +360,8 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                         },
                         {xtype: 'tbspacer', width: 10},
                         {
-                            xtype:'combo',
-                            id: prototype.id+'-cmbBank',
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbBank',
                             queryMode: 'local',
                             allowBlank: false,
                             forceSelection: true,
@@ -331,7 +371,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                             editable: true,
                             width: 202,
                             typeAhead: true,
-                            valueField: 'CODEBANK', 
+                            valueField: 'CODEBANK',
                             displayField: 'NAMEBANK',
                             listConfig: {maxHeight: 111, minWidth: 70},
                             enableKeyEvents: true,
@@ -343,7 +383,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
         },
         {
             xtype: 'panel',
-            id: prototype.id+'-boxSearchFilter1',
+            id: prototype.id + '-boxSearchFilter1',
             margin: '0 40',
             border: false,
             width: 1210,
@@ -373,31 +413,45 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                         {xtype: 'tbspacer', width: 20},
                         {
                             xtype: 'radiogroup',
-                            id:prototype.id+'-rbgSELEC',
+                            id: prototype.id + '-rbgSELEC',
                             items: [
-                                { boxLabel: '<b style="color:#046AAA;">Month</b>', inputValue: 'MONTH', name: 'rbgSELEC', checked: true},
+                                {boxLabel: '<b style="color:#046AAA;">Month</b>', inputValue: 'MONTH', name: 'rbgSELEC', checked: true},
                                 {xtype: 'tbspacer', width: 20},
-                                { boxLabel: '<b style="color:#046AAA;">Country</b>', inputValue: 'COUNTRY', name: 'rbgSELEC'},
+                                {boxLabel: '<b style="color:#046AAA;">Country</b>', inputValue: 'COUNTRY', name: 'rbgSELEC'},
                                 {xtype: 'tbspacer', width: 20},
-                                { boxLabel: '<b style="color:#046AAA;">Card</b>', inputValue: 'CARD', name: 'rbgSELEC'}
+                                {boxLabel: '<b style="color:#046AAA;">Card</b>', inputValue: 'CARD', name: 'rbgSELEC'}
                             ],
                             listeners: {
-                                change: 'btnSearch_click' 
+                                change: 'btnSearch_click'
                             }
                         },
                         {xtype: 'tbspacer', width: 30},
                         {
                             xtype: 'label',
+                            text: 'Range:',
+//                            style: 'font-weight:bold;',
+                            padding: '3 0',
+                            width: 45
+                        },
+                        {
+                            xtype: 'textfield',
+                            id: prototype.id + '-txtRange',
+                            padding: '3 0',
+                            width: 40
+                        },
+                        {xtype: 'tbspacer', width: 30},
+                        {
+                            xtype: 'label',
                             text: 'Show by:',
-                            id:prototype.id+'-lblShow',
+                            id: prototype.id + '-lblShow',
                             padding: '3 0',
 //                            hidden: true,
                             width: 50
                         },
                         {xtype: 'tbspacer', width: 7},
                         {
-                            xtype:'combo',
-                            id: prototype.id+'-cmbCASH',
+                            xtype: 'combo',
+                            id: prototype.id + '-cmbCASH',
                             queryMode: 'local',
                             allowBlank: false,
                             forceSelection: true,
@@ -409,12 +463,12 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                             width: 100,
 //                            readOnly: true,
                             typeAhead: true,
-                            valueField: 'code', 
+                            valueField: 'code',
                             displayField: 'name',
                             listConfig: {maxHeight: 111, minWidth: 70},
                             enableKeyEvents: true,
                             triggerAction: 'all',
-                            listeners:{
+                            listeners: {
                                 select: 'btnSearch_click'
                             }
                         }
@@ -424,7 +478,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
         },
         {
             xtype: 'panel',
-            id: prototype.id+'-boxSearchFilter2',
+            id: prototype.id + '-boxSearchFilter2',
             margin: '0 40',
             border: false,
             width: 1210,
@@ -454,14 +508,14 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                         {xtype: 'tbspacer', width: 20},
                         {
                             xtype: 'radiogroup',
-                            id:prototype.id+'-rbgPEM',
+                            id: prototype.id + '-rbgPEM',
                             items: [
-                                { boxLabel: '<b style="color:#046AAA;">POS</b>', inputValue: 'POS', name: 'rbgPEM', checked: true},
+                                {boxLabel: '<b style="color:#046AAA;">POS</b>', inputValue: 'POS', name: 'rbgPEM', checked: true},
                                 {xtype: 'tbspacer', width: 20},
-                                { boxLabel: '<b style="color:#046AAA;">Month</b>', inputValue: 'MONTH', name: 'rbgPEM'}
+                                {boxLabel: '<b style="color:#046AAA;">Month</b>', inputValue: 'MONTH', name: 'rbgPEM'}
                             ],
                             listeners: {
-                                change: 'btnSearch_click' 
+                                change: 'btnSearch_click'
                             }
                         }
                     ]
@@ -470,7 +524,7 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
         },
         {
             xtype: 'panel',
-            id: prototype.id+'-boxSearchFilter3',
+            id: prototype.id + '-boxSearchFilter3',
             margin: '0 40',
             border: false,
             width: 1210,
@@ -500,16 +554,18 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                         {xtype: 'tbspacer', width: 20},
                         {
                             xtype: 'radiogroup',
-                            id:prototype.id+'-rbgFlag',
+                            id: prototype.id + '-rbgFlag',
                             items: [
-                                { boxLabel: '<b style="color:#046AAA;">Month</b>', inputValue: 'MONTH', name: 'rbgFlag', checked: true},
+                                {boxLabel: '<b style="color:#046AAA;">Month</b>', inputValue: 'MONTH', name: 'rbgFlag', checked: true},
                                 {xtype: 'tbspacer', width: 20},
-                                { boxLabel: '<b style="color:#046AAA;">Card Type</b>', inputValue: 'SCARCOD', name: 'rbgFlag',width: 80},
+                                {boxLabel: '<b style="color:#046AAA;">Card Type</b>', inputValue: 'SCARCOD', name: 'rbgFlag', width: 80},
                                 {xtype: 'tbspacer', width: 20},
-                                { boxLabel: '<b style="color:#046AAA;">Bank</b>', inputValue: 'CODEBANK', name: 'rbgFlag'}
+                                {boxLabel: '<b style="color:#046AAA;">Bank</b>', inputValue: 'CODEBANK', name: 'rbgFlag'},
+                                {xtype: 'tbspacer', width: 20},
+                                {boxLabel: '<b style="color:#046AAA;">Merchant</b>', inputValue: 'MERCHANT', name: 'rbgFlag'}
                             ],
                             listeners: {
-                                change: 'btnSearch_click' 
+                                change: 'btnSearch_click'
                             }
                         },
                         {xtype: 'tbspacer', width: 30},
@@ -521,11 +577,9 @@ Ext.define('Ext.Praxis.view.program.ProPaymentsControlForm.Filters', {
                             boxLabel: '<b>Detail</b>',
                             inputValue: '1',
                             listeners: {
-                                change: 'ChangeCheckTotal' 
+                                change: 'ChangeCheckTotal'
                             }
-                        }
-                        
-                        
+                        },
                     ]
                 }
             ]

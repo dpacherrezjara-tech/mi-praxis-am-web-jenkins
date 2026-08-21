@@ -33,15 +33,15 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.DataEntryConcili
         Ext.getCmp(prototype.id + '-de-txtA1698CURR').setValue(data.CURRENCY);
         Ext.getCmp(prototype.id + '-de-txtA1698GROS').setValue(Ext.util.Format.number(data.TOT_GROSS, '0,000.00'));
         Ext.getCmp(prototype.id + '-de-txtA1698REMM').setValue(Ext.util.Format.number(data.TOT_REMITTENCE, '0,000.00'));
-        Ext.getCmp(prototype.id + '-de-txtA1698TAX').setValue(Ext.util.Format.number(data.ARC_TAX, '0,000.00'));
-        Ext.getCmp(prototype.id + '-de-txtA1698COMM').setValue(Ext.util.Format.number(data.ARC_COMM, '0,000.00'));
+        Ext.getCmp(prototype.id + '-de-txtA1698TAX').setValue(Ext.util.Format.number(data.BSP_TAX, '0,000.00'));
+        Ext.getCmp(prototype.id + '-de-txtA1698COMM').setValue(Ext.util.Format.number(data.BSP_COMM, '0,000.00'));
         Ext.getCmp(prototype.id + '-de-txtA1698GROSP').setValue(Ext.util.Format.number(data.TOT_GROSS_PX, '0,000.00'));
         Ext.getCmp(prototype.id + '-de-txtA1698REMMP').setValue(Ext.util.Format.number(data.TOT_REMITTENCE_PX, '0,000.00'));
         Ext.getCmp(prototype.id + '-de-txtA1698TAXP').setValue(Ext.util.Format.number(data.PRAXIS_TAX, '0,000.00'));
         Ext.getCmp(prototype.id + '-de-txtA1698COMMP').setValue(Ext.util.Format.number(data.PRAXIS_COMM, '0,000.00'));        
         Ext.getCmp(prototype.id + '-de-txtA1698COMEN').setValue(data.A1698COMEN.trim());
 
-        var sum = data.TOT_REMITTENCE + data.ARC_COMM;
+        var sum = data.TOT_REMITTENCE + data.BSP_COMM;
         var sum2 = data.TOT_REMITTENCE_PX + data.PRAXIS_COMM;
         var dif = sum - sum2;
 
@@ -49,7 +49,7 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.DataEntryConcili
         Ext.getCmp(prototype.id + '-de-txtCASHP').setValue(Ext.util.Format.number(sum2, '0,000.00'));
         Ext.getCmp(prototype.id + '-de-txtCASHD').setValue(Ext.util.Format.number(dif, '0,000.00'));
 
-        var num1 = data.TOT_GROSS - (data.TOT_REMITTENCE + data.ARC_COMM);
+        var num1 = data.TOT_GROSS - (data.TOT_REMITTENCE + data.BSP_COMM);
         var num2 = data.TOT_GROSS_PX - (data.TOT_REMITTENCE_PX + data.PRAXIS_COMM);
         var dif = num1 - num2;
 
@@ -59,8 +59,8 @@ Ext.define('Ext.Praxis.controller.sales.ConciliationDifferences.DataEntryConcili
 
         var dif = data.TOT_GROSS - data.TOT_GROSS_PX;
         var dif2 = data.TOT_REMITTENCE - data.TOT_REMITTENCE_PX;
-        var dif3 = data.ARC_TAX - data.PRAXIS_TAX;
-        var dif4 = data.ARC_COMM - data.PRAXIS_COMM;
+        var dif3 = data.BSP_TAX - data.PRAXIS_TAX;
+        var dif4 = data.BSP_COMM - data.PRAXIS_COMM;
         Ext.getCmp(prototype.id + '-de-txtA1698GROSD').setValue(Ext.util.Format.number(dif, '0,000.00'));
         Ext.getCmp(prototype.id + '-de-txtA1698REMMD').setValue(Ext.util.Format.number(dif2, '0,000.00'));
         Ext.getCmp(prototype.id + '-de-txtA1698TAXD').setValue(Ext.util.Format.number(dif3, '0,000.00'));
